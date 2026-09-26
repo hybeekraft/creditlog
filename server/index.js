@@ -312,8 +312,21 @@ const server = http.createServer(async (req, res) => {
   }
 
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const pathname = parsedUrl.pathname;
+  let pathname = parsedUrl.pathname;
   const query = Object.fromEntries(parsedUrl.searchParams);
+
+  if (pathname === '/api/index.js' && query.path) {
+    const rawPath = query.path;
+    try {
+      const subUrl = new URL(rawPath, 'http://localhost');
+      pathname = subUrl.pathname;
+      for (const [k, v] of subUrl.searchParams) {
+        query[k] = v;
+      }
+    } catch (e) {
+      pathname = rawPath.split('?')[0];
+    }
+  }
 
   // =========================================================================
   // ADMIN AUTHENTICATION
