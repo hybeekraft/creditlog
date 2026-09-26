@@ -1280,7 +1280,11 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
-  console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
-});
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
+    console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
+  });
+}
+
+module.exports = server;
