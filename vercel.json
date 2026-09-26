@@ -1,10 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "outputDirectory": ".",
   "functions": {
-    "api/*.js": {
-      "includeFiles": "{data/**,style.css,shared.js,assets/**,*.html}"
+    "api/index.js": {
+      "includeFiles": "data/**"
     }
   },
   "rewrites": [
@@ -23,16 +22,6 @@
       "source": "/catalogue.html",
       "destination": "/shop",
       "permanent": true
-    },
-    {
-      "source": "/server/:path*",
-      "destination": "/404",
-      "permanent": false
-    },
-    {
-      "source": "/data/:path*",
-      "destination": "/404",
-      "permanent": false
     }
   ]
 }
