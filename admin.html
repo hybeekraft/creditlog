@@ -26,9 +26,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           Admin Analytics
         </a>
-        <a href="index.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Storefront
+        <a href="shop.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Shop
         </a>
         <a href="inventory.html" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
@@ -142,15 +142,15 @@
             <svg class="sales-svg" viewBox="0 0 500 220" preserveAspectRatio="none" id="salesSvgChart">
               <defs>
                 <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0"/>
+                  <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0"/>
                 </linearGradient>
               </defs>
               <!-- Horizontal Grid Lines -->
-              <line x1="40" y1="30" x2="490" y2="30" stroke="#E2E8F0" stroke-dasharray="3 3"/>
-              <line x1="40" y1="80" x2="490" y2="80" stroke="#E2E8F0" stroke-dasharray="3 3"/>
-              <line x1="40" y1="130" x2="490" y2="130" stroke="#E2E8F0" stroke-dasharray="3 3"/>
-              <line x1="40" y1="180" x2="490" y2="180" stroke="#E2E8F0"/>
+              <line x1="40" y1="30" x2="490" y2="30" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="80" x2="490" y2="80" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="130" x2="490" y2="130" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="180" x2="490" y2="180" stroke="rgba(255, 255, 255, 0.08)"/>
 
               <!-- Y-Axis Labels -->
               <text x="32" y="34" class="chart-axis-label" text-anchor="end">200k</text>
@@ -161,16 +161,16 @@
               <!-- Shaded Area -->
               <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65 L 485 180 L 50 180 Z" fill="url(#salesGrad)" />
               <!-- Smooth Curve Line -->
-              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
 
               <!-- Active interactive points -->
-              <circle cx="50" cy="165" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 8: ₦52,000')"/>
-              <circle cx="120" cy="160" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 10: ₦68,000')"/>
-              <circle cx="190" cy="148" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 11: ₦95,000')"/>
-              <circle cx="260" cy="122" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 12: ₦130,000')"/>
-              <circle cx="330" cy="126" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 13: ₦124,000')"/>
-              <circle cx="400" cy="88" r="4" fill="#2563EB" class="chart-dot" onclick="showToast('Sep 14: ₦175,000')"/>
-              <circle cx="485" cy="65" r="5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" class="chart-dot" onclick="showToast('Sep 15: ₦210,000')"/>
+              <circle cx="50" cy="165" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 8: ₦52,000')"/>
+              <circle cx="120" cy="160" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 10: ₦68,000')"/>
+              <circle cx="190" cy="148" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 11: ₦95,000')"/>
+              <circle cx="260" cy="122" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 12: ₦130,000')"/>
+              <circle cx="330" cy="126" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 13: ₦124,000')"/>
+              <circle cx="400" cy="88" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 14: ₦175,000')"/>
+              <circle cx="485" cy="65" r="5" fill="#38BDF8" stroke="#0A0D14" stroke-width="2" class="chart-dot" onclick="showToast('Sep 15: ₦210,000')"/>
 
               <!-- X-Axis Dates -->
               <text x="50" y="202" class="chart-axis-label" text-anchor="middle">Sep 8</text>
@@ -195,7 +195,7 @@
               <div class="adm-item-info">
                 <div>
                   <span class="adm-badge-id">#CL-10482</span>
-                  <div style="font-size:12px; font-weight:700; color:var(--text-dark);">Netflix Premium</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Netflix Premium</div>
                   <div class="adm-sub-date">12 Sep 2026</div>
                 </div>
               </div>
@@ -209,7 +209,7 @@
               <div class="adm-item-info">
                 <div>
                   <span class="adm-badge-id">#CL-10461</span>
-                  <div style="font-size:12px; font-weight:700; color:var(--text-dark);">Claude Pro</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Claude Pro</div>
                   <div class="adm-sub-date">11 Sep 2026</div>
                 </div>
               </div>
@@ -223,7 +223,7 @@
               <div class="adm-item-info">
                 <div>
                   <span class="adm-badge-id">#CL-10479</span>
-                  <div style="font-size:12px; font-weight:700; color:var(--text-dark);">Spotify Premium</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Spotify Premium</div>
                   <div class="adm-sub-date">11 Sep 2026</div>
                 </div>
               </div>
@@ -237,7 +237,7 @@
               <div class="adm-item-info">
                 <div>
                   <span class="adm-badge-id">#CL-10475</span>
-                  <div style="font-size:12px; font-weight:700; color:var(--text-dark);">Canva Pro</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Canva Pro</div>
                   <div class="adm-sub-date">11 Sep 2026</div>
                 </div>
               </div>

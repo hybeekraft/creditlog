@@ -76,16 +76,6 @@
       overflow: hidden;
     }
 
-    .product-hero-card::after {
-      content: '';
-      position: absolute;
-      top: -120px;
-      right: -80px;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%);
-      pointer-events: none;
-    }
 
     .product-brand-row {
       display: flex;
@@ -501,7 +491,7 @@
       
       <!-- Cancel at the Top Bar -->
       <div class="product-top-bar">
-        <a href="catalogue.html" class="cancel-top-btn" id="cancelTopBtn">
+        <a href="shop.html" class="cancel-top-btn" id="cancelTopBtn">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
           </svg>
@@ -615,8 +605,8 @@
 
       <!-- Bottom Cancel helper -->
       <div style="text-align: center; margin-top: 32px;">
-        <a href="catalogue.html" style="color: #64748B; font-size: 13px; text-decoration: none; font-weight: 600;">
-          ← Cancel and return to Catalogue
+        <a href="shop.html" style="color: #64748B; font-size: 13px; text-decoration: none; font-weight: 600;">
+          ← Cancel and return to Shop
         </a>
       </div>
 
@@ -678,8 +668,9 @@
       document.getElementById('productReviewCount').textContent = currentProduct.reviews || '1.1k';
 
       const iconTile = document.getElementById('productIconTile');
-      iconTile.className = `product-icon-tile ${currentProduct.brandClass || 'tile-gemini'}`;
-      iconTile.innerHTML = currentProduct.brandSymbol || '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>';
+      if (iconTile) {
+        iconTile.outerHTML = renderBrandIcon(currentProduct);
+      }
 
       updateStockBadge();
       renderOptions();

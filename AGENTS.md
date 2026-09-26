@@ -11,6 +11,20 @@ Whenever working on, editing, refactoring, or improving this project, document, 
 * **Treat previously fixed functionality as strictly protected** unless the user explicitly asks to change it.
 * **Work incrementally, carefully, and consistently**, rather than solving one problem while creating another.
 
+### 0.1. Automatic Skill Selection & Application (MANDATORY CONTRACT)
+Whenever processing any prompt, request, or starting a new project, first analyze the task and determine exactly which installed skills are relevant and necessary to complete it.
+Automatically:
+1. **Identify requirements and objectives** of the task or project.
+2. **Review available installed skills.**
+3. **Select only the skills** that are directly relevant to the task.
+4. **Read selected skills** (`view_file` on `SKILL.md`) and follow their instructions.
+5. **Apply those skills** throughout planning, development, implementation, testing, and completion where applicable.
+6. **If multiple skills are needed**, combine and use them together in the appropriate order.
+7. **Do not use irrelevant skills** or skip a relevant installed skill.
+8. **If a required skill is not installed**, identify what capability is missing and proceed with the best available alternative when possible.
+9. **For new projects**, continue using the selected skills throughout the project unless requirements change.
+10. **Do not wait for explicit user instruction** on which skill to use; determine and execute this automatically from the request.
+
 ### 1. File Management
 * Keep only files that are necessary and useful to the current project.
 * If we change the approach, structure, pattern, or implementation and an old file is no longer needed, remove/delete it.

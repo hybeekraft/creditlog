@@ -4,55 +4,54 @@
 
 :root {
   color-scheme: dark;
-  --font-primary: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-primary: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
   
-  /* Brand Colors */
-  --color-primary: #2563EB;
-  --color-primary-hover: #1D4ED8;
-  --color-primary-light: rgba(37, 99, 235, 0.1);
-  --color-accent-blue: #2563EB;
+  /* Brand Accents — Apple Pro Sky & Titanium */
+  --color-primary: #38BDF8;
+  --color-primary-hover: #0EA5E9;
+  --color-primary-light: rgba(56, 189, 248, 0.1);
   --color-accent-sky: #38BDF8;
+  --color-accent-blue: #2563EB;
   --color-accent-red: #E50914;
   --color-accent-red-hover: #DC2626;
   --color-success: #10B981;
-  --color-success-bg: #ECFDF5;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
 
-  /* Surfaces & Backgrounds — Ultra-sleek Fintech Obsidian (Linear / Stripe / Vercel style) */
-  --bg-dark-hero: #070A11;
-  --bg-dark-card: #0D1322;
-  --bg-dark-border: rgba(255, 255, 255, 0.08);
-  
-  --bg-main: #070A12;
-  --bg-card: #0D1322;
+  /* Surfaces & Backgrounds — Deep Titanium (Apple Pro Dark) */
+  --bg-main: #0A0D14;
+  --bg-dark-hero: #0A0D14;
+  --bg-card: #111622;
+  --bg-card-hover: #161C2C;
   --border-light: rgba(255, 255, 255, 0.08);
   --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-focus: rgba(56, 189, 248, 0.45);
 
-  /* Text Colors */
+  /* Apple Pro Text Colors */
   --text-dark: #F8FAFC;
   --text-muted: #94A3B8;
   --text-subtle: #64748B;
   --text-white: #FFFFFF;
   --text-dark-hero-sub: #94A3B8;
 
-  /* Elevations */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 25px rgba(37, 99, 235, 0.2);
+  /* Restrained Apple Hardware Shadows (Zero AI Slop Glows) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 24px 50px rgba(0, 0, 0, 0.55);
 
   /* Radii */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* Transitions */
-  --trans-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --trans-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Snappy Transitions */
+  --trans-fast: 140ms cubic-bezier(0.16, 1, 0.3, 1);
+  --trans-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reset & Global Elements */
@@ -72,12 +71,11 @@ html {
 body {
   font-family: var(--font-primary);
   background-color: var(--bg-main);
-  background-image: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.07), transparent),
-    radial-gradient(ellipse 60% 40% at 85% 45%, rgba(56, 189, 248, 0.06), transparent);
+  background-image: none;
   color: var(--text-dark);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
@@ -872,33 +870,31 @@ select, option {
 }
 
 .directory-card {
-  background: rgba(14, 20, 34, 0.65);
-  background-image: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(56, 189, 248, 0.08), transparent 50%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg);
   padding: 24px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   cursor: pointer;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease, box-shadow 250ms ease;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+  transition: transform var(--trans-normal), border-color var(--trans-normal), box-shadow var(--trans-normal), background-color var(--trans-normal);
   animation: appleCardReveal 360ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
   animation-delay: calc(var(--card-index, 0) * 30ms);
 }
 
 .directory-card:hover {
-  transform: translateY(-4px) scale(1.012);
-  border-color: rgba(56, 189, 248, 0.32);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(37, 99, 235, 0.18);
+  transform: translateY(-3px);
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.65);
 }
 
 .directory-card:active {
-  transform: scale(0.985);
+  transform: scale(0.99);
   transition-duration: 80ms;
 }
 
@@ -2621,7 +2617,7 @@ select, option {
 .dash-main-area {
   flex: 1;
   padding: 32px 36px;
-  background: #F8FAFC;
+  background: var(--bg-main, #0A0D14);
 }
 
 .dash-top-bar {
@@ -2634,7 +2630,7 @@ select, option {
 .welcome-heading {
   font-size: 24px;
   font-weight: 800;
-  color: var(--text-dark);
+  color: #FFFFFF;
 }
 
 .welcome-sub {
@@ -2646,7 +2642,7 @@ select, option {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
   padding: 6px 14px 6px 8px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-light);
@@ -2830,7 +2826,7 @@ select, option {
 }
 
 .kpi-metric-card {
-  background: #FFFFFF;
+  background: var(--bg-card, #111622);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 20px;
@@ -2848,7 +2844,7 @@ select, option {
 .metric-val {
   font-size: 26px;
   font-weight: 800;
-  color: var(--text-dark);
+  color: #FFFFFF;
   margin-bottom: 8px;
 }
 
@@ -2870,7 +2866,7 @@ select, option {
 }
 
 .chart-panel-card, .admin-orders-card {
-  background: #FFFFFF;
+  background: var(--bg-card, #111622);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 22px;
@@ -2887,16 +2883,17 @@ select, option {
 .panel-title {
   font-size: 16px;
   font-weight: 800;
-  color: var(--text-dark);
+  color: #FFFFFF;
 }
 
 .timeframe-select select {
   font-size: 12.5px;
   font-weight: 600;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
-  padding: 4px 10px;
-  background: #F8FAFC;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #F1F5F9;
   outline: none;
 }
 
@@ -2912,7 +2909,7 @@ select, option {
 
 .chart-axis-label {
   font-size: 11px;
-  fill: #94A3B8;
+  fill: #64748B;
   font-family: inherit;
 }
 
@@ -2922,8 +2919,8 @@ select, option {
 }
 
 .chart-dot:hover {
-  r: 7;
-  filter: drop-shadow(0 0 6px #2563EB);
+  r: 6;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
 }
 
 .admin-orders-list {
@@ -2936,9 +2933,15 @@ select, option {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  background: #F8FAFC;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+
+.admin-order-row:hover {
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .adm-item-info {
@@ -2962,13 +2965,14 @@ select, option {
   font-size: 13.5px;
   font-weight: 800;
   text-align: right;
+  color: #FFFFFF;
 }
 
 /* ==========================================================================
    SCREEN 7: ADMIN ACTIVITY LOGS
    ========================================================================== */
 .logs-toolbar-card {
-  background: #FFFFFF;
+  background: var(--bg-card, #111622);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 16px 20px;
@@ -2986,10 +2990,11 @@ select, option {
 .filter-select-box select {
   font-size: 13px;
   font-weight: 500;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
   padding: 8px 14px;
-  background: #F8FAFC;
+  background: rgba(255, 255, 255, 0.05);
+  color: #F1F5F9;
   outline: none;
   min-width: 140px;
 }
@@ -2998,7 +3003,7 @@ select, option {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #F1F5F9;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-light);
   padding: 8px 14px;
   border-radius: var(--radius-sm);
@@ -3024,8 +3029,12 @@ select, option {
 }
 
 .logs-table-card {
+  background: var(--bg-card, #111622);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
   padding: 0;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .table-responsive {
@@ -3040,7 +3049,7 @@ select, option {
 }
 
 .data-table th {
-  background: #F8FAFC;
+  background: rgba(255, 255, 255, 0.02);
   padding: 14px 20px;
   font-size: 12px;
   font-weight: 700;
@@ -3053,31 +3062,42 @@ select, option {
 .data-table td {
   padding: 14px 20px;
   font-size: 13px;
-  color: var(--text-dark);
-  border-bottom: 1px solid var(--border-light);
+  color: #F1F5F9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .data-table tr:hover td {
-  background: #FAFBFF;
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .user-tag-admin {
-  color: #2563EB;
+  color: #38BDF8;
   font-weight: 700;
 }
 
 .user-tag-cust {
-  color: #059669;
+  color: #10B981;
   font-weight: 700;
 }
 
 .status-badge-success {
-  background: #DCFCE7;
-  color: #15803D;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 8px;
   border-radius: var(--radius-full);
+}
+
+.data-table code {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #38BDF8;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ==========================================================================
@@ -4960,16 +4980,7 @@ select, option {
 }
 
 .hero-glow-bg {
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 450px;
-  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, rgba(56, 189, 248, 0.08) 40%, transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-  z-index: 0;
+  display: none;
 }
 
 .hero-content-wrap {
@@ -5105,22 +5116,23 @@ select, option {
 .hero-btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 28px;
+  gap: 8px;
+  padding: 9px 18px;
   border-radius: 9999px;
-  background: #2563EB;
-  color: #FFFFFF;
-  font-size: 15px;
-  font-weight: 700;
+  background: #FFFFFF;
+  color: #0A0D14;
+  font-size: 13.5px;
+  font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all var(--trans-fast);
 }
 
 .hero-btn-primary:hover {
-  background: #1D4ED8;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.65);
+  background: #E2E8F0;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hero-btn-primary:active {
@@ -5305,25 +5317,26 @@ select, option {
 }
 
 .preview-buy-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #FFFFFF;
-  color: #07090E;
-  font-size: 13.5px;
-  font-weight: 800;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F1F5F9;
+  font-size: 12px;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.18s ease;
-  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+  transition: all var(--trans-fast);
 }
 
 .preview-buy-btn:hover {
-  background: #F1F5F9;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
 }
 
 /* ==========================================================================
@@ -6007,30 +6020,15 @@ select, option {
    SHOWCASE ENCLOSURE FRAME (Matching 3-Card + Bottom CTA Sketch)
    ========================================================================= */
 .showcase-enclosure-box {
-  background: rgba(15, 23, 42, 0.55);
+  background: #0E131F;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 32px;
-  padding: 38px 36px 42px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 
-    0 24px 60px -15px rgba(0, 0, 0, 0.5),
-    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 36px 32px 38px;
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.55);
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s ease;
-}
-
-.showcase-enclosure-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.45), transparent);
-  pointer-events: none;
+  transition: border-color var(--trans-normal);
 }
 
 .showcase-enclosure-grid {

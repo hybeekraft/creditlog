@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop All Subscriptions — CreditLog</title>
+  <meta name="description"
+    content="Browse verified digital subscriptions. Compare pricing, durations, and buy directly with automated instant dispatch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .catalogue-page-header {
+      padding: 48px 24px 24px;
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .catalogue-top-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94A3B8;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: color 0.15s ease;
+    }
+    .catalogue-top-back:hover {
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Global Main Navigation -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="#2563EB" />
+            <path d="M8 8V20H20" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="16" cy="12" r="2.5" fill="#38BDF8" />
+          </svg>
+        </div>
+        <span class="logo-text">Credit<span class="accent-text">Log</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Shop</a>
+      </nav>
+
+      <div class="header-actions">
+      </div>
+    </div>
+  </header>
+
+  <!-- SHOP MAIN CONTENT -->
+  <main class="main-content">
+    
+    <div class="catalogue-page-header">
+      <a href="index.html" class="catalogue-top-back">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+        </svg>
+        <span>Back to Home</span>
+      </a>
+      <h1 class="hero-title" style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 10px;">
+        Subscriptions Shop
+      </h1>
+      <p class="hero-subtitle" style="margin-bottom: 24px;">
+        Verified digital subscriptions across AI, Design, Streaming, and Productivity with instant direct dispatch.
+      </p>
+
+      <!-- Fast Search Bar -->
+      <div class="catalog-search-wrap">
+        <svg class="catalog-search-icon" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            clip-rule="evenodd" />
+        </svg>
+        <input type="text" id="catalogSearchInput" class="catalog-search-input"
+          placeholder="Search subscriptions (e.g. ChatGPT, Netflix, Canva)..." oninput="handleSearch(this.value)">
+        <span class="catalog-search-shortcut">/</span>
+      </div>
+    </div>
+
+    <!-- Catalog Section with Grid/List -->
+    <section class="catalog-section" id="catalogSection" style="padding-top: 10px;">
+      <!-- Dynamic Apple Segmented Category Navigation -->
+      <div class="category-nav-wrapper">
+        <div class="category-segmented-bar" id="categorySegmentedBar">
+          <button class="category-pill-btn active" data-cat="all" onclick="filterCategory('all', this)">
+            <span>All Tools</span>
+            <span class="category-pill-badge" id="badgeAll"></span>
+          </button>
+          <button class="category-pill-btn" data-cat="ai" onclick="filterCategory('ai', this)">
+            <span>AI & LLMs</span>
+            <span class="category-pill-badge" id="badgeAi">0</span>
+          </button>
+          <button class="category-pill-btn" data-cat="design" onclick="filterCategory('design', this)">
+            <span>Design & Studio</span>
+            <span class="category-pill-badge" id="badgeDesign">0</span>
+          </button>
+          <button class="category-pill-btn" data-cat="learning_prod" onclick="filterCategory('learning_prod', this)">
+            <span>Productivity</span>
+            <span class="category-pill-badge" id="badgeProd">0</span>
+          </button>
+          <button class="category-pill-btn" data-cat="streaming_gaming" onclick="filterCategory('streaming_gaming', this)">
+            <span>Entertainment</span>
+            <span class="category-pill-badge" id="badgeEnt">0</span>
+          </button>
+          <button class="category-pill-btn" data-cat="security" onclick="filterCategory('security', this)">
+            <span>Security & VPN</span>
+            <span class="category-pill-badge" id="badgeSec">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Controls Row: Count, Sort, and View Mode Toggle -->
+      <div class="catalog-controls-row">
+        <div class="catalog-counter-text" id="catalogCounterText">
+          Showing <strong>0</strong> subscriptions
+        </div>
+        <div class="catalog-controls-right">
+          <!-- Apple Glassmorphic Sort Dropdown -->
+          <div class="apple-dropdown-wrap" id="sortDropdownWrap">
+            <button type="button" class="apple-sort-trigger" id="sortDropdownTrigger" onclick="toggleSortMenu(event)" aria-haspopup="true" aria-expanded="false">
+              <span class="sort-icon-prefix">⇅</span>
+              <span id="sortDropdownLabel">Featured First</span>
+              <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <div class="apple-dropdown-menu hidden" id="sortDropdownMenu" role="menu">
+              <button type="button" class="apple-dropdown-item active" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
+                <span>Featured First</span>
+                <span class="sort-check">✓</span>
+              </button>
+              <button type="button" class="apple-dropdown-item" data-sort="price-asc" onclick="selectSortOption('price-asc', 'Price: Lowest to Highest')">
+                <span>Price: Lowest to Highest</span>
+                <span class="sort-check">✓</span>
+              </button>
+              <button type="button" class="apple-dropdown-item" data-sort="price-desc" onclick="selectSortOption('price-desc', 'Price: Highest to Lowest')">
+                <span>Price: Highest to Lowest</span>
+                <span class="sort-check">✓</span>
+              </button>
+              <button type="button" class="apple-dropdown-item" data-sort="name-asc" onclick="selectSortOption('name-asc', 'Alphabetical: A to Z')">
+                <span>Alphabetical: A to Z</span>
+                <span class="sort-check">✓</span>
+              </button>
+            </div>
+          </div>
+          <div class="view-mode-toggle" id="viewModeToggle">
+            <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="1" y="1" width="6" height="6" rx="1.5" />
+                <rect x="9" y="1" width="6" height="6" rx="1.5" />
+                <rect x="1" y="9" width="6" height="6" rx="1.5" />
+                <rect x="9" y="9" width="6" height="6" rx="1.5" />
+              </svg>
+              <span>Grid</span>
+            </button>
+            <button type="button" class="view-mode-btn" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="1" y="2" width="14" height="2.5" rx="1" />
+                <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
+                <rect x="1" y="11.5" width="14" height="2.5" rx="1" />
+              </svg>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Directory Container -->
+      <div class="directory-grid" id="directoryGrid">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Pagination Container (From Uiverse.io by uiverse-astronaut) -->
+      <div class="catalog-pagination-wrap" id="catalogPaginationWrap">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- CreditLog Platform Footer -->
+    <footer class="site-footer"
+      style="background: #080C16; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 24px 28px; margin-top: 60px;">
+      <div
+        style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-bottom: 36px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <div class="logo-icon small">
+              <svg viewBox="0 0 28 28" fill="none">
+                <rect width="28" height="28" rx="8" fill="#2563EB" />
+                <path d="M8 8V20H20" stroke="white" stroke-width="3" stroke-linecap="round" />
+                <circle cx="16" cy="12" r="2.5" fill="#38BDF8" />
+              </svg>
+            </div>
+            <span class="logo-text">Credit<span class="accent-text">Log</span></span>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">Your automated digital subscription
+            hub. Verified private accounts, instant credential dispatch, wholesale pricing, and 24/7 priority support.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 14px;">Quick Links</h4>
+          <ul
+            style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+            <li><a href="index.html" style="color: var(--text-muted); text-decoration: none;">Home Storefront</a></li>
+            <li><a href="shop.html" style="color: var(--text-muted); text-decoration: none;">Browse Full Shop</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 14px;">Protection & Security</h4>
+          <ul
+            style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+            <li><span style="color: var(--text-muted);">100% Replacement Warranty</span></li>
+            <li><span style="color: var(--text-muted);">Instant Automated Access</span></li>
+            <li><span style="color: var(--text-muted);">Paystack & Flutterwave 256-bit SSL</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 14px;">24/7 Customer Help</h4>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Need instant assistance or question
+            about account activation?</p>
+          <button onclick="showToast('Connecting to 24/7 Priority Support Desk...')" class="primary-btn"
+            style="padding: 9px 16px; font-size: 12.5px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zm-4 0H9v2h2V9z" clip-rule="evenodd"/></svg>
+            <span>24/7 Live Support</span>
+          </button>
+        </div>
+      </div>
+      <div
+        style="max-width: 1240px; margin: 0 auto; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12.5px; color: var(--text-muted);">
+        <div>&copy; 2026 CreditLog Platform. Direct checkout, automated digital delivery.</div>
+        <div style="display: flex; gap: 16px;">
+          <span>Instant Automated Delivery</span>
+          <span>100% Replacement Warranty</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="shared.js"></script>
+  <script>
+    // State Management
+    let currentCategory = 'all';
+    let currentSearch = '';
+    let currentSortMode = 'featured';
+    let currentViewMode = 'grid';
+    let currentPage = 1;
+    const PAGE_SIZE = 20;
+
+    // Global Key Listener for Quick Search (/)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        const searchInput = document.getElementById('catalogSearchInput');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+    });
+
+    // Helper: Category and Search Filter
+    function getFilteredProducts() {
+      const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+      return source.filter(prod => {
+        let matchesCat = true;
+        if (currentCategory === 'instock') {
+          matchesCat = prod.inStock === true;
+        } else if (currentCategory === 'soldout') {
+          matchesCat = prod.inStock === false;
+        } else if (currentCategory === 'ai') {
+          matchesCat = prod.category === 'ai';
+        } else if (currentCategory === 'design') {
+          matchesCat = prod.category === 'design';
+        } else if (currentCategory === 'learning_prod') {
+          matchesCat = prod.category === 'learning' || prod.category === 'productivity';
+        } else if (currentCategory === 'streaming_gaming') {
+          matchesCat = prod.category === 'streaming' || prod.category === 'gaming' || prod.category === 'social';
+        } else if (currentCategory === 'security') {
+          matchesCat = prod.category === 'security';
+        } else if (currentCategory !== 'all') {
+          matchesCat = prod.category === currentCategory;
+        }
+
+        const q = currentSearch.toLowerCase().trim();
+        const matchesSearch = !q ||
+          prod.name.toLowerCase().includes(q) ||
+          (prod.brand && prod.brand.toLowerCase().includes(q)) ||
+          (prod.description && prod.description.toLowerCase().includes(q)) ||
+          (prod.duration && prod.duration.toLowerCase().includes(q));
+
+        return matchesCat && matchesSearch;
+      });
+    }
+
+    // Sorting Helper
+    function getSortedProducts(products) {
+      const copy = [...products];
+      if (currentSortMode === 'price-asc') {
+        copy.sort((a, b) => (a.usdPrice || 0) - (b.usdPrice || 0));
+      } else if (currentSortMode === 'price-desc') {
+        copy.sort((a, b) => (b.usdPrice || 0) - (a.usdPrice || 0));
+      } else if (currentSortMode === 'name-asc') {
+        copy.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      return copy;
+    }
+
+    // Update Category Badges
+    function updateCategoryBadges() {
+      const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+      const allCount = source.length;
+      const aiCount = source.filter(p => p.category === 'ai').length;
+      const designCount = source.filter(p => p.category === 'design').length;
+      const prodCount = source.filter(p => p.category === 'learning' || p.category === 'productivity').length;
+      const entCount = source.filter(p => p.category === 'streaming' || p.category === 'gaming' || p.category === 'social').length;
+      const secCount = source.filter(p => p.category === 'security').length;
+
+      const setBadge = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setBadge('badgeAll', allCount);
+      setBadge('badgeAi', aiCount);
+      setBadge('badgeDesign', designCount);
+      setBadge('badgeProd', prodCount);
+      setBadge('badgeEnt', entCount);
+      setBadge('badgeSec', secCount);
+    }
+
+    // Direct Navigation to Product Detail Page
+    function navigateToProduct(prodId) {
+      if (!prodId) return;
+      window.location.href = `product.html?id=${encodeURIComponent(prodId)}`;
+    }
+
+    // Render Function: Renders each product individually with pagination (max 20 per page)
+    function renderCatalog() {
+      const filtered = getFilteredProducts();
+      const sortedProducts = getSortedProducts(filtered);
+      const container = document.getElementById('directoryGrid');
+      const paginationWrap = document.getElementById('catalogPaginationWrap');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      const totalItems = sortedProducts.length;
+      const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
+
+      // Clamp currentPage
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      // Update counter text
+      const counterEl = document.getElementById('catalogCounterText');
+      if (counterEl) {
+        if (totalItems === 0) {
+          counterEl.innerHTML = `Showing <strong>0</strong> subscriptions`;
+        } else {
+          const start = (currentPage - 1) * PAGE_SIZE + 1;
+          const end = Math.min(currentPage * PAGE_SIZE, totalItems);
+          counterEl.innerHTML = `Showing <strong>${start}–${end}</strong> of <strong>${totalItems}</strong> verified subscriptions`;
+        }
+      }
+
+      if (totalItems === 0) {
+        if (paginationWrap) paginationWrap.innerHTML = '';
+        container.className = 'directory-grid';
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; background: rgba(255, 255, 255, 0.02); border-radius: 20px; border: 1px dashed rgba(255, 255, 255, 0.08);">
+            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #38BDF8;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div style="font-size: 17px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px;">No subscriptions match your query</div>
+            <div style="font-size: 13.5px; color: var(--text-muted); max-width: 400px; margin: 0 auto 18px;">Try clearing your search terms or picking another category tab above.</div>
+            <button onclick="clearSearchAndReset()" class="primary-btn" style="padding: 9px 20px; font-size: 13px;">View All Subscriptions</button>
+          </div>
+        `;
+        return;
+      }
+
+      // Slice to 20 items per page
+      const pageProducts = sortedProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+      if (currentViewMode === 'grid') {
+        container.className = 'directory-grid';
+        pageProducts.forEach((prod, idx) => {
+          const formattedPrice = formatPrice(prod.usdPrice);
+          const formattedDual = formatDualPrice(prod.usdPrice);
+          const catLabel = (prod.category || 'APP').toUpperCase();
+          const inStock = prod.inStock !== false;
+
+          const card = document.createElement('div');
+          card.className = 'directory-card';
+          card.style.setProperty('--card-index', idx);
+          card.onclick = () => navigateToProduct(prod.id);
+
+          card.innerHTML = `
+            <div class="card-header-row">
+              ${renderBrandIcon(prod)}
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="card-cat-badge">${catLabel}</span>
+                ${inStock ? `<span class="card-stock-pill in-stock">● ${prod.availableStock !== undefined ? prod.availableStock + ' in Stock' : 'In Stock'}</span>` : '<span class="card-stock-pill sold-out">✖ Out of Stock</span>'}
+              </div>
+            </div>
+
+            <div class="card-title-group" style="margin-bottom: 12px;">
+              <h3 class="directory-item-title" style="font-size: 16.5px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; line-height: 1.35;">${prod.name}</h3>
+              <div class="card-duration-badge">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 4px;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                <span>${prod.duration || 'Standard License'}</span>
+              </div>
+              <p class="directory-item-desc" style="font-size: 13px; color: #94A3B8; line-height: 1.45; min-height: 38px; margin: 0;">${prod.description || 'Verified private digital subscription with instant delivery.'}</p>
+            </div>
+
+            <div class="card-pricing-footer" style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.06); margin-top: auto;">
+              <div class="price-val-box">
+                <span class="directory-price-val" style="font-size: 18px; font-weight: 800; color: #FFFFFF; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
+                <span class="directory-price-sub" style="font-size: 11px; color: #10B981; font-weight: 600;">Instant Delivery</span>
+              </div>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="preview-buy-btn" style="padding: 7px 12px; font-size: 11.5px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #CBD5E1;" onclick="event.stopPropagation(); openQuickViewModal('${prod.id}')">
+                  <span>Quick View</span>
+                </button>
+                <button type="button" class="directory-select-btn" ${!inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="event.stopPropagation(); ${inStock ? `navigateToProduct('${prod.id}')` : ''}">
+                  <span>${inStock ? 'Buy Now →' : 'Sold Out'}</span>
+                </button>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } else {
+        container.className = 'directory-list-view';
+        pageProducts.forEach((prod, idx) => {
+          const formattedPrice = formatPrice(prod.usdPrice);
+          const formattedDual = formatDualPrice(prod.usdPrice);
+          const catLabel = (prod.category || 'APP').toUpperCase();
+
+          const row = document.createElement('div');
+          row.className = 'directory-list-row';
+          row.onclick = () => navigateToProduct(prod.id);
+
+          row.innerHTML = `
+            <div class="list-row-left">
+              ${renderBrandIcon(prod)}
+              <div>
+                <div class="directory-item-title" style="font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px;">${prod.name}</div>
+                <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+                  <span style="color: #38BDF8; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                    <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                    ${prod.duration || '1 Month'}
+                  </span>
+                  <span>·</span>
+                  <span>${catLabel}</span>
+                  <span>·</span>
+                  <span>${prod.inStock !== false ? '● In Stock' : '● Sold Out'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="list-row-right" style="display: flex; align-items: center; gap: 16px;">
+              <div style="text-align: right;">
+                <span style="font-size: 16px; font-weight: 800; color: #FFFFFF; display: block;">${formattedPrice}</span>
+                <span style="font-size: 11px; color: #10B981; font-weight: 600;">Instant Delivery</span>
+              </div>
+              <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
+                <span>Buy Now →</span>
+              </button>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+      }
+
+      renderPagination(totalPages);
+    }
+
+    // Render Apple-Grade Pagination (From Uiverse.io by uiverse-astronaut)
+    function renderPagination(totalPages) {
+      const wrap = document.getElementById('catalogPaginationWrap');
+      if (!wrap) return;
+
+      if (totalPages <= 1) {
+        wrap.innerHTML = '';
+        return;
+      }
+
+      const items = getPaginationItems(currentPage, totalPages);
+      let html = `<nav class="cir-page" aria-label="Pagination">`;
+
+      // Previous page button
+      const prevDisabled = currentPage <= 1;
+      html += `
+        <button class="cir-page__nav" type="button" aria-label="Previous page" ${prevDisabled ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+        </button>
+      `;
+
+      // Page numbers & Ellipsis gaps
+      items.forEach(item => {
+        if (item === '...') {
+          html += `<span class="cir-page__gap" aria-hidden="true">…</span>`;
+        } else if (item === currentPage) {
+          html += `
+            <button class="cir-page__num cir-page__num--active" type="button" aria-current="page">
+              ${item}
+            </button>
+          `;
+        } else {
+          html += `
+            <button class="cir-page__num" type="button" onclick="goToPage(${item})">
+              ${item}
+            </button>
+          `;
+        }
+      });
+
+      // Next page button
+      const nextDisabled = currentPage >= totalPages;
+      html += `
+        <button class="cir-page__nav" type="button" aria-label="Next page" ${nextDisabled ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </button>
+      `;
+
+      html += `</nav>`;
+      wrap.innerHTML = html;
+    }
+
+    // Helper: Smart Pagination Range Algorithm
+    function getPaginationItems(current, total) {
+      if (total <= 7) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
+      if (current <= 4) {
+        return [1, 2, 3, 4, 5, '...', total];
+      }
+      if (current >= total - 3) {
+        return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+      }
+      return [1, '...', current - 1, current, current + 1, '...', total];
+    }
+
+    // Go to specific page
+    function goToPage(page) {
+      const filtered = getFilteredProducts();
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
+      if (page < 1 || page > totalPages || page === currentPage) return;
+      currentPage = page;
+      renderCatalog();
+      const catSection = document.getElementById('catalogSection');
+      if (catSection) {
+        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (typeof initCardSpotlights === 'function') {
+        initCardSpotlights();
+      }
+    }
+
+    // Set View Mode (Grid vs List)
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      document.getElementById('viewModeGrid').classList.toggle('active', mode === 'grid');
+      document.getElementById('viewModeList').classList.toggle('active', mode === 'list');
+      renderCatalog();
+    }
+
+    // Custom Apple Dropdown Control
+    function toggleSortMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('sortDropdownMenu');
+      const trigger = document.getElementById('sortDropdownTrigger');
+      if (!menu || !trigger) return;
+      const isHidden = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !isHidden);
+      trigger.classList.toggle('active', isHidden);
+      trigger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    function selectSortOption(sortVal, label) {
+      currentSortMode = sortVal;
+      currentPage = 1;
+      const labelEl = document.getElementById('sortDropdownLabel');
+      if (labelEl) labelEl.textContent = label;
+      document.querySelectorAll('#sortDropdownMenu .apple-dropdown-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-sort') === sortVal);
+      });
+      const menu = document.getElementById('sortDropdownMenu');
+      const trigger = document.getElementById('sortDropdownTrigger');
+      if (menu) menu.classList.add('hidden');
+      if (trigger) {
+        trigger.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+      renderCatalog();
+    }
+
+    // Close on outside click or Escape
+    document.addEventListener('click', (e) => {
+      const wrap = document.getElementById('sortDropdownWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        const menu = document.getElementById('sortDropdownMenu');
+        const trigger = document.getElementById('sortDropdownTrigger');
+        if (menu && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          if (trigger) {
+            trigger.classList.remove('active');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const menu = document.getElementById('sortDropdownMenu');
+        const trigger = document.getElementById('sortDropdownTrigger');
+        if (menu && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          if (trigger) {
+            trigger.classList.remove('active');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    });
+
+    // Clear search helper
+    function clearSearchAndReset() {
+      currentSearch = '';
+      currentCategory = 'all';
+      currentPage = 1;
+      const input = document.getElementById('catalogSearchInput');
+      if (input) input.value = '';
+      document.querySelectorAll('.category-pill-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+      });
+      renderCatalog();
+    }
+
+    // Filter by Category with Apple Sliding Pill Integration
+    function filterCategory(cat, btnElem) {
+      currentCategory = cat;
+      currentPage = 1;
+      const bar = document.getElementById('categorySegmentedBar');
+      if (bar) {
+        bar.querySelectorAll('.category-pill-btn').forEach(b => b.classList.remove('active'));
+      }
+      if (btnElem) {
+        btnElem.classList.add('active');
+      }
+      renderCatalog();
+      if (typeof initSegmentedSlidingPill === 'function' && bar) {
+        initSegmentedSlidingPill(bar);
+      }
+      if (typeof initCardSpotlights === 'function') {
+        initCardSpotlights();
+      }
+    }
+
+    // Search Input
+    function handleSearch(val) {
+      currentSearch = val.trim();
+      currentPage = 1;
+      renderCatalog();
+      if (typeof initCardSpotlights === 'function') {
+        initCardSpotlights();
+      }
+    }
+
+    // Robust Boot Function (handles both pre- and post-DOMContentLoaded states)
+    async function bootCatalog() {
+      updateCategoryBadges();
+      renderCatalog();
+      const bar = document.getElementById('categorySegmentedBar');
+      if (typeof initSegmentedSlidingPill === 'function' && bar) {
+        initSegmentedSlidingPill(bar);
+      }
+      if (typeof initCardSpotlights === 'function') {
+        initCardSpotlights();
+      }
+
+      // Sync live inventory from server
+      try {
+        const res = await fetch('/api/products');
+        if (res.ok) {
+          const apiData = await res.json();
+          if (apiData.success && Array.isArray(apiData.data)) {
+            window.CATALOG_PRODUCTS = apiData.data;
+            updateCategoryBadges();
+            renderCatalog();
+          }
+        }
+      } catch (err) {
+        console.warn('Catalog live sync fallback:', err);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootCatalog);
+    } else {
+      bootCatalog();
+    }
+
+
+  </script>
+</body>
+
+</html>

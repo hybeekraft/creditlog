@@ -1246,9 +1246,12 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // =========================================================================
-  // STATIC ASSETS & CLEAN URL SERVING
-  // =========================================================================
+  // 301 Redirect for legacy /catalogue paths to /shop.html
+  if (pathname === '/catalogue' || pathname === '/catalogue.html') {
+    res.writeHead(301, { 'Location': '/shop.html' });
+    return res.end();
+  }
+
   let reqPath = pathname === '/' ? '/index.html' : pathname;
   let filePath = path.join(__dirname, reqPath);
 

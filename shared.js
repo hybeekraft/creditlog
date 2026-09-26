@@ -149,6 +149,60 @@ function renderStockBadge(inStock) {
   return `<span class="stock-badge out-of-stock"><span class="badge-dot out-stock-dot"></span>Sold Out</span>`;
 }
 
+// Universal Apple Pro Brand Icon Renderer
+function renderBrandIcon(prod) {
+  if (!prod) {
+    return `<div class="directory-icon-box" style="background: #1E293B; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg></div>`;
+  }
+  const name = (prod.name || '').toLowerCase();
+  const brand = (prod.brand || '').toLowerCase();
+  const cat = (prod.category || '').toLowerCase();
+
+  if (name.includes('netflix') || brand.includes('netflix')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #E50914, #990000); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(229, 9, 20, 0.35);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 2h4.5l5.5 13.5V2H18v20h-4.5L8 8.5V22H4V2z"/></svg>
+    </div>`;
+  }
+  if (name.includes('gemini') || name.includes('google') || brand.includes('gemini')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #1A73E8, #8E24AA); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(26, 115, 232, 0.35);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+    </div>`;
+  }
+  if (name.includes('chatgpt') || name.includes('openai') || brand.includes('openai')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #10A37F, #0E8064); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(16, 163, 127, 0.35);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="2"/></svg>
+    </div>`;
+  }
+  if (name.includes('claude') || brand.includes('anthropic') || brand.includes('claude')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #D97706, #B45309); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
+    </div>`;
+  }
+  if (name.includes('spotify') || brand.includes('spotify')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #1DB954, #15883e); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.58 14.42a.75.75 0 01-1.04.24c-2.85-1.74-6.44-2.14-10.67-1.17a.75.75 0 11-.34-1.46c4.63-1.06 8.62-.61 11.81 1.34a.75.75 0 01.24 1.05zm1.5-3.34a.94.94 0 01-1.3.31c-3.26-2-8.23-2.58-12.08-1.41a.94.94 0 11-.55-1.79c4.4-1.34 9.9-.69 13.62 1.6a.94.94 0 01.31 1.29zm.13-3.48c-3.9-2.32-10.35-2.53-14.07-1.4a1.13 1.13 0 11-.66-2.16c4.28-1.3 11.41-1.06 15.9 1.6a1.13 1.13 0 01-1.17 1.96z"/></svg>
+    </div>`;
+  }
+  if (name.includes('canva') || brand.includes('canva')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #00C4CC, #7D2AE8); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0, 196, 204, 0.35); font-weight: 900; font-size: 20px;">
+      <span>C</span>
+    </div>`;
+  }
+  if (name.includes('microsoft') || name.includes('o365') || brand.includes('microsoft')) {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #0078D4, #106EBE); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0, 120, 212, 0.35);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M1 1h10v10H1zM13 1h10v10H13zM1 13h10v10H1zM13 13h10v10H13z"/></svg>
+    </div>`;
+  }
+  if (name.includes('vpn') || cat === 'security') {
+    return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #0EA5E9, #2563EB); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+    </div>`;
+  }
+  return `<div class="directory-icon-box" style="background: linear-gradient(135deg, #1E293B, #0F172A); border: 1px solid rgba(255, 255, 255, 0.1); color: #38BDF8; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>
+  </div>`;
+}
+
 // --- FULL SUBSCRIPTIONS CATALOG (All 93 Verified Items) ---
 var CATALOG_PRODUCTS = [
   {
