@@ -546,7 +546,7 @@
       <header class="dash-top-bar">
         <div>
           <h1 class="welcome-heading">Inventory & CMS Dashboard</h1>
-          <p class="welcome-sub">Manage product catalog, real-time stock levels, checkouts, reservations, and prices.</p>
+          <p class="welcome-sub">Manage shop inventory, real-time stock levels, checkouts, reservations, and prices.</p>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
           <div class="user-profile-badge" id="adminUserBadge">
@@ -567,7 +567,7 @@
       <div class="cms-kpi-grid">
         <div class="cms-card">
           <div class="cms-kpi-label">
-            <span>Total Catalog Products</span>
+            <span>Total Shop Products</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
           </div>
           <div class="cms-kpi-val" id="kpiTotalProducts">0</div>
@@ -975,7 +975,7 @@
                 <button type="button" class="cms-action-btn-sm" onclick="openVariantsModal('${prod.id}')" title="Configure Variant Options & Stock">
                   Options (${(prod.variants && prod.variants.length) || 1})
                 </button>
-                <button type="button" class="cms-action-btn-sm cms-delete-btn-sm" onclick="deleteProduct('${prod.id}', '${escapeHtml(prod.name)}')" title="Delete from Catalog">
+                <button type="button" class="cms-action-btn-sm cms-delete-btn-sm" onclick="deleteProduct('${prod.id}', '${escapeHtml(prod.name)}')" title="Delete from Shop">
                   🗑
                 </button>
               </div>
@@ -1113,7 +1113,7 @@
 
     // Delete Product
     async function deleteProduct(prodId, name) {
-      if (!confirm(`Are you sure you want to delete "${name}" from the catalog? This cannot be undone.`)) {
+      if (!confirm(`Are you sure you want to delete "${name}" from the shop? This cannot be undone.`)) {
         return;
       }
       try {
