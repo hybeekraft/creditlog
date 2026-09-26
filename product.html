@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details — CreditLog</title>
+  <meta name="description" content="View verified subscription details, available options, instant delivery information, and buy now.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       Apple Senior Designer — Product Details Page Styles
+       ========================================================================== */
+    .product-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* Top Bar with Cancel at the Top */
+    .product-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 32px;
+    }
+
+    .cancel-top-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cancel-top-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateX(-2px);
+    }
+
+    .cancel-top-btn:active {
+      transform: scale(0.97);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Product Header Presentation */
+    .product-hero-card {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 24px;
+      padding: 32px 32px 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-hero-card::after {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .product-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .product-icon-tile {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      flex-shrink: 0;
+    }
+
+    .product-meta-wrap {
+      flex: 1;
+    }
+
+    .product-cat-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .product-headline {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.025em;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .product-trust-strip {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12.5px;
+      color: #94A3B8;
+    }
+
+    .product-trust-strip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .product-desc-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #CBD5E1;
+      margin-top: 14px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Options & Purchase Matrix */
+    .purchase-section-card {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      padding: 28px 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin-bottom: 24px;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94A3B8;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Available Options / Variants Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .option-card-btn {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .option-card-btn:hover:not(.disabled) {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .option-card-btn.active {
+      background: rgba(37, 99, 235, 0.16);
+      border-color: #38BDF8;
+      box-shadow: 0 0 0 1px #38BDF8, 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    .option-card-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .option-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .option-duration {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .option-badge-pill {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .option-card-btn.disabled .option-badge-pill {
+      background: rgba(239, 68, 68, 0.12);
+      color: #F87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .option-price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .option-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: #F8FAFC;
+    }
+
+    .option-dual-price {
+      font-size: 11.5px;
+      color: #94A3B8;
+    }
+
+    /* Quantity Stepper Block */
+    .quantity-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 24px;
+    }
+
+    .quantity-label-box strong {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .quantity-label-box span {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    .stepper-control {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .stepper-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .stepper-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .stepper-btn:active {
+      transform: scale(0.92);
+    }
+
+    .stepper-value {
+      min-width: 48px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Price Summary & Buy Now Row */
+    .summary-and-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .total-price-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .total-price-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .total-price-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .total-price-dual {
+      font-size: 12.5px;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+
+    .buy-now-primary-btn {
+      background: #FFFFFF;
+      color: #07090E;
+      font-size: 15.5px;
+      font-weight: 800;
+      padding: 15px 36px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.18);
+    }
+
+    .buy-now-primary-btn:hover {
+      background: #E2E8F0;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.24);
+    }
+
+    .buy-now-primary-btn:active {
+      transform: scale(0.97);
+    }
+
+    .buy-now-primary-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Information Highlights (How It Is Delivered & Important Requirements) */
+    .info-card-block {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .delivery-accent {
+      border-left: 3px solid #38BDF8;
+    }
+
+    .requirements-accent {
+      border-left: 3px solid #F59E0B;
+    }
+
+    .info-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .info-card-desc {
+      font-size: 13.5px;
+      color: #CBD5E1;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .info-card-desc ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    .info-card-desc li {
+      margin-bottom: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .product-page-shell {
+        padding: 16px 14px 60px;
+      }
+      .product-hero-card, .purchase-section-card {
+        padding: 20px 18px;
+      }
+      .product-headline {
+        font-size: 22px;
+      }
+      .summary-and-action-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .buy-now-primary-btn {
+        width: 100%;
+      }
+    }
+
+    /* Live Stock Status Pill Badges */
+    .stock-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+    }
+    .stock-pill-badge.in-stock {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .stock-pill-badge.low-stock {
+      background: rgba(245, 158, 11, 0.12);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .stock-pill-badge.out-stock {
+      background: rgba(239, 68, 68, 0.12);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PRODUCT DETAIL CONTENT -->
+  <main class="main-content">
+    <div class="product-page-shell">
+      
+      <!-- Cancel at the Top Bar -->
+      <div class="product-top-bar">
+        <a href="catalogue.html" class="cancel-top-btn" id="cancelTopBtn">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+          </svg>
+          <span>Cancel</span>
+        </a>
+
+        <div class="top-bar-right">
+        </div>
+      </div>
+
+      <!-- 1. Product Name, Icon, Description & Meta -->
+      <section class="product-hero-card" id="productHeroCard">
+        <div class="product-brand-row">
+          <div class="product-icon-tile" id="productIconTile">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>
+          </div>
+          <div class="product-meta-wrap">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="product-cat-tag" id="productCategoryTag">AI & LLMs</span>
+              <span class="stock-pill-badge in-stock" id="productStockBadge">● In Stock</span>
+            </div>
+            <h1 class="product-headline" id="productTitle">Subscription Name</h1>
+            <div class="product-trust-strip">
+              <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg width="13" height="13" viewBox="0 0 20 20" fill="#F59E0B"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <strong id="productRatingVal">4.9</strong> (<span id="productReviewCount">1.2k</span> reviews)
+              </span>
+              <span>·</span>
+              <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
+                Instant Dispatch
+              </span>
+              <span>·</span>
+              <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" style="color: #10B981;"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                100% Replacement Warranty
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p class="product-desc-text" id="productDescription">
+          Loading subscription details and guaranteed account access specifications...
+        </p>
+      </section>
+
+      <!-- 2. Available Options, Quantity, Price & Buy Now -->
+      <section class="purchase-section-card">
+        <!-- Available Option / Variant -->
+        <span class="section-eyebrow">Available Option / Duration</span>
+        <div class="options-grid" id="optionsGrid">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="quantity-row">
+          <div class="quantity-label-box">
+            <strong>Quantity</strong>
+            <span>Number of dedicated access slots / licenses</span>
+          </div>
+          <div class="stepper-control">
+            <button type="button" class="stepper-btn" onclick="changeQty(-1)" aria-label="Decrease quantity">−</button>
+            <span class="stepper-value" id="qtyDisplay">1</span>
+            <button type="button" class="stepper-btn" onclick="changeQty(1)" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <!-- Price & Buy Now CTA -->
+        <div class="summary-and-action-row">
+          <div class="total-price-box">
+            <span class="total-price-label">Total to Pay</span>
+            <span class="total-price-val" id="totalPriceDisplay">₦0</span>
+            <span class="total-price-dual" id="dualPriceDisplay" style="color: #10B981; font-weight: 600;">Instant Digital Delivery</span>
+          </div>
+
+          <button type="button" class="buy-now-primary-btn" id="buyNowBtn" onclick="handleBuyNow()">
+            <span>Buy Now</span>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 3. How It Is Delivered -->
+      <section class="info-card-block delivery-accent">
+        <h3 class="info-card-title">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
+          <span>How It Is Delivered</span>
+        </h3>
+        <p class="info-card-desc">
+          Automated digital dispatch occurs immediately upon payment confirmation. Your verified login credentials, private assigned profile, PIN, and quick setup instructions are displayed directly on your order confirmation screen and sent directly to your email address. No waiting for manual operator approvals.
+        </p>
+      </section>
+
+      <!-- 4. Important Requirements -->
+      <section class="info-card-block requirements-accent">
+        <h3 class="info-card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #38BDF8;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Important Requirements</span>
+        </h3>
+        <div class="info-card-desc">
+          <ul>
+            <li><strong>Cross-Platform Compatibility:</strong> Direct access works on Web browsers, Mobile (iOS & Android), Desktop (macOS & Windows), and Smart TV apps.</li>
+            <li><strong>Private Profile & PIN:</strong> Your assigned slot has dedicated PIN protection. Master account login email and credentials must remain unaltered to retain your full warranty.</li>
+            <li><strong>Personal Account Upgrades:</strong> If you are upgrading your own existing email account (e.g. Canva Pro, Spotify Family, Notion, Duolingo), enter your email in the checkout field.</li>
+            <li><strong>100% Replacement Warranty:</strong> Active for the entirety of your selected duration. 24/7 priority help is available.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Bottom Cancel helper -->
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="catalogue.html" style="color: #64748B; font-size: 13px; text-decoration: none; font-weight: 600;">
+          ← Cancel and return to Catalogue
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="shared.js"></script>
+  <script>
+    // State
+    let currentProduct = null;
+    let currentPlan = null;
+    let currentQty = 1;
+
+    // Boot
+    async function initProductPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id') || 'netflix-premium';
+
+      // 1. Fetch live product details & stock from server API
+      try {
+        const res = await fetch(`/api/products/${encodeURIComponent(productId)}`);
+        if (res.ok) {
+          const apiData = await res.json();
+          if (apiData.success && apiData.data) {
+            currentProduct = apiData.data;
+          }
+        }
+      } catch (e) {
+        console.warn('API fallback to local catalog:', e);
+      }
+
+      // Offline fallback if needed
+      if (!currentProduct) {
+        const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS);
+        currentProduct = source.find(p => p.id === productId) || source[0];
+      }
+
+      // Setup initial plan
+      const defaultDuration = currentProduct.duration || '1 Month';
+      const availableVariant = (currentProduct.variants && currentProduct.variants.length > 0)
+        ? (currentProduct.variants.find(v => v.availableStock > 0 && v.inStock !== false) || currentProduct.variants[0])
+        : null;
+
+      currentPlan = {
+        productId: currentProduct.id,
+        duration: availableVariant ? availableVariant.duration : defaultDuration,
+        usdPrice: availableVariant ? availableVariant.usdPrice : (currentProduct.usdPrice || 5.00),
+        totalStock: availableVariant ? availableVariant.totalStock : (currentProduct.totalStock || 10),
+        reservedStock: availableVariant ? availableVariant.reservedStock : (currentProduct.reservedStock || 0),
+        availableStock: availableVariant ? availableVariant.availableStock : (currentProduct.availableStock !== undefined ? currentProduct.availableStock : 10),
+        inStock: availableVariant ? (availableVariant.inStock !== false && availableVariant.availableStock > 0 && currentProduct.enabled !== false) : (currentProduct.inStock !== false && currentProduct.availableStock > 0 && currentProduct.enabled !== false)
+      };
+
+      // Populate hero
+      document.getElementById('productTitle').textContent = currentProduct.name;
+      document.getElementById('productCategoryTag').textContent = (currentProduct.category || 'Subscription').toUpperCase();
+      document.getElementById('productDescription').textContent = currentProduct.description || 'Verified private digital account access with instant automated dispatch and 100% replacement warranty.';
+      document.getElementById('productRatingVal').textContent = currentProduct.rating || 4.9;
+      document.getElementById('productReviewCount').textContent = currentProduct.reviews || '1.1k';
+
+      const iconTile = document.getElementById('productIconTile');
+      iconTile.className = `product-icon-tile ${currentProduct.brandClass || 'tile-gemini'}`;
+      iconTile.innerHTML = currentProduct.brandSymbol || '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>';
+
+      updateStockBadge();
+      renderOptions();
+      updatePrice();
+    }
+
+    // Update remaining stock indicator
+    function updateStockBadge() {
+      const badge = document.getElementById('productStockBadge');
+      if (!badge || !currentProduct) return;
+
+      const isEnabled = currentProduct.enabled !== false;
+      const available = currentPlan ? currentPlan.availableStock : (currentProduct.availableStock || 0);
+
+      badge.className = 'stock-pill-badge';
+
+      if (!isEnabled || available <= 0) {
+        badge.classList.add('out-stock');
+        badge.textContent = '✖ Currently Out of Stock';
+      } else if (available <= 3) {
+        badge.classList.add('low-stock');
+        badge.textContent = `⚠ Only ${available} left in stock — High Demand`;
+      } else {
+        badge.classList.add('in-stock');
+        badge.textContent = `● Available: ${available} in stock`;
+      }
+    }
+
+    // Render interactive duration options with real variant stock
+    function renderOptions() {
+      const grid = document.getElementById('optionsGrid');
+      if (!grid || !currentProduct) return;
+      grid.innerHTML = '';
+
+      const isProdEnabled = currentProduct.enabled !== false;
+
+      // Use product's custom variants if present, otherwise generate tiers
+      let variantList = [];
+      if (currentProduct.variants && currentProduct.variants.length > 0) {
+        variantList = currentProduct.variants;
+      } else {
+        const baseUsd = currentProduct.usdPrice || 5.00;
+        const total = currentProduct.totalStock || 10;
+        const reserved = currentProduct.reservedStock || 0;
+        const available = Math.max(0, total - reserved);
+        variantList = [
+          { id: '1m', duration: '1 Month', usdPrice: baseUsd, totalStock: total, reservedStock: reserved, availableStock: available, inStock: available > 0 && isProdEnabled, discount: '' },
+          { id: '3m', duration: '3 Months', usdPrice: Number((baseUsd * 2.7).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.6)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.6)), inStock: isProdEnabled, discount: 'Save 10%' },
+          { id: '6m', duration: '6 Months', usdPrice: Number((baseUsd * 5.1).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.4)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.4)), inStock: isProdEnabled, discount: 'Save 15%' },
+          { id: '12m', duration: '1 Year', usdPrice: Number((baseUsd * 9.0).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.2)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.2)), inStock: isProdEnabled, discount: 'Save 25%' }
+        ];
+      }
+
+      variantList.forEach((variant) => {
+        const isSelected = currentPlan && (currentPlan.duration === variant.duration || currentPlan.id === variant.id);
+        const isAvailable = isProdEnabled && variant.availableStock > 0 && variant.inStock !== false;
+
+        const btn = document.createElement('div');
+        btn.className = `option-card-btn ${isSelected ? 'active' : ''} ${!isAvailable ? 'disabled' : ''}`;
+        btn.style.cursor = isAvailable ? 'pointer' : 'not-allowed';
+
+        let stockPillHtml = '';
+        if (!isAvailable) {
+          stockPillHtml = `<span class="option-badge-pill" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1);">Out of Stock</span>`;
+        } else if (variant.availableStock <= 3) {
+          stockPillHtml = `<span class="option-badge-pill" style="color: #FBBF24; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.1);">Only ${variant.availableStock} left</span>`;
+        } else {
+          stockPillHtml = variant.discount 
+            ? `<span class="option-badge-pill" style="color: #34D399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">${variant.discount}</span>` 
+            : `<span class="option-badge-pill">● ${variant.availableStock} in Stock</span>`;
+        }
+
+        btn.innerHTML = `
+          <div class="option-top-row">
+            <span class="option-duration">${escapeHtml(variant.duration)} Access</span>
+            ${stockPillHtml}
+          </div>
+          <div class="option-price-row">
+            <span class="option-price">${formatPrice(variant.usdPrice)}</span>
+            <span class="option-dual-price">Stock: ${variant.availableStock} left</span>
+          </div>
+        `;
+
+        if (isAvailable) {
+          btn.onclick = () => {
+            currentPlan = {
+              productId: currentProduct.id,
+              id: variant.id,
+              duration: variant.duration,
+              usdPrice: variant.usdPrice,
+              totalStock: variant.totalStock,
+              reservedStock: variant.reservedStock || 0,
+              availableStock: variant.availableStock,
+              inStock: true
+            };
+            // Clamp currentQty to available stock
+            if (currentQty > currentPlan.availableStock) {
+              currentQty = Math.max(1, currentPlan.availableStock);
+              document.getElementById('qtyDisplay').textContent = currentQty;
+            }
+            updateStockBadge();
+            renderOptions();
+            updatePrice(true);
+          };
+        }
+
+        grid.appendChild(btn);
+      });
+    }
+
+    // Change quantity
+    function changeQty(delta) {
+      const maxAvailable = (currentPlan && currentPlan.availableStock > 0) ? currentPlan.availableStock : 1;
+      currentQty = Math.max(1, Math.min(maxAvailable, currentQty + delta));
+      document.getElementById('qtyDisplay').textContent = currentQty;
+      updatePrice(true);
+    }
+
+    // Update dynamic price & Buy button status
+    function updatePrice(animate = false) {
+      if (!currentPlan) return;
+      const unitUsd = currentPlan.usdPrice || 5.00;
+      const totalUsd = unitUsd * currentQty;
+
+      const priceEl = document.getElementById('totalPriceDisplay');
+      priceEl.textContent = formatPrice(totalUsd);
+      document.getElementById('dualPriceDisplay').textContent = 'Instant Digital Delivery';
+
+      if (animate && priceEl.animate) {
+        priceEl.animate([
+          { transform: 'scale(1.12)', color: '#38BDF8' },
+          { transform: 'scale(1)', color: '#FFFFFF' }
+        ], {
+          duration: 260,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        });
+      }
+
+      const buyBtn = document.getElementById('buyNowBtn');
+      const isProductEnabled = currentProduct && currentProduct.enabled !== false;
+      const isAvailable = isProductEnabled && currentPlan.inStock !== false && currentPlan.availableStock > 0;
+
+      if (isAvailable) {
+        buyBtn.classList.remove('disabled');
+        buyBtn.disabled = false;
+        buyBtn.style.pointerEvents = 'auto';
+        buyBtn.innerHTML = `
+          <span>Buy Now — ${formatPrice(totalUsd)}</span>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        `;
+      } else {
+        buyBtn.classList.add('disabled');
+        buyBtn.disabled = true;
+        buyBtn.style.pointerEvents = 'none';
+        buyBtn.innerHTML = `<span>Currently Out of Stock</span>`;
+      }
+    }
+
+    // Buy Now -> Proceeds directly to Checkout with Reservation
+    function handleBuyNow() {
+      const isProductEnabled = currentProduct && currentProduct.enabled !== false;
+      const isAvailable = isProductEnabled && currentPlan && currentPlan.inStock !== false && currentPlan.availableStock > 0;
+
+      if (!isAvailable) {
+        showToast('This product or option is currently out of stock.');
+        return;
+      }
+
+      const prodId = currentPlan.productId || currentProduct.id;
+      const duration = currentPlan.duration;
+      const qty = currentQty;
+
+      // Navigate directly to checkout without customer account wall
+      const checkoutUrl = `checkout.html?productId=${encodeURIComponent(prodId)}&duration=${encodeURIComponent(duration)}&qty=${qty}`;
+      window.location.href = checkoutUrl;
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProductPage);
+    } else {
+      initProductPage();
+    }
+  </script>
+
+</body>
+</html>

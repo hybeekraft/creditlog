@@ -1,0 +1,4666 @@
+[
+  {
+    "id": "netflix-premium",
+    "name": "Netflix Premium",
+    "rawName": "Netflix Premium · $3.99",
+    "category": "streaming",
+    "brand": "Netflix",
+    "duration": "1 Month",
+    "usdPrice": 3.99,
+    "usdOldPrice": 19.99,
+    "discount": "80% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "4.8k",
+    "brandClass": "tile-netflix",
+    "iconType": "netflix",
+    "description": "Ultra HD 4K Netflix Premium account slot with private PIN, 100% replacement warranty, and instant automated credential dispatch.",
+    "totalStock": 10,
+    "reservedStock": 0,
+    "availableStock": 10,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.99,
+        "totalStock": 10,
+        "reservedStock": 0,
+        "availableStock": 10,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "google-gemini-3m",
+    "name": "Google AI Pro Gemini 3M",
+    "rawName": "Google AI Pro Gemini 3M · $6.97",
+    "category": "ai",
+    "brand": "Google Gemini",
+    "duration": "3 Months",
+    "usdPrice": 6.97,
+    "usdOldPrice": 19.99,
+    "discount": "65% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.2k",
+    "brandClass": "tile-gemini",
+    "iconType": "gemini",
+    "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6.97,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 18.82,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 62.73,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "hma-vpn-30d",
+    "name": "HMA VPN 20-30 Days",
+    "rawName": "HMA VPN 20-30 Days · $2.50",
+    "category": "security",
+    "brand": "HMA VPN",
+    "duration": "20-30 Days",
+    "usdPrice": 2.5,
+    "usdOldPrice": 9.99,
+    "discount": "75% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "420",
+    "brandClass": "tile-vpn",
+    "iconType": "vpn",
+    "description": "HideMyAss VPN premium license with global high-speed servers and lightning fast encryption.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "o365-ready-account",
+    "name": "O365 Ready Account Random 6-12M",
+    "rawName": "O365 Ready Account Random 6-12M · $4.00",
+    "category": "productivity",
+    "brand": "Microsoft 365",
+    "duration": "6-12 Months",
+    "usdPrice": 4,
+    "usdOldPrice": 15,
+    "discount": "73% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "980",
+    "brandClass": "tile-microsoft",
+    "iconType": "microsoft",
+    "description": "Instant ready-to-use Microsoft Office 365 account with 1TB OneDrive cloud storage & desktop apps.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 36,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "microsoft-365-family-5u",
+    "name": "Microsoft 365 Family 5U 12M",
+    "rawName": "Microsoft 365 Family 5U 12M · $12.00",
+    "category": "productivity",
+    "brand": "Microsoft 365",
+    "duration": "12 Months (5 Users)",
+    "usdPrice": 12,
+    "usdOldPrice": 99.99,
+    "discount": "88% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.5k",
+    "brandClass": "tile-microsoft",
+    "iconType": "microsoft",
+    "description": "Full Microsoft 365 Family subscription for up to 5 user slots with Word, Excel, PowerPoint & 1TB per user.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 12,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 32.4,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 108,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-7d",
+    "name": "CapCut Pro 7 Days",
+    "rawName": "CapCut Pro 7 Days · $0.50",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "7 Days",
+    "usdPrice": 0.5,
+    "usdOldPrice": 2.99,
+    "discount": "83% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "3.4k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro quick pass: Unlock all VIP effects, filters, captions, and 4K 60fps export for 7 days.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "lovable-pro-lite-1y",
+    "name": "Lovable Pro Lite 1 Year Link",
+    "rawName": "Lovable Pro Lite 1 Year Link · $12.00",
+    "category": "ai",
+    "brand": "Lovable",
+    "duration": "1 Year",
+    "usdPrice": 12,
+    "usdOldPrice": 48,
+    "discount": "75% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "810",
+    "brandClass": "tile-lovable",
+    "iconType": "lovable",
+    "description": "Build full-stack apps effortlessly with Lovable Pro Lite 1 Year activation invite link.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 12,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 32.4,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 108,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-team-1m",
+    "name": "CapCut Pro Team 1M",
+    "rawName": "CapCut Pro Team 1M · $2.60",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "1 Month (Team)",
+    "usdPrice": 2.6,
+    "usdOldPrice": 9.99,
+    "discount": "74% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.1k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro Team plan with collaborative editing, cloud storage, and shared media assets.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 7.02,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 23.4,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "duolingo-super-12m",
+    "name": "Duolingo Super 12M",
+    "rawName": "Duolingo Super 12M · $1.00",
+    "category": "learning",
+    "brand": "Duolingo",
+    "duration": "12 Months",
+    "usdPrice": 1,
+    "usdOldPrice": 83.99,
+    "discount": "98% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.8k",
+    "brandClass": "tile-duolingo",
+    "iconType": "duolingo",
+    "description": "Duolingo Super 1 Full Year: Unlimited hearts, no advertisements, personalized practice, and offline lessons.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "duolingo-super-2m",
+    "name": "Duolingo Super 2M",
+    "rawName": "Duolingo Super 2M · $0.50",
+    "category": "learning",
+    "brand": "Duolingo",
+    "duration": "2 Months",
+    "usdPrice": 0.5,
+    "usdOldPrice": 14,
+    "discount": "96% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "950",
+    "brandClass": "tile-duolingo",
+    "iconType": "duolingo",
+    "description": "Duolingo Super 2 Months access with unlimited hearts and ads removed.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "super-duolingo-yourmail-12m",
+    "name": "Super Duolingo Your Mail 12 Months",
+    "rawName": "Super Duolingo Your Mail 12 Months · $9.00",
+    "category": "learning",
+    "brand": "Duolingo",
+    "duration": "12 Months (Personal Mail)",
+    "usdPrice": 9,
+    "usdOldPrice": 83.99,
+    "discount": "89% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "640",
+    "brandClass": "tile-duolingo",
+    "iconType": "duolingo",
+    "description": "Super Duolingo activated directly on your personal email address for 1 full year.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 9,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 24.3,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 81,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "notion-business-3m",
+    "name": "Notion Business 3M",
+    "rawName": "Notion Business 3M · $2.50",
+    "category": "productivity",
+    "brand": "Notion",
+    "duration": "3 Months",
+    "usdPrice": 2.5,
+    "usdOldPrice": 30,
+    "discount": "92% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.9k",
+    "brandClass": "tile-notion",
+    "iconType": "notion",
+    "description": "Notion Business workspace with unlimited file uploads, 90-day page history, and advanced team permissions.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "canva-pro-team-12m",
+    "name": "Canva Pro Add to Team 12 Months",
+    "rawName": "Canva Pro Add to Team 12 Months · $4.50",
+    "category": "design",
+    "brand": "Canva",
+    "duration": "12 Months",
+    "usdPrice": 4.5,
+    "usdOldPrice": 55,
+    "discount": "91% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "4.2k",
+    "brandClass": "tile-canva",
+    "iconType": "canva",
+    "description": "Canva Pro Team member invite for 12 months with 100M+ stock assets, Magic Studio AI, Brand Kit, and resize.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 12.15,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 40.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "adobe-express-4m",
+    "name": "Adobe Express 4M",
+    "rawName": "Adobe Express 4M · $8.97",
+    "category": "design",
+    "brand": "Adobe",
+    "duration": "4 Months",
+    "usdPrice": 8.97,
+    "usdOldPrice": 39.99,
+    "discount": "77% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "530",
+    "brandClass": "tile-adobe",
+    "iconType": "adobe",
+    "description": "Adobe Express Premium with Firefly generative AI credits, Adobe Fonts, and premium graphic templates.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8.97,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 24.22,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 80.73,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "scribd-premium-1m",
+    "name": "Scribd Premium 1M",
+    "rawName": "Scribd Premium 1M · $2.50",
+    "category": "learning",
+    "brand": "Scribd",
+    "duration": "1 Month",
+    "usdPrice": 2.5,
+    "usdOldPrice": 11.99,
+    "discount": "79% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "310",
+    "brandClass": "tile-scribd",
+    "iconType": "scribd",
+    "description": "Unlimited access to audiobooks, ebooks, magazines, and academic documents on Scribd/Everand.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "adobe-express-12m",
+    "name": "Adobe Express 12M",
+    "rawName": "Adobe Express 12M · $0.50",
+    "category": "design",
+    "brand": "Adobe",
+    "duration": "12 Months",
+    "usdPrice": 0.5,
+    "usdOldPrice": 99.99,
+    "discount": "99% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.4k",
+    "brandClass": "tile-adobe",
+    "iconType": "adobe",
+    "description": "Special annual Adobe Express promo license with full design suite access.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "ilovepdf-premium-1y",
+    "name": "iLovePDF Premium 1 Year",
+    "rawName": "iLovePDF Premium 1 Year · $1.50",
+    "category": "productivity",
+    "brand": "iLovePDF",
+    "duration": "1 Year",
+    "usdPrice": 1.5,
+    "usdOldPrice": 48,
+    "discount": "96% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "890",
+    "brandClass": "tile-ilovepdf",
+    "iconType": "ilovepdf",
+    "description": "iLovePDF Desktop & Web Premium with unlimited file size, batch processing, and OCR text recognition.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 4.05,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 13.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "expressvpn-1m",
+    "name": "ExpressVPN 1M",
+    "rawName": "ExpressVPN 1M · $5.98",
+    "category": "security",
+    "brand": "ExpressVPN",
+    "duration": "1 Month",
+    "usdPrice": 5.98,
+    "usdOldPrice": 12.95,
+    "discount": "54% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.1k",
+    "brandClass": "tile-expressvpn",
+    "iconType": "expressvpn",
+    "description": "Ultra-fast global VPN servers across 105 countries with Lightway protocol and zero logging.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5.98,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.15,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 53.82,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "youtube-premium-3m",
+    "name": "YouTube Premium 3M ROW",
+    "rawName": "YouTube Premium 3M ROW · $4.60",
+    "category": "streaming",
+    "brand": "YouTube",
+    "duration": "3 Months",
+    "usdPrice": 4.6,
+    "usdOldPrice": 38.99,
+    "discount": "88% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "3.6k",
+    "brandClass": "tile-youtube",
+    "iconType": "youtube",
+    "description": "Ad-free YouTube and YouTube Music with background playback and video downloads.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 12.42,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 41.4,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "wordwall-pro-1m",
+    "name": "Wordwall Pro 1 Month",
+    "rawName": "Wordwall Pro 1 Month · $3.80",
+    "category": "learning",
+    "brand": "Wordwall",
+    "duration": "1 Month",
+    "usdPrice": 3.8,
+    "usdOldPrice": 12,
+    "discount": "68% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "240",
+    "brandClass": "tile-wordwall",
+    "iconType": "wordwall",
+    "description": "Interactive classroom learning activity creator with unlimited resources and printable worksheets.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.8,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.26,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 34.2,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "jetbrains-edu-1y",
+    "name": "JetBrains EDU 1 Year",
+    "rawName": "JetBrains EDU 1 Year · $4.50",
+    "category": "productivity",
+    "brand": "JetBrains",
+    "duration": "1 Year",
+    "usdPrice": 4.5,
+    "usdOldPrice": 249,
+    "discount": "98% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.7k",
+    "brandClass": "tile-jetbrains",
+    "iconType": "jetbrains",
+    "description": "JetBrains All Products Pack: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, Rider, CLion, and more.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 12.15,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 40.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "figma-pro-edu-2y",
+    "name": "Figma Pro EDU 2 Years",
+    "rawName": "Figma Pro EDU 2 Years · $6.00",
+    "category": "design",
+    "brand": "Figma",
+    "duration": "2 Years",
+    "usdPrice": 6,
+    "usdOldPrice": 288,
+    "discount": "97% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.5k",
+    "brandClass": "tile-figma",
+    "iconType": "figma",
+    "description": "Figma Professional & FigJam with unlimited version history, team libraries, and dev mode.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "pocket-fm-3m",
+    "name": "Pocket FM Premium 3M",
+    "rawName": "Pocket FM Premium 3M · $0.50",
+    "category": "streaming",
+    "brand": "Pocket FM",
+    "duration": "3 Months",
+    "usdPrice": 0.5,
+    "usdOldPrice": 9.99,
+    "discount": "95% OFF",
+    "inStock": true,
+    "rating": 4.5,
+    "reviews": "180",
+    "brandClass": "tile-pocketfm",
+    "iconType": "audio",
+    "description": "Audio series and audiobooks with ad-free binge listening and offline downloads.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "apple-tv-1m-canada",
+    "name": "Apple TV+ 1M Canada",
+    "rawName": "Apple TV+ 1M Canada · $1.00",
+    "category": "streaming",
+    "brand": "Apple TV+",
+    "duration": "1 Month",
+    "usdPrice": 1,
+    "usdOldPrice": 9.99,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "620",
+    "brandClass": "tile-appletv",
+    "iconType": "appletv",
+    "description": "Stream award-winning Apple Originals, blockbuster films, and live sports in 4K HDR.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "microsoft-office-365-plus-1y",
+    "name": "Microsoft Office 365 Plus 1 Year",
+    "rawName": "Microsoft Office 365 Plus 1 Year · $1.60",
+    "category": "productivity",
+    "brand": "Microsoft 365",
+    "duration": "1 Year",
+    "usdPrice": 1.6,
+    "usdOldPrice": 69.99,
+    "discount": "97% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.9k",
+    "brandClass": "tile-microsoft",
+    "iconType": "microsoft",
+    "description": "Office 365 Plus genuine activation with 1TB cloud storage and full desktop productivity apps.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1.6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 4.32,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 14.4,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-1m",
+    "name": "CapCut Pro 1 Month",
+    "rawName": "CapCut Pro 1 Month · $2.50",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "1 Month",
+    "usdPrice": 2.5,
+    "usdOldPrice": 9.99,
+    "discount": "75% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.8k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "Full CapCut Pro subscription for mobile and desktop video editing with VIP features.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "fallout-76-ms-store",
+    "name": "Fallout 76 MS Store",
+    "rawName": "Fallout 76 MS Store · $2.52",
+    "category": "gaming",
+    "brand": "Bethesda / Xbox",
+    "duration": "Full Game License",
+    "usdPrice": 2.52,
+    "usdOldPrice": 39.99,
+    "discount": "93% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "410",
+    "brandClass": "tile-gaming",
+    "iconType": "game",
+    "description": "Fallout 76 PC game digital key redeemable on Microsoft Store / Xbox PC app.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.52,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.68,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "xbox-pc-game-pass-1m",
+    "name": "Xbox PC Game Pass 1M",
+    "rawName": "Xbox PC Game Pass 1M · $7.75",
+    "category": "gaming",
+    "brand": "Xbox",
+    "duration": "1 Month",
+    "usdPrice": 7.75,
+    "usdOldPrice": 11.99,
+    "discount": "35% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.3k",
+    "brandClass": "tile-xbox",
+    "iconType": "xbox",
+    "description": "Play hundreds of high-quality PC games with friends, including new day-one releases.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7.75,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 20.93,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 69.75,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "quillbot-premium-1m",
+    "name": "QuillBot Premium 1M",
+    "rawName": "QuillBot Premium 1M · $2.50",
+    "category": "productivity",
+    "brand": "QuillBot",
+    "duration": "1 Month",
+    "usdPrice": 2.5,
+    "usdOldPrice": 19.95,
+    "discount": "87% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.2k",
+    "brandClass": "tile-quillbot",
+    "iconType": "quillbot",
+    "description": "AI Paraphrasing tool with unlimited words, 7 writing modes, grammar checker, and plagiarism detector.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "avast-premium-security-1y",
+    "name": "Avast Premium Security 1Y",
+    "rawName": "Avast Premium Security 1Y · $5.48",
+    "category": "security",
+    "brand": "Avast",
+    "duration": "1 Year",
+    "usdPrice": 5.48,
+    "usdOldPrice": 49.99,
+    "discount": "89% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "760",
+    "brandClass": "tile-avast",
+    "iconType": "avast",
+    "description": "Complete antivirus and cyber threat defense for PC/Mac with ransomware shielding and webcam guard.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5.48,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 14.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 49.32,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "mcafee-total-protection-1y",
+    "name": "McAfee Total Protection 1Y",
+    "rawName": "McAfee Total Protection 1Y · $7.46",
+    "category": "security",
+    "brand": "McAfee",
+    "duration": "1 Year",
+    "usdPrice": 7.46,
+    "usdOldPrice": 89.99,
+    "discount": "91% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "920",
+    "brandClass": "tile-mcafee",
+    "iconType": "mcafee",
+    "description": "All-in-one protection: award-winning antivirus, secure VPN, identity monitoring, and password manager.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7.46,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 20.14,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 67.14,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-business-team-1m",
+    "name": "ChatGPT Business Team 1 Month",
+    "rawName": "ChatGPT Business Team 1 Month · $18.00",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month (Team)",
+    "usdPrice": 18,
+    "usdOldPrice": 30,
+    "discount": "40% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.6k",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "OpenAI ChatGPT Team tier with higher messaging limits, workspace management, and no training on team data.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 18,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 48.6,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 162,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-k12-edu-24m",
+    "name": "ChatGPT Plus K12 Edu 24 Months",
+    "rawName": "ChatGPT Plus K12 Edu 24 Months · $4.95",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "24 Months",
+    "usdPrice": 4.95,
+    "usdOldPrice": 480,
+    "discount": "98% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.9k",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus K12 Edu package with 2-year guaranteed access to GPT-4o, canvas, and advanced reasoning.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.95,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 13.37,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 44.55,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-30d",
+    "name": "ChatGPT Plus 30D",
+    "rawName": "ChatGPT Plus 30D · $7.80",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "30 Days",
+    "usdPrice": 7.8,
+    "usdOldPrice": 20,
+    "discount": "61% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "3.8k",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "Official ChatGPT Plus 30-day subscription: GPT-4o, DALL·E 3, Browsing, and Advanced Voice Mode.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7.8,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 21.06,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 70.2,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "codex-api-50m-1d",
+    "name": "Codex API 50M Tokens 1 Day",
+    "rawName": "Codex API 50M Tokens 1 Day · $4.20",
+    "category": "ai",
+    "brand": "OpenAI Codex",
+    "duration": "1 Day (50M Tokens)",
+    "usdPrice": 4.2,
+    "usdOldPrice": 15,
+    "discount": "72% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "640",
+    "brandClass": "tile-codex",
+    "iconType": "codex",
+    "description": "High-speed OpenAI Codex coding API access with 50M token allowance for code synthesis and autocomplete.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.2,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 11.34,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 37.8,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "codex-api-10m-1d",
+    "name": "Codex API 10M Tokens 1 Day",
+    "rawName": "Codex API 10M Tokens 1 Day · $3.60",
+    "category": "ai",
+    "brand": "OpenAI Codex",
+    "duration": "1 Day (10M Tokens)",
+    "usdPrice": 3.6,
+    "usdOldPrice": 8,
+    "discount": "55% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "430",
+    "brandClass": "tile-codex",
+    "iconType": "codex",
+    "description": "OpenAI Codex API token pack for automated code generation, refactoring, and test writing.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 9.72,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 32.4,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "claude-api-100m-1d",
+    "name": "Claude API 100M Tokens 1 Day",
+    "rawName": "Claude API 100M Tokens 1 Day · $6.00",
+    "category": "ai",
+    "brand": "Claude",
+    "duration": "1 Day (100M Tokens)",
+    "usdPrice": 6,
+    "usdOldPrice": 25,
+    "discount": "76% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.5k",
+    "brandClass": "tile-claude",
+    "iconType": "claude",
+    "description": "Anthropic Claude 3.5 Sonnet direct API key with massive 100M token ceiling for high-throughput pipelines.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "claude-api-50m-1d",
+    "name": "Claude API 50M Tokens 1 Day",
+    "rawName": "Claude API 50M Tokens 1 Day · $5.00",
+    "category": "ai",
+    "brand": "Claude",
+    "duration": "1 Day (50M Tokens)",
+    "usdPrice": 5,
+    "usdOldPrice": 18,
+    "discount": "72% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.2k",
+    "brandClass": "tile-claude",
+    "iconType": "claude",
+    "description": "Anthropic Claude API key with 50M tokens allowance and top-tier speed.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 13.5,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 45,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "claude-api-10m-1d",
+    "name": "Claude API 10M Tokens 1 Day",
+    "rawName": "Claude API 10M Tokens 1 Day · $3.00",
+    "category": "ai",
+    "brand": "Claude",
+    "duration": "1 Day (10M Tokens)",
+    "usdPrice": 3,
+    "usdOldPrice": 10,
+    "discount": "70% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "890",
+    "brandClass": "tile-claude",
+    "iconType": "claude",
+    "description": "Anthropic Claude 3.5 API access with 10M tokens for daily development and research.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 8.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 27,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "claude-api-100usd-30d",
+    "name": "100$ API Claude 30D",
+    "rawName": "100$ API Claude 30D · $2.50",
+    "category": "ai",
+    "brand": "Claude",
+    "duration": "30 Days ($100 Balance)",
+    "usdPrice": 2.5,
+    "usdOldPrice": 100,
+    "discount": "97% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.1k",
+    "brandClass": "tile-claude",
+    "iconType": "claude",
+    "description": "Claude Anthropic developer account pre-loaded with $100 API balance valid for 30 days.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "gemini-pro-18m",
+    "name": "Gemini Pro 18 Months",
+    "rawName": "Gemini Pro 18 Months · $1.00",
+    "category": "ai",
+    "brand": "Google Gemini",
+    "duration": "18 Months",
+    "usdPrice": 1,
+    "usdOldPrice": 360,
+    "discount": "99% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "4.8k",
+    "brandClass": "tile-gemini",
+    "iconType": "gemini",
+    "description": "Google Gemini Pro 18-Month activation: Advanced AI model, 2TB Google One cloud storage, and Docs/Gmail AI tools.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "grok-api-15m-1d",
+    "name": "Grok API 4.5 HIGH/XHIGH 15M Tokens 1 Day",
+    "rawName": "Grok API 4.5 HIGH/XHIGH 15M Tokens 1 Day · $2.50",
+    "category": "ai",
+    "brand": "xAI Grok",
+    "duration": "1 Day (15M Tokens)",
+    "usdPrice": 2.5,
+    "usdOldPrice": 12,
+    "discount": "79% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "720",
+    "brandClass": "tile-grok",
+    "iconType": "grok",
+    "description": "xAI Grok 4.5 high-performance reasoning model API access with 15M tokens.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "kling-66-credits",
+    "name": "Kling 66 Credits",
+    "rawName": "Kling 66 Credits · $0.55",
+    "category": "ai",
+    "brand": "Kling AI",
+    "duration": "66 Credits Pack",
+    "usdPrice": 0.55,
+    "usdOldPrice": 5,
+    "discount": "89% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "340",
+    "brandClass": "tile-kling",
+    "iconType": "kling",
+    "description": "Kling AI video generation credits for realistic cinematic text-to-video and image animation.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.55,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.49,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.95,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "zoom-pro-1m-account",
+    "name": "Zoom Pro 1M Ready-made Account",
+    "rawName": "Zoom Pro 1M Ready-made Account · $4.00",
+    "category": "productivity",
+    "brand": "Zoom",
+    "duration": "1 Month",
+    "usdPrice": 4,
+    "usdOldPrice": 15.99,
+    "discount": "75% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "850",
+    "brandClass": "tile-zoom",
+    "iconType": "zoom",
+    "description": "Ready-made Zoom Pro account: host up to 100 participants, unlimited meeting duration, and cloud recordings.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 36,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "grok-api-100m-7d",
+    "name": "Grok API 4.5 HIGH/XHIGH 100M Tokens 7 Days",
+    "rawName": "Grok API 4.5 HIGH/XHIGH 100M Tokens 7 Days · $5.50",
+    "category": "ai",
+    "brand": "xAI Grok",
+    "duration": "7 Days (100M Tokens)",
+    "usdPrice": 5.5,
+    "usdOldPrice": 35,
+    "discount": "84% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "910",
+    "brandClass": "tile-grok",
+    "iconType": "grok",
+    "description": "xAI Grok 4.5 high/extra-high reasoning API tokens pack valid for 7 days.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 14.85,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 49.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "super-grok-10d",
+    "name": "Super Grok 9-10 Days",
+    "rawName": "Super Grok 9-10 Days · $3.82",
+    "category": "ai",
+    "brand": "xAI Grok",
+    "duration": "9-10 Days",
+    "usdPrice": 3.82,
+    "usdOldPrice": 16,
+    "discount": "76% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "610",
+    "brandClass": "tile-grok",
+    "iconType": "grok",
+    "description": "Super Grok full access account with uncensored queries, deep search, and image analysis.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.82,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.31,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 34.38,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "mcafee-antivirus-1device-1y",
+    "name": "McAfee AntiVirus 1 Device 1Y",
+    "rawName": "McAfee AntiVirus 1 Device 1Y · $7.48",
+    "category": "security",
+    "brand": "McAfee",
+    "duration": "1 Year (1 Device)",
+    "usdPrice": 7.48,
+    "usdOldPrice": 39.99,
+    "discount": "81% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "520",
+    "brandClass": "tile-mcafee",
+    "iconType": "mcafee",
+    "description": "Genuine McAfee AntiVirus license key protecting 1 Windows/Mac/Android device for a full year.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7.48,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 20.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 67.32,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-6m-personal",
+    "name": "CapCut Pro 6M Personal",
+    "rawName": "CapCut Pro 6M Personal · $14.00",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "6 Months (Personal)",
+    "usdPrice": 14,
+    "usdOldPrice": 59.99,
+    "discount": "76% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.8k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro 6 Months private account with dedicated cloud space and unrestricted VIP effects.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 14,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 37.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 126,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-6m",
+    "name": "CapCut Pro 6 Months",
+    "rawName": "CapCut Pro 6 Months · $13.00",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "6 Months",
+    "usdPrice": 13,
+    "usdOldPrice": 59.99,
+    "discount": "78% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.2k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro semi-annual subscription with all pro templates, auto-captions, and AI background tools.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 13,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 35.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 117,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "snapchat-plus-3m",
+    "name": "Snapchat Plus+ 3 Months",
+    "rawName": "Snapchat Plus+ 3 Months · $5.00",
+    "category": "social",
+    "brand": "Snapchat",
+    "duration": "3 Months",
+    "usdPrice": 5,
+    "usdOldPrice": 14.99,
+    "discount": "66% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "1.4k",
+    "brandClass": "tile-snapchat",
+    "iconType": "snapchat",
+    "description": "Snapchat+ exclusive features: #1 BFF pin, story rewatch count, custom app icons, and AI Bitmoji pets.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 13.5,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 45,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "peacock-1y",
+    "name": "Peacock Official Subscription 1 Year",
+    "rawName": "Peacock Official Subscription 1 Year · $6.00",
+    "category": "streaming",
+    "brand": "Peacock",
+    "duration": "1 Year",
+    "usdPrice": 6,
+    "usdOldPrice": 79.99,
+    "discount": "92% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "810",
+    "brandClass": "tile-peacock",
+    "iconType": "peacock",
+    "description": "Peacock streaming: Premier League live, WWE network, live sports, and blockbuster films for 1 year.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "elevenlabs-10k-credits",
+    "name": "ElevenLabs Free 10k Credits",
+    "rawName": "ElevenLabs Free 10k Credits · $1.50",
+    "category": "ai",
+    "brand": "ElevenLabs",
+    "duration": "10k Credits",
+    "usdPrice": 1.5,
+    "usdOldPrice": 5,
+    "discount": "70% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.1k",
+    "brandClass": "tile-elevenlabs",
+    "iconType": "elevenlabs",
+    "description": "Industry-leading AI voice cloning and lifelike text-to-speech with ElevenLabs 10k character tokens.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 4.05,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 13.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "gamma-ai-plus-1m",
+    "name": "Gamma AI Plus 1 Month",
+    "rawName": "Gamma AI Plus 1 Month · $11.00",
+    "category": "ai",
+    "brand": "Gamma AI",
+    "duration": "1 Month",
+    "usdPrice": 11,
+    "usdOldPrice": 20,
+    "discount": "45% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "780",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
+    "description": "Generate stunning presentations, web pages, and documents in seconds with Gamma AI Plus.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 11,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 29.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 99,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "magic-patterns-12m",
+    "name": "Magic Patterns Starter 12M",
+    "rawName": "Magic Patterns Starter 12M · $3.50",
+    "category": "design",
+    "brand": "Magic Patterns",
+    "duration": "12 Months",
+    "usdPrice": 3.5,
+    "usdOldPrice": 36,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "260",
+    "brandClass": "tile-design",
+    "iconType": "design",
+    "description": "AI prototyping canvas for React, Tailwind, and Figma UI design components.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 9.45,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 31.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "mobbin-10x-12m",
+    "name": "Mobbin 10x Seat 12M",
+    "rawName": "Mobbin 10x Seat 12M · $9.00",
+    "category": "design",
+    "brand": "Mobbin",
+    "duration": "12 Months (10x Seat)",
+    "usdPrice": 9,
+    "usdOldPrice": 96,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "920",
+    "brandClass": "tile-mobbin",
+    "iconType": "mobbin",
+    "description": "Discover the latest iOS, Android, and web design patterns with Mobbin Pro 10x seats.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 9,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 24.3,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 81,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "brain-fm-1y",
+    "name": "Brain.fm 1 Year",
+    "rawName": "Brain.fm 1 Year · $6.70",
+    "category": "productivity",
+    "brand": "Brain.fm",
+    "duration": "1 Year",
+    "usdPrice": 6.7,
+    "usdOldPrice": 69.99,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "570",
+    "brandClass": "tile-brainfm",
+    "iconType": "audio",
+    "description": "Functional music designed to improve focus, flow state, relaxation, and deep sleep.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6.7,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 18.09,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 60.3,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "customer-io-1y",
+    "name": "Customer.io Essentials 1Y",
+    "rawName": "Customer.io Essentials 1Y · $7.00",
+    "category": "productivity",
+    "brand": "Customer.io",
+    "duration": "1 Year",
+    "usdPrice": 7,
+    "usdOldPrice": 100,
+    "discount": "93% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "310",
+    "brandClass": "tile-customerio",
+    "iconType": "mail",
+    "description": "Automated email messaging, newsletters, and user behavioral triggers on Customer.io.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 18.9,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 63,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "fin-ai-advanced",
+    "name": "Fin AI + Advanced",
+    "rawName": "Fin AI + Advanced · $7.00",
+    "category": "ai",
+    "brand": "Fin AI",
+    "duration": "Advanced Plan",
+    "usdPrice": 7,
+    "usdOldPrice": 35,
+    "discount": "80% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "280",
+    "brandClass": "tile-finai",
+    "iconType": "ai",
+    "description": "Autonomous AI customer service and support agent with advanced resolution engine.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 18.9,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 63,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "snapchat-plus-6m",
+    "name": "Snapchat Plus+ 6 Months",
+    "rawName": "Snapchat Plus+ 6 Months · $8.00",
+    "category": "social",
+    "brand": "Snapchat",
+    "duration": "6 Months",
+    "usdPrice": 8,
+    "usdOldPrice": 24.99,
+    "discount": "68% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.9k",
+    "brandClass": "tile-snapchat",
+    "iconType": "snapchat",
+    "description": "Snapchat+ semi-annual subscription with premium story boosts and custom themes.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 21.6,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 72,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "warp-build-1y",
+    "name": "Warp Build 1 Year",
+    "rawName": "Warp Build 1 Year · $6.00",
+    "category": "productivity",
+    "brand": "Warp",
+    "duration": "1 Year",
+    "usdPrice": 6,
+    "usdOldPrice": 60,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "830",
+    "brandClass": "tile-warp",
+    "iconType": "terminal",
+    "description": "Warp modern 21st-century terminal with AI command search, workflow sharing, and fast cloud builds.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "wink-smile-7d",
+    "name": "Wink Smile+ 7 Days",
+    "rawName": "Wink Smile+ 7 Days · $2.30",
+    "category": "design",
+    "brand": "Wink Smile",
+    "duration": "7 Days",
+    "usdPrice": 2.3,
+    "usdOldPrice": 7.99,
+    "discount": "71% OFF",
+    "inStock": true,
+    "rating": 4.5,
+    "reviews": "210",
+    "brandClass": "tile-design",
+    "iconType": "video",
+    "description": "AI video portrait retouching, HD quality restoration, and facial enhancement for 7 days.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.21,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 20.7,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "readwise-1y",
+    "name": "Readwise 1 Year",
+    "rawName": "Readwise 1 Year · $5.50",
+    "category": "learning",
+    "brand": "Readwise",
+    "duration": "1 Year",
+    "usdPrice": 5.5,
+    "usdOldPrice": 96,
+    "discount": "94% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.3k",
+    "brandClass": "tile-readwise",
+    "iconType": "book",
+    "description": "Sync your Kindle highlights, articles, tweets, and notes into Notion/Obsidian with Readwise Reader.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 14.85,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 49.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "supercut-pro-10seats-12m",
+    "name": "Supercut Pro 10 Seats 12M",
+    "rawName": "Supercut Pro 10 Seats 12M · $7.00",
+    "category": "design",
+    "brand": "Supercut",
+    "duration": "12 Months (10 Seats)",
+    "usdPrice": 7,
+    "usdOldPrice": 120,
+    "discount": "94% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "340",
+    "brandClass": "tile-supercut",
+    "iconType": "video",
+    "description": "Video podcast silence and filler word remover with 10 collaborative team member seats.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 7,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 18.9,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 63,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "autodesk-admin-access",
+    "name": "Autodesk Admin Access",
+    "rawName": "Autodesk Admin Access · $14.00",
+    "category": "design",
+    "brand": "Autodesk",
+    "duration": "Annual Admin Access",
+    "usdPrice": 14,
+    "usdOldPrice": 250,
+    "discount": "94% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "870",
+    "brandClass": "tile-autodesk",
+    "iconType": "autodesk",
+    "description": "Autodesk Admin portal access granting AutoCAD, Revit, Maya, 3ds Max, and Inventor licenses.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 14,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 37.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 126,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "adobe-cc-pro-1m",
+    "name": "Adobe CC Pro 1M",
+    "rawName": "Adobe CC Pro 1M · $23.41",
+    "category": "design",
+    "brand": "Adobe",
+    "duration": "1 Month",
+    "usdPrice": 23.41,
+    "usdOldPrice": 59.99,
+    "discount": "61% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "3.1k",
+    "brandClass": "tile-adobe",
+    "iconType": "adobe",
+    "description": "Complete Adobe Creative Cloud All Apps: Photoshop, Illustrator, Premiere Pro, After Effects, and 100GB Cloud.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 23.41,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 63.21,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 210.69,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-w12h",
+    "name": "ChatGPT Plus 1M [W12H]",
+    "rawName": "ChatGPT Plus 1M [W12H] · $8.20",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month [W12H]",
+    "usdPrice": 8.2,
+    "usdOldPrice": 20,
+    "discount": "59% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "920",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus 1 Month guaranteed with 12h warranty replacement window. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8.2,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 22.14,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 73.8,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-applepay",
+    "name": "ChatGPT Plus 1 Month Apple Pay",
+    "rawName": "ChatGPT Plus 1 Month Apple Pay · $8.30",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month",
+    "usdPrice": 8.3,
+    "usdOldPrice": 20,
+    "discount": "58% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "640",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus activated through Apple Pay billing. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8.3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 22.41,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 74.7,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-momopay",
+    "name": "ChatGPT Plus Momo Pay 1 Month",
+    "rawName": "ChatGPT Plus Momo Pay 1 Month · $6.00",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month",
+    "usdPrice": 6,
+    "usdOldPrice": 20,
+    "discount": "70% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "410",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus via Momo wallet payment channel. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "codex-api-100m-1d",
+    "name": "Codex API 100M Tokens 1 Day",
+    "rawName": "Codex API 100M Tokens 1 Day · $5.00",
+    "category": "ai",
+    "brand": "OpenAI Codex",
+    "duration": "1 Day (100M Tokens)",
+    "usdPrice": 5,
+    "usdOldPrice": 25,
+    "discount": "80% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "530",
+    "brandClass": "tile-codex",
+    "iconType": "codex",
+    "description": "Codex API high-volume 100M tokens daily key. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 13.5,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 45,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-7d-soldout",
+    "name": "CapCut Pro 7D",
+    "rawName": "CapCut Pro 7D · $0.50",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "7 Days",
+    "usdPrice": 0.5,
+    "usdOldPrice": 2.99,
+    "discount": "83% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.2k",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro 7-day single activation key. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-ggpay",
+    "name": "ChatGPT Plus GGPay 1 Month",
+    "rawName": "ChatGPT Plus GGPay 1 Month · $8.88",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month",
+    "usdPrice": 8.88,
+    "usdOldPrice": 20,
+    "discount": "55% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "310",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus 1-month via GGPay. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8.88,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 23.98,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 79.92,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "chatgpt-plus-googlepay",
+    "name": "ChatGPT Plus Google Pay 1 Month",
+    "rawName": "ChatGPT Plus Google Pay 1 Month · $8.00",
+    "category": "ai",
+    "brand": "ChatGPT",
+    "duration": "1 Month",
+    "usdPrice": 8,
+    "usdOldPrice": 20,
+    "discount": "60% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "820",
+    "brandClass": "tile-chatgpt",
+    "iconType": "chatgpt",
+    "description": "ChatGPT Plus 1-month subscription charged to Google Play. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 8,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 21.6,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 72,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "surfshark-vpn-2m-code",
+    "name": "Surfshark VPN 2M Code",
+    "rawName": "Surfshark VPN 2M Code · $1.00",
+    "category": "security",
+    "brand": "Surfshark",
+    "duration": "2 Months",
+    "usdPrice": 1,
+    "usdOldPrice": 25,
+    "discount": "96% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.5k",
+    "brandClass": "tile-surfshark",
+    "iconType": "surfshark",
+    "description": "Surfshark VPN 2 Months voucher code with unlimited simultaneous device connections. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "netflix-premium",
+    "name": "Netflix Premium",
+    "rawName": "Admin Netflix 4K Premium 1M 5 Profiles · $2.50",
+    "category": "streaming",
+    "brand": "Netflix",
+    "duration": "1 Month",
+    "usdPrice": 3.99,
+    "usdOldPrice": 19.99,
+    "discount": "87% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "4.1k",
+    "brandClass": "tile-netflix",
+    "iconType": "netflix",
+    "description": "Netflix 4K Ultra HD full admin access with 5 private customizable PIN profiles. Currently sold out.",
+    "totalStock": 10,
+    "reservedStock": 0,
+    "availableStock": 10,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.99,
+        "totalStock": 0,
+        "reservedStock": 0,
+        "availableStock": 0,
+        "inStock": false
+      }
+    ]
+  },
+  {
+    "id": "claude-api-50m-3d",
+    "name": "Claude API 50M Tokens 3 Days",
+    "rawName": "Claude API 50M Tokens 3 Days · $6.00",
+    "category": "ai",
+    "brand": "Claude",
+    "duration": "3 Days (50M Tokens)",
+    "usdPrice": 6,
+    "usdOldPrice": 22,
+    "discount": "72% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "970",
+    "brandClass": "tile-claude",
+    "iconType": "claude",
+    "description": "Anthropic Claude API 50M token quota spread across 3 calendar days. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "proton-vpn-plus-1m",
+    "name": "Proton VPN Plus 1 Month",
+    "rawName": "Proton VPN Plus 1 Month · $3.00",
+    "category": "security",
+    "brand": "Proton VPN",
+    "duration": "1 Month",
+    "usdPrice": 3,
+    "usdOldPrice": 9.99,
+    "discount": "70% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.8k",
+    "brandClass": "tile-proton",
+    "iconType": "proton",
+    "description": "Swiss-based high security Proton VPN Plus with NetShield adblocker and Secure Core architecture. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 8.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 27,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "capcut-pro-3m",
+    "name": "CapCut Pro 3 Months",
+    "rawName": "CapCut Pro 3 Months · $6.00",
+    "category": "design",
+    "brand": "CapCut",
+    "duration": "3 Months",
+    "usdPrice": 6,
+    "usdOldPrice": 29.99,
+    "discount": "80% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "890",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
+    "description": "CapCut Pro 3 Months quarter subscription. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "xbox-account",
+    "name": "Xbox Account",
+    "rawName": "Xbox Account · $1.00",
+    "category": "gaming",
+    "brand": "Xbox",
+    "duration": "Account Access",
+    "usdPrice": 1,
+    "usdOldPrice": 14.99,
+    "discount": "93% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "620",
+    "brandClass": "tile-xbox",
+    "iconType": "xbox",
+    "description": "Pre-activated Xbox player account. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "klingai-750-1100-credits-1m",
+    "name": "KlingAI 750-1100 Credits 1M",
+    "rawName": "KlingAI 750-1100 Credits 1M · $11.38",
+    "category": "ai",
+    "brand": "Kling AI",
+    "duration": "1 Month (750-1100 Credits)",
+    "usdPrice": 11.38,
+    "usdOldPrice": 35,
+    "discount": "67% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "410",
+    "brandClass": "tile-kling",
+    "iconType": "kling",
+    "description": "High tier Kling AI video generation credits package for studio production. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 11.38,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 30.73,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 102.42,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "outlook-hotmail-account",
+    "name": "Outlook / Hotmail Email Account",
+    "rawName": "Outlook / Hotmail Email Account · $0.10",
+    "category": "productivity",
+    "brand": "Microsoft",
+    "duration": "Instant Account",
+    "usdPrice": 0.1,
+    "usdOldPrice": 1,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "3.1k",
+    "brandClass": "tile-microsoft",
+    "iconType": "microsoft",
+    "description": "Fresh POP3/IMAP enabled Outlook / Hotmail email account. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 0.27,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 0.9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "windows-10-pro-retail-key",
+    "name": "Windows 10 Pro Retail Key",
+    "rawName": "Windows 10 Pro Retail Key · $3.00",
+    "category": "productivity",
+    "brand": "Microsoft",
+    "duration": "Lifetime Retail License",
+    "usdPrice": 3,
+    "usdOldPrice": 199.99,
+    "discount": "98% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "5.2k",
+    "brandClass": "tile-microsoft",
+    "iconType": "microsoft",
+    "description": "Genuine digital retail license key for Windows 10/11 Pro with lifetime activation. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 8.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 27,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "nordvpn-3m-code",
+    "name": "NordVPN 3 Months Code",
+    "rawName": "NordVPN 3 Months Code · $3.75",
+    "category": "security",
+    "brand": "NordVPN",
+    "duration": "3 Months Voucher Code",
+    "usdPrice": 3.75,
+    "usdOldPrice": 39,
+    "discount": "90% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "2.4k",
+    "brandClass": "tile-vpn",
+    "iconType": "vpn",
+    "description": "NordVPN 3 months activation code with Threat Protection and Double VPN. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3.75,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.13,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 33.75,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "nordvpn-1m",
+    "name": "NordVPN 1 Month",
+    "rawName": "NordVPN 1 Month · $2.70",
+    "category": "security",
+    "brand": "NordVPN",
+    "duration": "1 Month",
+    "usdPrice": 2.7,
+    "usdOldPrice": 12.99,
+    "discount": "79% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.9k",
+    "brandClass": "tile-vpn",
+    "iconType": "vpn",
+    "description": "NordVPN 1 month high speed secure private connection. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.7,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 7.29,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 24.3,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "notion-plus-12m",
+    "name": "Notion Plus 12 Months",
+    "rawName": "Notion Plus 12 Months · $2.50",
+    "category": "productivity",
+    "brand": "Notion",
+    "duration": "12 Months",
+    "usdPrice": 2.5,
+    "usdOldPrice": 96,
+    "discount": "97% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.4k",
+    "brandClass": "tile-notion",
+    "iconType": "notion",
+    "description": "Notion Plus annual workspace subscription with unlimited blocks and file uploads. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "autodesk-edu-1y",
+    "name": "Autodesk Education Plan 1 Year",
+    "rawName": "Autodesk Education Plan 1 Year · $2.00",
+    "category": "design",
+    "brand": "Autodesk",
+    "duration": "1 Year (Edu)",
+    "usdPrice": 2,
+    "usdOldPrice": 200,
+    "discount": "99% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "950",
+    "brandClass": "tile-autodesk",
+    "iconType": "autodesk",
+    "description": "Autodesk Education license for AutoCAD, Fusion 360, 3ds Max and Revit. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 5.4,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 18,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "autodesk-all-apps-3y",
+    "name": "Autodesk All Apps 3-Year License",
+    "rawName": "Autodesk All Apps 3-Year License · $2.50",
+    "category": "design",
+    "brand": "Autodesk",
+    "duration": "3 Years (All Apps)",
+    "usdPrice": 2.5,
+    "usdOldPrice": 600,
+    "discount": "99% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.1k",
+    "brandClass": "tile-autodesk",
+    "iconType": "autodesk",
+    "description": "Comprehensive 3-year Autodesk suite access for design and architecture. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 2.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 6.75,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 22.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "spotify-premium-3m-soldout",
+    "name": "Spotify Premium 3M",
+    "rawName": "Spotify Premium 3M · $1.50",
+    "category": "streaming",
+    "brand": "Spotify",
+    "duration": "3 Months Promo",
+    "usdPrice": 1.5,
+    "usdOldPrice": 10.99,
+    "discount": "86% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "3.1k",
+    "brandClass": "tile-spotify",
+    "iconType": "spotify",
+    "description": "Spotify Premium 3-month code. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 4.05,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 13.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "steam-account",
+    "name": "Steam Account",
+    "rawName": "Steam Account · $1.00",
+    "category": "gaming",
+    "brand": "Steam",
+    "duration": "Account Access",
+    "usdPrice": 1,
+    "usdOldPrice": 15,
+    "discount": "93% OFF",
+    "inStock": true,
+    "rating": 4.7,
+    "reviews": "820",
+    "brandClass": "tile-gaming",
+    "iconType": "game",
+    "description": "Valve Steam gaming account pre-configured and region unlocked. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 1,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 2.7,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 9,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "deezer-account",
+    "name": "Deezer Account",
+    "rawName": "Deezer Account · $0.50",
+    "category": "streaming",
+    "brand": "Deezer",
+    "duration": "Premium Access",
+    "usdPrice": 0.5,
+    "usdOldPrice": 10.99,
+    "discount": "95% OFF",
+    "inStock": true,
+    "rating": 4.6,
+    "reviews": "430",
+    "brandClass": "tile-audio",
+    "iconType": "audio",
+    "description": "Deezer HiFi lossless FLAC audio streaming account. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 0.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 1.35,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 4.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "spotify-premium-2m-soldout",
+    "name": "Spotify Premium 2M",
+    "rawName": "Spotify Premium 2M · $4.00",
+    "category": "streaming",
+    "brand": "Spotify",
+    "duration": "2 Months Individual",
+    "usdPrice": 4,
+    "usdOldPrice": 20,
+    "discount": "80% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.2k",
+    "brandClass": "tile-spotify",
+    "iconType": "spotify",
+    "description": "Spotify Premium 2-month upgrade. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 10.8,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 36,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "prime-video-6m",
+    "name": "Prime Video 6 Months",
+    "rawName": "Prime Video 6 Months · $3.00",
+    "category": "streaming",
+    "brand": "Amazon Prime",
+    "duration": "6 Months",
+    "usdPrice": 3,
+    "usdOldPrice": 53.94,
+    "discount": "94% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "1.7k",
+    "brandClass": "tile-streaming",
+    "iconType": "video",
+    "description": "Amazon Prime Video 6 months access to movies, series, and Amazon Originals in 4K. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 8.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 27,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "apple-tv-6m",
+    "name": "Apple TV+ 6 Months",
+    "rawName": "Apple TV+ 6 Months · $4.50",
+    "category": "streaming",
+    "brand": "Apple TV+",
+    "duration": "6 Months",
+    "usdPrice": 4.5,
+    "usdOldPrice": 59.94,
+    "discount": "92% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "810",
+    "brandClass": "tile-appletv",
+    "iconType": "appletv",
+    "description": "Apple TV+ 6 months streaming pass in 4K HDR. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 4.5,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 12.15,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 40.5,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "apple-tv-12m",
+    "name": "Apple TV+ 12 Months",
+    "rawName": "Apple TV+ 12 Months · $6.00",
+    "category": "streaming",
+    "brand": "Apple TV+",
+    "duration": "12 Months",
+    "usdPrice": 6,
+    "usdOldPrice": 99,
+    "discount": "94% OFF",
+    "inStock": true,
+    "rating": 4.9,
+    "reviews": "1.4k",
+    "brandClass": "tile-appletv",
+    "iconType": "appletv",
+    "description": "Apple TV+ full 1-year pass with Ted Lasso, Morning Show, and live sports. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 6,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 16.2,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 54,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "canva-pro-admin-panel",
+    "name": "Canva Pro Admin Panel Without Leonardo AI",
+    "rawName": "Canva Pro Admin Panel Without Leonardo AI · $3.00",
+    "category": "design",
+    "brand": "Canva",
+    "duration": "Admin Panel Access",
+    "usdPrice": 3,
+    "usdOldPrice": 120,
+    "discount": "97% OFF",
+    "inStock": true,
+    "rating": 4.8,
+    "reviews": "960",
+    "brandClass": "tile-canva",
+    "iconType": "canva",
+    "description": "Canva Pro team owner administrator panel for managing multiple seats. Currently sold out.",
+    "totalStock": 15,
+    "reservedStock": 0,
+    "availableStock": 15,
+    "enabled": true,
+    "variants": [
+      {
+        "id": "1m",
+        "duration": "1 Month",
+        "usdPrice": 3,
+        "totalStock": 15,
+        "reservedStock": 0,
+        "availableStock": 15,
+        "inStock": true
+      },
+      {
+        "id": "3m",
+        "duration": "3 Months",
+        "usdPrice": 8.1,
+        "totalStock": 9,
+        "reservedStock": 0,
+        "availableStock": 9,
+        "inStock": true
+      },
+      {
+        "id": "12m",
+        "duration": "1 Year",
+        "usdPrice": 27,
+        "totalStock": 4,
+        "reservedStock": 0,
+        "availableStock": 4,
+        "inStock": true
+      }
+    ]
+  }
+]

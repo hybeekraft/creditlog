@@ -1,0 +1,38 @@
+[
+  {
+    "token": "resv_16459951341abf819f39628e",
+    "productId": "netflix-premium",
+    "productName": "Netflix Premium",
+    "duration": "1 Month",
+    "quantity": 1,
+    "customerEmail": "guest@creditlog.com",
+    "createdAt": "2026-09-26T11:06:46.975Z",
+    "expiresAt": 1790421706975,
+    "status": "released",
+    "releasedAt": "2026-09-26T11:07:05.719Z"
+  },
+  {
+    "token": "resv_1114a771e05512f183b2b0fa",
+    "productId": "netflix-premium",
+    "productName": "Netflix Premium",
+    "duration": "1 Month",
+    "quantity": 8,
+    "customerEmail": "customer2@test.com",
+    "createdAt": "2026-09-26T11:04:44.006Z",
+    "expiresAt": 1790421584006,
+    "status": "completed",
+    "completedAt": "2026-09-26T11:04:44.059Z"
+  },
+  {
+    "token": "resv_785fa911719d571364e27707",
+    "productId": "netflix-premium",
+    "productName": "Netflix Premium",
+    "duration": "1 Month",
+    "quantity": 2,
+    "customerEmail": "customer@test.com",
+    "createdAt": "2026-09-26T11:04:31.978Z",
+    "expiresAt": 1790421571978,
+    "status": "completed",
+    "completedAt": "2026-09-26T11:04:32.062Z"
+  }
+]

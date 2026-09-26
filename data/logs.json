@@ -1,0 +1,172 @@
+[
+  {
+    "id": "log_1790420825724_bo5u",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Release Reservation",
+    "details": "Released 1 of \"Netflix Premium\". Total: 10, Reserved: 0, Available: 10",
+    "timestamp": "2026-09-26T11:07:05.724Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420806978_b09d",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 1 of \"Netflix Premium\" (1 Month) for checkout. Total: 10, Reserved: 1, Available: 9",
+    "timestamp": "2026-09-26T11:06:46.979Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420758650_be7m",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Inventory",
+    "action": "Set Stock Quantity",
+    "details": "Set \"Netflix Premium\" total stock from 0 to 10. Available: 10, Reserved: 0",
+    "timestamp": "2026-09-26T11:05:58.650Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420684063_fyyq",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 0, Reserved: 0, Available: 0",
+    "timestamp": "2026-09-26T11:04:44.063Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420684010_68fz",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 8 of \"Netflix Premium\" (1 Month) for checkout. Total: 8, Reserved: 8, Available: 0",
+    "timestamp": "2026-09-26T11:04:44.010Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420672065_1hdi",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 8, Reserved: 0, Available: 8",
+    "timestamp": "2026-09-26T11:04:32.065Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790420671981_t1f6",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 2 of \"Netflix Premium\" (1 Month) for checkout. Total: 10, Reserved: 2, Available: 8",
+    "timestamp": "2026-09-26T11:04:31.981Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419914000_ybbk",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Inventory",
+    "action": "Set Stock Quantity",
+    "details": "Set \"Netflix Premium\" total stock from 0 to 10. Available: 10, Reserved: 0",
+    "timestamp": "2026-09-26T10:51:54.000Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913975_4x46",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 0, Reserved: 0, Available: 0",
+    "timestamp": "2026-09-26T10:51:53.975Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913964_hmpk",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 8 of \"Netflix Premium\" (1 Month) for checkout. Total: 8, Reserved: 8, Available: 0",
+    "timestamp": "2026-09-26T10:51:53.964Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913941_n6fd",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 8, Reserved: 0, Available: 8",
+    "timestamp": "2026-09-26T10:51:53.941Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913861_f5jv",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 2 of \"Netflix Premium\" (1 Month) for checkout. Total: 10, Reserved: 2, Available: 8",
+    "timestamp": "2026-09-26T10:51:53.861Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913843_aspl",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Inventory",
+    "action": "Set Stock Quantity",
+    "details": "Set \"Netflix Premium\" total stock from 10 to 10. Available: 10, Reserved: 0",
+    "timestamp": "2026-09-26T10:51:53.843Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419913831_e0id",
+    "user": "Admin Manager",
+    "role": "Admin",
+    "module": "Auth",
+    "action": "Sign In",
+    "details": "Admin logged into CMS dashboard",
+    "timestamp": "2026-09-26T10:51:53.831Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419500712_rkvd",
+    "user": "Admin Manager",
+    "role": "Admin",
+    "module": "Auth",
+    "action": "Sign In",
+    "details": "Admin logged into CMS dashboard",
+    "timestamp": "2026-09-26T10:45:00.712Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419432691_q7fu",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Release Reservation",
+    "details": "Released 2 of \"Netflix Premium\". Total: 18, Reserved: 0, Available: 18",
+    "timestamp": "2026-09-26T10:43:52.692Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790419432673_he63",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 2 of \"Netflix Premium\" (1 Month) for checkout. Total: 18, Reserved: 2, Available: 16",
+    "timestamp": "2026-09-26T10:43:52.673Z",
+    "ip": "127.0.0.1"
+  }
+]
