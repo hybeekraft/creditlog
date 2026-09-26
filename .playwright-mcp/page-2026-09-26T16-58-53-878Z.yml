@@ -1,0 +1,304 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "CreditLog" [ref=e4] [cursor=pointer]:
+        - /url: index.html
+      - navigation [ref=e9]:
+        - link "Home" [ref=e10] [cursor=pointer]:
+          - /url: index.html
+        - link "Shop" [ref=e11] [cursor=pointer]:
+          - /url: shop.html
+        - link "Tiers" [ref=e12] [cursor=pointer]:
+          - /url: "#curatedSection"
+        - link "Protocol" [ref=e13] [cursor=pointer]:
+          - /url: "#protocolSection"
+      - generic [ref=e14]:
+        - link "Explore Shop ↗" [ref=e15] [cursor=pointer]:
+          - /url: shop.html
+          - generic [ref=e16]: Explore Shop
+          - generic [ref=e17]: ↗
+        - button [ref=e19] [cursor=pointer]:
+          - img "Admin Manager" [ref=e20]
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]: ✦
+        - generic [ref=e26]: A VERIFIED DIGITAL EXCHANGE · NO. CL-2026
+      - heading "Private access built for the smart digital operator." [level=1] [ref=e27]:
+        - text: Private access built for the
+        - generic [ref=e28]: smart
+        - text: digital operator.
+      - paragraph [ref=e29]: Instant, private access to premium developer, AI, media, and design suites. Direct automated credential dispatch, zero signup walls, wholesale rates, and 100% replacement warranty.
+      - generic [ref=e30]:
+        - link "Browse Subscriptions" [ref=e31] [cursor=pointer]:
+          - /url: shop.html
+        - link "Explore Tiers" [ref=e35] [cursor=pointer]:
+          - /url: "#curatedSection"
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: 90+
+          - generic [ref=e39]: VERIFIED ACTIVE PLANS
+        - generic [ref=e40]:
+          - generic [ref=e41]: < 60s
+          - generic [ref=e42]: AUTOMATED DISPATCH
+        - generic [ref=e43]:
+          - generic [ref=e44]: 100%
+          - generic [ref=e45]: REPLACEMENT WARRANTY
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - text: ✦ CHATGPT PLUS
+          - strong [ref=e49]: ₦6,800
+          - text: +INSTANT
+        - generic [ref=e50]:
+          - text: ✦ CLAUDE PRO
+          - strong [ref=e51]: ₦9,450
+          - text: +IN STOCK
+        - generic [ref=e52]:
+          - text: ✦ NETFLIX 4K
+          - strong [ref=e53]: ₦5,985
+          - text: +VERIFIED
+        - generic [ref=e54]:
+          - text: ✦ CANVA PRO
+          - strong [ref=e55]: ₦2,250
+          - text: +DISPATCHED
+        - generic [ref=e56]:
+          - text: ✦ YOUTUBE PREMIUM
+          - strong [ref=e57]: ₦6,900
+          - text: +INSTANT
+        - generic [ref=e58]:
+          - text: ✦ EXPRESSVPN
+          - strong [ref=e59]: ₦8,970
+          - text: +IN STOCK
+        - generic [ref=e60]:
+          - text: ✦ CHATGPT PLUS
+          - strong [ref=e61]: ₦6,800
+          - text: +INSTANT
+        - generic [ref=e62]:
+          - text: ✦ CLAUDE PRO
+          - strong [ref=e63]: ₦9,450
+          - text: +IN STOCK
+    - generic [ref=e64]:
+      - generic [ref=e67]:
+        - generic [ref=e68]: TIERS OF SERVICE
+        - generic [ref=e69]: ✦
+        - generic [ref=e70]: OPEN FOR 2026
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - heading "Essential" [level=3] [ref=e75]
+            - generic [ref=e76]: Direct
+          - generic [ref=e77]:
+            - generic [ref=e78]: ₦2,250
+            - generic [ref=e79]: /month
+          - paragraph [ref=e80]: Individual digital tools, design utilities, and media access for solo creators and developers.
+          - list [ref=e81]:
+            - listitem [ref=e82]: ✓ Dedicated private account slot
+            - listitem [ref=e83]: ✓ Automated credential dispatch
+            - listitem [ref=e84]: ✓ 100% full replacement warranty
+            - listitem [ref=e85]: ✓ Email & dashboard activation
+          - link "Browse Essential Plans" [ref=e86] [cursor=pointer]:
+            - /url: shop.html
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - heading "Pro Suite" [level=3] [ref=e89]
+            - generic [ref=e90]: Most Subscribed
+          - generic [ref=e91]:
+            - generic [ref=e92]: ₦9,450
+            - generic [ref=e93]: /quarter
+          - paragraph [ref=e94]: State-of-the-art AI intelligence, large reasoning models, and production media workstations.
+          - list [ref=e95]:
+            - listitem [ref=e96]: ✓ Claude 3.5 Sonnet & ChatGPT Plus
+            - listitem [ref=e97]: ✓ Instant automated slot delivery
+            - listitem [ref=e98]: ✓ Priority 24/7 replacement coverage
+            - listitem [ref=e99]: ✓ Private credentials, zero sharing
+            - listitem [ref=e100]: ✓ Wholesale bundled pricing
+          - link "Explore Pro Suites ↗" [ref=e101] [cursor=pointer]:
+            - /url: shop.html
+            - generic [ref=e102]: Explore Pro Suites
+            - generic [ref=e103]: ↗
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - heading "Enterprise" [level=3] [ref=e106]
+            - generic [ref=e107]: Wholesale
+          - generic [ref=e108]:
+            - generic [ref=e109]: ₦48,500
+            - generic [ref=e110]: /annual
+          - paragraph [ref=e111]: Comprehensive team toolkits, multi-seat accounts, and dedicated VIP support concierge.
+          - list [ref=e112]:
+            - listitem [ref=e113]: ✓ Multi-seat development licenses
+            - listitem [ref=e114]: ✓ Bespoke custom invoicing
+            - listitem [ref=e115]: ✓ Dedicated WhatsApp support rep
+            - listitem [ref=e116]: ✓ Quarterly license renewal sync
+            - listitem [ref=e117]: ✓ Custom tool sourcing upon request
+          - link "Request Enterprise" [ref=e118] [cursor=pointer]:
+            - /url: shop.html
+    - generic [ref=e121]:
+      - generic [ref=e122]:
+        - heading "Compose your package ." [level=2] [ref=e123]:
+          - text: Compose your
+          - generic [ref=e124]: package
+          - text: .
+        - paragraph [ref=e125]: A subscription model that mirrors wholesale efficiency. Combine accounts across AI, developer tools, and streaming to unlock wholesale rates — delivered with zero latency.
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - generic [ref=e128]: Package Preview
+            - generic [ref=e129]:
+              - generic [ref=e130] [cursor=pointer]: Balanced
+              - generic [ref=e131] [cursor=pointer]: Power
+              - generic [ref=e132] [cursor=pointer]: Creator
+          - generic [ref=e133]:
+            - generic "AI & LLMs" [ref=e134]
+            - generic "Design Studio" [ref=e135]
+            - generic "Entertainment" [ref=e136]
+            - generic "Security & VPN" [ref=e137]
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - generic [ref=e141]: AI & Code
+              - strong [ref=e142]: 42%
+            - generic [ref=e143]:
+              - generic [ref=e145]: Design
+              - strong [ref=e146]: 28%
+            - generic [ref=e147]:
+              - generic [ref=e149]: Stream
+              - strong [ref=e150]: 20%
+            - generic [ref=e151]:
+              - generic [ref=e153]: Security
+              - strong [ref=e154]: 10%
+      - generic [ref=e155]:
+        - generic [ref=e156]:
+          - generic [ref=e157]: ESTIMATED BUNDLE VALUE
+          - generic [ref=e158]:
+            - generic [ref=e159]: NGN
+            - generic [ref=e160]: 25,000
+            - generic [ref=e161]: / quarter
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: DISPATCH CADENCE
+            - generic [ref=e165]: Instant Automated Delivery ▾
+          - generic [ref=e166]:
+            - generic [ref=e167]: LICENSE DURATION
+            - generic [ref=e168]: 3 Months — Standard ▾
+        - generic [ref=e169]:
+          - generic [ref=e170] [cursor=pointer]:
+            - generic [ref=e171]: ✓
+            - generic [ref=e172]: Include 100% Replacement Warranty
+            - generic [ref=e173]: +FREE
+          - generic [ref=e174] [cursor=pointer]:
+            - generic [ref=e175]: ✓
+            - generic [ref=e176]: Private Dedicated Login Credentials
+            - generic [ref=e177]: 0-LEAK
+          - generic [ref=e178] [cursor=pointer]:
+            - generic [ref=e179]: ✓
+            - generic [ref=e180]: Automated Renewal Notifications
+            - generic [ref=e181]: OPTIONAL
+        - generic [ref=e182]:
+          - link "Configure in Shop ❖" [ref=e183] [cursor=pointer]:
+            - /url: shop.html
+            - generic [ref=e184]: Configure in Shop
+            - generic [ref=e185]: ❖
+          - generic [ref=e186]: Zero signup walls · Direct Paystack checkout
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - img "CreditLog Automated Architecture" [ref=e190]
+        - generic [ref=e191]:
+          - generic [ref=e192]: ●
+          - generic [ref=e193]: Core Protocol · Vault CL-2026
+        - generic [ref=e194]:
+          - generic [ref=e195]: < 60s
+          - generic [ref=e196]: AVERAGE DISPATCH
+      - generic [ref=e197]:
+        - heading "The CreditLog Delivery Protocol" [level=2] [ref=e198]
+        - paragraph [ref=e199]: An automated infrastructure built for zero friction. Eliminate the risk of shared accounts, account bans, or delayed sellers — credentials are generated and verified on the fly.
+        - generic [ref=e200]:
+          - generic [ref=e201]:
+            - generic [ref=e202]: Dispatch speed, average
+            - generic [ref=e203]: 38 seconds
+            - generic [ref=e204]: INSTANT
+          - generic [ref=e205]:
+            - generic [ref=e206]: Replacement coverage, active
+            - generic [ref=e207]: 30 – 365 Days
+            - generic [ref=e208]: GUARANTEED
+          - generic [ref=e209]:
+            - generic [ref=e210]: Payment gateways, certified
+            - generic [ref=e211]: Paystack / 256-Bit
+            - generic [ref=e212]: A+ SECURE
+        - generic [ref=e213]:
+          - link "Open the Shop ↗" [ref=e214] [cursor=pointer]:
+            - /url: shop.html
+            - generic [ref=e215]: Open the Shop
+            - generic [ref=e216]: ↗
+          - link "Support Desk" [ref=e217] [cursor=pointer]:
+            - /url: https://wa.me/message/creditlog
+    - generic [ref=e218]:
+      - generic [ref=e221]:
+        - generic [ref=e222]: LIVE INVENTORY
+        - generic [ref=e223]: ✦
+        - generic [ref=e224]: AVAILABLE NOW
+      - generic [ref=e226]:
+        - heading "Top Verified Subscriptions" [level=2] [ref=e227]
+        - paragraph [ref=e228]: Explore our most popular AI models, creative tools, and entertainment plans with instant wholesale checkout.
+      - generic [ref=e229]:
+        - generic [ref=e230]:
+          - generic [ref=e231] [cursor=pointer]:
+            - generic [ref=e236]:
+              - generic [ref=e237]: STREAMING
+              - generic [ref=e238]: ● 10 in Stock
+            - heading "Netflix Premium" [level=3] [ref=e239]
+            - paragraph [ref=e240]: Ultra HD 4K Netflix Premium account slot with private PIN, 100% replacement warranty, and instant automated credential dispatch.
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - generic [ref=e243]: Wholesale Price
+                - generic [ref=e244]: ₦5,985
+                - generic [ref=e245]: Instant Digital Delivery
+              - button "Quick View" [ref=e247]
+          - generic [ref=e249] [cursor=pointer]:
+            - generic [ref=e254]:
+              - generic [ref=e255]: AI
+              - generic [ref=e256]: ● 28 in Stock
+            - heading "Google AI Pro Gemini 3M" [level=3] [ref=e257]
+            - paragraph [ref=e258]: Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - generic [ref=e261]: Wholesale Price
+                - generic [ref=e262]: ₦10,455
+                - generic [ref=e263]: Instant Digital Delivery
+              - button "Quick View" [ref=e265]
+          - generic [ref=e267] [cursor=pointer]:
+            - generic [ref=e272]:
+              - generic [ref=e273]: SECURITY
+              - generic [ref=e274]: ● 28 in Stock
+            - heading "HMA VPN 20-30 Days" [level=3] [ref=e275]
+            - paragraph [ref=e276]: HideMyAss VPN premium license with global high-speed servers and lightning fast encryption.
+            - generic [ref=e277]:
+              - generic [ref=e278]:
+                - generic [ref=e279]: Wholesale Price
+                - generic [ref=e280]: ₦3,750
+                - generic [ref=e281]: Instant Digital Delivery
+              - button "Quick View" [ref=e283]
+        - link "Browse Full Shop (90+ Tools) ↗" [ref=e286] [cursor=pointer]:
+          - /url: shop.html
+          - generic [ref=e287]: Browse Full Shop (90+ Tools)
+          - generic [ref=e288]: ↗
+    - generic [ref=e290]:
+      - generic [ref=e291]:
+        - link "CreditLog" [ref=e292] [cursor=pointer]:
+          - /url: index.html
+        - generic [ref=e297]: © 2026 CreditLog. All rights reserved.
+      - navigation [ref=e298]:
+        - link "Home" [ref=e299] [cursor=pointer]:
+          - /url: index.html
+        - link "Shop" [ref=e300] [cursor=pointer]:
+          - /url: shop.html
+        - link "Tiers" [ref=e301] [cursor=pointer]:
+          - /url: "#curatedSection"
+        - link "Protocol" [ref=e302] [cursor=pointer]:
+          - /url: "#protocolSection"
+        - link "Admin" [ref=e303] [cursor=pointer]:
+          - /url: admin.html
+      - generic [ref=e304]:
+        - link "Instagram" [ref=e305] [cursor=pointer]:
+          - /url: https://instagram.com
+        - link "TikTok" [ref=e309] [cursor=pointer]:
+          - /url: https://tiktok.com
+        - link "X" [ref=e312] [cursor=pointer]:
+          - /url: https://x.com
