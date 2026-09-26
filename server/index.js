@@ -5,12 +5,49 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
-const ROOT_DIR = isVercel ? process.cwd() : path.resolve(__dirname, '..');
+const candidateRoots = [process.cwd(), path.resolve(__dirname, '..'), __dirname];
+const ROOT_DIR = candidateRoots.find(dir => fs.existsSync(path.join(dir, 'index.html'))) || (isVercel ? process.cwd() : path.resolve(__dirname, '..'));
 const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(ROOT_DIR, 'data');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const RESERVATIONS_FILE = path.join(DATA_DIR, 'reservations.json');
 const LOGS_FILE = path.join(DATA_DIR, 'logs.json');
+
+// Explicit static references for @vercel/nft dependency tracing during Vercel builds
+if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
+  try {
+    fs.readFileSync(path.join(process.cwd(), 'style.css'));
+    fs.readFileSync(path.join(process.cwd(), 'shared.js'));
+    fs.readFileSync(path.join(process.cwd(), 'index.html'));
+    fs.readFileSync(path.join(process.cwd(), 'shop.html'));
+    fs.readFileSync(path.join(process.cwd(), 'product.html'));
+    fs.readFileSync(path.join(process.cwd(), 'checkout.html'));
+    fs.readFileSync(path.join(process.cwd(), 'success.html'));
+    fs.readFileSync(path.join(process.cwd(), 'admin.html'));
+    fs.readFileSync(path.join(process.cwd(), 'inventory.html'));
+    fs.readFileSync(path.join(process.cwd(), 'activity-logs.html'));
+    fs.readFileSync(path.join(process.cwd(), 'data', 'products.json'));
+    fs.readFileSync(path.join(process.cwd(), 'data', 'orders.json'));
+    fs.readFileSync(path.join(process.cwd(), 'data', 'reservations.json'));
+    fs.readFileSync(path.join(process.cwd(), 'data', 'logs.json'));
+    fs.readFileSync(path.join(process.cwd(), 'assets', 'images', 'editorial-architecture.jpg'));
+    fs.readFileSync(path.join(__dirname, '..', 'style.css'));
+    fs.readFileSync(path.join(__dirname, '..', 'shared.js'));
+    fs.readFileSync(path.join(__dirname, '..', 'index.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'shop.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'product.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'checkout.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'success.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'admin.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'inventory.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'activity-logs.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'products.json'));
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'orders.json'));
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'reservations.json'));
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'logs.json'));
+    fs.readFileSync(path.join(__dirname, '..', 'assets', 'images', 'editorial-architecture.jpg'));
+  } catch (e) {}
+}
 
 // Ensure data folder and seed files exist
 if (!fs.existsSync(DATA_DIR)) {
@@ -18,7 +55,12 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 // Seed bundled default JSON data if running in ephemeral environment
-const SOURCE_DATA_DIR = path.join(ROOT_DIR, 'data');
+const candidateDataDirs = [
+  path.join(ROOT_DIR, 'data'),
+  path.join(process.cwd(), 'data'),
+  path.join(__dirname, '..', 'data')
+];
+const SOURCE_DATA_DIR = candidateDataDirs.find(d => fs.existsSync(d)) || candidateDataDirs[0];
 [PRODUCTS_FILE, ORDERS_FILE, RESERVATIONS_FILE, LOGS_FILE].forEach(targetFile => {
   if (!fs.existsSync(targetFile)) {
     const filename = path.basename(targetFile);
@@ -1274,28 +1316,44 @@ const server = http.createServer(async (req, res) => {
   }
 
   let reqPath = pathname === '/' ? '/index.html' : pathname;
-  let filePath = path.join(ROOT_DIR, reqPath);
 
-  // Clean URL resolution
-  if (!fs.existsSync(filePath)) {
-    if (fs.existsSync(filePath + '.html')) {
-      filePath = filePath + '.html';
-    }
+  // Search candidate root directories (for both local and Vercel Lambda runtime)
+  const candidateFilePaths = [
+    path.join(ROOT_DIR, reqPath),
+    path.join(process.cwd(), reqPath),
+    path.join(__dirname, '..', reqPath),
+    path.join(__dirname, reqPath)
+  ];
+
+  let filePath = candidateFilePaths.find(p => {
+    try { return fs.existsSync(p) && fs.statSync(p).isFile(); } catch (e) { return false; }
+  });
+
+  // Clean URL resolution (e.g. /shop -> /shop.html)
+  if (!filePath) {
+    filePath = candidateFilePaths.map(p => p + '.html').find(p => {
+      try { return fs.existsSync(p) && fs.statSync(p).isFile(); } catch (e) { return false; }
+    });
   }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      const ext = path.extname(pathname).toLowerCase();
-      const isStaticAsset = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.json', '.woff', '.woff2', '.ttf', '.webp'].includes(ext);
-      if (isStaticAsset) {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        return res.end(`404 Not Found: ${pathname}`);
-      }
-      filePath = path.join(ROOT_DIR, 'index.html');
+  if (!filePath) {
+    const ext = path.extname(pathname).toLowerCase();
+    const isStaticAsset = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.json', '.woff', '.woff2', '.ttf', '.webp'].includes(ext);
+    if (isStaticAsset) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      return res.end(`404 Not Found: ${pathname}`);
     }
+    // SPA Fallback for client-side routing
+    const fallbackPaths = [
+      path.join(ROOT_DIR, 'index.html'),
+      path.join(process.cwd(), 'index.html'),
+      path.join(__dirname, '..', 'index.html')
+    ];
+    filePath = fallbackPaths.find(p => fs.existsSync(p)) || fallbackPaths[0];
+  }
 
-    const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  const ext = path.extname(filePath).toLowerCase();
+  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
     fs.readFile(filePath, (err, content) => {
       if (err) {
