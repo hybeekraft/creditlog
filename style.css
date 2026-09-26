@@ -6008,7 +6008,7 @@ select, option {
 
 
 /* ==========================================================================
-   Clean Boxed Pagination (Matching User Inspo Reference)
+   Clean Boxed Pagination (Terracotta Active Indicator & White Cards)
    ========================================================================== */
 .catalog-pagination-wrap {
   display: flex;
@@ -6022,62 +6022,76 @@ select, option {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   user-select: none;
   flex-wrap: wrap;
 }
 
 .cir-page__nav,
 .cir-page__num {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #FFFFFF;
-  border: 1px solid #176533;
-  border-radius: 6px;
-  color: #176533;
-  font-size: 13.5px;
+  border: 1.5px solid rgba(18, 9, 5, 0.22);
+  border-radius: 8px;
+  color: #120905;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   padding: 0;
   font-family: inherit;
-  box-shadow: none;
+  box-shadow: 0 1px 3px rgba(18, 9, 5, 0.04);
 }
 
 .cir-page__nav svg {
-  width: 14px;
-  height: 14px;
-  color: #176533;
+  width: 16px;
+  height: 16px;
+  color: #120905;
   display: block;
+  transition: color 0.18s ease;
 }
 
-.cir-page__nav:hover,
+.cir-page__nav:hover:not(:disabled),
 .cir-page__num:hover:not(.cir-page__num--active) {
-  background: #F0FDF4;
-  border-color: #176533;
-  color: #176533;
+  border-color: #A63C06;
+  color: #A63C06;
+  background: #FDFBF7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(166, 60, 6, 0.12);
+}
+
+.cir-page__nav:hover:not(:disabled) svg {
+  color: #A63C06;
 }
 
 .cir-page__num--active {
-  background: #176533 !important;
+  background: #A63C06 !important;
   color: #FFFFFF !important;
-  border-color: #176533 !important;
+  border-color: #A63C06 !important;
   cursor: default;
-  box-shadow: none !important;
+  box-shadow: 0 4px 14px rgba(166, 60, 6, 0.25) !important;
+}
+
+.cir-page__nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: rgba(18, 9, 5, 0.1);
+  pointer-events: none;
 }
 
 .cir-page__gap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 36px;
-  color: #176533;
-  font-size: 14px;
+  width: 32px;
+  height: 42px;
+  color: #6B625B;
+  font-size: 15px;
   font-weight: 700;
 }
