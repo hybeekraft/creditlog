@@ -1275,16 +1275,11 @@ const server = http.createServer(async (req, res) => {
 
   let reqPath = pathname === '/' ? '/index.html' : pathname;
   let filePath = path.join(ROOT_DIR, reqPath);
-  if (!fs.existsSync(filePath)) {
-    filePath = path.join(ROOT_DIR, 'public', reqPath);
-  }
 
   // Clean URL resolution
   if (!fs.existsSync(filePath)) {
     if (fs.existsSync(filePath + '.html')) {
       filePath = filePath + '.html';
-    } else if (fs.existsSync(path.join(ROOT_DIR, 'public', reqPath + '.html'))) {
-      filePath = path.join(ROOT_DIR, 'public', reqPath + '.html');
     }
   }
 
@@ -1296,9 +1291,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         return res.end(`404 Not Found: ${pathname}`);
       }
-      filePath = fs.existsSync(path.join(ROOT_DIR, 'public', 'index.html'))
-        ? path.join(ROOT_DIR, 'public', 'index.html')
-        : path.join(ROOT_DIR, 'index.html');
+      filePath = path.join(ROOT_DIR, 'index.html');
     }
 
     const ext = path.extname(filePath).toLowerCase();
