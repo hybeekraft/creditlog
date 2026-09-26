@@ -6088,5 +6088,104 @@ select, option {
   transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   MINIMALIST SINGLE-ROW FOOTER (CLEAN INSPIRATION LAYOUT)
+   ========================================================================== */
+.site-footer-minimal {
+  background: #060911;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 28px 24px;
+  margin-top: 60px;
+  width: 100%;
+}
+
+.footer-minimal-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-minimal-left {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.footer-minimal-left .footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-minimal-left .footer-copyright {
+  font-size: 13px;
+  color: var(--text-muted, #94A3B8);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.footer-minimal-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.footer-minimal-links a {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-muted, #94A3B8);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.footer-minimal-links a:hover {
+  color: #FFFFFF;
+}
+
+.footer-minimal-socials {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-minimal-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #94A3B8);
+  transition: color 0.18s ease, transform 0.18s ease;
+  text-decoration: none;
+}
+
+.footer-minimal-socials a:hover {
+  color: #FFFFFF;
+  transform: translateY(-1.5px);
+}
+
+@media (max-width: 920px) {
+  .footer-minimal-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .footer-minimal-left {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-minimal-links {
+    justify-content: center;
+    gap: 18px;
+  }
+}
+
 
 
