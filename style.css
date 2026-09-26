@@ -6040,3 +6040,85 @@ select, option {
 
 
 
+
+/* ==========================================================================
+   Clean Boxed Pagination (Matching User Inspo Reference)
+   ========================================================================== */
+.catalog-pagination-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto 70px;
+  width: 100%;
+}
+
+.cir-page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  flex-wrap: wrap;
+}
+
+.cir-page__nav,
+.cir-page__num {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(18, 9, 5, 0.22);
+  border-radius: 8px;
+  color: #120905;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  padding: 0;
+  font-family: inherit;
+  box-shadow: 0 1px 3px rgba(18, 9, 5, 0.04);
+}
+
+.cir-page__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cir-page__nav:hover:not(:disabled),
+.cir-page__num:hover:not(.cir-page__num--active) {
+  border-color: #A63C06;
+  color: #A63C06;
+  background: #FDFBF7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(166, 60, 6, 0.12);
+}
+
+.cir-page__num--active {
+  background: #A63C06 !important;
+  color: #FFFFFF !important;
+  border-color: #A63C06 !important;
+  cursor: default;
+  box-shadow: 0 4px 14px rgba(166, 60, 6, 0.25) !important;
+}
+
+.cir-page__nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: rgba(18, 9, 5, 0.1);
+  pointer-events: none;
+}
+
+.cir-page__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 42px;
+  color: #6B625B;
+  font-size: 15px;
+  font-weight: 700;
+}
