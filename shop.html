@@ -26,13 +26,13 @@
       gap: 6px;
       font-size: 13px;
       font-weight: 600;
-      color: #94A3B8;
+      color: #6B625B;
       text-decoration: none;
       margin-bottom: 16px;
       transition: color 0.15s ease;
     }
     .shop-top-back:hover {
-      color: #FFFFFF;
+      color: #A63C06;
     }
   </style>
 </head>
@@ -43,11 +43,9 @@
   <header class="site-header" id="siteHeader">
     <div class="header-container">
       <a href="index.html" class="brand-logo">
-        <div class="logo-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="28" height="28" rx="8" fill="#2563EB" />
-            <path d="M8 8V20H20" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-            <circle cx="16" cy="12" r="2.5" fill="#38BDF8" />
+        <div class="logo-icon" style="color: #A63C06;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
           </svg>
         </div>
         <span class="logo-text">Credit<span class="accent-text">Log</span></span>
@@ -203,14 +201,12 @@
       <div class="footer-minimal-container">
         <div class="footer-minimal-left">
           <a href="index.html" class="footer-brand-link">
-            <div class="logo-icon small">
-              <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
-                <rect width="28" height="28" rx="8" fill="#2563EB" />
-                <path d="M8 8V20H20" stroke="white" stroke-width="3" stroke-linecap="round" />
-                <circle cx="16" cy="12" r="2.5" fill="#38BDF8" />
+            <div class="logo-icon small" style="color: #EEBA0B;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
               </svg>
             </div>
-            <span class="logo-text" style="font-size: 16px; font-weight: 700;">Credit<span class="accent-text">Log</span></span>
+            <span class="logo-text" style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Credit<span class="accent-text" style="color: #EEBA0B;">Log</span></span>
           </a>
           <span class="footer-copyright">&copy; 2026 CreditLog. All rights reserved.</span>
         </div>
@@ -377,11 +373,11 @@
         if (paginationWrap) paginationWrap.innerHTML = '';
         container.className = 'directory-grid';
         container.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; background: rgba(255, 255, 255, 0.02); border-radius: 20px; border: 1px dashed rgba(255, 255, 255, 0.08);">
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #38BDF8;">
+          <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; background: rgba(18, 9, 5, 0.02); border-radius: 20px; border: 1px dashed rgba(18, 9, 5, 0.12);">
+            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(166, 60, 6, 0.08); border: 1px solid rgba(166, 60, 6, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #A63C06;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <div style="font-size: 17px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px;">No subscriptions match your query</div>
+            <div style="font-size: 17px; font-weight: 700; color: #120905; margin-bottom: 6px;">No subscriptions match your query</div>
             <div style="font-size: 13.5px; color: var(--text-muted); max-width: 400px; margin: 0 auto 18px;">Try clearing your search terms or picking another category tab above.</div>
             <button onclick="clearSearchAndReset()" class="primary-btn" style="padding: 9px 20px; font-size: 13px;">View All Subscriptions</button>
           </div>
@@ -415,21 +411,21 @@
             </div>
 
             <div class="card-title-group" style="margin-bottom: 12px;">
-              <h3 class="directory-item-title" style="font-size: 16.5px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; line-height: 1.35;">${prod.name}</h3>
-              <div class="card-duration-badge">
-                <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 4px;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+              <h3 class="directory-item-title" style="font-size: 16.5px; font-weight: 700; color: #120905; margin-bottom: 4px; line-height: 1.35;">${prod.name}</h3>
+              <div class="card-duration-badge" style="display: inline-flex; align-items: center; font-size: 12px; color: #C36F09; font-weight: 600; margin-bottom: 6px;">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #C36F09; margin-right: 4px;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
                 <span>${prod.duration || 'Standard License'}</span>
               </div>
-              <p class="directory-item-desc" style="font-size: 13px; color: #94A3B8; line-height: 1.45; min-height: 38px; margin: 0;">${prod.description || 'Verified private digital subscription with instant delivery.'}</p>
+              <p class="directory-item-desc" style="font-size: 13px; color: #6B625B; line-height: 1.45; min-height: 38px; margin: 0;">${prod.description || 'Verified private digital subscription with instant delivery.'}</p>
             </div>
 
-            <div class="card-pricing-footer" style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.06); margin-top: auto;">
+            <div class="card-pricing-footer" style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(18, 9, 5, 0.08); margin-top: auto;">
               <div class="price-val-box">
-                <span class="directory-price-val" style="font-size: 18px; font-weight: 800; color: #FFFFFF; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
-                <span class="directory-price-sub" style="font-size: 11px; color: #10B981; font-weight: 600;">Instant Delivery</span>
+                <span class="directory-price-val" style="font-size: 18px; font-weight: 800; color: #120905; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
+                <span class="directory-price-sub" style="font-size: 11px; color: #15803D; font-weight: 600;">Instant Delivery</span>
               </div>
               <div style="display: flex; gap: 6px;">
-                <button type="button" class="preview-buy-btn" style="padding: 7px 12px; font-size: 11.5px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #CBD5E1;" onclick="event.stopPropagation(); openQuickViewModal('${prod.id}')">
+                <button type="button" class="preview-buy-btn" style="padding: 7px 12px; font-size: 11.5px;" onclick="event.stopPropagation(); openQuickViewModal('${prod.id}')">
                   <span>Quick View</span>
                 </button>
                 <button type="button" class="directory-select-btn" ${!inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="event.stopPropagation(); ${inStock ? `navigateToProduct('${prod.id}')` : ''}">
@@ -455,9 +451,9 @@
             <div class="list-row-left">
               ${renderBrandIcon(prod)}
               <div>
-                <div class="directory-item-title" style="font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px;">${prod.name}</div>
+                <div class="directory-item-title" style="font-size: 15px; font-weight: 700; color: #120905; margin-bottom: 2px;">${prod.name}</div>
                 <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
-                  <span style="color: #38BDF8; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                  <span style="color: #C36F09; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
                     <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
                     ${prod.duration || '1 Month'}
                   </span>
@@ -471,8 +467,8 @@
 
             <div class="list-row-right" style="display: flex; align-items: center; gap: 16px;">
               <div style="text-align: right;">
-                <span style="font-size: 16px; font-weight: 800; color: #FFFFFF; display: block;">${formattedPrice}</span>
-                <span style="font-size: 11px; color: #10B981; font-weight: 600;">Instant Delivery</span>
+                <span style="font-size: 16px; font-weight: 800; color: #120905; display: block;">${formattedPrice}</span>
+                <span style="font-size: 11px; color: #15803D; font-weight: 600;">Instant Delivery</span>
               </div>
               <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
                 <span>Buy Now →</span>
