@@ -5683,36 +5683,6 @@ select, option {
   transform: translateY(-2px);
 }
 
-.hero-slab-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  padding: 24px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  margin-bottom: 24px;
-}
-
-.slab-metric-col {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.metric-num {
-  font-size: 32px;
-  font-weight: 800;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-
-.metric-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.75);
-}
 
 .hero-slab-ticker {
   background: #0E0704;
@@ -5923,10 +5893,6 @@ select, option {
   }
   .hero-slab-ticker {
     margin: 0 -24px -28px;
-  }
-  .hero-slab-metrics {
-    grid-template-columns: 1fr;
-    gap: 16px;
   }
   .protocol-card-white {
     grid-template-columns: 1fr;
