@@ -129,6 +129,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  position: relative;
 }
 
 .brand-logo {
@@ -137,6 +138,7 @@ a {
   gap: 10px;
   cursor: pointer;
   user-select: none;
+  z-index: 2;
 }
 
 .logo-icon {
@@ -167,6 +169,18 @@ a {
   display: flex;
   align-items: center;
   gap: 28px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: static;
+    transform: none;
+    gap: 16px;
+  }
 }
 
 .nav-link {
