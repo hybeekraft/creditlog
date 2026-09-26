@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreditLog — Admin Analytics Dashboard</title>
+  <meta name="description" content="Store performance metrics, sales overview chart, and order operations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-layout admin-layout">
+    <!-- Admin Sidebar -->
+    <aside class="dash-sidebar admin-sidebar">
+      <a href="index.html" class="dash-brand">
+        <div class="logo-icon small">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#2563EB"/><path d="M8 8V20H20" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="12" r="2.5" fill="#38BDF8"/></svg>
+        </div>
+        <span class="logo-text">Credit<span class="accent-text">Log</span></span>
+      </a>
+
+      <nav class="dash-menu">
+        <a href="admin.html" class="menu-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Admin Analytics
+        </a>
+        <a href="shop.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Shop
+        </a>
+        <a href="inventory.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Inventory & CMS
+        </a>
+        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Orders queue')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+          Orders
+        </a>
+        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Customer directory')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Customers
+        </a>
+        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Pending deliveries')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Deliveries
+        </a>
+        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Active coupon codes: SAVE15')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          Coupons
+        </a>
+        <a href="activity-logs.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Logs
+        </a>
+        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Admin settings')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="dash-main-area">
+      <header class="dash-top-bar">
+        <div>
+          <h1 class="welcome-heading">Admin Analytics Dashboard</h1>
+          <p class="welcome-sub">Overview of store performance, revenue, and platform operations.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div class="user-profile-badge" id="adminUserBadge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm">
+            <div>
+              <div class="badge-name" id="adminProfileName">Admin Manager</div>
+              <div class="badge-tag">Admin</div>
+            </div>
+          </div>
+          <button class="secondary-btn" onclick="logoutUser()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Sign out of Admin Portal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin KPI 4-Card Grid -->
+      <div class="admin-kpi-grid">
+        <div class="kpi-metric-card">
+          <span class="metric-title">Total Sales</span>
+          <div class="metric-val">₦1,245,000</div>
+          <div class="trend-badge positive">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
+            ↑ 12%
+          </div>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">Total Orders</span>
+          <div class="metric-val">142</div>
+          <div class="trend-badge positive">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
+            ↑ 8%
+          </div>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">Active Customers</span>
+          <div class="metric-val">256</div>
+          <div class="trend-badge positive">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
+            ↑ 15%
+          </div>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">Pending Deliveries</span>
+          <div class="metric-val">12</div>
+          <div class="trend-badge negative">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(45 10 10)"/></svg>
+            ↓ 3%
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Column Analytics Layout -->
+      <div class="admin-charts-grid">
+        <!-- Left: Sales Overview Interactive SVG Chart -->
+        <div class="chart-panel-card">
+          <div class="panel-header-row">
+            <h3 class="panel-title">Sales Overview</h3>
+            <div class="timeframe-select">
+              <select onchange="showToast('Updated sales chart: ' + this.value)">
+                <option value="7d" selected>Last 7 days</option>
+                <option value="30d">Last 30 days</option>
+                <option value="90d">Last 3 months</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Interactive Curved SVG Area Chart -->
+          <div class="chart-canvas-container">
+            <svg class="sales-svg" viewBox="0 0 500 220" preserveAspectRatio="none" id="salesSvgChart">
+              <defs>
+                <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <!-- Horizontal Grid Lines -->
+              <line x1="40" y1="30" x2="490" y2="30" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="80" x2="490" y2="80" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="130" x2="490" y2="130" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="3 3"/>
+              <line x1="40" y1="180" x2="490" y2="180" stroke="rgba(255, 255, 255, 0.08)"/>
+
+              <!-- Y-Axis Labels -->
+              <text x="32" y="34" class="chart-axis-label" text-anchor="end">200k</text>
+              <text x="32" y="84" class="chart-axis-label" text-anchor="end">150k</text>
+              <text x="32" y="134" class="chart-axis-label" text-anchor="end">100k</text>
+              <text x="32" y="184" class="chart-axis-label" text-anchor="end">50k</text>
+
+              <!-- Shaded Area -->
+              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65 L 485 180 L 50 180 Z" fill="url(#salesGrad)" />
+              <!-- Smooth Curve Line -->
+              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
+
+              <!-- Active interactive points -->
+              <circle cx="50" cy="165" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 8: ₦52,000')"/>
+              <circle cx="120" cy="160" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 10: ₦68,000')"/>
+              <circle cx="190" cy="148" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 11: ₦95,000')"/>
+              <circle cx="260" cy="122" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 12: ₦130,000')"/>
+              <circle cx="330" cy="126" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 13: ₦124,000')"/>
+              <circle cx="400" cy="88" r="4" fill="#38BDF8" class="chart-dot" onclick="showToast('Sep 14: ₦175,000')"/>
+              <circle cx="485" cy="65" r="5" fill="#38BDF8" stroke="#0A0D14" stroke-width="2" class="chart-dot" onclick="showToast('Sep 15: ₦210,000')"/>
+
+              <!-- X-Axis Dates -->
+              <text x="50" y="202" class="chart-axis-label" text-anchor="middle">Sep 8</text>
+              <text x="120" y="202" class="chart-axis-label" text-anchor="middle">Sep 10</text>
+              <text x="190" y="202" class="chart-axis-label" text-anchor="middle">Sep 11</text>
+              <text x="260" y="202" class="chart-axis-label" text-anchor="middle">Sep 12</text>
+              <text x="330" y="202" class="chart-axis-label" text-anchor="middle">Sep 13</text>
+              <text x="400" y="202" class="chart-axis-label" text-anchor="middle">Sep 14</text>
+              <text x="480" y="202" class="chart-axis-label" text-anchor="middle">Sep 15</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right: Recent Orders Widget -->
+        <div class="admin-orders-card">
+          <div class="panel-header-row">
+            <h3 class="panel-title">Recent Orders</h3>
+            <a href="activity-logs.html" class="view-all-link">View All →</a>
+          </div>
+          <div class="admin-orders-list" id="adminRecentOrdersList">
+            <div class="admin-order-row">
+              <div class="adm-item-info">
+                <div>
+                  <span class="adm-badge-id">#CL-10482</span>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Netflix Premium</div>
+                  <div class="adm-sub-date">12 Sep 2026</div>
+                </div>
+              </div>
+              <div>
+                <div class="adm-price">₦5,500</div>
+                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
+              </div>
+            </div>
+
+            <div class="admin-order-row">
+              <div class="adm-item-info">
+                <div>
+                  <span class="adm-badge-id">#CL-10461</span>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Claude Pro</div>
+                  <div class="adm-sub-date">11 Sep 2026</div>
+                </div>
+              </div>
+              <div>
+                <div class="adm-price">₦10,500</div>
+                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
+              </div>
+            </div>
+
+            <div class="admin-order-row">
+              <div class="adm-item-info">
+                <div>
+                  <span class="adm-badge-id">#CL-10479</span>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Spotify Premium</div>
+                  <div class="adm-sub-date">11 Sep 2026</div>
+                </div>
+              </div>
+              <div>
+                <div class="adm-price">₦7,200</div>
+                <span class="order-status-pill status-processing" style="margin-top:4px; display:inline-block;">Processing</span>
+              </div>
+            </div>
+
+            <div class="admin-order-row">
+              <div class="adm-item-info">
+                <div>
+                  <span class="adm-badge-id">#CL-10475</span>
+                  <div style="font-size:12px; font-weight:700; color:#FFFFFF;">Canva Pro</div>
+                  <div class="adm-sub-date">11 Sep 2026</div>
+                </div>
+              </div>
+              <div>
+                <div class="adm-price">₦12,000</div>
+                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (user && user.name) {
+        const el = document.getElementById('adminProfileName');
+        if (el) el.textContent = user.name;
+      }
+    });
+  </script>
+</body>
+</html>

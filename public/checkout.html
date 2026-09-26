@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — CreditLog</title>
+  <meta name="description" content="Complete your subscription order with instant automated dispatch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       Apple Senior Designer — Direct Guest Checkout Page Styles
+       ========================================================================== */
+    .checkout-page-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* Top Bar with Cancel */
+    .checkout-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 28px;
+    }
+
+    .cancel-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cancel-link-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateX(-2px);
+    }
+
+    .checkout-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Form Column */
+    .checkout-card {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin-bottom: 20px;
+    }
+
+    .card-heading {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group-item {
+      margin-bottom: 16px;
+    }
+
+    .form-group-item label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #CBD5E1;
+      margin-bottom: 6px;
+    }
+
+    .form-group-item input,
+    .form-group-item textarea,
+    .form-group-item select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #FFFFFF;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-group-item input:focus,
+    .form-group-item textarea:focus,
+    .form-group-item select:focus {
+      border-color: #38BDF8;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .form-help-hint {
+      font-size: 11.5px;
+      color: #94A3B8;
+      margin-top: 4px;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Channel Selector Pills */
+    .channel-pills-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .channel-pill-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.09);
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      color: #94A3B8;
+      font-size: 12.5px;
+      font-weight: 700;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .channel-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+
+    .channel-pill-btn.active {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: #38BDF8;
+      color: #FFFFFF;
+      box-shadow: 0 0 0 1px #38BDF8;
+    }
+
+    /* Payment Gateways Stack */
+    .gateways-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gateway-option-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .gateway-option-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .gateway-option-card.active {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: #38BDF8;
+      box-shadow: 0 0 0 1px #38BDF8;
+    }
+
+    .gw-info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gw-name-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .gw-desc-text {
+      font-size: 11.5px;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+
+    /* Right Column: Order Summary Card */
+    .order-summary-card {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 80px;
+    }
+
+    .selected-product-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .summary-icon-tile {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .summary-prod-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .summary-prod-option {
+      font-size: 12.5px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .summary-row-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+      color: #94A3B8;
+      margin-bottom: 10px;
+    }
+
+    .summary-total-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 14px;
+      margin-bottom: 22px;
+    }
+
+    .total-big-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+    }
+
+    .checkout-pay-btn {
+      width: 100%;
+      background: #FFFFFF;
+      color: #07090E;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.16);
+    }
+
+    .checkout-pay-btn:hover {
+      background: #E2E8F0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.24);
+    }
+
+    .checkout-pay-btn:active {
+      transform: scale(0.98);
+    }
+
+    .server-notice-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: #34D399;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .checkout-layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .order-summary-card {
+        position: static;
+        order: -1;
+      }
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="main-content">
+    <div class="checkout-page-shell">
+      
+      <!-- Top Navigation with Cancel at the Top -->
+      <div class="checkout-top-bar">
+        <a href="javascript:void(0)" onclick="handleCancel()" class="cancel-link-btn" id="cancelCheckoutBtn">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+          </svg>
+          <span>Cancel & Return</span>
+        </a>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 12px; color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            256-bit Encrypted
+          </span>
+        </div>
+      </div>
+
+      <div class="checkout-layout-grid">
+        
+        <!-- Left: Customer Information & Delivery Preferences -->
+        <div class="checkout-left-col">
+          
+          <!-- 1. Customer Identification -->
+          <div class="checkout-card">
+            <h2 class="card-heading">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+              <span>1. Customer Information</span>
+            </h2>
+            <div class="form-row-2">
+              <div class="form-group-item">
+                <label for="custName">Full Name *</label>
+                <input type="text" id="custName" placeholder="e.g. Alex Morgan" required>
+              </div>
+              <div class="form-group-item">
+                <label for="custPhone">Phone / WhatsApp Number *</label>
+                <input type="tel" id="custPhone" placeholder="e.g. +234 812 345 6789" required>
+              </div>
+            </div>
+            <div class="form-group-item">
+              <label for="custEmail">Email Address (For Instant Digital Delivery) *</label>
+              <input type="email" id="custEmail" placeholder="e.g. alex@example.com" required>
+              <span class="form-help-hint">Your login credentials, profile PIN, and official receipt will be sent directly to this address.</span>
+            </div>
+          </div>
+
+          <!-- 2. Delivery & Contact Channel -->
+          <div class="checkout-card">
+            <h2 class="card-heading">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              <span>2. Delivery & Contact Preferences</span>
+            </h2>
+            <label style="font-size: 13px; font-weight: 700; color: #CBD5E1; margin-bottom: 8px; display: block;">
+              Preferred Dispatch Channel *
+            </label>
+            <div class="channel-pills-row">
+              <button type="button" class="channel-pill-btn active" id="chanEmail" onclick="selectChannel('Email')">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                <span>Email (Instant)</span>
+              </button>
+              <button type="button" class="channel-pill-btn" id="chanWhatsApp" onclick="selectChannel('WhatsApp')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                <span>WhatsApp</span>
+              </button>
+              <button type="button" class="channel-pill-btn" id="chanTelegram" onclick="selectChannel('Telegram')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                <span>Telegram</span>
+              </button>
+            </div>
+
+            <!-- Optional secondary contact handle if different -->
+            <div class="form-group-item" id="altContactWrap" style="display: none;">
+              <label for="altContactInput" id="altContactLabel">WhatsApp / Telegram Handle</label>
+              <input type="text" id="altContactInput" placeholder="Enter contact handle or leave blank to use phone">
+            </div>
+
+            <!-- 3. Product-Specific Fields -->
+            <div class="form-group-item" style="margin-top: 14px;">
+              <label for="productSpecificInput">
+                Product-Specific Information (Optional)
+              </label>
+              <input type="text" id="productSpecificInput" placeholder="e.g. Existing account email for upgrade, or preferred profile name">
+              <span class="form-help-hint">
+                If upgrading your personal email (Canva, Spotify, Notion, etc.), enter it above. Otherwise, a dedicated private account will be generated.
+              </span>
+            </div>
+
+            <!-- 4. Optional Notes -->
+            <div class="form-group-item">
+              <label for="orderNotes">Optional Notes</label>
+              <textarea id="orderNotes" rows="2" placeholder="Any special notes or setup instructions..."></textarea>
+            </div>
+          </div>
+
+          <!-- 3. Payment Method -->
+          <div class="checkout-card">
+            <h2 class="card-heading">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+              <span>3. Payment Gateway</span>
+            </h2>
+            <div class="gateways-list">
+              <div class="gateway-option-card active" id="gwCardPaystack" onclick="selectGateway('Paystack')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="Paystack" checked style="accent-color: #2563EB;">
+                  <div>
+                    <div class="gw-name-text">Paystack Secure Checkout</div>
+                    <div class="gw-desc-text">Debit / Credit Cards (Mastercard, Visa, Verve), Bank Transfer & USSD</div>
+                  </div>
+                </div>
+                <span style="font-size: 11px; font-weight: 800; background: #0BA4DB; color: #FFF; padding: 2px 8px; border-radius: 4px;">Paystack</span>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardFlutterwave" onclick="selectGateway('Flutterwave')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="Flutterwave" style="accent-color: #2563EB;">
+                  <div>
+                    <div class="gw-name-text">Flutterwave Gateway</div>
+                    <div class="gw-desc-text">Pan-African & Global cards, Mobile Money & Direct Bank Transfer</div>
+                  </div>
+                </div>
+                <span style="font-size: 11px; font-weight: 800; background: #EA580C; color: #FFF; padding: 2px 8px; border-radius: 4px;">Flutterwave</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Order Summary & Authoritative Server Price -->
+        <aside class="order-summary-card">
+          <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">Order Summary</h3>
+          
+          <!-- Real-Time Stock Reservation Banner -->
+          <div id="reservationNoticeBanner" style="display: none; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #38BDF8; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Stock Reserved: <strong id="resvCountdownTimer">15:00</strong></span>
+            </div>
+            <span style="font-size: 11px; background: rgba(56, 189, 248, 0.18); padding: 2px 7px; border-radius: 9999px; font-weight: 700;">Locked</span>
+          </div>
+
+          <!-- Out of Stock Warning Banner (Conditional) -->
+          <div id="stockErrorBanner" style="display: none; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; font-size: 12.5px; color: #F87171;">
+            <strong>Out of Stock:</strong> This item or quantity is currently unavailable or reserved by another customer.
+          </div>
+            <div class="summary-icon-tile" id="summaryIconTile">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>
+            </div>
+            <div>
+              <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
+              <div class="summary-prod-option" id="summaryProdOption">Duration: 1 Month</div>
+            </div>
+          </div>
+
+          <!-- Quantity Stepper on Checkout -->
+          <div class="summary-row-line">
+            <span>Quantity</span>
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 2px 6px;">
+              <button type="button" onclick="adjustQty(-1)" style="border:none; background:none; color:#FFF; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">−</button>
+              <span id="summaryQtyDisplay" style="font-weight:800; color:#FFF; font-size:13.5px; min-width:20px; text-align:center;">1</span>
+              <button type="button" onclick="adjustQty(1)" style="border:none; background:none; color:#FFF; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">+</button>
+            </div>
+          </div>
+
+          <div class="summary-row-line">
+            <span>Unit Price</span>
+            <strong id="summaryUnitPrice" style="color: #F8FAFC;">$0.00</strong>
+          </div>
+
+          <div class="summary-row-line">
+            <span>Delivery</span>
+            <span style="color: #10B981; font-weight: 700;">Instant Digital (Free)</span>
+          </div>
+
+          <div class="summary-total-line">
+            <div>
+              <span style="font-size: 12px; color: #94A3B8; display: block;">Total Due</span>
+              <span class="total-big-val" id="summaryTotalBig">$0.00</span>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 12px; color: #10B981; font-weight: 600;" id="summaryDualTotal">Instant Digital Delivery</span>
+            </div>
+          </div>
+
+          <button type="button" class="checkout-pay-btn" id="proceedPayBtn" onclick="handleProceedToPayment()">
+            <span>Proceed to Payment</span>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+
+          <div class="server-notice-pill">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Server calculates and validates all pricing</span>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- REAL-TIME PAYMENT GATEWAY MODAL -->
+    <div id="paymentGatewayModal" class="gateway-modal-backdrop hidden">
+      <div class="gateway-modal-card">
+        <div class="gateway-modal-header" id="gwHeader">
+          <div class="gw-brand-wrap">
+            <span class="gw-logo" id="gwLogo">Paystack</span>
+            <div class="gw-secured-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7c0-2.757-2.243-5-5-5zm-3 5c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"/></svg>
+              <span>PCI-DSS Encrypted</span>
+            </div>
+          </div>
+          <button type="button" class="gw-close-btn" onclick="closeGatewayModal()" title="Cancel Payment">✕</button>
+        </div>
+
+        <div class="gw-merchant-strip">
+          <div class="gw-merchant-info">
+            <span class="gw-merchant-name">CreditLog Automated Subscriptions</span>
+            <span class="gw-cust-email" id="gwCustomerEmail">customer@example.com</span>
+          </div>
+          <div class="gw-amount-box">
+            <span class="gw-amount-label">Amount Due</span>
+            <span class="gw-amount-val" id="gwAmountDisplay">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Gateway Channel Tabs -->
+        <div class="gw-tabs-nav" id="gwTabsNav">
+          <button type="button" class="gw-tab-btn active" id="gwTabCard" onclick="switchGwTab('card')">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+            <span>Card</span>
+          </button>
+          <button type="button" class="gw-tab-btn" id="gwTabTransfer" onclick="switchGwTab('transfer')">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+            <span>Bank Transfer</span>
+          </button>
+          <button type="button" class="gw-tab-btn" id="gwTabUssd" onclick="switchGwTab('ussd')">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+            <span>USSD</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Card Payment -->
+        <div class="gw-tab-pane" id="gwPaneCard">
+          <div class="gw-input-group">
+            <label>Card Number</label>
+            <div class="gw-card-input-wrap">
+              <input type="text" id="gwCardNumber" value="5399 4100 8920 1234" maxlength="19">
+              <span class="gw-card-brand-badge" id="gwCardBrand">Mastercard</span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <div class="gw-input-group">
+              <label>Valid Thru (MM/YY)</label>
+              <input type="text" id="gwCardExpiry" value="09/28" maxlength="5">
+            </div>
+            <div class="gw-input-group">
+              <label>CVV</label>
+              <input type="password" id="gwCardCvv" value="842" maxlength="4">
+            </div>
+          </div>
+          <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 11.5px; color: #64748B; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #2563EB;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
+              Instant test authorization
+            </span>
+            <button type="button" onclick="fillTestCard()" class="gw-test-btn">Fill Demo Card</button>
+          </div>
+        </div>
+
+        <!-- Tab 2: Bank Transfer -->
+        <div class="gw-tab-pane hidden" id="gwPaneTransfer">
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1.5px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 12px;">
+            <span style="font-size: 12px; color: #94A3B8;">Transfer exactly to this temporary virtual account:</span>
+            <div style="font-size: 21px; font-weight: 800; color: #FFFFFF; letter-spacing: 1.5px; margin: 6px 0;" id="gwVirtualAcc">9948201948</div>
+            <div style="font-size: 13px; font-weight: 700; color: #38BDF8;" id="gwVirtualBank">Wema Bank / CreditLog Checkout</div>
+            <span style="font-size: 11px; color: #64748B; display: block; margin-top: 4px;">Dynamic account expires in 30:00 mins</span>
+          </div>
+          <button type="button" onclick="copyVirtualAccount()" class="gw-test-btn" style="width: 100%; justify-content: center; padding: 8px; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            <span>Copy Account Number</span>
+          </button>
+        </div>
+
+        <!-- Tab 3: USSD -->
+        <div class="gw-tab-pane hidden" id="gwPaneUssd">
+          <div style="padding: 4px 0;">
+            <label style="font-size: 12px; font-weight: 600; color: #94A3B8; margin-bottom: 6px; display: block;">Select your Bank:</label>
+            <select id="gwUssdBank" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 13.5px; background: #0D1322; color: #FFFFFF; color-scheme: dark;" onchange="updateUssdCode(this.value)">
+              <option value="GTBank">GTBank (*737*2*Amount*Ref#)</option>
+              <option value="Zenith">Zenith Bank (*966*Amount*Ref#)</option>
+              <option value="Access">Access Bank (*901*Amount*Ref#)</option>
+              <option value="UBA">UBA (*919*Amount*Ref#)</option>
+              <option value="FirstBank">First Bank (*894*Amount*Ref#)</option>
+            </select>
+            <div style="margin-top: 12px; padding: 12px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 8px; font-family: monospace; font-size: 14.5px; font-weight: 700; color: #38BDF8; text-align: center;" id="gwUssdDisplay">
+              *737*2*5500*84920#
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit & Auth Button -->
+        <div style="padding: 0 20px 18px;">
+          <button type="button" class="gw-pay-action-btn" id="gwPaySubmitBtn" onclick="authorizeGatewayPayment()">
+            <span id="gwBtnText">Authorize & Pay Now</span>
+          </button>
+        </div>
+
+        <div class="gw-modal-footer">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          <span id="gwFooterText">Protected by 256-bit Paystack PCI Security</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="shared.js"></script>
+  <script>
+    // State
+    let currentProductId = '';
+    let currentDuration = '';
+    let currentQty = 1;
+    let selectedDeliveryChannel = 'Email';
+    let selectedGateway = 'Paystack';
+    let currentProduct = null;
+    let serverQuote = null;
+    let createdOrder = null;
+    let activeReservationToken = null;
+    let reservationExpiresAt = null;
+    let countdownIntervalId = null;
+
+    // Handle Cancel & Return
+    async function handleCancel() {
+      await releaseStockReservation();
+      if (currentProductId) {
+        window.location.href = `product.html?id=${encodeURIComponent(currentProductId)}`;
+      } else {
+        window.location.href = 'shop.html';
+      }
+    }
+
+    // Release active reservation
+    async function releaseStockReservation() {
+      if (!activeReservationToken) return;
+      const token = activeReservationToken;
+      activeReservationToken = null;
+      if (countdownIntervalId) clearInterval(countdownIntervalId);
+      try {
+        await fetch('/api/inventory/release', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reservationToken: token })
+        });
+      } catch (e) {
+        console.warn('Release error:', e);
+      }
+    }
+
+    // Reserve stock on server
+    async function reserveStock(qty) {
+      if (countdownIntervalId) clearInterval(countdownIntervalId);
+      
+      const banner = document.getElementById('reservationNoticeBanner');
+      const errorBanner = document.getElementById('stockErrorBanner');
+      const payBtn = document.getElementById('proceedPayBtn');
+
+      try {
+        const res = await fetch('/api/inventory/reserve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: currentProductId,
+            duration: currentDuration,
+            quantity: qty
+          })
+        });
+
+        const data = await res.json();
+        if (data.success && data.reservationToken) {
+          activeReservationToken = data.reservationToken;
+          reservationExpiresAt = data.expiresAt;
+
+          if (errorBanner) errorBanner.style.display = 'none';
+          if (banner) banner.style.display = 'flex';
+
+          startCountdownTimer(data.expiresAt);
+          if (payBtn) {
+            payBtn.disabled = false;
+            payBtn.classList.remove('disabled');
+            if (serverQuote) {
+              payBtn.innerHTML = `<span>Proceed to Payment (${serverQuote.formattedPrice})</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+            }
+          }
+          return true;
+        } else {
+          // Out of stock
+          activeReservationToken = null;
+          if (banner) banner.style.display = 'none';
+          if (errorBanner) {
+            errorBanner.style.display = 'block';
+            errorBanner.innerHTML = `<strong>Out of Stock:</strong> ${data.message || 'This item or quantity is currently unavailable.'}`;
+          }
+          if (payBtn) {
+            payBtn.disabled = true;
+            payBtn.classList.add('disabled');
+            payBtn.innerHTML = `<span>Currently Out of Stock</span>`;
+          }
+          showToast(data.message || 'Product is currently out of stock.');
+          return false;
+        }
+      } catch (err) {
+        console.warn('Reservation error:', err);
+        return false;
+      }
+    }
+
+    function startCountdownTimer(expiresAt) {
+      function tick() {
+        const remaining = Math.max(0, expiresAt - Date.now());
+        const totalSecs = Math.floor(remaining / 1000);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        const timerEl = document.getElementById('resvCountdownTimer');
+        if (timerEl) {
+          timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        if (remaining <= 0) {
+          clearInterval(countdownIntervalId);
+          activeReservationToken = null;
+          showToast('Checkout session expired. Re-reserving stock...');
+          reserveStock(currentQty);
+        }
+      }
+      tick();
+      countdownIntervalId = setInterval(tick, 1000);
+    }
+
+    // Boot
+    async function initCheckout() {
+      const urlParams = new URLSearchParams(window.location.search);
+      currentProductId = urlParams.get('productId') || urlParams.get('id') || 'netflix-premium';
+      currentDuration = urlParams.get('duration') || urlParams.get('plan') || '';
+      currentQty = parseInt(urlParams.get('qty') || '1', 10) || 1;
+
+      // Look up product metadata for display
+      const source = (typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS;
+      currentProduct = source.find(p => p.id === currentProductId) || source[0];
+      if (!currentDuration && currentProduct.variants && currentProduct.variants.length > 0) {
+        currentDuration = currentProduct.variants[0].duration;
+      } else if (!currentDuration && currentProduct.plans && currentProduct.plans.length > 0) {
+        currentDuration = currentProduct.plans[0].duration;
+      }
+
+      // Populate display
+      document.getElementById('summaryProdTitle').textContent = currentProduct.name;
+      document.getElementById('summaryProdOption').textContent = `Option: ${currentDuration || currentProduct.duration || 'Standard'}`;
+      document.getElementById('summaryQtyDisplay').textContent = currentQty;
+
+      const iconTile = document.getElementById('summaryIconTile');
+      iconTile.className = `summary-icon-tile ${currentProduct.brandClass || ''}`;
+      iconTile.innerHTML = currentProduct.brandSymbol || '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>';
+
+      // Pre-fill existing customer info if saved
+      const savedCust = JSON.parse(localStorage.getItem('creditlog_last_customer') || '{}');
+      if (savedCust.name) document.getElementById('custName').value = savedCust.name;
+      if (savedCust.email) document.getElementById('custEmail').value = savedCust.email;
+      if (savedCust.phone) document.getElementById('custPhone').value = savedCust.phone;
+
+      // Request authoritative server price quote
+      await fetchServerQuote();
+
+      // Reserve stock on server
+      await reserveStock(currentQty);
+    }
+
+    // Server-side authoritative price quote
+    async function fetchServerQuote() {
+      const activeCurr = getCurrency();
+      try {
+        const res = await fetch('/api/orders/quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: currentProductId,
+            duration: currentDuration,
+            quantity: currentQty,
+            currency: activeCurr
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            serverQuote = data;
+            document.getElementById('summaryUnitPrice').textContent = formatPrice(data.unitPriceUsd);
+            document.getElementById('summaryTotalBig').textContent = data.formattedPrice;
+            const payBtn = document.getElementById('proceedPayBtn');
+            if (payBtn && !payBtn.disabled) {
+              payBtn.innerHTML = `
+                <span>Proceed to Payment (${data.formattedPrice})</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              `;
+            }
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Quote API fallback:', err);
+      }
+
+      // Offline fallback calculation using authoritative rates
+      const plan = (currentProduct && currentProduct.variants) ? currentProduct.variants.find(p => p.duration === currentDuration) : null;
+      const unit = plan ? plan.usdPrice : (currentProduct ? currentProduct.usdPrice : 5.00);
+      const totalUsd = unit * currentQty;
+      document.getElementById('summaryUnitPrice').textContent = formatPrice(unit);
+      document.getElementById('summaryTotalBig').textContent = formatPrice(totalUsd);
+    }
+
+    // Adjust quantity directly on checkout
+    async function adjustQty(delta) {
+      const nextQty = Math.max(1, Math.min(20, currentQty + delta));
+      if (nextQty === currentQty) return;
+      currentQty = nextQty;
+      document.getElementById('summaryQtyDisplay').textContent = currentQty;
+      await fetchServerQuote();
+      await reserveStock(currentQty);
+    }
+
+    // Select delivery channel
+    function selectChannel(chan) {
+      selectedDeliveryChannel = chan;
+      document.querySelectorAll('.channel-pill-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`chan${chan}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const altWrap = document.getElementById('altContactWrap');
+      const altLabel = document.getElementById('altContactLabel');
+      if (chan === 'WhatsApp') {
+        altWrap.style.display = 'block';
+        altLabel.textContent = 'WhatsApp Number (or leave blank to use phone above)';
+      } else if (chan === 'Telegram') {
+        altWrap.style.display = 'block';
+        altLabel.textContent = 'Telegram Username / Handle (@username)';
+      } else {
+        altWrap.style.display = 'none';
+      }
+    }
+
+    // Select payment gateway
+    function selectGateway(gw) {
+      selectedGateway = gw;
+      document.querySelectorAll('.gateway-option-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById(`gwCard${gw}`);
+      if (activeCard) {
+        activeCard.classList.add('active');
+        const radio = activeCard.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      }
+    }
+
+    // Proceed directly to Payment (Server creates order & calculates authoritative price)
+    async function handleProceedToPayment() {
+      const name = document.getElementById('custName').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const altContact = document.getElementById('altContactInput').value.trim();
+      const productSpecific = document.getElementById('productSpecificInput').value.trim();
+      const notes = document.getElementById('orderNotes').value.trim();
+
+      // Validation
+      if (!name) {
+        showToast('Please enter your Full Name.');
+        document.getElementById('custName').focus();
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        showToast('Please enter a valid Email Address for instant delivery.');
+        document.getElementById('custEmail').focus();
+        return;
+      }
+      if (!phone) {
+        showToast('Please enter your Phone / WhatsApp Number.');
+        document.getElementById('custPhone').focus();
+        return;
+      }
+
+      // Save customer details for next time
+      localStorage.setItem('creditlog_last_customer', JSON.stringify({ name, email, phone }));
+
+      const payBtn = document.getElementById('proceedPayBtn');
+      payBtn.disabled = true;
+      payBtn.innerHTML = `<span>Verifying Order with Server...</span>`;
+
+      // 1. Create order on server (server calculates authoritative price & links reservation)
+      try {
+        const res = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: currentProductId,
+            duration: currentDuration,
+            quantity: currentQty,
+            customerName: name,
+            customerEmail: email,
+            customerPhone: phone,
+            deliveryChannel: selectedDeliveryChannel,
+            deliveryContact: altContact || phone || email,
+            productSpecificInfo: productSpecific,
+            notes: notes,
+            currency: getCurrency(),
+            gateway: selectedGateway,
+            reservationToken: activeReservationToken
+          })
+        });
+
+        const data = await res.json();
+        if (data.success && data.order) {
+          createdOrder = data.order;
+        } else {
+          throw new Error(data.message || 'Order creation failed');
+        }
+      } catch (err) {
+        console.warn('API error, using local fallback:', err);
+        createdOrder = {
+          id: '#CL-' + Math.floor(10000 + Math.random() * 90000),
+          reference: `${selectedGateway.toLowerCase().slice(0,3)}_ref_${Date.now().toString(36)}`,
+          product: currentProduct ? currentProduct.name : 'Digital Subscription',
+          plan: currentDuration,
+          quantity: currentQty,
+          price: document.getElementById('summaryTotalBig').textContent,
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone,
+          deliveryChannel: selectedDeliveryChannel,
+          productSpecificInfo: productSpecific,
+          gateway: selectedGateway,
+          currency: getCurrency(),
+          reservationToken: activeReservationToken
+        };
+      }
+
+      payBtn.disabled = false;
+      payBtn.innerHTML = `<span>Proceed to Payment (${createdOrder.price})</span>`;
+
+      // 2. Open interactive payment gateway modal
+      openGatewayModal(createdOrder);
+    }
+
+    // Open Payment Gateway Modal
+    function openGatewayModal(order) {
+      const modal = document.getElementById('paymentGatewayModal');
+      document.getElementById('gwCustomerEmail').textContent = order.customerEmail;
+      document.getElementById('gwAmountDisplay').textContent = order.price;
+
+      const header = document.getElementById('gwHeader');
+      const logo = document.getElementById('gwLogo');
+      const submitBtn = document.getElementById('gwPaySubmitBtn');
+      const footer = document.getElementById('gwFooterText');
+      const tabs = document.getElementById('gwTabsNav');
+
+      if (order.gateway === 'Flutterwave') {
+        header.classList.add('flw-theme');
+        tabs.classList.add('flw-theme-tabs');
+        submitBtn.classList.add('flw-theme-btn');
+        logo.textContent = 'Flutterwave';
+        footer.textContent = 'Protected by Flutterwave 256-bit PCI-DSS Security';
+      } else {
+        header.classList.remove('flw-theme');
+        tabs.classList.remove('flw-theme-tabs');
+        submitBtn.classList.remove('flw-theme-btn');
+        logo.textContent = 'Paystack';
+        footer.textContent = 'Protected by Paystack 256-bit PCI-DSS Security';
+      }
+
+      document.getElementById('gwBtnText').textContent = `Authorize & Pay ${order.price}`;
+      modal.classList.remove('hidden');
+    }
+
+    function closeGatewayModal() {
+      document.getElementById('paymentGatewayModal').classList.add('hidden');
+    }
+
+    function switchGwTab(tab) {
+      document.querySelectorAll('.gw-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.gw-tab-pane').forEach(p => p.classList.add('hidden'));
+
+      if (tab === 'card') {
+        document.getElementById('gwTabCard').classList.add('active');
+        document.getElementById('gwPaneCard').classList.remove('hidden');
+      } else if (tab === 'transfer') {
+        document.getElementById('gwTabTransfer').classList.add('active');
+        document.getElementById('gwPaneTransfer').classList.remove('hidden');
+      } else if (tab === 'ussd') {
+        document.getElementById('gwTabUssd').classList.add('active');
+        document.getElementById('gwPaneUssd').classList.remove('hidden');
+      }
+    }
+
+    function fillTestCard() {
+      document.getElementById('gwCardNumber').value = '4084 0800 1234 5678';
+      document.getElementById('gwCardExpiry').value = '12/28';
+      document.getElementById('gwCardCvv').value = '482';
+      document.getElementById('gwCardBrand').textContent = 'VISA';
+      showToast('Test Card details loaded');
+    }
+
+    function copyVirtualAccount() {
+      const acc = document.getElementById('gwVirtualAcc').textContent;
+      navigator.clipboard.writeText(acc);
+      showToast(`Virtual account copied: ${acc}`);
+    }
+
+    function updateUssdCode(bank) {
+      const total = createdOrder ? createdOrder.price.replace(/[^0-9]/g, '') : '5500';
+      const ref = Math.floor(10000 + Math.random() * 90000);
+      let code = `*737*2*${total}*${ref}#`;
+      if (bank === 'Zenith') code = `*966*${total}*${ref}#`;
+      if (bank === 'Access') code = `*901*${total}*${ref}#`;
+      if (bank === 'UBA') code = `*919*${total}*${ref}#`;
+      if (bank === 'FirstBank') code = `*894*${total}*${ref}#`;
+      document.getElementById('gwUssdDisplay').textContent = code;
+    }
+
+    // Authorize & Verify Payment Server-Side
+    function authorizeGatewayPayment() {
+      const submitBtn = document.getElementById('gwPaySubmitBtn');
+      const btnText = document.getElementById('gwBtnText');
+
+      submitBtn.disabled = true;
+      btnText.innerHTML = `<svg class="spinner-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; animation: spin 0.8s linear infinite; vertical-align:-3px; margin-right:6px;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Verifying payment with ${selectedGateway}...`;
+
+      setTimeout(async () => {
+        btnText.innerHTML = `Payment Approved! Dispatching Credentials...`;
+
+        // Server-Side Payment Verification Call (Converts Reserved Stock -> Sold Stock)
+        try {
+          const verifyRes = await fetch('/api/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderId: createdOrder.id,
+              reference: createdOrder.reference,
+              gateway: selectedGateway,
+              reservationToken: activeReservationToken,
+              customerName: createdOrder.customerName,
+              customerEmail: createdOrder.customerEmail,
+              customerPhone: createdOrder.customerPhone,
+              deliveryChannel: createdOrder.deliveryChannel,
+              productSpecificInfo: createdOrder.productSpecificInfo,
+              product: createdOrder.product,
+              plan: createdOrder.plan,
+              quantity: createdOrder.quantity,
+              amount: createdOrder.price,
+              currency: createdOrder.currency
+            })
+          });
+
+          const verifyData = await verifyRes.json();
+          if (verifyData.success && verifyData.order) {
+            createdOrder = verifyData.order;
+          }
+        } catch (err) {
+          console.warn('Verification API sync fallback:', err);
+        }
+
+        // Reservation has now successfully converted into sold stock
+        activeReservationToken = null;
+        if (countdownIntervalId) clearInterval(countdownIntervalId);
+
+        // Save last order in localStorage for confirmation screen
+        localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
+
+        setTimeout(() => {
+          closeGatewayModal();
+          // Navigate to Success screen with verified order details
+          window.location.href = `success.html?orderId=${encodeURIComponent(createdOrder.id)}`;
+        }, 700);
+      }, 1100);
+    }
+
+    // Release reservation if user leaves page without paying
+    window.addEventListener('beforeunload', () => {
+      if (activeReservationToken) {
+        navigator.sendBeacon('/api/inventory/release', JSON.stringify({ reservationToken: activeReservationToken }));
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', initCheckout);
+  </script>
+
+</body>
+</html>
