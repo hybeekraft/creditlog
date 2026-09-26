@@ -521,7 +521,7 @@ const server = http.createServer(async (req, res) => {
 
       return sendJSON(res, 201, {
         success: true,
-        message: `Product "${newProduct.name}" successfully added to catalog.`,
+        message: `Product "${newProduct.name}" successfully added to shop.`,
         product: newProduct
       });
     });
@@ -779,7 +779,7 @@ const server = http.createServer(async (req, res) => {
       const product = products.find(p => p.id === productId || (p.brand && p.brand.toLowerCase() === (body.brand || '').toLowerCase()));
 
       if (!product) {
-        return sendJSON(res, 404, { success: false, message: 'Product not found in catalog.' });
+        return sendJSON(res, 404, { success: false, message: 'Product not found in shop.' });
       }
 
       if (product.enabled === false) {
@@ -914,7 +914,7 @@ const server = http.createServer(async (req, res) => {
   // STOREFRONT PUBLIC APIS
   // =========================================================================
 
-  // 1. GET /api/products — Catalog Listing with Live Stock Stats
+  // 1. GET /api/products — Shop Listing with Live Stock Stats
   if (pathname === '/api/products' && req.method === 'GET') {
     let products = getAllProducts().map(p => recomputeProductStock(p));
 
@@ -1302,6 +1302,7 @@ const server = http.createServer(async (req, res) => {
     const orders = getAllOrders();
     return sendJSON(res, 200, {
       success: true,
+      totalShop: products.length,
       totalCatalog: products.length,
       inStockCount: products.filter(p => p.inStock && p.availableStock > 0).length,
       totalOrdersDelivered: orders.filter(o => o.status === 'Delivered').length,

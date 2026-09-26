@@ -493,7 +493,7 @@ a {
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.08;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--text-dark, #120905);
   letter-spacing: -0.035em;
   margin-bottom: 14px;
 }
@@ -501,7 +501,7 @@ a {
 .hero-subtitle {
   font-size: 16.5px;
   line-height: 1.6;
-  color: #94A3B8;
+  color: var(--text-muted, #6B625B);
   max-width: 580px;
   margin: 0 auto 28px;
   letter-spacing: -0.015em;
@@ -2666,7 +2666,7 @@ select, option {
 .welcome-heading {
   font-size: 24px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--text-dark, #120905);
 }
 
 .welcome-sub {
@@ -2880,7 +2880,7 @@ select, option {
 .metric-val {
   font-size: 26px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--text-dark, #120905);
   margin-bottom: 8px;
 }
 
@@ -3098,8 +3098,8 @@ select, option {
 .data-table td {
   padding: 14px 20px;
   font-size: 13px;
-  color: #F1F5F9;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-dark, #120905);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .data-table tr:hover td {

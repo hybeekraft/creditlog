@@ -4245,11 +4245,16 @@ function getAllCatalogProducts() {
   return [];
 }
 
+const getAllShopProducts = getAllCatalogProducts;
+const SHOP_PRODUCTS = CATALOG_PRODUCTS;
+
 if (typeof window !== 'undefined') {
   window.CATALOG_PRODUCTS = CATALOG_PRODUCTS;
+  window.SHOP_PRODUCTS = SHOP_PRODUCTS;
   window.BOT_PRODUCTS = BOT_PRODUCTS;
   window.PRODUCTS = PRODUCTS;
   window.getAllCatalogProducts = getAllCatalogProducts;
+  window.getAllShopProducts = getAllShopProducts;
 }
 
 // --- Cart Storage (Persistent across pages via localStorage) ---
