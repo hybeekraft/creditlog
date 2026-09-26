@@ -5,7 +5,7 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
-const ROOT_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = isVercel ? process.cwd() : path.resolve(__dirname, '..');
 const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(ROOT_DIR, 'data');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
