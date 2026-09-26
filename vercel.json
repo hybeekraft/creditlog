@@ -1,57 +1,22 @@
 {
-  "version": 2,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "data/**"
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.js"
     }
-  },
-  "routes": [
+  ],
+  "redirects": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "source": "/catalogue",
+      "destination": "/shop",
+      "permanent": true
     },
     {
-      "src": "/catalogue(.html)?",
-      "status": 301,
-      "headers": {
-        "Location": "/shop"
-      }
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/shop",
-      "dest": "/shop.html"
-    },
-    {
-      "src": "/admin",
-      "dest": "/admin.html"
-    },
-    {
-      "src": "/inventory",
-      "dest": "/inventory.html"
-    },
-    {
-      "src": "/activity-logs",
-      "dest": "/activity-logs.html"
-    },
-    {
-      "src": "/checkout",
-      "dest": "/checkout.html"
-    },
-    {
-      "src": "/success",
-      "dest": "/success.html"
-    },
-    {
-      "src": "/product",
-      "dest": "/product.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/catalogue.html",
+      "destination": "/shop",
+      "permanent": true
     }
   ]
 }

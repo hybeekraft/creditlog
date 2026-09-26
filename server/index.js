@@ -5,7 +5,8 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
-const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(__dirname, 'data');
+const ROOT_DIR = path.resolve(__dirname, '..');
+const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(ROOT_DIR, 'data');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const RESERVATIONS_FILE = path.join(DATA_DIR, 'reservations.json');
@@ -17,7 +18,7 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 // Seed bundled default JSON data if running in ephemeral environment
-const SOURCE_DATA_DIR = path.join(__dirname, 'data');
+const SOURCE_DATA_DIR = path.join(ROOT_DIR, 'data');
 [PRODUCTS_FILE, ORDERS_FILE, RESERVATIONS_FILE, LOGS_FILE].forEach(targetFile => {
   if (!fs.existsSync(targetFile)) {
     const filename = path.basename(targetFile);
@@ -1260,7 +1261,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   let reqPath = pathname === '/' ? '/index.html' : pathname;
-  let filePath = path.join(__dirname, reqPath);
+  let filePath = path.join(ROOT_DIR, reqPath);
 
   // Clean URL resolution
   if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
@@ -1275,7 +1276,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         return res.end(`404 Not Found: ${pathname}`);
       }
-      filePath = path.join(__dirname, 'index.html');
+      filePath = path.join(ROOT_DIR, 'index.html');
     }
 
     const ext = path.extname(filePath).toLowerCase();
