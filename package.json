@@ -13,5 +13,8 @@
     "inventory-cms"
   ],
   "author": "CreditLog",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "simple-icons": "^16.32.0"
+  }
 }

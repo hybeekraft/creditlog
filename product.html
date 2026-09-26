@@ -499,9 +499,7 @@
       <!-- 1. Product Name, Icon, Description & Meta -->
       <section class="product-hero-card" id="productHeroCard">
         <div class="product-brand-row">
-          <div class="product-icon-tile" id="productIconTile">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>
-          </div>
+          <div class="product-icon-tile" id="productIconTile"></div>
           <div class="product-meta-wrap">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
               <span class="product-cat-tag" id="productCategoryTag">AI & LLMs</span>
@@ -663,7 +661,7 @@
 
       const iconTile = document.getElementById('productIconTile');
       if (iconTile) {
-        iconTile.outerHTML = renderBrandIcon(currentProduct);
+        iconTile.outerHTML = renderBrandIcon(currentProduct, { isHero: true, id: 'productIconTile', className: 'product-icon-tile' });
       }
 
       updateStockBadge();

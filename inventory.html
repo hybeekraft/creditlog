@@ -918,9 +918,7 @@
           <tr id="row_${prod.id}">
             <td>
               <div class="cms-prod-cell">
-                <div class="cms-prod-icon ${prod.brandClass || 'tile-gemini'}">
-                  ${prod.brandSymbol || '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>'}
-                </div>
+                ${typeof renderBrandIcon === 'function' ? renderBrandIcon(prod, { size: 36, radius: 10, iconSize: 18 }) : `<div class="cms-prod-icon ${prod.brandClass || ''}">${prod.brandSymbol || ''}</div>`}
                 <div>
                   <div class="cms-prod-name">${escapeHtml(prod.name)}</div>
                   <div class="cms-prod-meta">
