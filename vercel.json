@@ -12,9 +12,6 @@
       "dest": "/api/index.js"
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/catalogue(.html)?",
       "status": 301,
       "headers": {
@@ -22,8 +19,35 @@
       }
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/shop",
       "dest": "/shop.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/inventory",
+      "dest": "/inventory.html"
+    },
+    {
+      "src": "/activity-logs",
+      "dest": "/activity-logs.html"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/checkout.html"
+    },
+    {
+      "src": "/success",
+      "dest": "/success.html"
+    },
+    {
+      "src": "/product",
+      "dest": "/product.html"
     },
     {
       "src": "/(.*)",

@@ -4,7 +4,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
+const isVercel = Boolean(process.env.VERCEL);
+const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(__dirname, 'data');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const RESERVATIONS_FILE = path.join(DATA_DIR, 'reservations.json');
@@ -14,18 +15,24 @@ const LOGS_FILE = path.join(DATA_DIR, 'logs.json');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
-if (!fs.existsSync(PRODUCTS_FILE)) {
-  fs.writeFileSync(PRODUCTS_FILE, '[]');
-}
-if (!fs.existsSync(ORDERS_FILE)) {
-  fs.writeFileSync(ORDERS_FILE, '[]');
-}
-if (!fs.existsSync(RESERVATIONS_FILE)) {
-  fs.writeFileSync(RESERVATIONS_FILE, '[]');
-}
-if (!fs.existsSync(LOGS_FILE)) {
-  fs.writeFileSync(LOGS_FILE, '[]');
-}
+
+// Seed bundled default JSON data if running in ephemeral environment
+const SOURCE_DATA_DIR = path.join(__dirname, 'data');
+[PRODUCTS_FILE, ORDERS_FILE, RESERVATIONS_FILE, LOGS_FILE].forEach(targetFile => {
+  if (!fs.existsSync(targetFile)) {
+    const filename = path.basename(targetFile);
+    const sourceFile = path.join(SOURCE_DATA_DIR, filename);
+    if (fs.existsSync(sourceFile)) {
+      try {
+        fs.copyFileSync(sourceFile, targetFile);
+      } catch (e) {
+        fs.writeFileSync(targetFile, '[]');
+      }
+    } else {
+      fs.writeFileSync(targetFile, '[]');
+    }
+  }
+});
 
 // Payment Gateway Config
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_demo_creditlog_paystack';
@@ -1262,6 +1269,12 @@ const server = http.createServer(async (req, res) => {
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
+      const ext = path.extname(pathname).toLowerCase();
+      const isStaticAsset = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.json', '.woff', '.woff2', '.ttf', '.webp'].includes(ext);
+      if (isStaticAsset) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        return res.end(`404 Not Found: ${pathname}`);
+      }
       filePath = path.join(__dirname, 'index.html');
     }
 
