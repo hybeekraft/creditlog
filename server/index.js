@@ -1364,7 +1364,6 @@ const server = http.createServer(async (req, res) => {
         res.end(content);
       }
     });
-  });
 });
 
 if (require.main === module) {
