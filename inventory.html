@@ -660,7 +660,7 @@
                 <th>Available</th>
                 <th>Status</th>
                 <th>Enabled</th>
-                <th>Options & Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="inventoryTableBody">
@@ -979,9 +979,6 @@
 
             <td>
               <div style="display: flex; align-items: center; gap: 6px;">
-                <button type="button" class="cms-action-btn-sm" onclick="openVariantsModal('${prod.id}')" title="Configure Variant Options & Stock">
-                  Options (${(prod.variants && prod.variants.length) || 1})
-                </button>
                 <button type="button" class="cms-action-btn-sm cms-delete-btn-sm" onclick="deleteProduct('${prod.id}', '${escapeHtml(prod.name)}')" title="Delete from Shop">
                   🗑
                 </button>
