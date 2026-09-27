@@ -46,55 +46,15 @@ function logoutUser() {
 }
 
 function renderHeaderAuth() {
-  const actions = document.querySelector('.site-header .header-actions');
-  if (!actions) return;
-
-  const user = getCurrentUser();
+  // Profile avatar and admin menu are strictly reserved for backoffice admin pages (admin.html, inventory.html, activity-logs.html)
+  // Ensure no profile avatar or admin menu is ever injected into the public storefront header
   const existingAuthWrap = document.getElementById('headerAuthContainer');
-
-  const authHtml = (user && user.role && user.role.toLowerCase() === 'admin') ? `
-    <div class="user-profile-menu" id="headerAuthContainer">
-      <button class="user-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown()" title="${user.name}">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="${user.name}" class="avatar-img">
-      </button>
-      <div class="user-dropdown hidden" id="userDropdown">
-        <div class="user-dropdown-header">
-          <span class="user-name">${user.name}</span>
-          <span class="user-role">${user.role}</span>
-        </div>
-        <div class="dropdown-divider"></div>
-        <a href="inventory.html" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          <span>Inventory & CMS</span>
-        </a>
-        <a href="admin.html" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          <span>Admin Analytics</span>
-        </a>
-        <a href="activity-logs.html" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <span>Activity Logs</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="javascript:void(0)" onclick="logoutUser()" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          <span>Sign Out</span>
-        </a>
-      </div>
-    </div>
-  ` : `
-    <div class="header-guest-actions" id="headerAuthContainer"></div>
-  `;
-
   if (existingAuthWrap) {
-    existingAuthWrap.outerHTML = authHtml;
-  } else {
-    const staticMenu = actions.querySelector('.user-profile-menu');
-    if (staticMenu) {
-      staticMenu.outerHTML = authHtml;
-    } else {
-      actions.appendChild(document.createRange().createContextualFragment(authHtml));
-    }
+    existingAuthWrap.remove();
+  }
+  const staticMenu = document.querySelector('.site-header .user-profile-menu');
+  if (staticMenu) {
+    staticMenu.remove();
   }
 
   // Remove obsolete links from desktop navigation
