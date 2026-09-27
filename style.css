@@ -6242,34 +6242,34 @@ select, option {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   width: 100%;
   margin-bottom: 24px;
 }
 
 .section-tag-line {
   height: 1px;
-  background: rgba(25, 13, 8, 0.12);
+  background: rgba(25, 13, 8, 0.16);
   flex: 1;
-  max-width: 140px;
+  max-width: 160px;
 }
 
 .section-tag-badge {
   font-family: var(--font-mono, 'SF Mono', monospace);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #705E51;
+  color: #5C4A3E;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   user-select: none;
 }
 
 .section-tag-badge .spark-icon {
   color: #D04515;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
 }
 
