@@ -3147,9 +3147,9 @@
     "brandClass": "tile-autodesk",
     "iconType": "autodesk",
     "description": "Autodesk Admin portal access granting AutoCAD, Revit, Maya, 3ds Max, and Inventor licenses.",
-    "totalStock": 15,
+    "totalStock": 28,
     "reservedStock": 0,
-    "availableStock": 15,
+    "availableStock": 28,
     "enabled": true,
     "variants": [
       {

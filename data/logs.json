@@ -1,5 +1,25 @@
 [
   {
+    "id": "log_1790517080826_0959",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Enable Product",
+    "details": "Enabled product \"Autodesk Admin Access\".",
+    "timestamp": "2026-09-27T13:51:20.826Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790517079424_66v7",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Disable Product",
+    "details": "Disabled product \"Autodesk Admin Access\".",
+    "timestamp": "2026-09-27T13:51:19.424Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1790484877140_j71d",
     "user": "Guest Customer",
     "role": "Customer",

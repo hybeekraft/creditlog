@@ -588,9 +588,9 @@
         const rawReq = (currentProduct.importantRequirements || currentProduct.requirements).trim();
         const lines = rawReq.split('\n').map(l => l.trim()).filter(Boolean);
         if (lines.length > 1) {
-          reqEl.innerHTML = `<ul>${lines.map(line => `<li>${line.replace(/^[•\-\*]\s*/, '')}</li>`).join('')}</ul>`;
+          reqEl.innerHTML = `<ul>${lines.map(line => `<li>${escapeHtml(line.replace(/^[•\-\*]\s*/, ''))}</li>`).join('')}</ul>`;
         } else {
-          reqEl.innerHTML = `<p>${rawReq}</p>`;
+          reqEl.innerHTML = `<p>${escapeHtml(rawReq)}</p>`;
         }
       }
 
