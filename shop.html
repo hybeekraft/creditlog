@@ -371,7 +371,7 @@
               ${renderBrandIcon(prod)}
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span class="card-cat-badge">${catLabel}</span>
-                ${inStock ? `<span class="card-stock-pill in-stock">● ${prod.availableStock !== undefined ? prod.availableStock + ' in Stock' : 'In Stock'}</span>` : '<span class="card-stock-pill sold-out">✖ Out of Stock</span>'}
+                ${!inStock ? '<span class="card-stock-pill sold-out">✖ Out of Stock</span>' : ''}
               </div>
             </div>
 
@@ -389,7 +389,7 @@
                 <span class="directory-price-val" style="font-size: 18px; font-weight: 800; color: #190D08; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
               </div>
               <button type="button" class="directory-select-btn" ${!inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="event.stopPropagation(); ${inStock ? `navigateToProduct('${prod.id}')` : ''}">
-                <span>${inStock ? 'Buy Now →' : 'Sold Out'}</span>
+                <span>${inStock ? 'Details →' : 'Sold Out'}</span>
               </button>
             </div>
           `;
@@ -429,7 +429,7 @@
                 <span style="font-size: 16px; font-weight: 800; color: #190D08; display: block;">${formattedPrice}</span>
               </div>
               <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
-                <span>Buy Now →</span>
+                <span>Details →</span>
               </button>
             </div>
           `;

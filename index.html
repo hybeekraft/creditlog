@@ -258,9 +258,9 @@
         const available = prod.availableStock !== undefined ? prod.availableStock : Math.max(0, total - reserved);
         const isAvailable = prod.enabled !== false && available > 0 && prod.inStock !== false;
 
-        const stockBadge = isAvailable
-          ? `<span style="font-size: 11px; font-weight: 700; color: #15803D; background: rgba(21, 128, 61, 0.09); border: 1px solid rgba(21, 128, 61, 0.2); border-radius: 9999px; padding: 2px 8px;">● ${available} in Stock</span>`
-          : `<span style="font-size: 11px; font-weight: 700; color: #B91C1C; background: rgba(185, 28, 28, 0.09); border: 1px solid rgba(185, 28, 28, 0.2); border-radius: 9999px; padding: 2px 8px;">✖ Out of Stock</span>`;
+        const stockBadge = !isAvailable
+          ? `<span style="font-size: 11px; font-weight: 700; color: #B91C1C; background: rgba(185, 28, 28, 0.09); border: 1px solid rgba(185, 28, 28, 0.2); border-radius: 9999px; padding: 2px 8px;">✖ Out of Stock</span>`
+          : '';
 
         card.innerHTML = `
           <div class="card-header-row">
@@ -278,7 +278,7 @@
               <div style="font-size: 19px; font-weight: 800; color: #190D08; font-variant-numeric: tabular-nums;">${formatPrice(prod.usdPrice)}</div>
             </div>
             <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(prod.id)}'" ${!isAvailable ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
-              <span>${isAvailable ? 'Buy Now →' : 'Sold Out'}</span>
+              <span>${isAvailable ? 'Details →' : 'Sold Out'}</span>
             </button>
           </div>
         `;
