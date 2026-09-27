@@ -6156,3 +6156,42 @@ select, option {
   font-size: 15px;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   SECTION TAG FLANK DIVIDER (BEST SELLING / EDITORIAL SHOWCASE)
+   ========================================================================== */
+.section-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.section-tag-line {
+  height: 1px;
+  background: rgba(18, 9, 5, 0.12);
+  flex: 1;
+  max-width: 140px;
+}
+
+.section-tag-badge {
+  font-family: var(--font-mono, 'SF Mono', monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6B625B;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.section-tag-badge .spark-icon {
+  color: #A63C06;
+  font-size: 14px;
+  line-height: 1;
+}
+
