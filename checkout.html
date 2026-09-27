@@ -25,7 +25,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 12px 0 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(18, 9, 5, 0.08);
       margin-bottom: 28px;
     }
 
@@ -33,21 +33,22 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #CBD5E1;
+      background: #FFFFFF;
+      border: 1px solid rgba(18, 9, 5, 0.12);
+      color: #120905;
       font-size: 13.5px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-sm);
     }
 
     .cancel-link-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #FFFFFF;
-      border-color: rgba(255, 255, 255, 0.25);
+      background: #FAF8F5;
+      color: #A63C06;
+      border-color: #A63C06;
       transform: translateX(-2px);
     }
 
@@ -60,20 +61,18 @@
 
     /* Form Column */
     .checkout-card {
-      background: rgba(15, 23, 42, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      background: #FFFFFF;
+      border: 1px solid rgba(18, 9, 5, 0.09);
       border-radius: 20px;
       padding: 28px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-sm);
       margin-bottom: 20px;
     }
 
     .card-heading {
       font-size: 17px;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #120905;
       margin-bottom: 18px;
       display: flex;
       align-items: center;
@@ -88,7 +87,7 @@
       display: block;
       font-size: 13px;
       font-weight: 700;
-      color: #CBD5E1;
+      color: #120905;
       margin-bottom: 6px;
     }
 
@@ -96,11 +95,11 @@
     .form-group-item textarea,
     .form-group-item select {
       width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      background: #FAF8F5;
+      border: 1.5px solid rgba(18, 9, 5, 0.12);
       border-radius: 12px;
       padding: 12px 14px;
-      color: #FFFFFF;
+      color: #120905;
       font-size: 14px;
       outline: none;
       transition: all 0.2s ease;
@@ -110,14 +109,14 @@
     .form-group-item input:focus,
     .form-group-item textarea:focus,
     .form-group-item select:focus {
-      border-color: #38BDF8;
-      background: rgba(255, 255, 255, 0.07);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      border-color: #A63C06;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(166, 60, 6, 0.12);
     }
 
     .form-help-hint {
       font-size: 11.5px;
-      color: #94A3B8;
+      color: #6B625B;
       margin-top: 4px;
       line-height: 1.4;
       display: block;
@@ -138,13 +137,13 @@
     }
 
     .channel-pill-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid rgba(255, 255, 255, 0.09);
+      background: #FAF8F5;
+      border: 1.5px solid rgba(18, 9, 5, 0.1);
       border-radius: 12px;
       padding: 10px 8px;
       text-align: center;
       cursor: pointer;
-      color: #94A3B8;
+      color: #6B625B;
       font-size: 12.5px;
       font-weight: 700;
       transition: all 0.15s ease;
@@ -155,15 +154,14 @@
     }
 
     .channel-pill-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #FFFFFF;
+      background: #F0EEE6;
+      color: #120905;
     }
 
     .channel-pill-btn.active {
-      background: rgba(56, 189, 248, 0.12);
-      border-color: #38BDF8;
-      color: #FFFFFF;
-      box-shadow: 0 0 0 1px #38BDF8;
+      background: rgba(166, 60, 6, 0.08);
+      border-color: #A63C06;
+      color: #A63C06;
     }
 
     /* Payment Gateways Stack */
@@ -174,8 +172,8 @@
     }
 
     .gateway-option-card {
-      background: rgba(255, 255, 255, 0.035);
-      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      background: #FAF9F5;
+      border: 1.5px solid rgba(18, 9, 5, 0.08);
       border-radius: 14px;
       padding: 14px 16px;
       display: flex;
@@ -186,14 +184,13 @@
     }
 
     .gateway-option-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: #F3EFE8;
+      border-color: rgba(18, 9, 5, 0.18);
     }
 
     .gateway-option-card.active {
-      background: rgba(37, 99, 235, 0.12);
-      border-color: #38BDF8;
-      box-shadow: 0 0 0 1px #38BDF8;
+      background: rgba(166, 60, 6, 0.06);
+      border-color: #A63C06;
     }
 
     .gw-info-left {
@@ -205,24 +202,22 @@
     .gw-name-text {
       font-size: 14px;
       font-weight: 700;
-      color: #FFFFFF;
+      color: #120905;
     }
 
     .gw-desc-text {
       font-size: 11.5px;
-      color: #94A3B8;
+      color: #6B625B;
       margin-top: 2px;
     }
 
     /* Right Column: Order Summary Card */
     .order-summary-card {
-      background: rgba(15, 23, 42, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      background: #FFFFFF;
+      border: 1px solid rgba(18, 9, 5, 0.09);
       border-radius: 20px;
       padding: 24px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 80px;
     }
@@ -232,7 +227,7 @@
       align-items: center;
       gap: 14px;
       padding-bottom: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(18, 9, 5, 0.08);
       margin-bottom: 18px;
     }
 
@@ -240,8 +235,8 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #FAF8F5;
+      border: 1px solid rgba(18, 9, 5, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -251,13 +246,13 @@
     .summary-prod-title {
       font-size: 16px;
       font-weight: 700;
-      color: #FFFFFF;
+      color: #120905;
       line-height: 1.3;
     }
 
     .summary-prod-option {
       font-size: 12.5px;
-      color: #38BDF8;
+      color: #A63C06;
       font-weight: 600;
       margin-top: 2px;
     }
@@ -267,7 +262,7 @@
       align-items: center;
       justify-content: space-between;
       font-size: 13.5px;
-      color: #94A3B8;
+      color: #6B625B;
       margin-bottom: 10px;
     }
 
@@ -276,7 +271,7 @@
       align-items: baseline;
       justify-content: space-between;
       padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(18, 9, 5, 0.08);
       margin-top: 14px;
       margin-bottom: 22px;
     }
@@ -284,14 +279,14 @@
     .total-big-val {
       font-size: 26px;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #120905;
       letter-spacing: -0.02em;
     }
 
     .checkout-pay-btn {
       width: 100%;
-      background: #FFFFFF;
-      color: #07090E;
+      background: #A63C06;
+      color: #FFFFFF;
       font-size: 15px;
       font-weight: 800;
       padding: 14px 20px;
@@ -303,13 +298,13 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.16);
+      box-shadow: 0 4px 14px rgba(166, 60, 6, 0.3);
     }
 
     .checkout-pay-btn:hover {
-      background: #E2E8F0;
+      background: #8C3003;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.24);
+      box-shadow: 0 8px 24px rgba(166, 60, 6, 0.4);
     }
 
     .checkout-pay-btn:active {
@@ -320,12 +315,12 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      background: rgba(21, 128, 61, 0.08);
+      border: 1px solid rgba(21, 128, 61, 0.22);
       border-radius: 8px;
       padding: 8px 10px;
       font-size: 11.5px;
-      color: #34D399;
+      color: #15803D;
       font-weight: 600;
       margin-top: 14px;
     }
@@ -374,7 +369,7 @@
           <!-- 1. Customer Identification -->
           <div class="checkout-card">
             <h2 class="card-heading">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #A63C06; margin-right: 6px;"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
               <span>1. Customer Information</span>
             </h2>
             <div class="form-row-2">
@@ -397,10 +392,10 @@
           <!-- 2. Delivery & Contact Channel -->
           <div class="checkout-card">
             <h2 class="card-heading">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #A63C06; margin-right: 6px;"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
               <span>2. Delivery & Contact Preferences</span>
             </h2>
-            <label style="font-size: 13px; font-weight: 700; color: #CBD5E1; margin-bottom: 8px; display: block;">
+            <label style="font-size: 13px; font-weight: 700; color: #120905; margin-bottom: 8px; display: block;">
               Preferred Dispatch Channel *
             </label>
             <div class="channel-pills-row">
@@ -445,13 +440,13 @@
           <!-- 3. Payment Method -->
           <div class="checkout-card">
             <h2 class="card-heading">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #38BDF8; margin-right: 6px;"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #A63C06; margin-right: 6px;"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
               <span>3. Payment Gateway</span>
             </h2>
             <div class="gateways-list">
               <div class="gateway-option-card active" id="gwCardPaystack" onclick="selectGateway('Paystack')">
                 <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="Paystack" checked style="accent-color: #2563EB;">
+                  <input type="radio" name="paymentGateway" value="Paystack" checked style="accent-color: #A63C06;">
                   <div>
                     <div class="gw-name-text">Paystack Secure Checkout</div>
                     <div class="gw-desc-text">Debit / Credit Cards (Mastercard, Visa, Verve), Bank Transfer & USSD</div>
@@ -462,7 +457,7 @@
 
               <div class="gateway-option-card" id="gwCardFlutterwave" onclick="selectGateway('Flutterwave')">
                 <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="Flutterwave" style="accent-color: #2563EB;">
+                  <input type="radio" name="paymentGateway" value="Flutterwave" style="accent-color: #A63C06;">
                   <div>
                     <div class="gw-name-text">Flutterwave Gateway</div>
                     <div class="gw-desc-text">Pan-African & Global cards, Mobile Money & Direct Bank Transfer</div>
@@ -477,21 +472,23 @@
 
         <!-- Right: Order Summary & Authoritative Server Price -->
         <aside class="order-summary-card">
-          <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">Order Summary</h3>
+          <h3 style="font-size: 16px; font-weight: 800; color: #120905; margin-bottom: 16px;">Order Summary</h3>
           
           <!-- Real-Time Stock Reservation Banner -->
-          <div id="reservationNoticeBanner" style="display: none; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #38BDF8; display: flex; align-items: center; justify-content: space-between;">
+          <div id="reservationNoticeBanner" style="display: none; background: rgba(195, 111, 9, 0.1); border: 1px solid rgba(195, 111, 9, 0.25); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #C36F09; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <span>Stock Reserved: <strong id="resvCountdownTimer">15:00</strong></span>
             </div>
-            <span style="font-size: 11px; background: rgba(56, 189, 248, 0.18); padding: 2px 7px; border-radius: 9999px; font-weight: 700;">Locked</span>
+            <span style="font-size: 11px; background: rgba(195, 111, 9, 0.18); padding: 2px 7px; border-radius: 9999px; font-weight: 700;">Locked</span>
           </div>
 
           <!-- Out of Stock Warning Banner (Conditional) -->
-          <div id="stockErrorBanner" style="display: none; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; font-size: 12.5px; color: #F87171;">
+          <div id="stockErrorBanner" style="display: none; background: rgba(185, 28, 28, 0.1); border: 1px solid rgba(185, 28, 28, 0.25); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; font-size: 12.5px; color: #B91C1C;">
             <strong>Out of Stock:</strong> This item or quantity is currently unavailable or reserved by another customer.
           </div>
+
+          <div class="selected-product-box">
             <div class="summary-icon-tile" id="summaryIconTile"></div>
             <div>
               <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
@@ -502,30 +499,30 @@
           <!-- Quantity Stepper on Checkout -->
           <div class="summary-row-line">
             <span>Quantity</span>
-            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 2px 6px;">
-              <button type="button" onclick="adjustQty(-1)" style="border:none; background:none; color:#FFF; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">−</button>
-              <span id="summaryQtyDisplay" style="font-weight:800; color:#FFF; font-size:13.5px; min-width:20px; text-align:center;">1</span>
-              <button type="button" onclick="adjustQty(1)" style="border:none; background:none; color:#FFF; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">+</button>
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: #FAF8F5; border: 1px solid rgba(18, 9, 5, 0.12); border-radius: 8px; padding: 2px 6px;">
+              <button type="button" onclick="adjustQty(-1)" style="border:none; background:none; color:#120905; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">−</button>
+              <span id="summaryQtyDisplay" style="font-weight:800; color:#120905; font-size:13.5px; min-width:20px; text-align:center;">1</span>
+              <button type="button" onclick="adjustQty(1)" style="border:none; background:none; color:#120905; font-weight:700; cursor:pointer; font-size:14px; padding:2px 6px;">+</button>
             </div>
           </div>
 
           <div class="summary-row-line">
             <span>Unit Price</span>
-            <strong id="summaryUnitPrice" style="color: #F8FAFC;">$0.00</strong>
+            <strong id="summaryUnitPrice" style="color: #120905;">$0.00</strong>
           </div>
 
           <div class="summary-row-line">
             <span>Delivery</span>
-            <span style="color: #10B981; font-weight: 700;">Instant Digital (Free)</span>
+            <span style="color: #15803D; font-weight: 700;">Instant Digital (Free)</span>
           </div>
 
           <div class="summary-total-line">
             <div>
-              <span style="font-size: 12px; color: #94A3B8; display: block;">Total Due</span>
+              <span style="font-size: 12px; color: #6B625B; display: block;">Total Due</span>
               <span class="total-big-val" id="summaryTotalBig">$0.00</span>
             </div>
             <div style="text-align: right;">
-              <span style="font-size: 12px; color: #10B981; font-weight: 600;" id="summaryDualTotal">Instant Digital Delivery</span>
+              <span style="font-size: 12px; color: #15803D; font-weight: 600;" id="summaryDualTotal">Instant Digital Delivery</span>
             </div>
           </div>
 
@@ -606,8 +603,8 @@
             </div>
           </div>
           <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-size: 11.5px; color: #64748B; display: inline-flex; align-items: center; gap: 4px;">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #2563EB;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
+            <span style="font-size: 11.5px; color: #6B625B; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #A63C06;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
               Instant test authorization
             </span>
             <button type="button" onclick="fillTestCard()" class="gw-test-btn">Fill Demo Card</button>
@@ -616,11 +613,11 @@
 
         <!-- Tab 2: Bank Transfer -->
         <div class="gw-tab-pane hidden" id="gwPaneTransfer">
-          <div style="background: rgba(255, 255, 255, 0.03); border: 1.5px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 12px;">
-            <span style="font-size: 12px; color: #94A3B8;">Transfer exactly to this temporary virtual account:</span>
-            <div style="font-size: 21px; font-weight: 800; color: #FFFFFF; letter-spacing: 1.5px; margin: 6px 0;" id="gwVirtualAcc">9948201948</div>
-            <div style="font-size: 13px; font-weight: 700; color: #38BDF8;" id="gwVirtualBank">Wema Bank / CreditLog Checkout</div>
-            <span style="font-size: 11px; color: #64748B; display: block; margin-top: 4px;">Dynamic account expires in 30:00 mins</span>
+          <div style="background: #FAF8F5; border: 1.5px dashed rgba(18, 9, 5, 0.18); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 12px;">
+            <span style="font-size: 12px; color: #6B625B;">Transfer exactly to this temporary virtual account:</span>
+            <div style="font-size: 21px; font-weight: 800; color: #120905; letter-spacing: 1.5px; margin: 6px 0;" id="gwVirtualAcc">9948201948</div>
+            <div style="font-size: 13px; font-weight: 700; color: #A63C06;" id="gwVirtualBank">Wema Bank / CreditLog Checkout</div>
+            <span style="font-size: 11px; color: #8C827A; display: block; margin-top: 4px;">Dynamic account expires in 30:00 mins</span>
           </div>
           <button type="button" onclick="copyVirtualAccount()" class="gw-test-btn" style="width: 100%; justify-content: center; padding: 8px; display: inline-flex; align-items: center; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
@@ -631,15 +628,15 @@
         <!-- Tab 3: USSD -->
         <div class="gw-tab-pane hidden" id="gwPaneUssd">
           <div style="padding: 4px 0;">
-            <label style="font-size: 12px; font-weight: 600; color: #94A3B8; margin-bottom: 6px; display: block;">Select your Bank:</label>
-            <select id="gwUssdBank" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 13.5px; background: #0D1322; color: #FFFFFF; color-scheme: dark;" onchange="updateUssdCode(this.value)">
+            <label style="font-size: 12px; font-weight: 600; color: #6B625B; margin-bottom: 6px; display: block;">Select your Bank:</label>
+            <select id="gwUssdBank" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(18, 9, 5, 0.14); font-size: 13.5px; background: #FAF8F5; color: #120905;" onchange="updateUssdCode(this.value)">
               <option value="GTBank">GTBank (*737*2*Amount*Ref#)</option>
               <option value="Zenith">Zenith Bank (*966*Amount*Ref#)</option>
               <option value="Access">Access Bank (*901*Amount*Ref#)</option>
               <option value="UBA">UBA (*919*Amount*Ref#)</option>
               <option value="FirstBank">First Bank (*894*Amount*Ref#)</option>
             </select>
-            <div style="margin-top: 12px; padding: 12px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 8px; font-family: monospace; font-size: 14.5px; font-weight: 700; color: #38BDF8; text-align: center;" id="gwUssdDisplay">
+            <div style="margin-top: 12px; padding: 12px; background: rgba(166, 60, 6, 0.08); border: 1px solid rgba(166, 60, 6, 0.2); border-radius: 8px; font-family: monospace; font-size: 14.5px; font-weight: 700; color: #A63C06; text-align: center;" id="gwUssdDisplay">
               *737*2*5500*84920#
             </div>
           </div>
