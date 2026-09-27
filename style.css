@@ -5847,61 +5847,177 @@ select, option {
   font-weight: 700;
 }
 
-/* 4. CORE PROTOCOL & SERVICE GUARANTEES BAR */
+/* 4. PROTOCOL & GUARANTEE SHOWCASE (Screen 3) */
 .protocol-showcase-section {
-  padding: 8px 24px 34px;
+  padding: 30px 20px 60px;
   max-width: 1560px;
   margin: 0 auto;
 }
 
-.guarantees-bar {
-  background: #190D08;
-  border-radius: var(--radius-card, 20px);
-  padding: 16px 28px;
-  display: flex;
+.protocol-card-white {
+  background: #FFFFFF;
+  border-radius: var(--radius-slab, 32px);
+  border: 1px solid rgba(25, 13, 8, 0.08);
+  box-shadow: 0 6px 30px rgba(25, 13, 8, 0.04);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 36px;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  box-shadow: 0 10px 30px rgba(25, 13, 8, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.guarantee-pill {
+.protocol-visual-box {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  height: 380px;
+}
+
+.protocol-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.floating-tag-top {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: rgba(14, 7, 4, 0.88);
+  backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-full, 9999px);
-  color: #FBF6EA;
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  user-select: none;
+  gap: 8px;
 }
 
-.guarantee-pill:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+.tag-dot {
+  color: #F1C244;
 }
 
-.guarantee-pill .pill-icon-cyan {
-  color: #38BDF8;
-  display: inline-block;
-  flex-shrink: 0;
+.floating-tag-bottom {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: #FFFFFF;
+  color: #190D08;
+  padding: 10px 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.guarantee-pill .pill-icon-green {
-  color: #10B981;
-  display: inline-block;
-  flex-shrink: 0;
+.floating-tag-bottom .metric-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: #D04515;
+}
+
+.floating-tag-bottom .metric-sub {
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #705E51;
+  letter-spacing: 0.06em;
+}
+
+.protocol-title {
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 800;
+  color: #190D08;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.protocol-desc {
+  font-size: 14.5px;
+  color: #705E51;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.protocol-specs-list {
+  border-top: 1px solid rgba(25, 13, 8, 0.08);
+  margin-bottom: 32px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(25, 13, 8, 0.08);
+  font-size: 14px;
+}
+
+.spec-name {
+  color: #705E51;
+}
+
+.spec-value {
+  font-weight: 700;
+  color: #190D08;
+  margin-left: auto;
+  margin-right: 14px;
+}
+
+.spec-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: rgba(208, 69, 21, 0.08);
+  color: #D04515;
+}
+
+.protocol-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.protocol-btn-dark {
+  background: #190D08;
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.18s ease;
+}
+
+.protocol-btn-dark:hover {
+  transform: translateY(-2px);
+}
+
+.protocol-btn-outline {
+  background: transparent;
+  border: 1.5px solid rgba(208, 69, 21, 0.35);
+  color: #D04515;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.protocol-btn-outline:hover {
+  background: #D04515;
+  color: #FFFFFF;
 }
 
 /* RESPONSIVE DESIGN ADJUSTMENTS */
@@ -5912,18 +6028,12 @@ select, option {
   .hero-slab-ticker {
     margin: 0 -24px -28px;
   }
-  .protocol-showcase-section {
-    padding: 6px 16px 26px;
+  .protocol-card-white {
+    grid-template-columns: 1fr;
+    padding: 24px;
   }
-  .guarantees-bar {
-    padding: 14px 16px;
-    gap: 10px;
-    border-radius: 16px;
-  }
-  .guarantee-pill {
-    padding: 8px 14px;
-    font-size: 12.5px;
-    gap: 8px;
+  .protocol-visual-box {
+    height: 260px;
   }
 }
 
