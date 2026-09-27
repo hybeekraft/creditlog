@@ -5434,28 +5434,7 @@ select, option {
   padding: 8px 10px;
 }
 
-.preview-buy-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #F1F5F9;
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all var(--trans-fast);
-}
 
-.preview-buy-btn:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
-  transform: translateY(-1px);
-}
 
 /* ==========================================================================
    Quick Benefits Section

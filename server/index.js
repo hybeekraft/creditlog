@@ -23,6 +23,8 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'product.html'));
     fs.readFileSync(path.join(process.cwd(), 'checkout.html'));
     fs.readFileSync(path.join(process.cwd(), 'success.html'));
+    fs.readFileSync(path.join(process.cwd(), 'robots.txt'));
+    fs.readFileSync(path.join(process.cwd(), 'sitemap.xml'));
     fs.readFileSync(path.join(process.cwd(), 'admin.html'));
     fs.readFileSync(path.join(process.cwd(), 'inventory.html'));
     fs.readFileSync(path.join(process.cwd(), 'activity-logs.html'));
@@ -338,7 +340,9 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.ico': 'image/x-icon',
-  '.webp': 'image/webp'
+  '.webp': 'image/webp',
+  '.txt': 'text/plain',
+  '.xml': 'application/xml'
 };
 
 // --- HTTP Server ---
@@ -1339,7 +1343,7 @@ const server = http.createServer(async (req, res) => {
 
   if (!filePath) {
     const ext = path.extname(pathname).toLowerCase();
-    const isStaticAsset = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.json', '.woff', '.woff2', '.ttf', '.webp'].includes(ext);
+    const isStaticAsset = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.json', '.woff', '.woff2', '.ttf', '.webp', '.txt', '.xml'].includes(ext);
     if (isStaticAsset) {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       return res.end(`404 Not Found: ${pathname}`);

@@ -1,0 +1,37 @@
+# https://www.robotstxt.org/robotstxt.html
+# CreditLog — Crawling and Indexing Directives
+
+User-agent: *
+
+# Block administrative panels, inventory CMS, and internal logs
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /inventory.html
+Disallow: /inventory
+Disallow: /activity-logs.html
+Disallow: /activity-logs
+
+# Block checkout sessions, private reservations, and customer receipts
+Disallow: /checkout.html
+Disallow: /checkout
+Disallow: /success.html
+Disallow: /success
+
+# Block backend API routes & data persistence files
+Disallow: /api/
+Disallow: /data/
+
+# Crawl-delay to prevent server overload from aggressive scraper bots
+Crawl-delay: 10
+
+# Explicitly permit public storefront pages and core visual assets
+Allow: /
+Allow: /index.html
+Allow: /shop.html
+Allow: /product.html
+Allow: /style.css
+Allow: /shared.js
+Allow: /assets/
+
+# Host sitemap
+Sitemap: https://creditlog.vercel.app/sitemap.xml
