@@ -451,7 +451,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span>Important Requirements</span>
         </h3>
-        <div class="info-card-desc">
+        <div class="info-card-desc" id="productRequirements">
           <ul>
             <li><strong>Cross-Platform Compatibility:</strong> Direct access works on Web browsers, Mobile (iOS & Android), Desktop (macOS & Windows), and Smart TV apps.</li>
             <li><strong>Private Profile & PIN:</strong> Your assigned slot has dedicated PIN protection. Master account login email and credentials must remain unaltered to retain your full warranty.</li>
@@ -467,7 +467,7 @@
           <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
           <span>How It Is Delivered</span>
         </h3>
-        <p class="info-card-desc">
+        <p class="info-card-desc" id="productDelivery">
           Automated digital dispatch occurs immediately upon payment confirmation. Your verified login credentials, private assigned profile, PIN, and quick setup instructions are displayed directly on your order confirmation screen and sent directly to your email address. No waiting for manual operator approvals.
         </p>
       </section>
@@ -580,6 +580,23 @@
       const iconTile = document.getElementById('productIconTile');
       if (iconTile) {
         iconTile.outerHTML = renderBrandIcon(currentProduct, { isHero: true, id: 'productIconTile', className: 'product-icon-tile' });
+      }
+
+      // Populate custom requirements and delivery info if defined
+      const reqEl = document.getElementById('productRequirements');
+      if (reqEl && (currentProduct.importantRequirements || currentProduct.requirements)) {
+        const rawReq = (currentProduct.importantRequirements || currentProduct.requirements).trim();
+        const lines = rawReq.split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length > 1) {
+          reqEl.innerHTML = `<ul>${lines.map(line => `<li>${line.replace(/^[•\-\*]\s*/, '')}</li>`).join('')}</ul>`;
+        } else {
+          reqEl.innerHTML = `<p>${rawReq}</p>`;
+        }
+      }
+
+      const delEl = document.getElementById('productDelivery');
+      if (delEl && (currentProduct.howItIsDelivered || currentProduct.deliveryInfo)) {
+        delEl.textContent = (currentProduct.howItIsDelivered || currentProduct.deliveryInfo).trim();
       }
 
       updateStockBadge();

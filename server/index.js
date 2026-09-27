@@ -458,7 +458,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     const body = await parseBody(req);
-    const { name, brand, category, description, usdPrice, totalStock, duration, variants } = body;
+    const { name, brand, category, description, usdPrice, totalStock, duration, variants, howItIsDelivered, importantRequirements } = body;
 
     if (!name) {
       return sendJSON(res, 400, { success: false, message: 'Product name is required.' });
@@ -513,6 +513,8 @@ const server = http.createServer(async (req, res) => {
         brandClass: `tile-${(category || 'other').toLowerCase()}`,
         iconType: (category || 'other').toLowerCase(),
         description: description || 'Verified private digital subscription with instant credentials dispatch upon payment.',
+        importantRequirements: (importantRequirements || body.requirements || '').trim(),
+        howItIsDelivered: (howItIsDelivered || body.deliveryInfo || '').trim(),
         variants: parsedVariants,
         createdAt: new Date().toISOString()
       };

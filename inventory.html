@@ -730,6 +730,16 @@
           <textarea id="addDesc" class="cms-form-textarea" rows="2" placeholder="Verified private digital subscription with instant credentials dispatch..."></textarea>
         </div>
 
+        <div class="cms-form-group">
+          <label>Important Requirements</label>
+          <textarea id="addRequirements" class="cms-form-textarea" rows="3" placeholder="Enter key rules or requirements (e.g. 1 device per profile, PIN protection, web & mobile access)..."></textarea>
+        </div>
+
+        <div class="cms-form-group">
+          <label>How It Is Delivered</label>
+          <textarea id="addDelivery" class="cms-form-textarea" rows="2" placeholder="e.g. Automated instant digital dispatch with verified credentials and setup instructions sent to your email."></textarea>
+        </div>
+
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
           <button type="button" class="secondary-btn" onclick="closeAddProductModal()">Cancel</button>
           <button type="submit" class="cms-btn-primary">Create Product & Initialize Stock</button>
@@ -1159,6 +1169,8 @@
       const totalStock = parseInt(document.getElementById('addStock').value, 10);
       const duration = document.getElementById('addDuration').value.trim() || '1 Month';
       const description = document.getElementById('addDesc').value.trim();
+      const importantRequirements = document.getElementById('addRequirements') ? document.getElementById('addRequirements').value.trim() : '';
+      const howItIsDelivered = document.getElementById('addDelivery') ? document.getElementById('addDelivery').value.trim() : '';
 
       try {
         const res = await fetch('/api/admin/products', {
@@ -1175,7 +1187,9 @@
             usdPrice,
             totalStock,
             duration,
-            description
+            description,
+            importantRequirements,
+            howItIsDelivered
           })
         });
 
