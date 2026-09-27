@@ -65,18 +65,6 @@
       <p class="hero-subtitle" style="margin-bottom: 24px;">
         Verified digital subscriptions across AI, Design, Streaming, and Productivity with instant direct dispatch.
       </p>
-
-      <!-- Fast Search Bar -->
-      <div class="catalog-search-wrap">
-        <svg class="catalog-search-icon" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd" />
-        </svg>
-        <input type="text" id="catalogSearchInput" class="catalog-search-input"
-          placeholder="Search subscriptions (e.g. ChatGPT, Netflix, Canva)..." oninput="handleSearch(this.value)">
-        <span class="catalog-search-shortcut">/</span>
-      </div>
     </div>
 
     <!-- Shop Section with Grid/List -->
@@ -111,10 +99,18 @@
         </div>
       </div>
 
-      <!-- Dynamic Controls Row: Count, Sort, and View Mode Toggle -->
+      <!-- Dynamic Controls Row: Search, Sort, and View Mode Toggle -->
       <div class="catalog-controls-row">
-        <div class="catalog-counter-text" id="catalogCounterText">
-          Showing <strong>0</strong> subscriptions
+        <!-- Fast Search Bar -->
+        <div class="catalog-search-wrap">
+          <svg class="catalog-search-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clip-rule="evenodd" />
+          </svg>
+          <input type="text" id="catalogSearchInput" class="catalog-search-input"
+            placeholder="Search subscriptions (e.g. ChatGPT, Netflix, Canva)..." oninput="handleSearch(this.value)">
+          <span class="catalog-search-shortcut">/</span>
         </div>
         <div class="catalog-controls-right">
           <!-- Apple Glassmorphic Sort Dropdown -->
@@ -339,17 +335,6 @@
       if (currentPage > totalPages) currentPage = totalPages;
       if (currentPage < 1) currentPage = 1;
 
-      // Update counter text
-      const counterEl = document.getElementById('catalogCounterText');
-      if (counterEl) {
-        if (totalItems === 0) {
-          counterEl.innerHTML = `Showing <strong>0</strong> subscriptions`;
-        } else {
-          const start = (currentPage - 1) * PAGE_SIZE + 1;
-          const end = Math.min(currentPage * PAGE_SIZE, totalItems);
-          counterEl.innerHTML = `Showing <strong>${start}–${end}</strong> of <strong>${totalItems}</strong> verified subscriptions`;
-        }
-      }
 
       if (totalItems === 0) {
         if (paginationWrap) paginationWrap.innerHTML = '';
