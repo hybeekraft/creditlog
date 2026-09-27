@@ -117,13 +117,17 @@
           <div class="apple-dropdown-wrap" id="sortDropdownWrap">
             <button type="button" class="apple-sort-trigger" id="sortDropdownTrigger" onclick="toggleSortMenu(event)" aria-haspopup="true" aria-expanded="false">
               <span class="sort-icon-prefix">⇅</span>
-              <span id="sortDropdownLabel">Featured First</span>
+              <span id="sortDropdownLabel">Alphabetical: A to Z</span>
               <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
               </svg>
             </button>
             <div class="apple-dropdown-menu hidden" id="sortDropdownMenu" role="menu">
-              <button type="button" class="apple-dropdown-item active" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
+              <button type="button" class="apple-dropdown-item active" data-sort="name-asc" onclick="selectSortOption('name-asc', 'Alphabetical: A to Z')">
+                <span>Alphabetical: A to Z</span>
+                <span class="sort-check">✓</span>
+              </button>
+              <button type="button" class="apple-dropdown-item" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
                 <span>Featured First</span>
                 <span class="sort-check">✓</span>
               </button>
@@ -133,10 +137,6 @@
               </button>
               <button type="button" class="apple-dropdown-item" data-sort="price-desc" onclick="selectSortOption('price-desc', 'Price: Highest to Lowest')">
                 <span>Price: Highest to Lowest</span>
-                <span class="sort-check">✓</span>
-              </button>
-              <button type="button" class="apple-dropdown-item" data-sort="name-asc" onclick="selectSortOption('name-asc', 'Alphabetical: A to Z')">
-                <span>Alphabetical: A to Z</span>
                 <span class="sort-check">✓</span>
               </button>
             </div>
@@ -223,7 +223,7 @@
     // State Management
     let currentCategory = 'all';
     let currentSearch = '';
-    let currentSortMode = 'featured';
+    let currentSortMode = 'name-asc';
     let currentViewMode = 'grid';
     let currentPage = 1;
     const PAGE_SIZE = 20;
