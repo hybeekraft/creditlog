@@ -21,7 +21,7 @@
   <header class="site-header" id="siteHeader">
     <div class="header-container">
       <a href="index.html" class="brand-logo">
-        <div class="logo-icon" style="color: #A63C06;">
+        <div class="logo-icon" style="color: #D04515;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
           </svg>
@@ -163,8 +163,8 @@
       </div>
 
       <div class="section-header-centered" style="margin-bottom: 28px; text-align: center;">
-        <h2 class="section-main-title" style="font-size: 32px; font-weight: 800; color: #120905; letter-spacing: -0.02em;">Top Verified Subscriptions</h2>
-        <p class="section-main-sub" style="font-size: 14.5px; color: #6B625B; max-width: 580px; margin: 8px auto 0;">Explore our most popular AI models, creative tools, and entertainment plans with instant wholesale checkout.</p>
+        <h2 class="section-main-title" style="font-size: 32px; font-weight: 800; color: #190D08; letter-spacing: -0.02em;">Top Verified Subscriptions</h2>
+        <p class="section-main-sub" style="font-size: 14.5px; color: #705E51; max-width: 580px; margin: 8px auto 0;">Explore our most popular AI models, creative tools, and entertainment plans with instant wholesale checkout.</p>
       </div>
 
       <div class="showcase-enclosure-box" style="background: transparent; border: none; padding: 0;">
@@ -186,12 +186,12 @@
       <div class="footer-minimal-container">
         <div class="footer-minimal-left">
           <a href="index.html" class="footer-brand-link">
-            <div class="logo-icon small" style="color: #EEBA0B;">
+            <div class="logo-icon small" style="color: #F1C244;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
               </svg>
             </div>
-            <span class="logo-text" style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Credit<span class="accent-text" style="color: #EEBA0B;">Log</span></span>
+            <span class="logo-text" style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Credit<span class="accent-text" style="color: #F1C244;">Log</span></span>
           </a>
           <span class="footer-copyright">&copy; 2026 CreditLog. All rights reserved.</span>
         </div>
@@ -276,11 +276,11 @@
             </div>
           </div>
           <h3 class="directory-title" style="margin-top: 12px; font-size: 17px; font-weight: 700;">${prod.name}</h3>
-          <p class="directory-desc" style="font-size: 13px; line-height: 1.45; color: #6B625B; margin: 6px 0 16px;">${prod.description || 'Verified private digital subscription with instant credentials dispatch upon payment.'}</p>
-          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(18, 9, 5, 0.08); padding-top: 14px;">
+          <p class="directory-desc" style="font-size: 13px; line-height: 1.45; color: #705E51; margin: 6px 0 16px;">${prod.description || 'Verified private digital subscription with instant credentials dispatch upon payment.'}</p>
+          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(25, 13, 8, 0.08); padding-top: 14px;">
             <div>
-              <div style="font-size: 10.5px; color: #6B625B; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Wholesale Price</div>
-              <div style="font-size: 19px; font-weight: 800; color: #120905; font-variant-numeric: tabular-nums;">${formatPrice(prod.usdPrice)}</div>
+              <div style="font-size: 10.5px; color: #705E51; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Wholesale Price</div>
+              <div style="font-size: 19px; font-weight: 800; color: #190D08; font-variant-numeric: tabular-nums;">${formatPrice(prod.usdPrice)}</div>
               <div style="font-size: 11.5px; color: #15803D; font-weight: 600;">Instant Digital Delivery</div>
             </div>
             <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); window.location.href='product.html?id=${encodeURIComponent(prod.id)}'" ${!isAvailable ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
