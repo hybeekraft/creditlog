@@ -3632,8 +3632,8 @@
     ]
   },
   {
-    "id": "netflix-premium",
-    "name": "Netflix Premium",
+    "id": "netflix-4k-admin-5p",
+    "name": "Netflix 4K Admin 5 Profiles",
     "rawName": "Admin Netflix 4K Premium 1M 5 Profiles · $2.50",
     "category": "streaming",
     "brand": "Netflix",
@@ -3646,7 +3646,7 @@
     "reviews": "4.1k",
     "brandClass": "tile-netflix",
     "iconType": "netflix",
-    "description": "Netflix 4K Ultra HD full admin access with 5 private customizable PIN profiles. Currently sold out.",
+    "description": "Netflix 4K Ultra HD full admin access with 5 private customizable PIN profiles. Instant delivery.",
     "totalStock": 10,
     "reservedStock": 0,
     "availableStock": 10,
@@ -3656,10 +3656,10 @@
         "id": "1m",
         "duration": "1 Month",
         "usdPrice": 3.99,
-        "totalStock": 0,
+        "totalStock": 10,
         "reservedStock": 0,
-        "availableStock": 0,
-        "inStock": false
+        "availableStock": 10,
+        "inStock": true
       }
     ]
   },

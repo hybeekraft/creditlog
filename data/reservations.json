@@ -1,5 +1,17 @@
 [
   {
+    "token": "resv_e455cf4eaa3db262d49b74a2",
+    "productId": "netflix-premium",
+    "productName": "Netflix Premium",
+    "duration": "1 Month",
+    "quantity": 1,
+    "customerEmail": "guest@creditlog.com",
+    "createdAt": "2026-09-27T04:54:25.761Z",
+    "expiresAt": 1790485765761,
+    "status": "released",
+    "releasedAt": "2026-09-27T04:54:37.133Z"
+  },
+  {
     "token": "resv_16459951341abf819f39628e",
     "productId": "netflix-premium",
     "productName": "Netflix Premium",

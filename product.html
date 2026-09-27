@@ -163,91 +163,6 @@
       display: block;
     }
 
-    /* Available Options / Variants Grid */
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .option-card-btn {
-      background: #FFFFFF;
-      border: 1.5px solid rgba(25, 13, 8, 0.12);
-      border-radius: 14px;
-      padding: 14px 16px;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      position: relative;
-    }
-
-    .option-card-btn:hover:not(.disabled) {
-      background: #FBF6EA;
-      border-color: #D04515;
-      transform: translateY(-2px);
-    }
-
-    .option-card-btn.active {
-      background: rgba(208, 69, 21, 0.04);
-      border-color: #D04515;
-      box-shadow: 0 0 0 1.5px #D04515, 0 8px 20px rgba(208, 69, 21, 0.12);
-    }
-
-    .option-card-btn.disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .option-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .option-duration {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #190D08;
-    }
-
-    .option-badge-pill {
-      font-size: 10px;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 9999px;
-      background: rgba(21, 128, 61, 0.1);
-      color: #15803D;
-      border: 1px solid rgba(21, 128, 61, 0.25);
-    }
-
-    .option-card-btn.disabled .option-badge-pill {
-      background: rgba(185, 28, 28, 0.1);
-      color: #B91C1C;
-      border-color: rgba(185, 28, 28, 0.25);
-    }
-
-    .option-price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-top: 4px;
-    }
-
-    .option-price {
-      font-size: 16px;
-      font-weight: 800;
-      color: #190D08;
-    }
-
-    .option-dual-price {
-      font-size: 11.5px;
-      color: #705E51;
-    }
-
     /* Quantity Stepper Block */
     .quantity-row {
       display: flex;
@@ -530,13 +445,8 @@
         </p>
       </section>
 
-      <!-- 2. Available Options, Quantity, Price & Buy Now -->
+      <!-- 2. Quantity, Price & Buy Now -->
       <section class="purchase-section-card">
-        <!-- Available Option / Variant -->
-        <span class="section-eyebrow">Available Option / Duration</span>
-        <div class="options-grid" id="optionsGrid">
-          <!-- Rendered dynamically -->
-        </div>
 
         <!-- Quantity Selector -->
         <div class="quantity-row">
@@ -639,17 +549,25 @@
       // Setup initial plan
       const defaultDuration = currentProduct.duration || '1 Month';
       const availableVariant = (currentProduct.variants && currentProduct.variants.length > 0)
-        ? (currentProduct.variants.find(v => v.availableStock > 0 && v.inStock !== false) || currentProduct.variants[0])
+        ? (currentProduct.variants.find(v => (v.availableStock === undefined || v.availableStock > 0) && v.inStock !== false) || currentProduct.variants[0])
         : null;
+
+      const totalStock = availableVariant ? (availableVariant.totalStock !== undefined ? availableVariant.totalStock : 15) : (currentProduct.totalStock !== undefined ? currentProduct.totalStock : 15);
+      const reservedStock = availableVariant ? (availableVariant.reservedStock || 0) : (currentProduct.reservedStock || 0);
+      const availableStock = availableVariant ? (availableVariant.availableStock !== undefined ? availableVariant.availableStock : Math.max(0, totalStock - reservedStock)) : (currentProduct.availableStock !== undefined ? currentProduct.availableStock : Math.max(0, totalStock - reservedStock));
+      const isProductEnabled = currentProduct.enabled !== false;
+      const isProductInStock = availableVariant
+        ? (availableVariant.inStock !== false && availableStock > 0 && isProductEnabled)
+        : (currentProduct.inStock !== false && availableStock > 0 && isProductEnabled);
 
       currentPlan = {
         productId: currentProduct.id,
         duration: availableVariant ? availableVariant.duration : defaultDuration,
         usdPrice: availableVariant ? availableVariant.usdPrice : (currentProduct.usdPrice || 5.00),
-        totalStock: availableVariant ? availableVariant.totalStock : (currentProduct.totalStock || 10),
-        reservedStock: availableVariant ? availableVariant.reservedStock : (currentProduct.reservedStock || 0),
-        availableStock: availableVariant ? availableVariant.availableStock : (currentProduct.availableStock !== undefined ? currentProduct.availableStock : 10),
-        inStock: availableVariant ? (availableVariant.inStock !== false && availableVariant.availableStock > 0 && currentProduct.enabled !== false) : (currentProduct.inStock !== false && currentProduct.availableStock > 0 && currentProduct.enabled !== false)
+        totalStock: totalStock,
+        reservedStock: reservedStock,
+        availableStock: availableStock,
+        inStock: isProductInStock
       };
 
       // Populate hero
@@ -665,7 +583,6 @@
       }
 
       updateStockBadge();
-      renderOptions();
       updatePrice();
     }
 
@@ -675,11 +592,12 @@
       if (!badge || !currentProduct) return;
 
       const isEnabled = currentProduct.enabled !== false;
-      const available = currentPlan ? currentPlan.availableStock : (currentProduct.availableStock || 0);
+      const available = currentPlan ? currentPlan.availableStock : (currentProduct.availableStock !== undefined ? currentProduct.availableStock : 15);
+      const inStock = currentPlan ? (currentPlan.inStock !== false && available > 0) : (currentProduct.inStock !== false && available > 0);
 
       badge.className = 'stock-pill-badge';
 
-      if (!isEnabled || available <= 0) {
+      if (!isEnabled || !inStock || available <= 0) {
         badge.classList.add('out-stock');
         badge.textContent = '✖ Currently Out of Stock';
       } else if (available <= 3) {
@@ -691,91 +609,9 @@
       }
     }
 
-    // Render interactive duration options with real variant stock
-    function renderOptions() {
-      const grid = document.getElementById('optionsGrid');
-      if (!grid || !currentProduct) return;
-      grid.innerHTML = '';
-
-      const isProdEnabled = currentProduct.enabled !== false;
-
-      // Use product's custom variants if present, otherwise generate tiers
-      let variantList = [];
-      if (currentProduct.variants && currentProduct.variants.length > 0) {
-        variantList = currentProduct.variants;
-      } else {
-        const baseUsd = currentProduct.usdPrice || 5.00;
-        const total = currentProduct.totalStock || 10;
-        const reserved = currentProduct.reservedStock || 0;
-        const available = Math.max(0, total - reserved);
-        variantList = [
-          { id: '1m', duration: '1 Month', usdPrice: baseUsd, totalStock: total, reservedStock: reserved, availableStock: available, inStock: available > 0 && isProdEnabled, discount: '' },
-          { id: '3m', duration: '3 Months', usdPrice: Number((baseUsd * 2.7).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.6)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.6)), inStock: isProdEnabled, discount: 'Save 10%' },
-          { id: '6m', duration: '6 Months', usdPrice: Number((baseUsd * 5.1).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.4)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.4)), inStock: isProdEnabled, discount: 'Save 15%' },
-          { id: '12m', duration: '1 Year', usdPrice: Number((baseUsd * 9.0).toFixed(2)), totalStock: Math.max(1, Math.floor(total * 0.2)), reservedStock: 0, availableStock: Math.max(1, Math.floor(total * 0.2)), inStock: isProdEnabled, discount: 'Save 25%' }
-        ];
-      }
-
-      variantList.forEach((variant) => {
-        const isSelected = currentPlan && (currentPlan.duration === variant.duration || currentPlan.id === variant.id);
-        const isAvailable = isProdEnabled && variant.availableStock > 0 && variant.inStock !== false;
-
-        const btn = document.createElement('div');
-        btn.className = `option-card-btn ${isSelected ? 'active' : ''} ${!isAvailable ? 'disabled' : ''}`;
-        btn.style.cursor = isAvailable ? 'pointer' : 'not-allowed';
-
-        let stockPillHtml = '';
-        if (!isAvailable) {
-          stockPillHtml = `<span class="option-badge-pill" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1);">Out of Stock</span>`;
-        } else if (variant.availableStock <= 3) {
-          stockPillHtml = `<span class="option-badge-pill" style="color: #FBBF24; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.1);">Only ${variant.availableStock} left</span>`;
-        } else {
-          stockPillHtml = variant.discount 
-            ? `<span class="option-badge-pill" style="color: #34D399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">${variant.discount}</span>` 
-            : `<span class="option-badge-pill">● ${variant.availableStock} in Stock</span>`;
-        }
-
-        btn.innerHTML = `
-          <div class="option-top-row">
-            <span class="option-duration">${escapeHtml(variant.duration)} Access</span>
-            ${stockPillHtml}
-          </div>
-          <div class="option-price-row">
-            <span class="option-price">${formatPrice(variant.usdPrice)}</span>
-            <span class="option-dual-price">Stock: ${variant.availableStock} left</span>
-          </div>
-        `;
-
-        if (isAvailable) {
-          btn.onclick = () => {
-            currentPlan = {
-              productId: currentProduct.id,
-              id: variant.id,
-              duration: variant.duration,
-              usdPrice: variant.usdPrice,
-              totalStock: variant.totalStock,
-              reservedStock: variant.reservedStock || 0,
-              availableStock: variant.availableStock,
-              inStock: true
-            };
-            // Clamp currentQty to available stock
-            if (currentQty > currentPlan.availableStock) {
-              currentQty = Math.max(1, currentPlan.availableStock);
-              document.getElementById('qtyDisplay').textContent = currentQty;
-            }
-            updateStockBadge();
-            renderOptions();
-            updatePrice(true);
-          };
-        }
-
-        grid.appendChild(btn);
-      });
-    }
-
     // Change quantity
     function changeQty(delta) {
-      const maxAvailable = (currentPlan && currentPlan.availableStock > 0) ? currentPlan.availableStock : 1;
+      const maxAvailable = (currentPlan && currentPlan.availableStock > 0) ? currentPlan.availableStock : 10;
       currentQty = Math.max(1, Math.min(maxAvailable, currentQty + delta));
       document.getElementById('qtyDisplay').textContent = currentQty;
       updatePrice(true);
@@ -784,7 +620,7 @@
     // Update dynamic price & Buy button status
     function updatePrice(animate = false) {
       if (!currentPlan) return;
-      const unitUsd = currentPlan.usdPrice || 5.00;
+      const unitUsd = currentPlan.usdPrice || currentProduct.usdPrice || 5.00;
       const totalUsd = unitUsd * currentQty;
 
       const priceEl = document.getElementById('totalPriceDisplay');
@@ -803,7 +639,7 @@
 
       const buyBtn = document.getElementById('buyNowBtn');
       const isProductEnabled = currentProduct && currentProduct.enabled !== false;
-      const isAvailable = isProductEnabled && currentPlan.inStock !== false && currentPlan.availableStock > 0;
+      const isAvailable = isProductEnabled && currentPlan && currentPlan.inStock !== false && currentPlan.availableStock > 0;
 
       if (isAvailable) {
         buyBtn.classList.remove('disabled');
@@ -829,12 +665,12 @@
       const isAvailable = isProductEnabled && currentPlan && currentPlan.inStock !== false && currentPlan.availableStock > 0;
 
       if (!isAvailable) {
-        showToast('This product or option is currently out of stock.');
+        showToast('This product is currently out of stock.');
         return;
       }
 
       const prodId = currentPlan.productId || currentProduct.id;
-      const duration = currentPlan.duration;
+      const duration = currentPlan.duration || currentProduct.duration || '1 Month';
       const qty = currentQty;
 
       // Navigate directly to checkout without customer account wall

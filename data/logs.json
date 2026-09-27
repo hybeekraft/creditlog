@@ -1,5 +1,25 @@
 [
   {
+    "id": "log_1790484877140_j71d",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Release Reservation",
+    "details": "Released 1 of \"Netflix Premium\". Total: 10, Reserved: 0, Available: 10",
+    "timestamp": "2026-09-27T04:54:37.141Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790484865766_t1lp",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 1 of \"Netflix Premium\" (1 Month) for checkout. Total: 10, Reserved: 1, Available: 9",
+    "timestamp": "2026-09-27T04:54:25.767Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1790420825724_bo5u",
     "user": "Guest Customer",
     "role": "Customer",
