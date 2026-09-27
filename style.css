@@ -6093,16 +6093,18 @@ select, option {
 .footer-minimal-links {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 84px;
   flex-wrap: wrap;
 }
 
 .footer-minimal-links a {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-muted, #94A3B8);
   text-decoration: none;
+  letter-spacing: 0.03em;
   transition: color 0.18s ease;
+  padding: 4px 0;
 }
 
 .footer-minimal-links a:hover {
@@ -6142,7 +6144,7 @@ select, option {
   }
   .footer-minimal-links {
     justify-content: center;
-    gap: 18px;
+    gap: 36px;
   }
 }
 
