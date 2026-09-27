@@ -151,7 +151,7 @@
     </section>
 
     <!-- 5. FEATURED STOREFRONT SHOWCASE -->
-    <section class="featured-storefront-section" style="padding: 20px 24px 70px; max-width: 1240px; margin: 0 auto;">
+    <section class="featured-storefront-section" style="padding: 20px 28px 70px; max-width: 1560px; margin: 0 auto;">
       <div class="section-tag-row" style="margin-bottom: 24px;">
         <span class="section-tag-line"></span>
         <div class="section-tag-badge">
@@ -250,8 +250,8 @@
         source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       }
       
-      // Exactly 3 featured items as illustrated in the layout sketch
-      const displayItems = source.slice(0, 3);
+      // Top 4 featured items matching 4-column wide grid
+      const displayItems = source.slice(0, 4);
       container.innerHTML = '';
 
       displayItems.forEach((prod, idx) => {
