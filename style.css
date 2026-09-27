@@ -5952,10 +5952,9 @@ select, option {
 .protocol-guarantees-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding: 20px 0;
-  border-top: 1px solid rgba(25, 13, 8, 0.08);
+  gap: 14px;
+  margin-bottom: 30px;
+  padding: 0 0 26px 0;
   border-bottom: 1px solid rgba(25, 13, 8, 0.08);
 }
 
