@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111 200">
+  <defs>
+    <linearGradient id="nfShadow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.6"/>
+      <stop offset="25%" stop-color="#000000" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Left Leg -->
+  <path d="M0 0h37v200H0z" fill="#E50914"/>
+  <!-- Right Leg -->
+  <path d="M74 0h37v200H74z" fill="#E50914"/>
+  <!-- Diagonal Ribbon -->
+  <polygon points="0,0 37,0 111,200 74,200" fill="#E50914"/>
+  <!-- Diagonal Shadow on Left Side -->
+  <polygon points="0,0 37,0 111,200 74,200" fill="url(#nfShadow)"/>
+  <!-- Bottom Arc Mask -->
+  <path d="M0 200c37-7 74-7 111 0v10H0z" fill="#000000"/>
+</svg>
