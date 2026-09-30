@@ -818,6 +818,7 @@ select, option {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   box-shadow: var(--shadow-sm);
@@ -851,8 +852,10 @@ select, option {
 .apple-dropdown-menu {
   position: absolute;
   top: calc(100% + 6px);
-  right: 0;
+  left: 0;
+  right: auto;
   min-width: 230px;
+  max-width: calc(100vw - 32px);
   background: #FFFFFF;
   border: 1px solid rgba(25, 13, 8, 0.1);
   border-radius: 12px;
@@ -864,7 +867,7 @@ select, option {
   gap: 2px;
   opacity: 1;
   transform: translateY(0) scale(1);
-  transform-origin: top right;
+  transform-origin: top left;
   transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
