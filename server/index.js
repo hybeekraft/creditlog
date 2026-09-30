@@ -1322,6 +1322,12 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
 
+  // Clean 204 handler for favicon.ico
+  if (pathname === '/favicon.ico') {
+    res.writeHead(204, { 'Content-Type': 'image/x-icon' });
+    return res.end();
+  }
+
   let reqPath = pathname === '/' ? '/index.html' : pathname;
 
   // Search candidate root directories (for both local and Vercel Lambda runtime)

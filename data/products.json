@@ -47,9 +47,9 @@
     "brandClass": "tile-gemini",
     "iconType": "gemini",
     "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
-    "totalStock": 15,
+    "totalStock": 28,
     "reservedStock": 0,
-    "availableStock": 15,
+    "availableStock": 28,
     "enabled": true,
     "variants": [
       {

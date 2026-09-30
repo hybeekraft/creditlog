@@ -1,5 +1,29 @@
 [
   {
+    "token": "resv_e56952c2210c633ec2090450",
+    "productId": "netflix-premium",
+    "productName": "Netflix Premium",
+    "duration": "3 Months",
+    "quantity": 1,
+    "customerEmail": "guest@creditlog.com",
+    "createdAt": "2026-09-30T07:59:35.596Z",
+    "expiresAt": 1790756075596,
+    "status": "released",
+    "releasedAt": "2026-09-30T07:59:39.219Z"
+  },
+  {
+    "token": "resv_3e1c60927d383be1b4027994",
+    "productId": "google-gemini-3m",
+    "productName": "Google AI Pro Gemini 3M",
+    "duration": "3 Months",
+    "quantity": 1,
+    "customerEmail": "guest@creditlog.com",
+    "createdAt": "2026-09-30T07:48:14.088Z",
+    "expiresAt": 1790755394087,
+    "status": "released",
+    "releasedAt": "2026-09-30T07:48:48.352Z"
+  },
+  {
     "token": "resv_e455cf4eaa3db262d49b74a2",
     "productId": "netflix-premium",
     "productName": "Netflix Premium",

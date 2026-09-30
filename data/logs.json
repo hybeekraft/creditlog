@@ -1,5 +1,45 @@
 [
   {
+    "id": "log_1790755179228_8u4v",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Release Reservation",
+    "details": "Released 1 of \"Netflix Premium\". Total: 10, Reserved: 0, Available: 10",
+    "timestamp": "2026-09-30T07:59:39.228Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790755175599_5wg3",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 1 of \"Netflix Premium\" (3 Months) for checkout. Total: 10, Reserved: 0, Available: 10",
+    "timestamp": "2026-09-30T07:59:35.599Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790754528360_22op",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Release Reservation",
+    "details": "Released 1 of \"Google AI Pro Gemini 3M\". Total: 28, Reserved: 0, Available: 28",
+    "timestamp": "2026-09-30T07:48:48.360Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790754494092_ximp",
+    "user": "Guest Customer",
+    "role": "Customer",
+    "module": "Inventory",
+    "action": "Reserve Stock",
+    "details": "Reserved 1 of \"Google AI Pro Gemini 3M\" (3 Months) for checkout. Total: 28, Reserved: 1, Available: 27",
+    "timestamp": "2026-09-30T07:48:14.092Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1790517080826_0959",
     "user": "Admin",
     "role": "Admin",
