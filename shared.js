@@ -142,9 +142,13 @@ var BRAND_ICON_REGISTRY = [
       "google ai"
     ],
     "name": "Google Gemini",
-    "color": "#8E24AA",
-    "bg": "linear-gradient(135deg, #8E24AA, #1A73E8)",
-    "shadow": "rgba(142, 36, 170, 0.35)",
+    "color": "#1A73E8",
+    "bg": "#FFFFFF",
+    "border": "1px solid rgba(142, 36, 170, 0.18)",
+    "shadow": "rgba(26, 115, 232, 0.18)",
+    "imgSrc": "assets/icons/gemini.svg",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<defs><linearGradient id='geminiStarGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#1A73E8'/><stop offset='100%' stop-color='#8E24AA'/></linearGradient></defs><path d='M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81' fill='url(#geminiStarGrad)'/>",
     "path": "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"
   },
   {
@@ -780,13 +784,14 @@ function renderBrandIcon(prod, options) {
   const textColor = brand.textColor || '#FFFFFF';
   const customId = opts.id ? ' id="' + opts.id + '"' : '';
   const extraClass = opts.className ? ' ' + opts.className : '';
+  const borderStyle = brand.border ? ' border: ' + brand.border + ';' : '';
 
   if (brand.imgSrc) {
     const isFull = !!brand.imgFull;
     const imgStyle = isFull
       ? 'width: 100%; height: 100%; object-fit: cover; border-radius: inherit; pointer-events: none;'
       : 'width: ' + svgSize + 'px; height: ' + svgSize + 'px; object-fit: contain; pointer-events: none;';
-    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden;">' +
+    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden;">' +
       '<img src="' + brand.imgSrc + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" />' +
     '</div>';
   }
@@ -796,7 +801,7 @@ function renderBrandIcon(prod, options) {
     ? '<path d="' + brand.path + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
     : '<path d="' + brand.path + '"/>');
 
-  return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + '; color: ' + textColor + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0;">' +
+  return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' color: ' + textColor + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0;">' +
     '<svg width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '">' + svgInner + '</svg>' +
   '</div>';
 }
