@@ -128,6 +128,10 @@
                 <span>Alphabetical: A to Z</span>
                 <span class="sort-check">✓</span>
               </button>
+              <button type="button" class="apple-dropdown-item" data-sort="brand-asc" onclick="selectSortOption('brand-asc', 'Brand: A to Z')">
+                <span>Brand: A to Z</span>
+                <span class="sort-check">✓</span>
+              </button>
               <button type="button" class="apple-dropdown-item" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
                 <span>Featured First</span>
                 <span class="sort-check">✓</span>
@@ -284,6 +288,14 @@
         copy.sort((a, b) => (b.usdPrice || 0) - (a.usdPrice || 0));
       } else if (currentSortMode === 'name-asc') {
         copy.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (currentSortMode === 'brand-asc') {
+        copy.sort((a, b) => {
+          const brandA = (a.brand || (typeof getBrandData === 'function' ? getBrandData(a).name : '') || a.name || '').trim();
+          const brandB = (b.brand || (typeof getBrandData === 'function' ? getBrandData(b).name : '') || b.name || '').trim();
+          const cmp = brandA.localeCompare(brandB, undefined, { sensitivity: 'base' });
+          if (cmp !== 0) return cmp;
+          return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+        });
       }
       return copy;
     }
