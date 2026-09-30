@@ -1,5 +1,55 @@
 [
   {
+    "id": "log_1790782488322_kgh5",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Branding",
+    "action": "Upload Logo",
+    "details": "Uploaded new brand logo: logo-1790782488321-test-badge.svg",
+    "timestamp": "2026-09-30T15:34:48.322Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790782001277_40fi",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Enable Product",
+    "details": "Enabled product \"Netflix Premium\".",
+    "timestamp": "2026-09-30T15:26:41.277Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790781998705_bo31",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Disable Product",
+    "details": "Disabled product \"Netflix Premium\".",
+    "timestamp": "2026-09-30T15:26:38.705Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790781996403_2yrw",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Enable Product",
+    "details": "Enabled product \"Netflix Premium\".",
+    "timestamp": "2026-09-30T15:26:36.403Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1790781995465_yh8m",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Products",
+    "action": "Disable Product",
+    "details": "Disabled product \"Netflix Premium\".",
+    "timestamp": "2026-09-30T15:26:35.465Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1790755179228_8u4v",
     "user": "Guest Customer",
     "role": "Customer",

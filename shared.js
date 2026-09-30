@@ -131,7 +131,7 @@ var BRAND_ICON_REGISTRY = [
     "color": "#E50914",
     "bg": "linear-gradient(135deg, #1C1C1C, #000000)",
     "shadow": "rgba(229, 9, 20, 0.45)",
-    "imgSrc": "assets/icons/netflix.png",
+    "imgSrc": "assets/icons/netflix.svg",
     "path": "m5.398 0 8.348 23.602c2.346.059 4.856.398 4.856.398L10.113 0H5.398zm8.489 0v9.172l4.715 13.33V0h-4.715zM5.398 1.5V24c1.873-.225 2.81-.312 4.715-.398V14.83L5.398 1.5z"
   },
   {
@@ -278,7 +278,7 @@ var BRAND_ICON_REGISTRY = [
     "color": "#F24E1E",
     "bg": "linear-gradient(135deg, #262626, #121212)",
     "shadow": "rgba(242, 78, 30, 0.4)",
-    "imgSrc": "assets/icons/figma.png",
+    "imgSrc": "assets/icons/figma.svg",
     "viewBox": "0 0 38 57",
     "svgHtml": "<path d='M19 0H9.5C4.25 0 0 4.25 0 9.5C0 14.75 4.25 19 9.5 19H19V0Z' fill='#F24E1E'/><path d='M19 0H28.5C33.75 0 38 4.25 38 9.5C38 14.75 33.75 19 28.5 19H19V0Z' fill='#FF7262'/><path d='M0 28.5C0 23.25 4.25 19 9.5 19H19V38H9.5C4.25 38 0 33.75 0 28.5Z' fill='#A259FF'/><circle cx='28.5' cy='28.5' r='9.5' fill='#1ABCFE'/><path d='M0 47.5C0 42.25 4.25 38 9.5 38H19V47.5C19 52.75 14.75 57 9.5 57C4.25 57 0 52.75 0 47.5Z' fill='#0ACF83'/>",
     "path": "M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"
@@ -593,7 +593,7 @@ var BRAND_ICON_REGISTRY = [
     "color": "#45C740",
     "bg": "linear-gradient(135deg, #45C740, #32AE2D)",
     "shadow": "rgba(69, 199, 64, 0.45)",
-    "imgSrc": "assets/icons/quillbot.png",
+    "imgSrc": "assets/icons/quillbot.svg",
     "imgFull": true,
     "viewBox": "0 0 48 48",
     "svgHtml": "<polygon points='24,5 29,10 26.5,10 26.5,13.5 24,15 21.5,13.5 21.5,10 19,10' fill='#171C17'/><rect x='22.5' y='14' width='3' height='4' rx='1' fill='#171C17'/><rect x='9' y='18' width='30' height='22' rx='6' fill='#171C17'/><circle cx='17.5' cy='28.5' r='3.75' fill='#45C740'/><circle cx='30.5' cy='28.5' r='3.75' fill='#45C740'/>",
@@ -609,7 +609,7 @@ var BRAND_ICON_REGISTRY = [
     "color": "#F38020",
     "bg": "linear-gradient(135deg, #28211B, #120E0B)",
     "shadow": "rgba(243, 128, 32, 0.45)",
-    "imgSrc": "assets/icons/cloudflare.png",
+    "imgSrc": "assets/icons/cloudflare.svg",
     "viewBox": "0 0 24 24",
     "svgHtml": "<path d='M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268z' fill='#F38020'/><path d='M19.2656 11.2813c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727' fill='#FAAD3F'/>",
     "path": "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
@@ -747,8 +747,39 @@ var BRAND_ICON_REGISTRY = [
   }
 ];
 
+function resolveBrandAssetUrl(url) {
+  if (!url) return '';
+  const clean = String(url).trim();
+  if (clean.startsWith('data:') || clean.startsWith('blob:') || clean.startsWith('http://') || clean.startsWith('https://')) {
+    return clean;
+  }
+  if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') {
+    return clean.replace(/^\/+/, '');
+  }
+  return clean.startsWith('/') ? clean : '/' + clean;
+}
+
 function getBrandData(prod) {
   if (!prod) return BRAND_ICON_REGISTRY[0];
+
+  // 0. Direct custom logoUrl provided on product record (Admin uploaded or linked)
+  if (prod.logoUrl || prod.logo || prod.customLogo) {
+    const rawLogo = prod.logoUrl || prod.logo || prod.customLogo;
+    const baseMatch = prod.iconType ? BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === String(prod.iconType).toLowerCase()) : null;
+    return {
+      id: prod.iconType || 'custom',
+      name: prod.brand || prod.name || 'Custom Brand',
+      bg: baseMatch ? baseMatch.bg : '#FFFFFF',
+      border: baseMatch ? (baseMatch.border || '1px solid rgba(25, 13, 8, 0.12)') : '1px solid rgba(25, 13, 8, 0.12)',
+      shadow: baseMatch ? baseMatch.shadow : 'rgba(25, 13, 8, 0.12)',
+      textColor: baseMatch ? (baseMatch.textColor || '#190D08') : '#190D08',
+      imgSrc: rawLogo,
+      imgFull: baseMatch ? !!baseMatch.imgFull : false,
+      svgHtml: baseMatch ? baseMatch.svgHtml : null,
+      path: baseMatch ? baseMatch.path : (BRAND_ICON_REGISTRY[0] ? BRAND_ICON_REGISTRY[0].path : ''),
+      viewBox: baseMatch ? baseMatch.viewBox : '0 0 24 24'
+    };
+  }
 
   // 1. Direct match by explicit iconType (highest priority)
   if (prod.iconType) {
@@ -809,25 +840,44 @@ function renderBrandIcon(prod, options) {
   const extraClass = opts.className ? ' ' + opts.className : '';
   const borderStyle = brand.border ? ' border: ' + brand.border + ';' : '';
 
+  const viewBox = brand.viewBox || '0 0 24 24';
+  const svgInner = brand.svgHtml || (brand.stroke
+    ? '<path d="' + (brand.path || '') + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
+    : '<path d="' + (brand.path || '') + '"/>');
+  const fallbackSvg = '<svg class="brand-fallback-vector" width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '" style="display:none; color: ' + textColor + '; pointer-events: none;">' + svgInner + '</svg>';
+
   if (brand.imgSrc) {
     const isFull = !!brand.imgFull;
+    const resolvedUrl = resolveBrandAssetUrl(brand.imgSrc);
     const imgStyle = isFull
       ? 'width: 100%; height: 100%; object-fit: cover; border-radius: inherit; pointer-events: none;'
       : 'width: ' + svgSize + 'px; height: ' + svgSize + 'px; object-fit: contain; pointer-events: none;';
-    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden;">' +
-      '<img src="' + brand.imgSrc + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" />' +
+
+    // Graceful error handling: instantly hides broken img and displays crisp SVG vector logo
+    const onErrHandler = "this.onerror=null; this.style.display=\'none\'; const fb=this.parentElement.querySelector(\'.brand-fallback-vector\'); if(fb) fb.style.display=\'block\';";
+
+    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden; position: relative;">' +
+      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" onerror="' + onErrHandler + '" />' +
+      fallbackSvg +
     '</div>';
   }
-
-  const viewBox = brand.viewBox || '0 0 24 24';
-  const svgInner = brand.svgHtml || (brand.stroke
-    ? '<path d="' + brand.path + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
-    : '<path d="' + brand.path + '"/>');
 
   return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' color: ' + textColor + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0;">' +
     '<svg width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '">' + svgInner + '</svg>' +
   '</div>';
 }
+
+function getAvailableBrandLogos() {
+  return BRAND_ICON_REGISTRY.map(b => ({
+    id: b.id,
+    name: b.name,
+    color: b.color,
+    bg: b.bg,
+    border: b.border || null,
+    imgSrc: b.imgSrc || null
+  }));
+}
+
 
 // --- FULL SUBSCRIPTIONS CATALOG (All 93 Verified Items) ---
 var CATALOG_PRODUCTS = [

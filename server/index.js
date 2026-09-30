@@ -451,6 +451,68 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  // 1b. POST /api/admin/upload-logo — Upload Custom Brand Logo File
+  if (pathname === '/api/admin/upload-logo' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+
+    const body = await parseBody(req);
+    const { fileName, data } = body;
+
+    if (!data || typeof data !== 'string') {
+      return sendJSON(res, 400, { success: false, message: 'Missing base64 logo data.' });
+    }
+
+    try {
+      const match = data.match(/^data:image\/([a-zA-Z0-9\+\-\.]+);base64,(.+)$/);
+      let ext = 'png';
+      let base64String = data;
+
+      if (match) {
+        const rawMime = match[1].toLowerCase();
+        if (rawMime.includes('svg')) ext = 'svg';
+        else if (rawMime.includes('jpeg') || rawMime.includes('jpg')) ext = 'jpg';
+        else if (rawMime.includes('webp')) ext = 'webp';
+        else if (rawMime.includes('gif')) ext = 'gif';
+        else if (rawMime.includes('ico')) ext = 'ico';
+        else ext = 'png';
+        base64String = match[2];
+      } else if (fileName && fileName.includes('.')) {
+        ext = path.extname(fileName).toLowerCase().replace('.', '') || 'png';
+      }
+
+      const cleanBase = (fileName || 'brand-logo')
+        .replace(/\.[^/.]+$/, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '-')
+        .substring(0, 40);
+
+      const targetFileName = `logo-${Date.now()}-${cleanBase}.${ext}`;
+      const iconsDir = path.join(ROOT_DIR, 'assets', 'icons');
+      if (!fs.existsSync(iconsDir)) {
+        fs.mkdirSync(iconsDir, { recursive: true });
+      }
+
+      const filePath = path.join(iconsDir, targetFileName);
+      const buffer = Buffer.from(base64String, 'base64');
+      fs.writeFileSync(filePath, buffer);
+
+      const relativeUrl = `assets/icons/${targetFileName}`;
+      recordLog('Admin', 'Admin', 'Branding', 'Upload Logo', `Uploaded new brand logo: ${targetFileName}`);
+
+      return sendJSON(res, 200, {
+        success: true,
+        message: 'Logo uploaded successfully.',
+        url: relativeUrl,
+        fileName: targetFileName
+      });
+    } catch (err) {
+      console.error('[Upload Logo Error]', err);
+      return sendJSON(res, 500, { success: false, message: 'Failed to write logo file: ' + err.message });
+    }
+  }
+
   // 2. POST /api/admin/products — Add New Product with Initial Stock
   if (pathname === '/api/admin/products' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
@@ -458,7 +520,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     const body = await parseBody(req);
-    const { name, brand, category, description, usdPrice, totalStock, duration, variants, howItIsDelivered, importantRequirements } = body;
+    const { name, brand, category, description, usdPrice, totalStock, duration, variants, howItIsDelivered, importantRequirements, logoUrl, iconType } = body;
 
     if (!name) {
       return sendJSON(res, 400, { success: false, message: 'Product name is required.' });
@@ -494,6 +556,7 @@ const server = http.createServer(async (req, res) => {
             }
           ];
 
+      const effectiveIcon = (iconType || category || 'other').toLowerCase().trim();
       const newProduct = {
         id: uniqueId,
         name: name.trim(),
@@ -510,8 +573,9 @@ const server = http.createServer(async (req, res) => {
         inStock: initialTotal > 0,
         rating: 4.9,
         reviews: '100+',
-        brandClass: `tile-${(category || 'other').toLowerCase()}`,
-        iconType: (category || 'other').toLowerCase(),
+        brandClass: `tile-${effectiveIcon}`,
+        iconType: effectiveIcon,
+        logoUrl: logoUrl ? logoUrl.trim() : undefined,
         description: description || 'Verified private digital subscription with instant credentials dispatch upon payment.',
         importantRequirements: (importantRequirements || body.requirements || '').trim(),
         howItIsDelivered: (howItIsDelivered || body.deliveryInfo || '').trim(),
@@ -529,6 +593,60 @@ const server = http.createServer(async (req, res) => {
         success: true,
         message: `Product "${newProduct.name}" successfully added to shop.`,
         product: newProduct
+      });
+    });
+  }
+
+  // 2b. PUT /api/admin/products/:id — Full Product & Branding Update
+  if (pathname.match(/^\/api\/admin\/products\/([^/]+)$/) && req.method === 'PUT') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+
+    const prodId = pathname.split('/')[4];
+    const body = await parseBody(req);
+
+    return await withInventoryTransaction(async () => {
+      const products = getAllProducts();
+      const prod = products.find(p => p.id === prodId);
+
+      if (!prod) {
+        return sendJSON(res, 404, { success: false, message: 'Product not found.' });
+      }
+
+      if (body.name !== undefined) prod.name = body.name.trim();
+      if (body.brand !== undefined) prod.brand = body.brand.trim();
+      if (body.category !== undefined) prod.category = body.category.toLowerCase().trim();
+      if (body.duration !== undefined) prod.duration = body.duration.trim();
+      if (body.description !== undefined) prod.description = body.description.trim();
+      if (body.importantRequirements !== undefined) prod.importantRequirements = body.importantRequirements.trim();
+      if (body.howItIsDelivered !== undefined) prod.howItIsDelivered = body.howItIsDelivered.trim();
+      if (body.iconType !== undefined) {
+        prod.iconType = body.iconType.toLowerCase().trim();
+        prod.brandClass = `tile-${prod.iconType}`;
+      }
+      if (body.logoUrl !== undefined) {
+        prod.logoUrl = body.logoUrl.trim() || undefined;
+      }
+      if (body.usdPrice !== undefined) {
+        const p = parseFloat(body.usdPrice);
+        if (!isNaN(p) && p > 0) {
+          prod.usdPrice = p;
+          if (prod.variants && prod.variants.length === 1) {
+            prod.variants[0].usdPrice = p;
+          }
+        }
+      }
+
+      recomputeProductStock(prod);
+      saveProducts(products);
+
+      recordLog('Admin', 'Admin', 'Products', 'Update Product Details', `Updated details & branding for "${prod.name}".`);
+
+      return sendJSON(res, 200, {
+        success: true,
+        message: `Product "${prod.name}" updated successfully.`,
+        product: prod
       });
     });
   }

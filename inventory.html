@@ -504,6 +504,25 @@
       padding: 10px 12px;
       margin-bottom: 8px;
     }
+
+    /* Brand Logo Picker Tabs */
+    .cms-logo-tab {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .cms-logo-tab.active {
+      background: #D04515;
+      color: #FFFFFF;
+      border-color: #D04515;
+    }
   </style>
 </head>
 <body>
@@ -687,7 +706,7 @@
         <div class="cms-form-row">
           <div class="cms-form-group">
             <label>Brand / Publisher *</label>
-            <input type="text" id="addBrand" class="cms-form-input" placeholder="e.g. Netflix" required>
+            <input type="text" id="addBrand" class="cms-form-input" placeholder="e.g. Netflix" required oninput="handleBrandTextInput(this.value, 'add')">
           </div>
           <div class="cms-form-group">
             <label>Category *</label>
@@ -699,6 +718,56 @@
               <option value="security">Security & VPN</option>
               <option value="gaming">Gaming</option>
             </select>
+          </div>
+        </div>
+
+        <!-- Brand Logo Selector & Uploader -->
+        <div class="cms-form-group" style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <label style="margin: 0; font-size: 12.5px; font-weight: 700; color: #190D08;">Brand Logo & Icon</label>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="cms-logo-tab active" id="tabAddPreloaded" onclick="switchLogoSource('preloaded', 'add')">Brand Library</button>
+              <button type="button" class="cms-logo-tab" id="tabAddUpload" onclick="switchLogoSource('upload', 'add')">Upload File</button>
+              <button type="button" class="cms-logo-tab" id="tabAddUrl" onclick="switchLogoSource('url', 'add')">Image URL</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <!-- Live Preview Tile -->
+            <div id="addLogoPreviewTile" style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
+              <span id="addLogoPreviewPlaceholder" style="font-size: 20px;">🖼️</span>
+            </div>
+
+            <!-- Controls -->
+            <div style="flex: 1; min-width: 0;">
+              <!-- 1. Preloaded Brand Select -->
+              <div id="addLogoPreloadedWrap">
+                <select id="addBrandSelect" class="cms-form-select" onchange="handleBrandSelectChange(this.value, 'add')">
+                  <option value="">-- Choose from 30+ Official Brand Logos --</option>
+                </select>
+              </div>
+
+              <!-- 2. Custom Upload File -->
+              <div id="addLogoUploadWrap" class="hidden">
+                <input type="file" id="addLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon" style="display: none;" onchange="handleLogoFileUpload(this, 'add')">
+                <div onclick="document.getElementById('addLogoFile').click()" style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;" ondragover="event.preventDefault(); this.style.background='#FEEFEB';" ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'add')">
+                  <div style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Click or Drag & Drop Logo Image</span>
+                  </div>
+                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="addUploadStatusText">PNG, SVG, JPG, WebP (Transparent/Square recommended)</div>
+                </div>
+              </div>
+
+              <!-- 3. Direct Image URL -->
+              <div id="addLogoUrlWrap" class="hidden">
+                <input type="url" id="addLogoUrlInput" class="cms-form-input" placeholder="Paste image URL (e.g. assets/icons/... or https://...)" oninput="handleLogoUrlInput(this.value, 'add')">
+              </div>
+
+              <!-- Hidden State -->
+              <input type="hidden" id="addIconType" value="">
+              <input type="hidden" id="addLogoUrl" value="">
+            </div>
           </div>
         </div>
 
@@ -792,6 +861,124 @@
         <button type="button" class="secondary-btn" onclick="closeStockEditModal()">Cancel</button>
         <button type="button" class="cms-btn-primary" onclick="saveExactStock()">Update Stock</button>
       </div>
+    </div>
+  </div>
+
+  <!-- EDIT PRODUCT & LOGO MODAL -->
+  <div class="cms-modal-overlay hidden" id="editProductModal">
+    <div class="cms-modal-card">
+      <div class="cms-modal-header">
+        <h3 class="cms-modal-title">Edit Subscription & Logo</h3>
+        <button type="button" class="cms-close-btn" onclick="closeEditProductModal()">×</button>
+      </div>
+
+      <form id="editProductForm" onsubmit="handleEditProductSubmit(event)">
+        <input type="hidden" id="editProdId" value="">
+
+        <div class="cms-form-group">
+          <label>Product Name *</label>
+          <input type="text" id="editName" class="cms-form-input" placeholder="e.g. Netflix Premium 4K" required>
+        </div>
+
+        <div class="cms-form-row">
+          <div class="cms-form-group">
+            <label>Brand / Publisher *</label>
+            <input type="text" id="editBrand" class="cms-form-input" placeholder="e.g. Netflix" required oninput="handleBrandTextInput(this.value, 'edit')">
+          </div>
+          <div class="cms-form-group">
+            <label>Category *</label>
+            <select id="editCategory" class="cms-form-select">
+              <option value="streaming">Streaming</option>
+              <option value="ai">AI & LLMs</option>
+              <option value="productivity">Productivity</option>
+              <option value="design">Design & Studio</option>
+              <option value="security">Security & VPN</option>
+              <option value="gaming">Gaming</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Brand Logo Selector & Uploader -->
+        <div class="cms-form-group" style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <label style="margin: 0; font-size: 12.5px; font-weight: 700; color: #190D08;">Brand Logo & Icon</label>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="cms-logo-tab active" id="tabEditPreloaded" onclick="switchLogoSource('preloaded', 'edit')">Brand Library</button>
+              <button type="button" class="cms-logo-tab" id="tabEditUpload" onclick="switchLogoSource('upload', 'edit')">Upload File</button>
+              <button type="button" class="cms-logo-tab" id="tabEditUrl" onclick="switchLogoSource('url', 'edit')">Image URL</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <!-- Live Preview Tile -->
+            <div id="editLogoPreviewTile" style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
+              <span id="editLogoPreviewPlaceholder" style="font-size: 20px;">🖼️</span>
+            </div>
+
+            <!-- Controls -->
+            <div style="flex: 1; min-width: 0;">
+              <!-- 1. Preloaded Brand Select -->
+              <div id="editLogoPreloadedWrap">
+                <select id="editBrandSelect" class="cms-form-select" onchange="handleBrandSelectChange(this.value, 'edit')">
+                  <option value="">-- Choose from 30+ Official Brand Logos --</option>
+                </select>
+              </div>
+
+              <!-- 2. Custom Upload File -->
+              <div id="editLogoUploadWrap" class="hidden">
+                <input type="file" id="editLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon" style="display: none;" onchange="handleLogoFileUpload(this, 'edit')">
+                <div onclick="document.getElementById('editLogoFile').click()" style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;" ondragover="event.preventDefault(); this.style.background='#FEEFEB';" ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'edit')">
+                  <div style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Click or Drag & Drop Logo Image</span>
+                  </div>
+                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="editUploadStatusText">PNG, SVG, JPG, WebP</div>
+                </div>
+              </div>
+
+              <!-- 3. Direct Image URL -->
+              <div id="editLogoUrlWrap" class="hidden">
+                <input type="url" id="editLogoUrlInput" class="cms-form-input" placeholder="Paste image URL (e.g. assets/icons/... or https://...)" oninput="handleLogoUrlInput(this.value, 'edit')">
+              </div>
+
+              <!-- Hidden State -->
+              <input type="hidden" id="editIconType" value="">
+              <input type="hidden" id="editLogoUrl" value="">
+            </div>
+          </div>
+        </div>
+
+        <div class="cms-form-row">
+          <div class="cms-form-group">
+            <label>Base Price ($ USD) *</label>
+            <input type="number" step="0.01" min="0.5" id="editPrice" class="cms-form-input" required>
+          </div>
+          <div class="cms-form-group">
+            <label>Default Duration</label>
+            <input type="text" id="editDuration" class="cms-form-input" placeholder="e.g. 1 Month">
+          </div>
+        </div>
+
+        <div class="cms-form-group">
+          <label>Product Description</label>
+          <textarea id="editDesc" class="cms-form-textarea" rows="2" placeholder="Verified private digital subscription..."></textarea>
+        </div>
+
+        <div class="cms-form-group">
+          <label>Important Requirements</label>
+          <textarea id="editRequirements" class="cms-form-textarea" rows="3" placeholder="Enter key rules or requirements..."></textarea>
+        </div>
+
+        <div class="cms-form-group">
+          <label>How It Is Delivered</label>
+          <textarea id="editDelivery" class="cms-form-textarea" rows="2" placeholder="Automated instant digital dispatch..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+          <button type="button" class="secondary-btn" onclick="closeEditProductModal()">Cancel</button>
+          <button type="submit" class="cms-btn-primary">Save Changes & Update Logo</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -982,6 +1169,10 @@
 
             <td>
               <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="cms-action-btn-sm" onclick="openEditProductModal('${prod.id}')" title="Edit Subscription & Logo" style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; font-weight: 700;">
+                  <span>✏️</span>
+                  <span>Edit</span>
+                </button>
                 <button type="button" class="cms-action-btn-sm cms-delete-btn-sm" onclick="deleteProduct('${prod.id}', '${escapeHtml(prod.name)}')" title="Delete from Shop">
                   🗑
                 </button>
@@ -1143,9 +1334,197 @@
       }
     }
 
+    // =========================================================================
+    // BRAND LOGO SELECTION & UPLOAD HANDLERS
+    // =========================================================================
+
+    function populateBrandSelects() {
+      if (typeof getAvailableBrandLogos !== 'function') return;
+      const brands = getAvailableBrandLogos();
+
+      ['addBrandSelect', 'editBrandSelect'].forEach(selectId => {
+        const sel = document.getElementById(selectId);
+        if (!sel) return;
+        const currentVal = sel.value;
+        sel.innerHTML = '<option value="">-- Choose from 30+ Official Brand Logos --</option>' +
+          brands.map(b => `<option value="${b.id}">${escapeHtml(b.name)}</option>`).join('');
+        if (currentVal) sel.value = currentVal;
+      });
+    }
+
+    function switchLogoSource(type, mode) {
+      const isAdd = mode === 'add';
+      const preloadedWrap = document.getElementById(isAdd ? 'addLogoPreloadedWrap' : 'editLogoPreloadedWrap');
+      const uploadWrap = document.getElementById(isAdd ? 'addLogoUploadWrap' : 'editLogoUploadWrap');
+      const urlWrap = document.getElementById(isAdd ? 'addLogoUrlWrap' : 'editLogoUrlWrap');
+
+      const tabPreloaded = document.getElementById(isAdd ? 'tabAddPreloaded' : 'tabEditPreloaded');
+      const tabUpload = document.getElementById(isAdd ? 'tabAddUpload' : 'tabEditUpload');
+      const tabUrl = document.getElementById(isAdd ? 'tabAddUrl' : 'tabEditUrl');
+
+      if (tabPreloaded) tabPreloaded.classList.toggle('active', type === 'preloaded');
+      if (tabUpload) tabUpload.classList.toggle('active', type === 'upload');
+      if (tabUrl) tabUrl.classList.toggle('active', type === 'url');
+
+      if (preloadedWrap) preloadedWrap.classList.toggle('hidden', type !== 'preloaded');
+      if (uploadWrap) uploadWrap.classList.toggle('hidden', type !== 'upload');
+      if (urlWrap) urlWrap.classList.toggle('hidden', type !== 'url');
+
+      if (type === 'preloaded') {
+        const sel = document.getElementById(isAdd ? 'addBrandSelect' : 'editBrandSelect');
+        if (sel && sel.value) handleBrandSelectChange(sel.value, mode);
+      } else if (type === 'upload') {
+        const logoUrlInput = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl');
+        if (logoUrlInput && logoUrlInput.value) {
+          updateLiveLogoPreview(mode, { logoUrl: logoUrlInput.value });
+        }
+      } else if (type === 'url') {
+        const urlInput = document.getElementById(isAdd ? 'addLogoUrlInput' : 'editLogoUrlInput');
+        if (urlInput && urlInput.value) {
+          handleLogoUrlInput(urlInput.value, mode);
+        }
+      }
+    }
+
+    function handleBrandSelectChange(brandId, mode) {
+      const isAdd = mode === 'add';
+      const iconTypeEl = document.getElementById(isAdd ? 'addIconType' : 'editIconType');
+      const logoUrlEl = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl');
+      const brandInput = document.getElementById(isAdd ? 'addBrand' : 'editBrand');
+
+      if (iconTypeEl) iconTypeEl.value = brandId;
+      if (logoUrlEl) logoUrlEl.value = '';
+
+      if (brandId && typeof BRAND_ICON_REGISTRY !== 'undefined') {
+        const brandMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandId.toLowerCase());
+        if (brandMatch && brandInput && (!brandInput.value || mode === 'add')) {
+          brandInput.value = brandMatch.name;
+        }
+        updateLiveLogoPreview(mode, { iconType: brandId, brand: brandMatch ? brandMatch.name : brandId });
+      } else {
+        updateLiveLogoPreview(mode, { iconType: '', brand: brandInput ? brandInput.value : '' });
+      }
+    }
+
+    function handleBrandTextInput(val, mode) {
+      const isAdd = mode === 'add';
+      const logoUrl = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl')?.value;
+      if (logoUrl) return; // Custom uploaded image takes priority
+
+      const iconTypeEl = document.getElementById(isAdd ? 'addIconType' : 'editIconType');
+      const brandSel = document.getElementById(isAdd ? 'addBrandSelect' : 'editBrandSelect');
+
+      if (val && typeof getBrandData === 'function') {
+        const match = getBrandData({ name: val, brand: val });
+        if (match && match.id && brandSel) {
+          brandSel.value = match.id;
+          if (iconTypeEl) iconTypeEl.value = match.id;
+        }
+        updateLiveLogoPreview(mode, { brand: val, iconType: iconTypeEl ? iconTypeEl.value : '' });
+      }
+    }
+
+    async function handleLogoFileUpload(fileInput, mode) {
+      if (!fileInput.files || fileInput.files.length === 0) return;
+      const file = fileInput.files[0];
+      await processAndUploadLogoFile(file, mode);
+    }
+
+    function handleLogoDrop(e, mode) {
+      e.preventDefault();
+      e.currentTarget.style.background = '#FFFFFF';
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        processAndUploadLogoFile(e.dataTransfer.files[0], mode);
+      }
+    }
+
+    async function processAndUploadLogoFile(file, mode) {
+      const isAdd = mode === 'add';
+      const statusText = document.getElementById(isAdd ? 'addUploadStatusText' : 'editUploadStatusText');
+      if (statusText) statusText.textContent = `Uploading ${file.name}...`;
+
+      const reader = new FileReader();
+      reader.onload = async (evt) => {
+        const base64Data = evt.target.result;
+        // Immediate local preview while upload completes
+        updateLiveLogoPreview(mode, { logoUrl: base64Data });
+
+        try {
+          const res = await fetch('/api/admin/upload-logo', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + currentAdminToken,
+              'x-admin-token': currentAdminToken
+            },
+            body: JSON.stringify({
+              fileName: file.name,
+              data: base64Data
+            })
+          });
+
+          const data = await res.json();
+          if (data.success && data.url) {
+            const logoUrlEl = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl');
+            const iconTypeEl = document.getElementById(isAdd ? 'addIconType' : 'editIconType');
+            if (logoUrlEl) logoUrlEl.value = data.url;
+            if (iconTypeEl) iconTypeEl.value = 'custom';
+
+            if (statusText) statusText.innerHTML = `✓ Uploaded: <strong>${escapeHtml(data.fileName)}</strong>`;
+            updateLiveLogoPreview(mode, { logoUrl: data.url });
+            showToast('Logo uploaded and ready!');
+          } else {
+            if (statusText) statusText.textContent = 'Upload failed: ' + (data.message || 'Error');
+            showToast(data.message || 'Upload failed');
+          }
+        } catch (err) {
+          if (statusText) statusText.textContent = 'Upload error. Saved for this session.';
+          const logoUrlEl = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl');
+          if (logoUrlEl) logoUrlEl.value = base64Data;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleLogoUrlInput(url, mode) {
+      const isAdd = mode === 'add';
+      const logoUrlEl = document.getElementById(isAdd ? 'addLogoUrl' : 'editLogoUrl');
+      const iconTypeEl = document.getElementById(isAdd ? 'addIconType' : 'editIconType');
+      const cleanUrl = url.trim();
+
+      if (logoUrlEl) logoUrlEl.value = cleanUrl;
+      if (iconTypeEl && cleanUrl) iconTypeEl.value = 'custom';
+
+      if (cleanUrl) {
+        updateLiveLogoPreview(mode, { logoUrl: cleanUrl });
+      } else {
+        const brandInput = document.getElementById(isAdd ? 'addBrand' : 'editBrand');
+        updateLiveLogoPreview(mode, { brand: brandInput ? brandInput.value : '' });
+      }
+    }
+
+    function updateLiveLogoPreview(mode, mockProd) {
+      const isAdd = mode === 'add';
+      const container = document.getElementById(isAdd ? 'addLogoPreviewTile' : 'editLogoPreviewTile');
+      if (!container) return;
+
+      if (typeof renderBrandIcon === 'function') {
+        container.innerHTML = renderBrandIcon(mockProd, { size: 50, radius: 12, iconSize: 26 });
+      } else {
+        container.innerHTML = '<span style="font-size: 20px;">🖼️</span>';
+      }
+    }
+
     // Add Product Modal
     function openAddProductModal() {
       document.getElementById('addProductForm').reset();
+      document.getElementById('addIconType').value = '';
+      document.getElementById('addLogoUrl').value = '';
+      const statusEl = document.getElementById('addUploadStatusText');
+      if (statusEl) statusEl.textContent = 'PNG, SVG, JPG, WebP (Transparent/Square recommended)';
+      populateBrandSelects();
+      switchLogoSource('preloaded', 'add');
+      updateLiveLogoPreview('add', {});
       document.getElementById('addProductModal').classList.remove('hidden');
     }
 
@@ -1164,6 +1543,8 @@
       const description = document.getElementById('addDesc').value.trim();
       const importantRequirements = document.getElementById('addRequirements') ? document.getElementById('addRequirements').value.trim() : '';
       const howItIsDelivered = document.getElementById('addDelivery') ? document.getElementById('addDelivery').value.trim() : '';
+      const iconType = document.getElementById('addIconType').value;
+      const logoUrl = document.getElementById('addLogoUrl').value;
 
       try {
         const res = await fetch('/api/admin/products', {
@@ -1182,7 +1563,9 @@
             duration,
             description,
             importantRequirements,
-            howItIsDelivered
+            howItIsDelivered,
+            iconType: iconType || undefined,
+            logoUrl: logoUrl || undefined
           })
         });
 
@@ -1196,6 +1579,95 @@
         }
       } catch (err) {
         showToast('Error adding product.');
+      }
+    }
+
+    // Edit Product & Logo Modal
+    function openEditProductModal(prodId) {
+      const prod = productsList.find(p => p.id === prodId);
+      if (!prod) return;
+
+      populateBrandSelects();
+
+      document.getElementById('editProdId').value = prod.id;
+      document.getElementById('editName').value = prod.name || '';
+      document.getElementById('editBrand').value = prod.brand || '';
+      document.getElementById('editCategory').value = prod.category || 'streaming';
+      document.getElementById('editPrice').value = prod.usdPrice || 5.00;
+      document.getElementById('editDuration').value = prod.duration || '1 Month';
+      document.getElementById('editDesc').value = prod.description || '';
+      document.getElementById('editRequirements').value = prod.importantRequirements || prod.requirements || '';
+      document.getElementById('editDelivery').value = prod.howItIsDelivered || prod.deliveryInfo || '';
+
+      document.getElementById('editIconType').value = prod.iconType || '';
+      document.getElementById('editLogoUrl').value = prod.logoUrl || '';
+
+      if (prod.logoUrl) {
+        switchLogoSource('url', 'edit');
+        const urlInp = document.getElementById('editLogoUrlInput');
+        if (urlInp) urlInp.value = prod.logoUrl;
+      } else {
+        switchLogoSource('preloaded', 'edit');
+        const sel = document.getElementById('editBrandSelect');
+        if (sel) sel.value = prod.iconType || '';
+      }
+
+      updateLiveLogoPreview('edit', prod);
+      document.getElementById('editProductModal').classList.remove('hidden');
+    }
+
+    function closeEditProductModal() {
+      document.getElementById('editProductModal').classList.add('hidden');
+    }
+
+    async function handleEditProductSubmit(e) {
+      e.preventDefault();
+      const prodId = document.getElementById('editProdId').value;
+      if (!prodId) return;
+
+      const name = document.getElementById('editName').value.trim();
+      const brand = document.getElementById('editBrand').value.trim();
+      const category = document.getElementById('editCategory').value;
+      const usdPrice = parseFloat(document.getElementById('editPrice').value);
+      const duration = document.getElementById('editDuration').value.trim() || '1 Month';
+      const description = document.getElementById('editDesc').value.trim();
+      const importantRequirements = document.getElementById('editRequirements').value.trim();
+      const howItIsDelivered = document.getElementById('editDelivery').value.trim();
+      const iconType = document.getElementById('editIconType').value;
+      const logoUrl = document.getElementById('editLogoUrl').value;
+
+      try {
+        const res = await fetch(`/api/admin/products/${encodeURIComponent(prodId)}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + currentAdminToken,
+            'x-admin-token': currentAdminToken
+          },
+          body: JSON.stringify({
+            name,
+            brand,
+            category,
+            usdPrice,
+            duration,
+            description,
+            importantRequirements,
+            howItIsDelivered,
+            iconType: iconType || undefined,
+            logoUrl: logoUrl || ''
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          closeEditProductModal();
+          showToast(`"${name}" details & logo updated!`);
+          loadInventory();
+        } else {
+          showToast(data.message || 'Update failed.');
+        }
+      } catch (err) {
+        showToast('Error saving product changes.');
       }
     }
 
@@ -1308,6 +1780,7 @@
     // Init
     document.addEventListener('DOMContentLoaded', () => {
       checkAdminAuth();
+      populateBrandSelects();
       loadInventory();
       // Auto-poll inventory status every 15 seconds for live reservations
       setInterval(loadInventory, 15000);
