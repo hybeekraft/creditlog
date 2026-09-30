@@ -5755,16 +5755,16 @@ select, option {
 .browse-full-shop-btn {
   background: #190D08;
   color: #FFFFFF;
-  padding: 16px 38px;
+  padding: 18px 46px;
   border-radius: var(--radius-full);
-  font-size: 16.5px;
+  font-size: 18px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   white-space: nowrap;
-  box-shadow: 0 10px 30px rgba(25, 13, 8, 0.22);
+  box-shadow: 0 12px 32px rgba(25, 13, 8, 0.25);
   transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
   text-decoration: none;
 }
@@ -5772,14 +5772,14 @@ select, option {
 .browse-full-shop-btn:hover {
   background: #000000;
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
 }
 
 @media (max-width: 480px) {
   .browse-full-shop-btn {
-    padding: 14px 24px;
-    font-size: 14.5px;
-    gap: 8px;
+    padding: 15px 30px;
+    font-size: 15.5px;
+    gap: 9px;
   }
 }
 
