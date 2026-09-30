@@ -137,7 +137,8 @@ var BRAND_ICON_REGISTRY = [
     "id": "gemini",
     "match": [
       "gemini",
-      "google"
+      "google gemini",
+      "google ai"
     ],
     "name": "Google Gemini",
     "color": "#8E75B2",
@@ -695,7 +696,45 @@ var BRAND_ICON_REGISTRY = [
 
 function getBrandData(prod) {
   if (!prod) return BRAND_ICON_REGISTRY[0];
-  const target = ((prod.brand || '') + ' ' + (prod.name || '') + ' ' + (prod.id || '')).toLowerCase();
+
+  // 1. Direct match by explicit iconType (highest priority)
+  if (prod.iconType) {
+    const iconKey = String(prod.iconType).toLowerCase().trim();
+    const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey);
+    if (iconMatch) return iconMatch;
+  }
+
+  // 2. Direct match by brandClass (e.g., 'tile-chatgpt' -> 'chatgpt')
+  if (prod.brandClass) {
+    const cleanClass = String(prod.brandClass).replace(/^tile-/, '').toLowerCase().trim();
+    const classMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === cleanClass);
+    if (classMatch) return classMatch;
+  }
+
+  // 3. Match against explicit brand field
+  if (prod.brand) {
+    const brandLower = String(prod.brand).toLowerCase().trim();
+    const directBrand = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandLower || b.name.toLowerCase() === brandLower);
+    if (directBrand) return directBrand;
+    for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
+      const b = BRAND_ICON_REGISTRY[i];
+      for (let j = 0; j < b.match.length; j++) {
+        if (brandLower.includes(b.match[j])) return b;
+      }
+    }
+  }
+
+  // 4. Fallback search on name & id, prioritizing primary software brands over generic words
+  const target = ((prod.name || '') + ' ' + (prod.id || '')).toLowerCase();
+  if (target.includes('chatgpt') || target.includes('openai')) {
+    const gpt = BRAND_ICON_REGISTRY.find(b => b.id === 'chatgpt');
+    if (gpt) return gpt;
+  }
+  if (target.includes('claude') || target.includes('anthropic')) {
+    const claude = BRAND_ICON_REGISTRY.find(b => b.id === 'claude');
+    if (claude) return claude;
+  }
+
   for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
     const b = BRAND_ICON_REGISTRY[i];
     for (let j = 0; j < b.match.length; j++) {
