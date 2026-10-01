@@ -884,7 +884,7 @@ function getAvailableBrandLogos() {
 }
 
 
-// --- FULL SUBSCRIPTIONS CATALOG (All 93 Verified Items) ---
+// --- FULL SUBSCRIPTIONS SHOP (All 93 Verified Items) ---
 var CATALOG_PRODUCTS = [
   {
     "id": "google-gemini-3m",
@@ -1121,7 +1121,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 1 Full Year: Unlimited hearts, no advertisements, personalized practice, and offline lessons.",
     "currPrice": 1500,
     "oldPrice": 125985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#58CC02\"><path d=\"M14.484 18.213c1.142 1.033 2.657 1.662 4.316 1.662l.294-.001c1.985-.038 3.749-.9 4.906-2.454.004-.006.012-.016.016-.022a1.36 1.36 0 0 0 .163-.357c.075-.276.016-.549-.163-.746a.78.78 0 0 0-.585-.251c-.244 0-.482.115-.653.315-.884 1.188-2.227 1.848-3.738 1.876l-.239.001c-1.272 0-2.433-.483-3.311-1.277a.78.78 0 0 0-.52-.204.77.77 0 0 0-.555.234.78.78 0 0 0 .07 1.248M7.818 10.742c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688m8.364 0c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12c.571 0 1.13-.042 1.68-.12a9.63 9.63 0 0 1-.48-3.03c0-3.32 1.7-6.24 4.28-7.96C17.06 1.25 14.67 0 12 0\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "12 Months",
@@ -1152,7 +1152,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 2 Months access with unlimited hearts and ads removed.",
     "currPrice": 750,
     "oldPrice": 21000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#58CC02\"><path d=\"M14.484 18.213c1.142 1.033 2.657 1.662 4.316 1.662l.294-.001c1.985-.038 3.749-.9 4.906-2.454.004-.006.012-.016.016-.022a1.36 1.36 0 0 0 .163-.357c.075-.276.016-.549-.163-.746a.78.78 0 0 0-.585-.251c-.244 0-.482.115-.653.315-.884 1.188-2.227 1.848-3.738 1.876l-.239.001c-1.272 0-2.433-.483-3.311-1.277a.78.78 0 0 0-.52-.204.77.77 0 0 0-.555.234.78.78 0 0 0 .07 1.248M7.818 10.742c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688m8.364 0c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12c.571 0 1.13-.042 1.68-.12a9.63 9.63 0 0 1-.48-3.03c0-3.32 1.7-6.24 4.28-7.96C17.06 1.25 14.67 0 12 0\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "2 Months",
@@ -1183,7 +1183,7 @@ var CATALOG_PRODUCTS = [
     "description": "Super Duolingo activated directly on your personal email address for 1 full year.",
     "currPrice": 13500,
     "oldPrice": 125985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#58CC02\"><path d=\"M14.484 18.213c1.142 1.033 2.657 1.662 4.316 1.662l.294-.001c1.985-.038 3.749-.9 4.906-2.454.004-.006.012-.016.016-.022a1.36 1.36 0 0 0 .163-.357c.075-.276.016-.549-.163-.746a.78.78 0 0 0-.585-.251c-.244 0-.482.115-.653.315-.884 1.188-2.227 1.848-3.738 1.876l-.239.001c-1.272 0-2.433-.483-3.311-1.277a.78.78 0 0 0-.52-.204.77.77 0 0 0-.555.234.78.78 0 0 0 .07 1.248M7.818 10.742c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688m8.364 0c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12c.571 0 1.13-.042 1.68-.12a9.63 9.63 0 0 1-.48-3.03c0-3.32 1.7-6.24 4.28-7.96C17.06 1.25 14.67 0 12 0\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "12 Months (Personal Mail)",
@@ -1710,7 +1710,7 @@ var CATALOG_PRODUCTS = [
     "description": "Play hundreds of high-quality PC games with friends, including new day-one releases.",
     "currPrice": 11625,
     "oldPrice": 17985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#107C10\"><path d=\"M3.663 20.183A11.96 11.96 0 0 0 12 24c3.21 0 6.13-1.263 8.337-3.317a11.97 11.97 0 0 0 2.946-4.636c-1.34 1.49-3.792 2.657-6.574 3.033 1.942-.98 3.513-2.392 4.417-3.923-1.637 1.13-4.045 1.96-6.792 2.146 1.542-.924 2.766-2.188 3.407-3.515-2.257.94-5.06 1.464-7.741 1.464-2.68 0-5.484-.524-7.74-1.464.64 1.327 1.864 2.59 3.406 3.515-2.747-.186-5.155-1.016-6.792-2.146.904 1.53 2.475 2.943 4.417 3.923-2.782-.376-5.234-1.543-6.574-3.033.722 1.74 1.764 3.328 2.946 4.636zM12 0C6.545 0 1.922 3.655.438 8.643c1.554-.86 4.093-1.472 7.027-1.642-1.047 1.04-1.89 2.37-2.38 3.784 2.05-1.272 4.542-2.03 7.242-2.03 2.7 0 5.192.758 7.242 2.03-.49-1.414-1.333-2.744-2.38-3.784 2.934.17 5.473.782 7.027 1.642C22.078 3.655 17.455 0 12 0z\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "1 Month",
@@ -3260,7 +3260,7 @@ var CATALOG_PRODUCTS = [
     "description": "Pre-activated Xbox player account. Instant digital delivery and verified warranty.",
     "currPrice": 1500,
     "oldPrice": 22485,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#107C10\"><path d=\"M3.663 20.183A11.96 11.96 0 0 0 12 24c3.21 0 6.13-1.263 8.337-3.317a11.97 11.97 0 0 0 2.946-4.636c-1.34 1.49-3.792 2.657-6.574 3.033 1.942-.98 3.513-2.392 4.417-3.923-1.637 1.13-4.045 1.96-6.792 2.146 1.542-.924 2.766-2.188 3.407-3.515-2.257.94-5.06 1.464-7.741 1.464-2.68 0-5.484-.524-7.74-1.464.64 1.327 1.864 2.59 3.406 3.515-2.747-.186-5.155-1.016-6.792-2.146.904 1.53 2.475 2.943 4.417 3.923-2.782-.376-5.234-1.543-6.574-3.033.722 1.74 1.764 3.328 2.946 4.636zM12 0C6.545 0 1.922 3.655.438 8.643c1.554-.86 4.093-1.472 7.027-1.642-1.047 1.04-1.89 2.37-2.38 3.784 2.05-1.272 4.542-2.03 7.242-2.03 2.7 0 5.192.758 7.242 2.03-.49-1.414-1.333-2.744-2.38-3.784 2.934.17 5.473.782 7.027 1.642C22.078 3.655 17.455 0 12 0z\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "Account Access",
@@ -4030,7 +4030,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "2.8k",
     "brandClass": "tile-duolingo",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#58CC02\"><path d=\"M14.484 18.213c1.142 1.033 2.657 1.662 4.316 1.662l.294-.001c1.985-.038 3.749-.9 4.906-2.454.004-.006.012-.016.016-.022a1.36 1.36 0 0 0 .163-.357c.075-.276.016-.549-.163-.746a.78.78 0 0 0-.585-.251c-.244 0-.482.115-.653.315-.884 1.188-2.227 1.848-3.738 1.876l-.239.001c-1.272 0-2.433-.483-3.311-1.277a.78.78 0 0 0-.52-.204.77.77 0 0 0-.555.234.78.78 0 0 0 .07 1.248M7.818 10.742c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688m8.364 0c-.93 0-1.688.758-1.688 1.688s.758 1.688 1.688 1.688 1.688-.758 1.688-1.688-.758-1.688-1.688-1.688M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12c.571 0 1.13-.042 1.68-.12a9.63 9.63 0 0 1-.48-3.03c0-3.32 1.7-6.24 4.28-7.96C17.06 1.25 14.67 0 12 0\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "description": "Master 40+ languages with Duolingo Super: Unlimited hearts, zero ads, unlimited test-outs, and targeted mistake review.",
     "plans": [
       {
@@ -4353,7 +4353,7 @@ const CORE_PRODUCTS = [
 // Alias for backward compatibility across existing references
 const BOT_PRODUCTS = CATALOG_PRODUCTS;
 
-// Combined Catalog: Core Flagships + Unique Individual Catalog Items
+// Combined Shop: Core Flagships + Unique Individual Shop Items
 const PRODUCTS = [
   ...CORE_PRODUCTS,
   ...CATALOG_PRODUCTS.filter(bp => !CORE_PRODUCTS.some(cp => cp.id === bp.id))
