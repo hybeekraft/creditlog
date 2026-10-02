@@ -26,8 +26,9 @@ const DEFAULT_CONFIG = {
   // Range-based price multipliers:
   // If wholesale price falls in [min, max], this multiplier is applied
   priceTiers: [
-    { id: 'tier_micro', min: 0.00, max: 2.00, multiplier: 2.50, label: 'Micro ($0.00 – $2.00)' },
-    { id: 'tier_low', min: 2.01, max: 5.00, multiplier: 2.00, label: 'Low ($2.01 – $5.00)' },
+    { id: 'tier_nano', min: 0.00, max: 0.99, multiplier: 3.50, label: 'Sub-Dollar ($0.00 – $0.99)' },
+    { id: 'tier_micro', min: 1.00, max: 2.00, multiplier: 2.00, label: 'Micro ($1.00 – $2.00)' },
+    { id: 'tier_low', min: 2.01, max: 5.00, multiplier: 1.80, label: 'Low ($2.01 – $5.00)' },
     { id: 'tier_mid', min: 5.01, max: 15.00, multiplier: 1.60, label: 'Mid ($5.01 – $15.00)' },
     { id: 'tier_upper', min: 15.01, max: 40.00, multiplier: 1.35, label: 'Upper ($15.01 – $40.00)' },
     { id: 'tier_high', min: 40.01, max: 999999, multiplier: 1.20, label: 'High ($40.01+)' }
@@ -48,8 +49,8 @@ function readConfig() {
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const parsed = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
-      return { 
-        ...DEFAULT_CONFIG, 
+      return {
+        ...DEFAULT_CONFIG,
         ...parsed,
         priceTiers: parsed.priceTiers || DEFAULT_CONFIG.priceTiers,
         productOverrides: parsed.productOverrides || {},
@@ -490,7 +491,7 @@ class ResellerService {
       case 1:
         return 'https://one.google.com/promo/join?token=' + Math.random().toString(36).substring(2, 15) + '_gemini_pro_vip';
       case 2:
-        return 'Email: chatgpt_vip_' + Math.floor(Math.random()*8999+1000) + '@creditlog.net | Password: ClPass_' + Math.random().toString(36).substring(2, 8);
+        return 'Email: chatgpt_vip_' + Math.floor(Math.random() * 8999 + 1000) + '@creditlog.net | Password: ClPass_' + Math.random().toString(36).substring(2, 8);
       case 3:
         return 'https://invite.duolingo.com/family/' + Math.random().toString(36).substring(2, 12);
       case 4:
