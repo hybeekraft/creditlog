@@ -889,6 +889,61 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 200, { success: true, count: logs.length, logs });
   }
 
+  // 10. GET /api/admin/customers — Aggregated Customer Directory from Store Orders
+  if (pathname === '/api/admin/customers' && req.method === 'GET') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+
+    const orders = getAllOrders();
+    const customerMap = new Map();
+
+    orders.forEach(order => {
+      const email = (order.customerEmail || '').trim().toLowerCase();
+      if (!email) return;
+
+      if (!customerMap.has(email)) {
+        customerMap.set(email, {
+          email,
+          name: order.customerName || 'Customer',
+          phone: order.customerPhone || '',
+          deliveryChannels: new Set(),
+          orderCount: 0,
+          totalSpentUsd: 0,
+          totalSpentNgn: 0,
+          products: new Set(),
+          recentOrderDate: order.date || order.createdAt || '',
+          recentOrderId: order.id,
+          lastStatus: order.status || 'Delivered'
+        });
+      }
+
+      const cust = customerMap.get(email);
+      cust.orderCount += 1;
+      if (order.customerName && (cust.name === 'Customer' || cust.name === '')) cust.name = order.customerName;
+      if (order.customerPhone && !cust.phone) cust.phone = order.customerPhone;
+      if (order.deliveryChannel) cust.deliveryChannels.add(order.deliveryChannel);
+      if (order.product) cust.products.add(order.product);
+
+      const usd = order.totalUsd !== undefined ? Number(order.totalUsd) : (parseFloat((order.price || '').replace(/[^0-9.]/g, '')) || 0);
+      const ngn = order.totalNgn !== undefined ? Number(order.totalNgn) : (usd * USD_TO_NGN_RATE);
+      cust.totalSpentUsd = Number((cust.totalSpentUsd + usd).toFixed(2));
+      cust.totalSpentNgn = Math.round(cust.totalSpentNgn + ngn);
+    });
+
+    const customers = Array.from(customerMap.values()).map(c => ({
+      ...c,
+      deliveryChannels: Array.from(c.deliveryChannels),
+      products: Array.from(c.products)
+    })).sort((a, b) => b.orderCount - a.orderCount || b.totalSpentUsd - a.totalSpentUsd);
+
+    return sendJSON(res, 200, {
+      success: true,
+      count: customers.length,
+      customers
+    });
+  }
+
   // =========================================================================
   // RESELLER / SUPPLIER API INTEGRATION (AUTOMATED WHOLESALE DISPATCH)
   // =========================================================================

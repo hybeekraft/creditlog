@@ -38,11 +38,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           Activity Logs
         </a>
-        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Customer directory')">
+        <a href="javascript:void(0)" class="menu-item" onclick="openCustomersModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           Customers
         </a>
-        <a href="javascript:void(0)" class="menu-item" onclick="showToast('Admin settings')">
+        <a href="javascript:void(0)" class="menu-item" onclick="openResellerModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
           Settings
         </a>
@@ -483,9 +483,53 @@
     </div>
   </div>
 
+  <!-- Customers Directory Modal -->
+  <div id="customersModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+    <div style="background:#FFFDF8; border:1px solid rgba(25,13,8,0.12); border-radius:16px; padding:24px 28px; width:94%; max-width:880px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 12px 36px rgba(0,0,0,0.25);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(25,13,8,0.08); padding-bottom:12px;">
+        <div>
+          <h3 style="margin:0; font-size:18px; font-weight:800; color:#190D08;">Customer Directory</h3>
+          <p style="margin:3px 0 0; font-size:12px; color:#705E51;">All registered buyers, order frequency, delivery channels, and lifetime value.</p>
+        </div>
+        <button type="button" onclick="closeCustomersModal()" style="background:none; border:none; font-size:20px; cursor:pointer; color:#705E51;">✕</button>
+      </div>
+
+      <!-- Quick KPI Strip -->
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:14px;">
+        <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:12px 14px;">
+          <span style="font-size:11px; text-transform:uppercase; font-weight:800; color:#705E51;">Total Customers</span>
+          <div id="custTotalCount" style="font-size:20px; font-weight:800; color:#190D08; margin-top:2px;">0</div>
+        </div>
+        <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:12px 14px;">
+          <span style="font-size:11px; text-transform:uppercase; font-weight:800; color:#705E51;">Total Customer LTV</span>
+          <div id="custTotalRevenue" style="font-size:20px; font-weight:800; color:#16A34A; margin-top:2px;">₦0</div>
+        </div>
+        <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:12px 14px;">
+          <span style="font-size:11px; text-transform:uppercase; font-weight:800; color:#705E51;">Repeat Buyers</span>
+          <div id="custRepeatRate" style="font-size:20px; font-weight:800; color:#D04515; margin-top:2px;">0 (0%)</div>
+        </div>
+      </div>
+
+      <!-- Search & Export Bar -->
+      <div style="display:flex; gap:10px; margin-bottom:14px;">
+        <input type="text" id="custSearchInput" placeholder="Search by name, email, phone, or purchased product..." oninput="filterCustomersUI()" style="flex:1; padding:9px 14px; border:1px solid rgba(25,13,8,0.18); border-radius:8px; font-size:13px; background:#FFFFFF;">
+        <button type="button" onclick="exportCustomersCSV()" class="secondary-btn" style="padding:8px 14px; font-size:12px; display:inline-flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+      </div>
+
+      <!-- Customers List -->
+      <div id="customersListContainer" style="display:flex; flex-direction:column; gap:10px; overflow-y:auto; flex:1; padding-right:4px;">
+        <div style="text-align:center; padding:30px; color:#705E51;">Loading customer directory...</div>
+      </div>
+    </div>
+  </div>
+
   <script src="/shared.js"></script>
   <script>
     let currentResellerSettings = null;
+    let allLoadedCustomers = [];
 
     document.addEventListener('DOMContentLoaded', () => {
       const user = getCurrentUser();
@@ -494,6 +538,14 @@
         if (el) el.textContent = user.name;
       }
       fetchResellerStatus();
+
+      // Check URL parameters for direct navigation from other admin pages
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('open') === 'customers') {
+        openCustomersModal();
+      } else if (urlParams.get('open') === 'settings') {
+        openResellerModal();
+      }
     });
 
     async function fetchResellerStatus() {
@@ -872,6 +924,126 @@
       } catch (err) {
         list.innerHTML = `<div style="text-align:center; padding:20px; color:#DC2626;">Error: ${err.message}</div>`;
       }
+    }
+
+    // Customer Directory Controller
+    async function openCustomersModal() {
+      const modal = document.getElementById('customersModal');
+      modal.style.display = 'flex';
+      const container = document.getElementById('customersListContainer');
+      container.innerHTML = '<div style="text-align:center; padding:30px; color:#705E51;">Loading customer directory...</div>';
+
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch('/api/admin/customers', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success && data.customers) {
+          allLoadedCustomers = data.customers;
+          renderCustomersList(allLoadedCustomers);
+        } else {
+          container.innerHTML = '<div style="text-align:center; padding:30px; color:#DC2626;">Failed to load customers: ' + (data.message || 'Error') + '</div>';
+        }
+      } catch (err) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:#DC2626;">Network error: ${err.message}</div>`;
+      }
+    }
+
+    function closeCustomersModal() {
+      document.getElementById('customersModal').style.display = 'none';
+    }
+
+    function renderCustomersList(customers) {
+      const container = document.getElementById('customersListContainer');
+      const countEl = document.getElementById('custTotalCount');
+      const revEl = document.getElementById('custTotalRevenue');
+      const repEl = document.getElementById('custRepeatRate');
+
+      const totalRevNgn = customers.reduce((sum, c) => sum + (c.totalSpentNgn || 0), 0);
+      const repeatCount = customers.filter(c => c.orderCount > 1).length;
+
+      if (countEl) countEl.textContent = customers.length;
+      if (revEl) revEl.textContent = `₦${totalRevNgn.toLocaleString('en-US')}`;
+      if (repEl) repEl.textContent = `${repeatCount} (${customers.length > 0 ? Math.round((repeatCount / customers.length) * 100) : 0}%)`;
+
+      if (!customers || customers.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:30px; color:#705E51;">No customers found.</div>';
+        return;
+      }
+
+      container.innerHTML = customers.map(c => {
+        const initials = (c.name || 'C').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        const channels = (c.deliveryChannels || []).join(' · ') || 'Email';
+        const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
+        const waLink = cleanPhone ? `https://wa.me/${cleanPhone.startsWith('0') ? '234' + cleanPhone.slice(1) : cleanPhone}` : null;
+        const prodsList = (c.products || []).slice(0, 3).join(', ') + ((c.products || []).length > 3 ? ` +${c.products.length - 3} more` : '');
+
+        return `
+          <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:14px;">
+            <div style="display:flex; align-items:center; gap:12px; flex:1;">
+              <div style="width:40px; height:40px; border-radius:50%; background:#190D08; color:#F1C244; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;">
+                ${initials}
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <strong style="color:#190D08; font-size:14px;">${c.name}</strong>
+                  <span style="font-size:11px; padding:2px 7px; border-radius:12px; font-weight:700; background:${c.orderCount > 1 ? 'rgba(22,163,74,0.1)' : 'rgba(25,13,8,0.06)'}; color:${c.orderCount > 1 ? '#16A34A' : '#705E51'};">
+                    ${c.orderCount} ${c.orderCount === 1 ? 'Order' : 'Orders'} ${c.orderCount > 1 ? '· Repeat' : ''}
+                  </span>
+                </div>
+                <div style="font-size:12px; color:#705E51; margin-top:2px;">
+                  <span>${c.email}</span>
+                  ${c.phone ? ` · <span>${c.phone}</span>` : ''}
+                  · <span style="color:#D04515; font-weight:600;">${channels}</span>
+                </div>
+                ${prodsList ? `<div style="font-size:11px; color:#888; margin-top:3px;">Purchased: ${prodsList}</div>` : ''}
+              </div>
+            </div>
+            <div style="text-align:right; flex-shrink:0;">
+              <div style="font-size:15px; font-weight:800; color:#190D08;">₦${c.totalSpentNgn.toLocaleString('en-US')}</div>
+              <div style="font-size:11px; color:#705E51;">$${c.totalSpentUsd.toFixed(2)} USD</div>
+              <div style="margin-top:6px; display:flex; gap:6px; justify-content:flex-end;">
+                ${waLink ? `<a href="${waLink}" target="_blank" rel="noopener" class="secondary-btn" style="padding:3px 8px; font-size:11px; text-decoration:none; color:#16A34A; border-color:#16A34A;">WhatsApp</a>` : ''}
+                <a href="mailto:${c.email}" class="secondary-btn" style="padding:3px 8px; font-size:11px; text-decoration:none;">Email</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterCustomersUI() {
+      const q = (document.getElementById('custSearchInput')?.value || '').toLowerCase().trim();
+      if (!q) {
+        renderCustomersList(allLoadedCustomers);
+        return;
+      }
+      const filtered = allLoadedCustomers.filter(c => 
+        (c.name && c.name.toLowerCase().includes(q)) ||
+        (c.email && c.email.toLowerCase().includes(q)) ||
+        (c.phone && c.phone.includes(q)) ||
+        (c.products && c.products.some(p => p.toLowerCase().includes(q)))
+      );
+      renderCustomersList(filtered);
+    }
+
+    function exportCustomersCSV() {
+      if (!allLoadedCustomers || allLoadedCustomers.length === 0) {
+        alert('No customers to export.');
+        return;
+      }
+      let csv = 'Name,Email,Phone,Orders Count,Total NGN,Total USD,Delivery Channels,Purchased Products\n';
+      allLoadedCustomers.forEach(c => {
+        csv += `"${c.name}","${c.email}","${c.phone || ''}",${c.orderCount},${c.totalSpentNgn},${c.totalSpentUsd},"${(c.deliveryChannels || []).join(';')}", "${(c.products || []).join(';')}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `creditlog_customers_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
