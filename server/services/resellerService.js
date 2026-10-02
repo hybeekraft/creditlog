@@ -21,14 +21,40 @@ const DEFAULT_CONFIG = {
   usdToNgnRate: 1500,
   autoFulfill: true,
   mode: process.env.RESELLER_API_KEY ? 'live' : 'simulation',
-  lowBalanceThreshold: 5.0
+  lowBalanceThreshold: 5.0,
+
+  // Range-based price multipliers:
+  // If wholesale price falls in [min, max], this multiplier is applied
+  priceTiers: [
+    { id: 'tier_micro', min: 0.00, max: 2.00, multiplier: 2.50, label: 'Micro ($0.00 – $2.00)' },
+    { id: 'tier_low', min: 2.01, max: 5.00, multiplier: 2.00, label: 'Low ($2.01 – $5.00)' },
+    { id: 'tier_mid', min: 5.01, max: 15.00, multiplier: 1.60, label: 'Mid ($5.01 – $15.00)' },
+    { id: 'tier_upper', min: 15.01, max: 40.00, multiplier: 1.35, label: 'Upper ($15.01 – $40.00)' },
+    { id: 'tier_high', min: 40.01, max: 999999, multiplier: 1.20, label: 'High ($40.01+)' }
+  ],
+  // Product-specific overrides (productId -> multiplier)
+  productOverrides: {},
+  // Category-specific fallback multipliers
+  categoryMultipliers: {
+    ai: 1.75,
+    gaming: 1.50,
+    streaming: 1.40,
+    productivity: 1.50,
+    security: 1.60
+  }
 };
 
 function readConfig() {
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const parsed = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
-      return { ...DEFAULT_CONFIG, ...parsed };
+      return { 
+        ...DEFAULT_CONFIG, 
+        ...parsed,
+        priceTiers: parsed.priceTiers || DEFAULT_CONFIG.priceTiers,
+        productOverrides: parsed.productOverrides || {},
+        categoryMultipliers: { ...DEFAULT_CONFIG.categoryMultipliers, ...(parsed.categoryMultipliers || {}) }
+      };
     }
   } catch (err) {
     console.error('[ResellerService] Error reading config file:', err.message);
@@ -69,7 +95,10 @@ class ResellerService {
       usdToNgnRate: this.config.usdToNgnRate,
       autoFulfill: this.config.autoFulfill,
       mode: isConfigured ? (this.config.mode || 'live') : 'simulation',
-      lowBalanceThreshold: this.config.lowBalanceThreshold || 5.0
+      lowBalanceThreshold: this.config.lowBalanceThreshold || 5.0,
+      priceTiers: this.config.priceTiers || DEFAULT_CONFIG.priceTiers,
+      productOverrides: this.config.productOverrides || {},
+      categoryMultipliers: this.config.categoryMultipliers || DEFAULT_CONFIG.categoryMultipliers
     };
   }
 
@@ -92,8 +121,91 @@ class ResellerService {
     if (updates.mode !== undefined) this.config.mode = updates.mode;
     if (updates.lowBalanceThreshold !== undefined) this.config.lowBalanceThreshold = Number(updates.lowBalanceThreshold) || 5.0;
 
+    // Save Price Range Tiers
+    if (updates.priceTiers && Array.isArray(updates.priceTiers)) {
+      this.config.priceTiers = updates.priceTiers.map((tier, idx) => ({
+        id: tier.id || ('tier_' + (idx + 1)),
+        min: Math.max(0, parseFloat(tier.min) || 0),
+        max: Math.max(0, parseFloat(tier.max) || 0),
+        multiplier: Math.max(1.0, parseFloat(tier.multiplier) || 1.0),
+        label: tier.label || `Tier $${tier.min} - $${tier.max}`
+      })).sort((a, b) => a.min - b.min);
+    }
+
+    // Save Product Overrides
+    if (updates.productOverrides && typeof updates.productOverrides === 'object') {
+      this.config.productOverrides = updates.productOverrides;
+    }
+
+    // Save Category Multipliers
+    if (updates.categoryMultipliers && typeof updates.categoryMultipliers === 'object') {
+      this.config.categoryMultipliers = { ...this.config.categoryMultipliers, ...updates.categoryMultipliers };
+    }
+
     writeConfig(this.config);
     return this.getSettings();
+  }
+
+  // Calculate dynamic retail pricing based on range tiers and overrides
+  calculatePricing(wholesalePriceUsd, productId = null, category = null) {
+    this.config = readConfig();
+    const cost = Math.max(0, parseFloat(wholesalePriceUsd || 0));
+    const tiers = Array.isArray(this.config.priceTiers) ? this.config.priceTiers : DEFAULT_CONFIG.priceTiers;
+    const overrides = this.config.productOverrides || {};
+    const catMultipliers = this.config.categoryMultipliers || {};
+    const defaultMultiplier = 1 + (Number(this.config.markupPercent || 25) / 100);
+
+    let multiplier = null;
+    let ruleMatched = '';
+    let ruleType = '';
+
+    // 1. Specific Product ID / Key Override
+    if (productId && overrides[productId] !== undefined && Number(overrides[productId]) > 0) {
+      multiplier = Number(overrides[productId]);
+      ruleMatched = `Product Custom (${productId})`;
+      ruleType = 'product_override';
+    }
+
+    // 2. Price Range Tier (if cost falls in [min, max])
+    if (multiplier === null) {
+      const matchedTier = tiers.find(t => cost >= Number(t.min) && cost <= Number(t.max));
+      if (matchedTier && Number(matchedTier.multiplier) > 0) {
+        multiplier = Number(matchedTier.multiplier);
+        ruleMatched = matchedTier.label || `Range $${matchedTier.min} - $${matchedTier.max}`;
+        ruleType = 'price_tier';
+      }
+    }
+
+    // 3. Category Multiplier
+    if (multiplier === null && category && catMultipliers[category] !== undefined && Number(catMultipliers[category]) > 0) {
+      multiplier = Number(catMultipliers[category]);
+      ruleMatched = `Category (${category})`;
+      ruleType = 'category';
+    }
+
+    // 4. Fallback to default markup percentage
+    if (multiplier === null) {
+      multiplier = defaultMultiplier;
+      ruleMatched = `Default Store Markup (+${this.config.markupPercent || 25}%)`;
+      ruleType = 'default';
+    }
+
+    const rate = Number(this.config.usdToNgnRate) || 1500;
+    const retailUsd = Number((cost * multiplier).toFixed(2));
+    const retailNgn = Math.round(retailUsd * rate);
+    const profitUsd = Number((retailUsd - cost).toFixed(2));
+    const profitMarginPercent = retailUsd > 0 ? Math.round(((retailUsd - cost) / retailUsd) * 100) : 0;
+
+    return {
+      wholesaleUsd: cost,
+      multiplier,
+      ruleMatched,
+      ruleType,
+      retailUsd,
+      retailNgn,
+      profitUsd,
+      profitMarginPercent
+    };
   }
 
   isLive() {
@@ -149,9 +261,24 @@ class ResellerService {
     return this.request('/account/balance');
   }
 
-  // Available Products
+  // Available Products with Calculated Retail Pricing
   async getProducts() {
-    return this.request('/products');
+    const res = await this.request('/products');
+    if (res && res.products && Array.isArray(res.products)) {
+      res.products = res.products.map(p => {
+        const cost = parseFloat(p.price || 0);
+        const pricing = this.calculatePricing(cost, p.id || p.productId, p.category);
+        return {
+          ...p,
+          pricing,
+          suggestedRetailUsd: pricing.retailUsd,
+          suggestedRetailNgn: pricing.retailNgn,
+          appliedMultiplier: pricing.multiplier,
+          pricingRule: pricing.ruleMatched
+        };
+      });
+    }
+    return res;
   }
 
   // Single Product Detail

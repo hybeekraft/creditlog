@@ -946,6 +946,66 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, result.ok ? 200 : 400, result);
   }
 
+  // POST /api/admin/reseller/calculate-price — Calculate dynamic price with range multipliers
+  if (pathname === '/api/admin/reseller/calculate-price' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const body = await parseBody(req);
+    const { wholesalePrice, productId, category } = body;
+    const pricing = resellerService.calculatePricing(wholesalePrice, productId, category);
+    return sendJSON(res, 200, { success: true, pricing });
+  }
+
+  // POST /api/admin/reseller/apply-multipliers — Apply tiered multipliers to store inventory
+  if (pathname === '/api/admin/reseller/apply-multipliers' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const body = await parseBody(req);
+    const targetProductId = body.productId;
+
+    return await withInventoryTransaction(async () => {
+      const products = getAllProducts();
+      let updatedCount = 0;
+
+      products.forEach(p => {
+        if (targetProductId && p.id !== targetProductId) return;
+
+        const baseCost = p.wholesaleUsd !== undefined ? Number(p.wholesaleUsd) : Number(p.usdPrice || 0);
+        if (baseCost > 0) {
+          const mainPricing = resellerService.calculatePricing(baseCost, p.id, p.category);
+          p.wholesaleUsd = baseCost;
+          p.usdPrice = mainPricing.retailUsd;
+          p.appliedMultiplier = mainPricing.multiplier;
+          p.pricingRule = mainPricing.ruleMatched;
+          updatedCount++;
+        }
+
+        if (p.variants && Array.isArray(p.variants)) {
+          p.variants.forEach(v => {
+            const vBaseCost = v.wholesaleUsd !== undefined ? Number(v.wholesaleUsd) : Number(v.usdPrice || 0);
+            if (vBaseCost > 0) {
+              const vPricing = resellerService.calculatePricing(vBaseCost, p.id, p.category);
+              v.wholesaleUsd = vBaseCost;
+              v.usdPrice = vPricing.retailUsd;
+              v.appliedMultiplier = vPricing.multiplier;
+              v.pricingRule = vPricing.ruleMatched;
+            }
+          });
+        }
+      });
+
+      saveProducts(products);
+      recordLog('Admin', 'Admin', 'Pricing', 'Batch Multiplier Sync', `Applied tiered price multipliers across store inventory (${updatedCount} products updated)`);
+      return sendJSON(res, 200, {
+        success: true,
+        message: `Applied tiered price multipliers to ${updatedCount} product(s).`,
+        updatedCount
+      });
+    });
+  }
+
   // =========================================================================
   // TRANSACTIONAL INVENTORY RESERVATION SYSTEM (ACID Safe)
   // =========================================================================
