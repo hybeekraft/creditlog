@@ -3,6 +3,10 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/icons/:path*",
+      "destination": "/assets/icons/:path*"
+    },
+    {
       "source": "/api/:path*",
       "destination": "/api/index.js?path=/api/:path*"
     }

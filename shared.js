@@ -757,11 +757,19 @@ var BRAND_ICON_REGISTRY = [
 
 function resolveBrandAssetUrl(url) {
   if (!url) return '';
-  const clean = String(url).trim();
+  let clean = String(url).trim();
   if (clean.startsWith('data:') || clean.startsWith('blob:') || clean.startsWith('http://') || clean.startsWith('https://')) {
     return clean;
   }
-  return clean.replace(/^\/+/, '');
+  if (clean.startsWith('icons/')) {
+    clean = 'assets/' + clean;
+  } else if (clean.startsWith('/icons/')) {
+    clean = '/assets' + clean;
+  }
+  if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') {
+    return clean.replace(/^\/+/, '');
+  }
+  return clean.startsWith('/') ? clean : '/' + clean;
 }
 
 function getBrandData(prod) {
@@ -846,10 +854,13 @@ function renderBrandIcon(prod, options) {
   const borderStyle = brand.border ? ' border: ' + brand.border + ';' : '';
 
   const viewBox = brand.viewBox || '0 0 24 24';
+  const hasFallbackVector = !!(brand.path || brand.svgHtml);
   const svgInner = brand.svgHtml || (brand.stroke
     ? '<path d="' + (brand.path || '') + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
     : '<path d="' + (brand.path || '') + '"/>');
-  const fallbackSvg = '<svg class="brand-fallback-vector" width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '" style="display:none; color: ' + textColor + '; pointer-events: none;">' + svgInner + '</svg>';
+  const fallbackSvg = hasFallbackVector
+    ? '<svg class="brand-fallback-vector" width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '" style="display:none; color: ' + textColor + '; pointer-events: none;">' + svgInner + '</svg>'
+    : '';
 
   if (brand.imgSrc) {
     const isFull = !!brand.imgFull;
@@ -858,11 +869,12 @@ function renderBrandIcon(prod, options) {
       ? 'width: 100%; height: 100%; object-fit: cover; border-radius: inherit; pointer-events: none;'
       : 'width: ' + svgSize + 'px; height: ' + svgSize + 'px; object-fit: contain; pointer-events: none;';
 
-    // Graceful error handling: instantly hides broken img and displays crisp SVG vector logo
-    const onErrHandler = "this.style.display='none'; const fb=this.parentElement?this.parentElement.querySelector('.brand-fallback-vector'):null; if(fb) fb.style.display='block';";
+    const onErrHandler = hasFallbackVector
+      ? "this.style.display='none'; const fb=this.parentElement?this.parentElement.querySelector('.brand-fallback-vector'):null; if(fb) fb.style.display='block';"
+      : "";
 
     return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden; position: relative;">' +
-      '<img src="' + resolvedUrl + '" alt="" style="' + imgStyle + '" onerror="' + onErrHandler + '" />' +
+      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '"' + (onErrHandler ? ' onerror="' + onErrHandler + '"' : '') + ' />' +
       fallbackSvg +
       '</div>';
   }
@@ -1674,12 +1686,12 @@ var CATALOG_PRODUCTS = [
     "inStock": true,
     "rating": 4.6,
     "reviews": "410",
-    "brandClass": "tile-gaming",
-    "iconType": "game",
+    "brandClass": "tile-xbox",
+    "iconType": "xbox",
     "description": "Fallout 76 PC game digital key redeemable on Microsoft Store / Xbox PC app.",
     "currPrice": 3780,
     "oldPrice": 59985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M3 3h18v18H3V3zm4 4v10h10V7H7zm2 2h6v6H9V9z\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\">",
     "plans": [
       {
         "duration": "Full Game License",
@@ -3658,8 +3670,8 @@ var CATALOG_PRODUCTS = [
     "inStock": true,
     "rating": 4.8,
     "reviews": "1.7k",
-    "brandClass": "tile-streaming",
-    "iconType": "video",
+    "brandClass": "tile-amazon",
+    "iconType": "amazon",
     "description": "Amazon Prime Video 6 months access to movies, series, and Amazon Originals in 4K. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 80910,

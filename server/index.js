@@ -1448,13 +1448,35 @@ const server = http.createServer(async (req, res) => {
 
   let reqPath = pathname === '/' ? '/index.html' : pathname;
 
+  const cleanReqPath = reqPath.replace(/^\/+/, '');
+
   // Search candidate root directories (for both local and Vercel Lambda runtime)
   const candidateFilePaths = [
-    path.join(ROOT_DIR, reqPath),
-    path.join(process.cwd(), reqPath),
-    path.join(__dirname, '..', reqPath),
-    path.join(__dirname, reqPath)
+    path.join(ROOT_DIR, cleanReqPath),
+    path.join(process.cwd(), cleanReqPath),
+    path.join(__dirname, '..', cleanReqPath),
+    path.join(__dirname, cleanReqPath)
   ];
+
+  // If requesting from /icons/ alias, also check assets/icons/
+  if (cleanReqPath.startsWith('icons/')) {
+    const assetIconPath = 'assets/' + cleanReqPath;
+    candidateFilePaths.unshift(
+      path.join(ROOT_DIR, assetIconPath),
+      path.join(process.cwd(), assetIconPath),
+      path.join(__dirname, '..', assetIconPath)
+    );
+  }
+
+  // If static file requested under clean-url path (e.g. /shop/assets/icons/duolingo.svg or /shop/style.css)
+  const strippedReqPath = cleanReqPath.replace(/^(shop|product|checkout|success|admin|inventory|activity-logs)\//, '');
+  if (strippedReqPath !== cleanReqPath) {
+    candidateFilePaths.push(
+      path.join(ROOT_DIR, strippedReqPath),
+      path.join(process.cwd(), strippedReqPath),
+      path.join(__dirname, '..', strippedReqPath)
+    );
+  }
 
   let filePath = candidateFilePaths.find(p => {
     try { return fs.existsSync(p) && fs.statSync(p).isFile(); } catch (e) { return false; }
