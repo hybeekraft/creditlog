@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreditLog — Store Settings & Supplier Integration</title>
+  <meta name="description" content="Configure wholesale reseller API credentials, dynamic pricing tiers, currency exchange rates, and store automation.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
+  <style>
+    .settings-tab-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(25, 13, 8, 0.15);
+      background: #FFFFFF;
+      color: #190D08;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .settings-tab-btn:hover {
+      border-color: #D04515;
+      color: #D04515;
+    }
+    .settings-tab-btn.active {
+      background: #190D08;
+      color: #FFFFFF;
+      border-color: #190D08;
+    }
+    .settings-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(25, 13, 8, 0.1);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .form-group-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #190D08;
+      margin-bottom: 6px;
+    }
+    .form-helper-text {
+      font-size: 12px;
+      color: #705E51;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .settings-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid rgba(25, 13, 8, 0.18);
+      border-radius: 8px;
+      font-size: 13.5px;
+      background: #FFFFFF;
+      color: #190D08;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .settings-input:focus {
+      outline: none;
+      border-color: #D04515;
+      box-shadow: 0 0 0 3px rgba(208, 69, 21, 0.12);
+    }
+    .price-tier-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 38px;
+      gap: 10px;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid rgba(25, 13, 8, 0.1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      transition: border-color 0.15s ease;
+    }
+    .price-tier-row:hover {
+      border-color: rgba(208, 69, 21, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-layout admin-layout">
+    <!-- Admin Sidebar -->
+    <aside class="dash-sidebar admin-sidebar">
+      <a href="index.html" class="dash-brand">
+        <div class="logo-icon small" style="color: #D04515;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+          </svg>
+        </div>
+        <span class="logo-text">Credit<span class="accent-text" style="color: #D04515;">Log</span></span>
+      </a>
+
+      <nav class="dash-menu">
+        <a href="inventory.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Inventory & CMS
+        </a>
+        <a href="admin.html#orders" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Orders
+        </a>
+        <a href="activity-logs.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Activity Logs
+        </a>
+        <a href="customers.html" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Customers
+        </a>
+        <a href="settings.html" class="menu-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dash-main-area">
+      <header class="dash-top-bar">
+        <div>
+          <h1 class="welcome-heading">Store Settings & Reseller API</h1>
+          <p class="welcome-sub">Manage wholesale supplier connection, FX exchange rate, dynamic price range multipliers, and instant fulfillment.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div class="user-profile-badge" id="adminUserBadge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
+            <div>
+              <div class="badge-name" id="adminProfileName">Admin Manager</div>
+              <div class="badge-tag">Admin</div>
+            </div>
+          </div>
+          <button class="secondary-btn" onclick="logoutUser()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Sign out of Admin Portal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- KPI Status Ribbon -->
+      <div class="admin-kpi-grid">
+        <div class="kpi-metric-card">
+          <span class="metric-title">Connection Status</span>
+          <div class="metric-val" id="resellerStatusText" style="font-size: 20px;">Checking...</div>
+          <span id="resellerStatusPill" class="order-status-pill status-processing" style="font-size: 11px; padding: 2px 8px;">Connecting</span>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">Wholesale Supplier Balance</span>
+          <div class="metric-val" id="resellerBalanceVal">$0.00 USD</div>
+          <div id="resellerBalanceSub" class="cms-kpi-sub" style="color: #705E51;">Checking balance...</div>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">USD/NGN Exchange Rate</span>
+          <div class="metric-val" id="resellerRateVal">₦1,550</div>
+          <div class="cms-kpi-sub" style="color: #705E51;">Conversion base rate</div>
+        </div>
+
+        <div class="kpi-metric-card">
+          <span class="metric-title">Fulfillment Engine</span>
+          <div class="metric-val" id="resellerEngineVal" style="color: #16A34A;">Automated</div>
+          <div class="cms-kpi-sub" style="color: #705E51;">Instant dispatch enabled</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+        <button type="button" class="settings-tab-btn active" id="tabBtnCredentials" onclick="switchSettingsTab('credentials')">
+          🔑 Supplier API & FX
+        </button>
+        <button type="button" class="settings-tab-btn" id="tabBtnTiers" onclick="switchSettingsTab('tiers')">
+          📈 Dynamic Price Tiers
+        </button>
+        <button type="button" class="settings-tab-btn" id="tabBtnCategories" onclick="switchSettingsTab('categories')">
+          🏷️ Category Multipliers
+        </button>
+        <button type="button" class="settings-tab-btn" id="tabBtnSimulator" onclick="switchSettingsTab('simulator')">
+          🧪 Live Retail Price Tester
+        </button>
+        <button type="button" class="settings-tab-btn" id="tabBtnCatalog" onclick="switchSettingsTab('catalog')">
+          📦 Supplier Catalog & Tests
+        </button>
+      </div>
+
+      <!-- Main Settings Form -->
+      <form id="settingsForm" onsubmit="handleSettingsSubmit(event)">
+        <!-- TAB 1: Credentials & FX -->
+        <div id="tabContentCredentials" class="settings-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 12px;">
+            <div>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Wholesale API Credentials & Exchange Rates</h3>
+              <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Connect your digital goods supplier API to enable automated ordering and real-time inventory.</p>
+            </div>
+            <button type="button" onclick="fetchResellerStatus()" class="secondary-btn" style="padding: 7px 12px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Refresh Balance</span>
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+              <label class="form-group-label">Supplier API Base URL</label>
+              <input type="url" id="inputBaseUrl" required class="settings-input" value="https://api-geminipro.ignorelist.com/api/reseller/v1">
+              <div class="form-helper-text">Official GeminiPro digital goods supplier endpoint.</div>
+            </div>
+
+            <div>
+              <label class="form-group-label">
+                Reseller API Key (X-API-Key)
+                <span style="font-weight: normal; color: #705E51; font-size: 11.5px;">(Leave blank to keep server in safe Sandbox Simulation)</span>
+              </label>
+              <div style="position: relative;">
+                <input type="password" id="inputApiKey" placeholder="Paste your private supplier API key here" class="settings-input" style="padding-right: 80px;">
+                <button type="button" onclick="toggleApiKeyVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 12px; font-weight: 700; color: #D04515; cursor: pointer;">
+                  <span id="apiKeyToggleText">Show</span>
+                </button>
+              </div>
+              <div id="currentMaskedNotice" style="font-size: 11.5px; color: #16A34A; margin-top: 5px; font-weight: 600; display: none;"></div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div>
+              <label class="form-group-label">USD to NGN Exchange Rate</label>
+              <div style="position: relative;">
+                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">₦</span>
+                <input type="number" id="inputRate" min="100" max="10000" step="10" required class="settings-input" style="padding-left: 28px;" value="1550" oninput="updateSimulatorPreview()">
+              </div>
+              <div class="form-helper-text">Base conversion rate for converting wholesale USD to retail Naira.</div>
+            </div>
+
+            <div>
+              <label class="form-group-label">Default Fallback Markup (%)</label>
+              <div style="position: relative;">
+                <input type="number" id="inputMarkup" min="0" max="500" step="1" required class="settings-input" value="25" oninput="updateSimulatorPreview()">
+                <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">%</span>
+              </div>
+              <div class="form-helper-text">Applied only if an item does not match any tier or category rule.</div>
+            </div>
+
+            <div>
+              <label class="form-group-label">Low Balance Warning ($)</label>
+              <div style="position: relative;">
+                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">$</span>
+                <input type="number" id="inputLowBalanceThreshold" min="1" max="500" step="1" required class="settings-input" style="padding-left: 28px;" value="5">
+              </div>
+              <div class="form-helper-text">Triggers an admin alert when supplier balance dips below this amount.</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); padding: 14px 18px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
+            <input type="checkbox" id="inputAutoFulfill" checked style="width: 18px; height: 18px; accent-color: #D04515; cursor: pointer;">
+            <div>
+              <label for="inputAutoFulfill" style="font-size: 13.5px; font-weight: 700; color: #190D08; cursor: pointer; display: block;">
+                Automated Instant Dispatch (Zero-Touch Fulfillment)
+              </label>
+              <span style="font-size: 12px; color: #705E51;">
+                When checked, CreditLog immediately dispatches an API order to the supplier upon successful customer payment, retrieving credentials and delivering them instantly.
+              </span>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+              Save Credentials & FX Settings
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: Dynamic Price Tiers -->
+        <div id="tabContentTiers" class="settings-card" style="display: none;">
+          <div style="background: rgba(208, 69, 21, 0.06); border: 1px solid rgba(208, 69, 21, 0.2); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 12.5px; color: #190D08; line-height: 1.5;">
+            <strong>💡 How Range Multipliers Work:</strong>
+            When a product's wholesale cost falls inside a specific range, CreditLog automatically applies that range's multiplier to calculate the retail price.
+            Low-cost items (e.g. $0.50 – $2.00) get higher multipliers (e.g. <strong>2.50x</strong>) to ensure strong gross profits, while high-value products ($40+) use lower multipliers (e.g. <strong>1.20x</strong>) to stay competitive.
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #190D08;">Configured Price Ranges</h3>
+              <p style="margin: 2px 0 0; font-size: 12px; color: #705E51;">Modify or add ranges. Evaluated in order from lowest to highest.</p>
+            </div>
+            <button type="button" onclick="addNewPriceTierRow()" class="secondary-btn" style="padding: 6px 12px; font-size: 12px; border-radius: 6px; cursor: pointer;">
+              + Add Range Tier
+            </button>
+          </div>
+
+          <!-- Dynamic Tiers List -->
+          <div id="priceTiersContainer" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;">
+            <!-- Populated via renderPriceTiers -->
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(25,13,8,0.08);">
+            <button type="button" onclick="applyMultipliersToStore()" class="secondary-btn" style="padding: 9px 16px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px;">
+              ⚡ Sync Multipliers to All Store Inventory Now
+            </button>
+            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+              Save Tier Rules
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 3: Category Multipliers -->
+        <div id="tabContentCategories" class="settings-card" style="display: none;">
+          <div style="margin-bottom: 16px;">
+            <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #190D08;">Category-Level Fallback Multipliers</h3>
+            <p style="margin: 4px 0 0; font-size: 12.5px; color: #705E51;">
+              When an item doesn't fall into a price range tier, CreditLog applies the category multiplier.
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
+              <label class="form-group-label">🤖 AI Models (ChatGPT, Gemini, Claude)</label>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                <input type="number" id="catMult_ai" step="0.05" min="1.0" max="10.0" value="1.75" class="settings-input" style="font-weight: 700;">
+                <span style="font-size: 14px; font-weight: 800; color: #705E51;">x</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
+              <label class="form-group-label">🎮 Gaming (Xbox, Steam, PlayStation)</label>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                <input type="number" id="catMult_gaming" step="0.05" min="1.0" max="10.0" value="1.50" class="settings-input" style="font-weight: 700;">
+                <span style="font-size: 14px; font-weight: 800; color: #705E51;">x</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
+              <label class="form-group-label">🎬 Streaming & Media (Netflix, Spotify)</label>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                <input type="number" id="catMult_streaming" step="0.05" min="1.0" max="10.0" value="1.40" class="settings-input" style="font-weight: 700;">
+                <span style="font-size: 14px; font-weight: 800; color: #705E51;">x</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
+              <label class="form-group-label">💼 Productivity & Design (Canva, Office)</label>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                <input type="number" id="catMult_productivity" step="0.05" min="1.0" max="10.0" value="1.50" class="settings-input" style="font-weight: 700;">
+                <span style="font-size: 14px; font-weight: 800; color: #705E51;">x</span>
+              </div>
+            </div>
+
+            <div style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
+              <label class="form-group-label">🛡️ Security & VPNs (NordVPN, Surfshark)</label>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                <input type="number" id="catMult_security" step="0.05" min="1.0" max="10.0" value="1.60" class="settings-input" style="font-weight: 700;">
+                <span style="font-size: 14px; font-weight: 800; color: #705E51;">x</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+              Save Category Multipliers
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- TAB 4: Live Price Simulator -->
+      <div id="tabContentSimulator" class="settings-card" style="display: none;">
+        <div style="margin-bottom: 18px;">
+          <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Interactive Retail Price Simulator</h3>
+          <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Test wholesale costs to see what retail selling prices, conversions, and profit margins will be generated.</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="form-group-label">Sample Wholesale Cost ($ USD)</label>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div style="position: relative; width: 180px;">
+              <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">$</span>
+              <input type="number" id="inputSimulatorCost" step="0.10" min="0.10" max="1000" value="0.80" class="settings-input" style="padding-left: 28px; font-weight: 800; font-size: 16px;" oninput="updateSimulatorPreview()">
+            </div>
+            <button type="button" onclick="setSimulatorSample(0.80)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$0.80 (Micro)</button>
+            <button type="button" onclick="setSimulatorSample(1.50)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$1.50 (Micro)</button>
+            <button type="button" onclick="setSimulatorSample(3.50)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$3.50 (Low)</button>
+            <button type="button" onclick="setSimulatorSample(10.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$10.00 (Mid)</button>
+            <button type="button" onclick="setSimulatorSample(25.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$25.00 (Upper)</button>
+            <button type="button" onclick="setSimulatorSample(50.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$50.00 (High)</button>
+          </div>
+        </div>
+
+        <!-- Simulator Result Panel -->
+        <div style="background: #FFFDF8; border: 1px solid rgba(25,13,8,0.12); border-radius: 12px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <span style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #705E51; letter-spacing: 0.05em;">Matched Tier Rule</span>
+              <div id="simRuleMatched" style="font-size: 17px; font-weight: 800; color: #190D08; margin-top: 2px;">Micro ($0.00 – $2.00)</div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #705E51; letter-spacing: 0.05em;">Applied Multiplier</span>
+              <div id="simMultiplier" style="font-size: 22px; font-weight: 800; color: #D04515; margin-top: 2px;">2.50x</div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-top: 16px; border-top: 1px solid rgba(25,13,8,0.08);">
+            <div>
+              <span style="font-size: 12px; color: #705E51;">Wholesale Cost</span>
+              <div id="simCostUsd" style="font-size: 18px; font-weight: 800; color: #190D08; margin-top: 2px;">$0.80</div>
+            </div>
+            <div>
+              <span style="font-size: 12px; color: #705E51;">Retail USD</span>
+              <div id="simRetailUsd" style="font-size: 18px; font-weight: 800; color: #190D08; margin-top: 2px;">$2.00</div>
+            </div>
+            <div>
+              <span style="font-size: 12px; color: #705E51;">Retail NGN (@ ₦1,550)</span>
+              <div id="simRetailNgn" style="font-size: 18px; font-weight: 800; color: #16A34A; margin-top: 2px;">₦3,100</div>
+            </div>
+            <div>
+              <span style="font-size: 12px; color: #705E51;">Net Profit & Gross Margin</span>
+              <div id="simProfit" style="font-size: 18px; font-weight: 800; color: #D04515; margin-top: 2px;">+$1.20 (60%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: Supplier Catalog & Tests -->
+      <div id="tabContentCatalog" class="settings-card" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Supplier Wholesale Catalog & Test Orders</h3>
+            <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Inspect live products from your supplier and verify end-to-end order placement.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" onclick="loadSupplierCatalog()" class="secondary-btn" style="padding: 8px 14px; font-size: 12px;">
+              🔄 Refresh Catalog
+            </button>
+            <button type="button" onclick="testResellerOrder()" class="primary-btn" style="padding: 8px 16px; font-size: 12px; border-radius: 8px;">
+              🚀 Place Test Order (#1)
+            </button>
+          </div>
+        </div>
+
+        <!-- Supplier Products Container -->
+        <div id="supplierProductsList" style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="text-align: center; padding: 30px; color: #705E51;">Click 'Refresh Catalog' or switch to this tab to query the supplier API.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/shared.js"></script>
+  <script>
+    let currentResellerSettings = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (user && user.name) {
+        const el = document.getElementById('adminProfileName');
+        if (el) el.textContent = user.name;
+      }
+      fetchResellerStatus();
+    });
+
+    async function fetchResellerStatus() {
+      try {
+        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const res = await fetch('/api/admin/reseller/status', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          currentResellerSettings = data.settings;
+          populateForm(data);
+          updateSimulatorPreview();
+        }
+      } catch (err) {
+        console.warn('Failed to fetch reseller status:', err);
+      }
+    }
+
+    function populateForm(data) {
+      const { settings, balance } = data;
+      const isLive = settings.mode === 'live' && settings.isConfigured;
+
+      // Status Ribbon
+      const stText = document.getElementById('resellerStatusText');
+      const stPill = document.getElementById('resellerStatusPill');
+      if (stText && stPill) {
+        if (isLive) {
+          stText.textContent = 'Live Supplier Active';
+          stText.style.color = '#16A34A';
+          stPill.className = 'order-status-pill status-fulfilled';
+          stPill.textContent = '● Live Connected';
+        } else {
+          stText.textContent = 'Sandbox Simulation';
+          stText.style.color = '#D97706';
+          stPill.className = 'order-status-pill status-processing';
+          stPill.textContent = '● Sandbox Active';
+        }
+      }
+
+      // Balance
+      const balVal = document.getElementById('resellerBalanceVal');
+      const balSub = document.getElementById('resellerBalanceSub');
+      if (balVal && balance) {
+        const amt = parseFloat(balance.balance || '0.00');
+        balVal.textContent = `$${amt.toFixed(2)} ${balance.currency || 'USD'}`;
+        if (balSub) {
+          if (amt <= 0) {
+            balSub.textContent = '⚠️ Balance empty. Deposit funds at supplier.';
+            balSub.style.color = '#DC2626';
+          } else if (amt < (settings.lowBalanceThreshold || 5)) {
+            balSub.textContent = '⚠️ Low balance warning (< $5.00)';
+            balSub.style.color = '#D97706';
+          } else {
+            balSub.textContent = isLive ? '● Live funds ready for automated dispatch' : '● Sandbox test balance';
+            balSub.style.color = '#16A34A';
+          }
+        }
+      }
+
+      // FX & Engine
+      const rateVal = document.getElementById('resellerRateVal');
+      if (rateVal) rateVal.textContent = `₦${Number(settings.usdToNgnRate || 1550).toLocaleString()}`;
+
+      const engVal = document.getElementById('resellerEngineVal');
+      if (engVal) {
+        engVal.textContent = settings.autoFulfill ? 'Automated' : 'Manual';
+        engVal.style.color = settings.autoFulfill ? '#16A34A' : '#705E51';
+      }
+
+      // Populate Inputs
+      document.getElementById('inputBaseUrl').value = settings.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+      document.getElementById('inputRate').value = settings.usdToNgnRate || 1550;
+      document.getElementById('inputMarkup').value = settings.markupPercent || 25;
+      document.getElementById('inputLowBalanceThreshold').value = settings.lowBalanceThreshold || 5;
+      document.getElementById('inputAutoFulfill').checked = settings.autoFulfill !== false;
+
+      const notice = document.getElementById('currentMaskedNotice');
+      if (settings.isConfigured && settings.maskedKey) {
+        notice.style.display = 'block';
+        notice.textContent = `Active Encrypted Key: ${settings.maskedKey}`;
+      } else {
+        notice.style.display = 'none';
+      }
+
+      // Category multipliers
+      const cats = settings.categoryMultipliers || {};
+      if (cats.ai) document.getElementById('catMult_ai').value = cats.ai;
+      if (cats.gaming) document.getElementById('catMult_gaming').value = cats.gaming;
+      if (cats.streaming) document.getElementById('catMult_streaming').value = cats.streaming;
+      if (cats.productivity) document.getElementById('catMult_productivity').value = cats.productivity;
+      if (cats.security) document.getElementById('catMult_security').value = cats.security;
+
+      // Price Tiers
+      renderPriceTiers(settings.priceTiers);
+    }
+
+    function switchSettingsTab(tabKey) {
+      const tabs = ['credentials', 'tiers', 'categories', 'simulator', 'catalog'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+        const content = document.getElementById('tabContent' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn && content) {
+          if (t === tabKey) {
+            btn.classList.add('active');
+            content.style.display = 'block';
+          } else {
+            btn.classList.remove('active');
+            content.style.display = 'none';
+          }
+        }
+      });
+      if (tabKey === 'simulator') {
+        updateSimulatorPreview();
+      } else if (tabKey === 'catalog') {
+        loadSupplierCatalog();
+      }
+    }
+
+    function toggleApiKeyVisibility() {
+      const input = document.getElementById('inputApiKey');
+      const text = document.getElementById('apiKeyToggleText');
+      if (input.type === 'password') {
+        input.type = 'text';
+        text.textContent = 'Hide';
+      } else {
+        input.type = 'password';
+        text.textContent = 'Show';
+      }
+    }
+
+    function renderPriceTiers(tiers) {
+      const container = document.getElementById('priceTiersContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      (tiers || []).forEach((tier, index) => {
+        const row = document.createElement('div');
+        row.className = 'price-tier-row';
+        row.innerHTML = `
+          <div>
+            <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Tier Label</div>
+            <input type="text" class="tier-label settings-input" value="${tier.label || ''}" placeholder="Tier Label" style="padding:6px 10px; font-size:12.5px;">
+          </div>
+          <div>
+            <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Min ($)</div>
+            <input type="number" step="0.01" min="0" class="tier-min settings-input" value="${tier.min !== undefined ? tier.min : 0}" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+          </div>
+          <div>
+            <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Max ($)</div>
+            <input type="number" step="0.01" min="0" class="tier-max settings-input" value="${tier.max !== undefined ? tier.max : 9999}" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+          </div>
+          <div>
+            <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Multiplier (x)</div>
+            <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="${tier.multiplier || 1.5}" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;" oninput="updateSimulatorPreview()">
+          </div>
+          <div style="text-align:right;">
+            <button type="button" onclick="this.closest('.price-tier-row').remove(); updateSimulatorPreview();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function addNewPriceTierRow() {
+      const container = document.getElementById('priceTiersContainer');
+      const row = document.createElement('div');
+      row.className = 'price-tier-row';
+      row.innerHTML = `
+        <div>
+          <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Tier Label</div>
+          <input type="text" class="tier-label settings-input" value="Custom Range" placeholder="Tier Label" style="padding:6px 10px; font-size:12.5px;">
+        </div>
+        <div>
+          <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Min ($)</div>
+          <input type="number" step="0.01" min="0" class="tier-min settings-input" value="0.00" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+        </div>
+        <div>
+          <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Max ($)</div>
+          <input type="number" step="0.01" min="0" class="tier-max settings-input" value="10.00" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+        </div>
+        <div>
+          <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Multiplier (x)</div>
+          <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="1.80" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;" oninput="updateSimulatorPreview()">
+        </div>
+        <div style="text-align:right;">
+          <button type="button" onclick="this.closest('.price-tier-row').remove(); updateSimulatorPreview();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
+        </div>
+      `;
+      container.appendChild(row);
+    }
+
+    function collectTiersFromUI() {
+      const rows = document.querySelectorAll('.price-tier-row');
+      const tiers = [];
+      rows.forEach((r, idx) => {
+        const label = r.querySelector('.tier-label')?.value.trim() || `Tier ${idx + 1}`;
+        const min = parseFloat(r.querySelector('.tier-min')?.value) || 0;
+        const max = parseFloat(r.querySelector('.tier-max')?.value) || 0;
+        const multiplier = parseFloat(r.querySelector('.tier-multiplier')?.value) || 1.5;
+        tiers.push({ id: 'tier_' + (idx + 1), label, min, max, multiplier });
+      });
+      return tiers.sort((a, b) => a.min - b.min);
+    }
+
+    function setSimulatorSample(val) {
+      const input = document.getElementById('inputSimulatorCost');
+      if (input) {
+        input.value = val;
+        updateSimulatorPreview();
+      }
+    }
+
+    function updateSimulatorPreview() {
+      const costInput = document.getElementById('inputSimulatorCost');
+      if (!costInput) return;
+      const cost = Math.max(0, parseFloat(costInput.value) || 0);
+      const rate = Math.max(1, parseFloat(document.getElementById('inputRate')?.value) || 1550);
+      const tiers = collectTiersFromUI();
+
+      let matchedTier = tiers.find(t => cost >= t.min && cost <= t.max);
+      let multiplier = matchedTier ? matchedTier.multiplier : (1 + (parseFloat(document.getElementById('inputMarkup')?.value || 25) / 100));
+      let ruleName = matchedTier ? matchedTier.label : 'Default Store Markup';
+
+      const retailUsd = Number((cost * multiplier).toFixed(2));
+      const retailNgn = Math.round(retailUsd * rate);
+      const profitUsd = Number((retailUsd - cost).toFixed(2));
+      const margin = retailUsd > 0 ? Math.round(((retailUsd - cost) / retailUsd) * 100) : 0;
+
+      document.getElementById('simRuleMatched').textContent = ruleName;
+      document.getElementById('simMultiplier').textContent = `${multiplier.toFixed(2)}x`;
+      document.getElementById('simCostUsd').textContent = `$${cost.toFixed(2)}`;
+      document.getElementById('simRetailUsd').textContent = `$${retailUsd.toFixed(2)}`;
+      document.getElementById('simRetailNgn').textContent = `₦${retailNgn.toLocaleString('en-US')}`;
+      document.getElementById('simProfit').innerHTML = `+$${profitUsd.toFixed(2)} <span style="font-size:12px; font-weight:600; color:#705E51;">(${margin}%)</span>`;
+    }
+
+    async function handleSettingsSubmit(e) {
+      e.preventDefault();
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const baseUrl = document.getElementById('inputBaseUrl').value.trim();
+      const apiKey = document.getElementById('inputApiKey').value.trim();
+      const markupPercent = parseInt(document.getElementById('inputMarkup').value, 10);
+      const usdToNgnRate = parseInt(document.getElementById('inputRate').value, 10);
+      const lowBalanceThreshold = parseFloat(document.getElementById('inputLowBalanceThreshold').value);
+      const autoFulfill = document.getElementById('inputAutoFulfill').checked;
+      const priceTiers = collectTiersFromUI();
+
+      const categoryMultipliers = {
+        ai: parseFloat(document.getElementById('catMult_ai')?.value) || 1.75,
+        gaming: parseFloat(document.getElementById('catMult_gaming')?.value) || 1.50,
+        streaming: parseFloat(document.getElementById('catMult_streaming')?.value) || 1.40,
+        productivity: parseFloat(document.getElementById('catMult_productivity')?.value) || 1.50,
+        security: parseFloat(document.getElementById('catMult_security')?.value) || 1.60
+      };
+
+      const payload = {
+        baseUrl,
+        markupPercent,
+        usdToNgnRate,
+        lowBalanceThreshold,
+        autoFulfill,
+        priceTiers,
+        categoryMultipliers
+      };
+
+      if (apiKey) payload.apiKey = apiKey;
+
+      showToast('Saving store configuration and price rules...');
+      try {
+        const res = await fetch('/api/admin/reseller/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Settings & Pricing Tiers saved successfully!');
+          document.getElementById('inputApiKey').value = '';
+          fetchResellerStatus();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error saving settings: ' + err.message);
+      }
+    }
+
+    async function applyMultipliersToStore() {
+      if (!confirm('Apply these tiered multipliers across all store products and variants in your catalog?')) return;
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      showToast('Recalculating and syncing store inventory prices...');
+      try {
+        const res = await fetch('/api/admin/reseller/apply-multipliers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(`Successfully applied tiered pricing multipliers to ${data.updatedCount} products in the shop!`);
+        } else {
+          alert('Failed to sync multipliers: ' + data.message);
+        }
+      } catch (e) {
+        alert('Error syncing multipliers: ' + e.message);
+      }
+    }
+
+    async function loadSupplierCatalog() {
+      const list = document.getElementById('supplierProductsList');
+      list.innerHTML = '<div style="text-align:center; padding:30px; color:#705E51;">Querying supplier wholesale API catalog...</div>';
+
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch('/api/admin/reseller/products', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.ok && data.products && data.products.length > 0) {
+          list.innerHTML = data.products.map(p => {
+            const pricing = p.pricing || {};
+            const multiplierStr = p.appliedMultiplier ? `${p.appliedMultiplier.toFixed(2)}x` : '—';
+            const ruleStr = p.pricingRule || 'Standard';
+            const retailUsd = p.suggestedRetailUsd ? `$${p.suggestedRetailUsd.toFixed(2)}` : '—';
+            const retailNgn = p.suggestedRetailNgn ? `₦${p.suggestedRetailNgn.toLocaleString('en-US')}` : '—';
+            const profitStr = pricing.profitUsd !== undefined ? `+$${pricing.profitUsd.toFixed(2)} (${pricing.profitMarginPercent}%)` : '';
+
+            return `
+              <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:14px;">
+                <div style="flex:1;">
+                  <div style="font-weight:800; color:#190D08; font-size:14.5px;">${p.name || p.title}</div>
+                  <div style="font-size:12px; color:#705E51; margin-top:3px;">
+                    Supplier ID: #${p.id || p.productId} · Stock: <span style="font-weight:700; color:${p.inStock ? '#16A34A' : '#DC2626'};">${p.stock} units</span>
+                  </div>
+                  <div style="margin-top:6px; display:inline-flex; align-items:center; gap:6px; background:rgba(208,69,21,0.08); padding:3px 8px; border-radius:6px; font-size:11.5px; font-weight:700; color:#D04515;">
+                    <span>⚡ Rule: ${ruleStr}</span>
+                    <span>·</span>
+                    <span>${multiplierStr} Multiplier</span>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:11.5px; color:#705E51;">Wholesale: <strong style="color:#190D08;">$${p.price}</strong></div>
+                  <div style="font-weight:800; font-size:16px; color:#16A34A; margin-top:2px;">Retail: ${retailUsd} <span style="font-size:12px; color:#705E51;">(${retailNgn})</span></div>
+                  ${profitStr ? `<div style="font-size:11.5px; font-weight:700; color:#D04515; margin-top:2px;">Profit: ${profitStr}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          list.innerHTML = '<div style="text-align:center; padding:30px; color:#DC2626;">No products returned from supplier API. Check API credentials.</div>';
+        }
+      } catch (err) {
+        list.innerHTML = `<div style="text-align:center; padding:30px; color:#DC2626;">Error: ${err.message}</div>`;
+      }
+    }
+
+    async function testResellerOrder() {
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      showToast('Dispatching test order to reseller API...');
+      try {
+        const res = await fetch('/api/admin/reseller/test-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ productId: 1, quantity: 1 })
+        });
+        const data = await res.json();
+        if (data.ok && data.order) {
+          alert(`Test Order Succeeded!\n\nSupplier Order Code: ${data.order.orderCode}\nStatus: ${data.order.status}\nDelivered Value: ${data.order.value}`);
+          fetchResellerStatus();
+        } else {
+          alert('Test Order Failed: ' + (data.message || data.error || JSON.stringify(data)));
+        }
+      } catch (err) {
+        alert('Error placing test order: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

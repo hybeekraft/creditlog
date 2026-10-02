@@ -29,6 +29,8 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'admin.html'));
     fs.readFileSync(path.join(process.cwd(), 'inventory.html'));
     fs.readFileSync(path.join(process.cwd(), 'activity-logs.html'));
+    fs.readFileSync(path.join(process.cwd(), 'customers.html'));
+    fs.readFileSync(path.join(process.cwd(), 'settings.html'));
     fs.readFileSync(path.join(process.cwd(), 'data', 'products.json'));
     fs.readFileSync(path.join(process.cwd(), 'data', 'orders.json'));
     fs.readFileSync(path.join(process.cwd(), 'data', 'reservations.json'));
@@ -45,6 +47,8 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(__dirname, '..', 'admin.html'));
     fs.readFileSync(path.join(__dirname, '..', 'inventory.html'));
     fs.readFileSync(path.join(__dirname, '..', 'activity-logs.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'customers.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'settings.html'));
     fs.readFileSync(path.join(__dirname, '..', 'data', 'products.json'));
     fs.readFileSync(path.join(__dirname, '..', 'data', 'orders.json'));
     fs.readFileSync(path.join(__dirname, '..', 'data', 'reservations.json'));
