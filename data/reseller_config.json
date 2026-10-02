@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://api-geminipro.ignorelist.com/api/reseller/v1",
+  "apiKey": "",
+  "markupPercent": 30,
+  "usdToNgnRate": 1550,
+  "autoFulfill": true,
+  "mode": "simulation",
+  "lowBalanceThreshold": 5
+}

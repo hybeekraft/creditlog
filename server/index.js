@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const resellerService = require('./services/resellerService');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
@@ -32,6 +33,7 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'data', 'orders.json'));
     fs.readFileSync(path.join(process.cwd(), 'data', 'reservations.json'));
     fs.readFileSync(path.join(process.cwd(), 'data', 'logs.json'));
+    fs.readFileSync(path.join(process.cwd(), 'data', 'reseller_config.json'));
     fs.readFileSync(path.join(process.cwd(), 'assets', 'images', 'editorial-architecture.jpg'));
     fs.readFileSync(path.join(__dirname, '..', 'style.css'));
     fs.readFileSync(path.join(__dirname, '..', 'shared.js'));
@@ -47,6 +49,7 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(__dirname, '..', 'data', 'orders.json'));
     fs.readFileSync(path.join(__dirname, '..', 'data', 'reservations.json'));
     fs.readFileSync(path.join(__dirname, '..', 'data', 'logs.json'));
+    fs.readFileSync(path.join(__dirname, '..', 'data', 'reseller_config.json'));
     fs.readFileSync(path.join(__dirname, '..', 'assets', 'images', 'editorial-architecture.jpg'));
   } catch (e) {}
 }
@@ -887,6 +890,63 @@ const server = http.createServer(async (req, res) => {
   }
 
   // =========================================================================
+  // RESELLER / SUPPLIER API INTEGRATION (AUTOMATED WHOLESALE DISPATCH)
+  // =========================================================================
+
+  // GET /api/admin/reseller/status — Connection Status, Wallet Balance, Store Info
+  if (pathname === '/api/admin/reseller/status' && req.method === 'GET') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const settings = resellerService.getSettings();
+    const balance = await resellerService.getBalance();
+    const info = await resellerService.getInfo();
+    return sendJSON(res, 200, {
+      success: true,
+      settings,
+      balance,
+      info
+    });
+  }
+
+  // POST /api/admin/reseller/settings — Save API Key, Exchange Rate, Margin
+  if (pathname === '/api/admin/reseller/settings' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const body = await parseBody(req);
+    const updated = resellerService.saveSettings(body);
+    recordLog('Admin', 'Admin', 'Reseller', 'Update Settings', `Updated Reseller API settings (Mode: ${updated.mode}, Markup: ${updated.markupPercent}%, Rate: ${updated.usdToNgnRate})`);
+    return sendJSON(res, 200, {
+      success: true,
+      message: 'Reseller API settings saved successfully.',
+      settings: updated
+    });
+  }
+
+  // GET /api/admin/reseller/products — Live Catalog from Reseller API
+  if (pathname === '/api/admin/reseller/products' && req.method === 'GET') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const result = await resellerService.getProducts();
+    return sendJSON(res, 200, result);
+  }
+
+  // POST /api/admin/reseller/test-order — Place test/sample order
+  if (pathname === '/api/admin/reseller/test-order' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const body = await parseBody(req);
+    const productId = body.productId || 1;
+    const quantity = body.quantity || 1;
+    const result = await resellerService.createOrder(productId, quantity);
+    recordLog('Admin', 'Admin', 'Reseller', 'Test Order', `Placed test order for supplier product #${productId}: ${result.ok ? 'Success' : 'Failed'}`);
+    return sendJSON(res, result.ok ? 200 : 400, result);
+  }
+
+  // =========================================================================
   // TRANSACTIONAL INVENTORY RESERVATION SYSTEM (ACID Safe)
   // =========================================================================
 
@@ -1328,13 +1388,39 @@ const server = http.createServer(async (req, res) => {
         console.log(`[Payment Success & Stock Sold] "${prod.name}" x${qty} — Total: ${prod.totalStock}, Reserved: ${prod.reservedStock}, Available: ${prod.availableStock}`);
       }
 
-      const credentials = generateCredentials(order.product, order.customerEmail, order.productSpecificInfo || order.notes);
+      // Trigger automated reseller wholesale fulfillment
+      const targetVariant = order.plan && prod && prod.variants ? prod.variants.find(va => va.duration === order.plan) : null;
+      let fulfillment = await resellerService.fulfillCreditLogOrder(order, prod, targetVariant);
 
-      order.status = 'Delivered';
+      if (fulfillment && fulfillment.success) {
+        order.status = 'Delivered';
+        order.fulfillmentStatus = 'automated';
+        order.deliveredValue = fulfillment.deliveredValue;
+        order.supplierOrderCode = fulfillment.orderCode;
+        order.supplierTotal = fulfillment.supplierTotal;
+        order.supplierCurrency = fulfillment.currency;
+        order.credentials = {
+          account: order.customerEmail,
+          value: fulfillment.deliveredValue,
+          password: fulfillment.deliveredValue,
+          instructions: (fulfillment.deliveredValue && fulfillment.deliveredValue.startsWith('http'))
+            ? 'Open your private activation invite link below to join.'
+            : 'Use your delivered credentials below to sign in.',
+          warranty: 'Active · 100% Replacement Warranty Included'
+        };
+        recordLog('Automated Fulfillment', 'System', 'Orders', 'Auto-Dispatched', `Order #${order.id} fulfilled via Reseller API (Supplier Code: ${fulfillment.orderCode})`);
+      } else {
+        const credentials = generateCredentials(order.product, order.customerEmail, order.productSpecificInfo || order.notes);
+        order.status = 'Delivered';
+        order.fulfillmentStatus = fulfillment && fulfillment.pending ? 'manual_review_needed' : 'delivered';
+        order.fulfillmentError = fulfillment ? fulfillment.message : null;
+        order.credentials = credentials;
+        recordLog('Fulfillment Warning', 'System', 'Orders', 'Fallback Dispatch', `Order #${order.id}: Supplier fulfillment skipped (${fulfillment ? fulfillment.message : 'no response'}). Fallback credentials assigned.`);
+      }
+
       order.reference = reference || order.reference || `pay_ref_${Date.now()}`;
       order.gateway = gateway || order.gateway || 'Paystack';
       order.paidAt = new Date().toISOString();
-      order.credentials = credentials;
 
       saveOrder(order);
 
@@ -1353,7 +1439,11 @@ const server = http.createServer(async (req, res) => {
           customerEmail: order.customerEmail,
           gateway: order.gateway,
           paidAt: order.paidAt,
-          credentials: order.credentials
+          credentials: order.credentials,
+          deliveredValue: order.deliveredValue,
+          fulfillmentStatus: order.fulfillmentStatus,
+          supplierOrderCode: order.supplierOrderCode,
+          supplierTotal: order.supplierTotal
         }
       });
     });
@@ -1371,11 +1461,6 @@ const server = http.createServer(async (req, res) => {
         const orders = getAllOrders();
         const order = orders.find(o => o.reference === ref || (data.metadata && data.metadata.orderId === o.id));
         if (order && order.status !== 'Delivered') {
-          order.status = 'Delivered';
-          order.paidAt = new Date().toISOString();
-          order.credentials = generateCredentials(order.product, order.customerEmail, order.notes);
-          saveOrder(order);
-
           // Deduct stock if not already finalized
           const products = getAllProducts();
           const prod = products.find(p => p.id === order.productId || p.name === order.product);
@@ -1386,6 +1471,38 @@ const server = http.createServer(async (req, res) => {
             recomputeProductStock(prod);
             saveProducts(products);
           }
+
+          // Trigger automated reseller wholesale fulfillment
+          const targetVariant = order.plan && prod && prod.variants ? prod.variants.find(va => va.duration === order.plan) : null;
+          let fulfillment = await resellerService.fulfillCreditLogOrder(order, prod, targetVariant);
+
+          if (fulfillment && fulfillment.success) {
+            order.status = 'Delivered';
+            order.fulfillmentStatus = 'automated';
+            order.deliveredValue = fulfillment.deliveredValue;
+            order.supplierOrderCode = fulfillment.orderCode;
+            order.supplierTotal = fulfillment.supplierTotal;
+            order.supplierCurrency = fulfillment.currency;
+            order.credentials = {
+              account: order.customerEmail,
+              value: fulfillment.deliveredValue,
+              password: fulfillment.deliveredValue,
+              instructions: (fulfillment.deliveredValue && fulfillment.deliveredValue.startsWith('http'))
+                ? 'Open your private activation invite link below to join.'
+                : 'Use your delivered credentials below to sign in.',
+              warranty: 'Active · 100% Replacement Warranty Included'
+            };
+            recordLog('Automated Fulfillment', 'System', 'Orders', 'Auto-Dispatched (Webhook)', `Order #${order.id} fulfilled via Reseller API (Supplier Code: ${fulfillment.orderCode})`);
+          } else {
+            order.status = 'Delivered';
+            order.fulfillmentStatus = fulfillment && fulfillment.pending ? 'manual_review_needed' : 'delivered';
+            order.fulfillmentError = fulfillment ? fulfillment.message : null;
+            order.credentials = generateCredentials(order.product, order.customerEmail, order.notes);
+            recordLog('Fulfillment Warning', 'System', 'Orders', 'Fallback Dispatch (Webhook)', `Order #${order.id}: Supplier fulfillment skipped (${fulfillment ? fulfillment.message : 'no response'}). Fallback credentials assigned.`);
+          }
+
+          order.paidAt = new Date().toISOString();
+          saveOrder(order);
           console.log(`[Paystack Webhook] Order ${order.id} marked as Delivered via charge.success`);
         }
       });

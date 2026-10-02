@@ -110,6 +110,58 @@
         </div>
       </div>
 
+      <!-- Wholesale Reseller API Integration Status & Config -->
+      <div class="chart-panel-card" style="margin-bottom: 24px;">
+        <div class="panel-header-row" style="margin-bottom: 16px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h3 class="panel-title" style="margin-bottom: 0;">Reseller Wholesale Integration</h3>
+              <span id="resellerStatusBadge" class="order-status-pill status-fulfilled" style="font-size: 11px; padding: 3px 10px;">Checking status...</span>
+            </div>
+            <p style="font-size: 12.5px; color: #705E51; margin-top: 4px; margin-bottom: 0;">Automated wholesale dispatch connecting CreditLog to your digital goods supplier API.</p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="secondary-btn" onclick="fetchResellerStatus()" style="padding: 7px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Refresh Balance</span>
+            </button>
+            <button type="button" class="primary-btn" onclick="openResellerModal()" style="padding: 7px 14px; font-size: 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Configure API Key</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 12px;">
+          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px;">
+            <div style="font-size: 11.5px; text-transform: uppercase; color: #705E51; font-weight: 600; letter-spacing: 0.04em;">Supplier Wallet Balance</div>
+            <div id="resellerBalanceVal" style="font-size: 24px; font-weight: 800; color: #190D08; margin-top: 4px;">$0.00 USD</div>
+            <div id="resellerBalanceSub" style="font-size: 11.5px; color: #16A34A; margin-top: 2px;">● Checking balance...</div>
+          </div>
+
+          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px;">
+            <div style="font-size: 11.5px; text-transform: uppercase; color: #705E51; font-weight: 600; letter-spacing: 0.04em;">Profit Margin & Rate</div>
+            <div id="resellerMarginVal" style="font-size: 24px; font-weight: 800; color: #D04515; margin-top: 4px;">+25% Markup</div>
+            <div id="resellerRateSub" style="font-size: 11.5px; color: #705E51; margin-top: 2px;">FX: ₦1,500 / $1.00 USD</div>
+          </div>
+
+          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px;">
+            <div style="font-size: 11.5px; text-transform: uppercase; color: #705E51; font-weight: 600; letter-spacing: 0.04em;">Auto-Fulfillment Engine</div>
+            <div id="resellerEngineStatus" style="font-size: 24px; font-weight: 800; color: #190D08; margin-top: 4px;">Enabled</div>
+            <div style="font-size: 11.5px; color: #705E51; margin-top: 2px;">Instant dispatch on payment</div>
+          </div>
+
+          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+            <button type="button" class="secondary-btn" onclick="testResellerOrder()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
+              ⚡ Test Order (Sandbox)
+            </button>
+            <button type="button" class="secondary-btn" onclick="viewSupplierProducts()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
+              📦 View Supplier Catalog
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- 2-Column Analytics Layout -->
       <div class="admin-charts-grid">
         <!-- Left: Sales Overview Interactive SVG Chart -->
@@ -240,15 +292,264 @@
     </main>
   </div>
 
+  <!-- Reseller Configuration Modal -->
+  <div id="resellerModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+    <div style="background:#FFFDF8; border:1px solid rgba(25,13,8,0.12); border-radius:16px; padding:28px; width:92%; max-width:520px; box-shadow:0 12px 36px rgba(0,0,0,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <h3 style="margin:0; font-size:18px; font-weight:800; color:#190D08;">Reseller API Configuration</h3>
+        <button type="button" onclick="closeResellerModal()" style="background:none; border:none; font-size:20px; cursor:pointer; color:#705E51;">✕</button>
+      </div>
+
+      <form id="resellerSettingsForm" onsubmit="handleResellerSettingsSubmit(event)">
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:12px; font-weight:700; color:#190D08; margin-bottom:6px;">Supplier Base URL</label>
+          <input type="url" id="inputResellerBaseUrl" required style="width:100%; padding:10px 14px; border:1px solid rgba(25,13,8,0.18); border-radius:8px; font-size:13.5px; background:#FFFFFF;" value="https://api-geminipro.ignorelist.com/api/reseller/v1">
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:12px; font-weight:700; color:#190D08; margin-bottom:6px;">
+            Reseller API Key (X-API-Key)
+            <span style="font-weight:400; color:#705E51; font-size:11px;">(leave blank to run in safe Sandbox Simulation)</span>
+          </label>
+          <input type="password" id="inputResellerApiKey" placeholder="Paste your private API key here" style="width:100%; padding:10px 14px; border:1px solid rgba(25,13,8,0.18); border-radius:8px; font-size:13.5px; background:#FFFFFF;">
+          <div id="currentMaskedKeyNotice" style="font-size:11px; color:#16A34A; margin-top:4px; display:none;"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#190D08; margin-bottom:6px;">Profit Markup (%)</label>
+            <input type="number" id="inputResellerMarkup" min="0" max="500" step="1" required style="width:100%; padding:10px 14px; border:1px solid rgba(25,13,8,0.18); border-radius:8px; font-size:13.5px; background:#FFFFFF;" value="25">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#190D08; margin-bottom:6px;">USD to NGN Exchange Rate</label>
+            <input type="number" id="inputResellerRate" min="100" max="10000" step="10" required style="width:100%; padding:10px 14px; border:1px solid rgba(25,13,8,0.18); border-radius:8px; font-size:13.5px; background:#FFFFFF;" value="1500">
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="inputResellerAutoFulfill" checked style="width:16px; height:16px; accent-color:#D04515;">
+          <label for="inputResellerAutoFulfill" style="font-size:13px; font-weight:600; color:#190D08; cursor:pointer;">
+            Enable automated instant dispatch upon payment
+          </label>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" onclick="closeResellerModal()" class="secondary-btn" style="padding:9px 18px; font-size:13px;">Cancel</button>
+          <button type="submit" class="primary-btn" style="padding:9px 20px; font-size:13px; border-radius:8px;">Save Settings</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supplier Catalog Modal -->
+  <div id="supplierCatalogModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+    <div style="background:#FFFDF8; border:1px solid rgba(25,13,8,0.12); border-radius:16px; padding:28px; width:92%; max-width:680px; max-height:85vh; overflow-y:auto; box-shadow:0 12px 36px rgba(0,0,0,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div>
+          <h3 style="margin:0; font-size:18px; font-weight:800; color:#190D08;">Supplier Product Catalog</h3>
+          <p style="margin:4px 0 0; font-size:12px; color:#705E51;">Live services, wholesale USD prices, and stock from Reseller API.</p>
+        </div>
+        <button type="button" onclick="document.getElementById('supplierCatalogModal').style.display='none'" style="background:none; border:none; font-size:20px; cursor:pointer; color:#705E51;">✕</button>
+      </div>
+      <div id="supplierProductsList" style="display:flex; flex-direction:column; gap:10px;">
+        <div style="text-align:center; padding:20px; color:#705E51;">Loading products...</div>
+      </div>
+    </div>
+  </div>
+
   <script src="/shared.js"></script>
   <script>
+    let currentResellerSettings = null;
+
     document.addEventListener('DOMContentLoaded', () => {
       const user = getCurrentUser();
       if (user && user.name) {
         const el = document.getElementById('adminProfileName');
         if (el) el.textContent = user.name;
       }
+      fetchResellerStatus();
     });
+
+    async function fetchResellerStatus() {
+      try {
+        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const res = await fetch('/api/admin/reseller/status', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          currentResellerSettings = data.settings;
+          renderResellerUI(data);
+        }
+      } catch (err) {
+        console.warn('Failed to fetch reseller status:', err);
+      }
+    }
+
+    function renderResellerUI(data) {
+      const { settings, balance, info } = data;
+      const isLive = settings.mode === 'live' && settings.isConfigured;
+
+      // Status Badge
+      const badge = document.getElementById('resellerStatusBadge');
+      if (badge) {
+        if (isLive) {
+          badge.className = 'order-status-pill status-fulfilled';
+          badge.textContent = '● Live Supplier Active';
+        } else {
+          badge.className = 'order-status-pill status-processing';
+          badge.textContent = '● Sandbox Simulation';
+        }
+      }
+
+      // Balance
+      const balVal = document.getElementById('resellerBalanceVal');
+      const balSub = document.getElementById('resellerBalanceSub');
+      if (balVal && balance) {
+        const amt = parseFloat(balance.balance || '0.00');
+        balVal.textContent = `$${amt.toFixed(2)} ${balance.currency || 'USD'}`;
+        if (balSub) {
+          if (amt <= 0) {
+            balSub.textContent = '⚠️ Balance empty. Deposit funds at supplier.';
+            balSub.style.color = '#DC2626';
+          } else if (amt < (settings.lowBalanceThreshold || 5)) {
+            balSub.textContent = '⚠️ Low balance warning (< $5.00)';
+            balSub.style.color = '#D97706';
+          } else {
+            balSub.textContent = isLive ? '● Live funds ready for automated dispatch' : '● Simulated test balance';
+            balSub.style.color = '#16A34A';
+          }
+        }
+      }
+
+      // Margin & Rate
+      const marginVal = document.getElementById('resellerMarginVal');
+      const rateSub = document.getElementById('resellerRateSub');
+      if (marginVal) marginVal.textContent = `+${settings.markupPercent}% Markup`;
+      if (rateSub) rateSub.textContent = `FX: ₦${Number(settings.usdToNgnRate).toLocaleString()} / $1.00 USD`;
+
+      // Engine status
+      const engineStatus = document.getElementById('resellerEngineStatus');
+      if (engineStatus) {
+        engineStatus.textContent = settings.autoFulfill ? 'Active' : 'Paused';
+        engineStatus.style.color = settings.autoFulfill ? '#16A34A' : '#705E51';
+      }
+    }
+
+    function openResellerModal() {
+      if (currentResellerSettings) {
+        document.getElementById('inputResellerBaseUrl').value = currentResellerSettings.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+        document.getElementById('inputResellerMarkup').value = currentResellerSettings.markupPercent || 25;
+        document.getElementById('inputResellerRate').value = currentResellerSettings.usdToNgnRate || 1500;
+        document.getElementById('inputResellerAutoFulfill').checked = currentResellerSettings.autoFulfill !== false;
+
+        const notice = document.getElementById('currentMaskedKeyNotice');
+        if (currentResellerSettings.isConfigured && currentResellerSettings.maskedKey) {
+          notice.style.display = 'block';
+          notice.textContent = `Current Active Key: ${currentResellerSettings.maskedKey}`;
+        } else {
+          notice.style.display = 'none';
+        }
+      }
+      const modal = document.getElementById('resellerModal');
+      modal.style.display = 'flex';
+    }
+
+    function closeResellerModal() {
+      document.getElementById('resellerModal').style.display = 'none';
+    }
+
+    async function handleResellerSettingsSubmit(e) {
+      e.preventDefault();
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const baseUrl = document.getElementById('inputResellerBaseUrl').value.trim();
+      const apiKey = document.getElementById('inputResellerApiKey').value.trim();
+      const markupPercent = parseInt(document.getElementById('inputResellerMarkup').value, 10);
+      const usdToNgnRate = parseInt(document.getElementById('inputResellerRate').value, 10);
+      const autoFulfill = document.getElementById('inputResellerAutoFulfill').checked;
+
+      const payload = { baseUrl, markupPercent, usdToNgnRate, autoFulfill };
+      if (apiKey) payload.apiKey = apiKey;
+
+      try {
+        const res = await fetch('/api/admin/reseller/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          showToast('Reseller API settings saved!');
+          closeResellerModal();
+          fetchResellerStatus();
+        } else {
+          const err = await res.json();
+          alert('Failed to save settings: ' + (err.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Network error saving settings: ' + err.message);
+      }
+    }
+
+    async function testResellerOrder() {
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      showToast('Dispatching test order to reseller API...');
+      try {
+        const res = await fetch('/api/admin/reseller/test-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ productId: 1, quantity: 1 })
+        });
+        const data = await res.json();
+        if (data.ok && data.order) {
+          alert(`Test Order Succeeded!\n\nSupplier Order Code: ${data.order.orderCode}\nStatus: ${data.order.status}\nDelivered Value: ${data.order.value}`);
+          fetchResellerStatus();
+        } else {
+          alert('Test Order Failed: ' + (data.message || data.error || JSON.stringify(data)));
+        }
+      } catch (err) {
+        alert('Error placing test order: ' + err.message);
+      }
+    }
+
+    async function viewSupplierProducts() {
+      const modal = document.getElementById('supplierCatalogModal');
+      const list = document.getElementById('supplierProductsList');
+      modal.style.display = 'flex';
+      list.innerHTML = '<div style="text-align:center; padding:20px; color:#705E51;">Loading live catalog...</div>';
+
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch('/api/admin/reseller/products', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.ok && data.products && data.products.length > 0) {
+          list.innerHTML = data.products.map(p => `
+            <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-weight:700; color:#190D08; font-size:13.5px;">${p.name || p.title}</div>
+                <div style="font-size:11.5px; color:#705E51; margin-top:2px;">Supplier ID: #${p.id || p.productId} · Stock: <span style="font-weight:700; color:${p.inStock ? '#16A34A' : '#DC2626'};">${p.stock} units</span></div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-weight:800; font-size:15px; color:#D04515;">$${p.price} ${p.currency || 'USD'}</div>
+                <div style="font-size:11px; color:#705E51;">Wholesale Cost</div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          list.innerHTML = '<div style="text-align:center; padding:20px; color:#DC2626;">No products returned from supplier API. Check API Key.</div>';
+        }
+      } catch (err) {
+        list.innerHTML = `<div style="text-align:center; padding:20px; color:#DC2626;">Error: ${err.message}</div>`;
+      }
+    }
   </script>
 </body>
 </html>
