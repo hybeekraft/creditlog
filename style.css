@@ -6013,43 +6013,53 @@ select, option {
 
 .protocol-actions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .protocol-btn-dark {
   background: #190D08;
   color: #FFFFFF;
-  padding: 12px 24px;
+  padding: 15px 32px;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: transform 0.18s ease;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(25, 13, 8, 0.15);
 }
 
 .protocol-btn-dark:hover {
+  background: #2D1E15;
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(25, 13, 8, 0.25);
 }
 
 .protocol-btn-outline {
-  background: transparent;
-  border: 1.5px solid rgba(208, 69, 21, 0.35);
-  color: #D04515;
-  padding: 12px 24px;
+  background: #D04515;
+  border: 1px solid #D04515;
+  color: #FFFFFF;
+  padding: 15px 32px;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
-  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(208, 69, 21, 0.2);
 }
 
 .protocol-btn-outline:hover {
-  background: #D04515;
+  background: #B83A0F;
+  border-color: #B83A0F;
   color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(208, 69, 21, 0.3);
 }
 
 /* RESPONSIVE DESIGN ADJUSTMENTS */
