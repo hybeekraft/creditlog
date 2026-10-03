@@ -36,6 +36,21 @@
       color: #FFFFFF;
       border-color: #190D08;
     }
+    .settings-tabs-sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 236, 216, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 0 14px 0;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(25, 13, 8, 0.08);
+      box-shadow: 0 4px 16px rgba(25, 13, 8, 0.04);
+    }
     .settings-card {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.1);
@@ -194,8 +209,8 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
-      <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+      <!-- Navigation Tabs (Sticky while scrolling through contents) -->
+      <div class="settings-tabs-sticky-bar">
         <button type="button" class="settings-tab-btn active" id="tabBtnCredentials" onclick="switchSettingsTab('credentials')">
           🔑 Supplier API & FX
         </button>
