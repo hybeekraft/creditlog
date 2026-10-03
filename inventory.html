@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,12 @@
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
   <style>
     /* CMS & Inventory Specific Layouts */
     .cms-kpi-grid {
@@ -55,11 +59,8 @@
       margin-top: 6px;
     }
 
-    /* Toolbar Card (Sticky when scrolling through products) */
+    /* Toolbar Card */
     .cms-toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 90;
       background: #FFFFFF;
       border: 1px solid var(--border-light);
       border-radius: 18px;
@@ -70,7 +71,7 @@
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
-      box-shadow: 0 6px 20px rgba(25, 13, 8, 0.08);
+      box-shadow: var(--shadow-sm);
     }
 
     .cms-search-box {
@@ -163,33 +164,17 @@
 
     .cms-table-wrap {
       overflow-x: auto;
-      overflow-y: auto;
-      max-height: calc(100vh - 430px);
-      min-height: 460px;
       width: 100%;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(208, 69, 21, 0.4) rgba(25, 13, 8, 0.05);
     }
 
-    .cms-table-wrap::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    .cms-table-wrap::-webkit-scrollbar-track {
-      background: rgba(25, 13, 8, 0.04);
-      border-radius: 8px;
-    }
-
-    .cms-table-wrap::-webkit-scrollbar-thumb {
-      background: rgba(208, 69, 21, 0.35);
-      border-radius: 8px;
+    .cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
     }
 
     .cms-table th {
-      position: sticky;
-      top: 0;
-      z-index: 10;
       padding: 14px 18px;
       background: #F4ECD8;
       border-bottom: 1px solid var(--border-light);
@@ -372,11 +357,11 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
-    .cms-switch input:checked + .cms-slider {
+    .cms-switch input:checked+.cms-slider {
       background-color: #10B981;
     }
 
-    .cms-switch input:checked + .cms-slider:before {
+    .cms-switch input:checked+.cms-slider:before {
       transform: translateX(20px);
     }
 
@@ -458,7 +443,9 @@
       margin-bottom: 6px;
     }
 
-    .cms-form-input, .cms-form-textarea, .cms-form-select {
+    .cms-form-input,
+    .cms-form-textarea,
+    .cms-form-select {
       width: 100%;
       background: #FBF6EA;
       border: 1px solid rgba(25, 13, 8, 0.12);
@@ -471,7 +458,9 @@
       font-family: inherit;
     }
 
-    .cms-form-input:focus, .cms-form-textarea:focus, .cms-form-select:focus {
+    .cms-form-input:focus,
+    .cms-form-textarea:focus,
+    .cms-form-select:focus {
       border-color: #D04515;
       background: #FFFFFF;
       box-shadow: 0 0 0 3px rgba(208, 69, 21, 0.12);
@@ -544,6 +533,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="dashboard-layout admin-layout">
     <!-- Admin Sidebar -->
@@ -551,7 +541,7 @@
       <a href="index.html" class="dash-brand">
         <div class="logo-icon small" style="color: #D04515;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
           </svg>
         </div>
         <span class="logo-text">Credit<span class="accent-text" style="color: #D04515;">Log</span></span>
@@ -559,23 +549,46 @@
 
       <nav class="dash-menu">
         <a href="inventory.html" class="menu-item active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+          </svg>
           Inventory & CMS
         </a>
         <a href="admin.html#orders" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
           Orders
         </a>
         <a href="activity-logs.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
           Activity Logs
         </a>
         <a href="customers.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
           Customers
         </a>
         <a href="settings.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
           Settings
         </a>
       </nav>
@@ -590,14 +603,21 @@
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
           <div class="user-profile-badge" id="adminUserBadge">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
             <div>
               <div class="badge-name" id="adminProfileName">Admin Manager</div>
               <div class="badge-tag">Admin Master</div>
             </div>
           </div>
-          <button class="secondary-btn" onclick="logoutUser()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Sign out of Admin Portal">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <button class="secondary-btn" onclick="logoutUser()"
+            style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;"
+            title="Sign out of Admin Portal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
             <span>Sign Out</span>
           </button>
         </div>
@@ -608,7 +628,10 @@
         <div class="cms-card">
           <div class="cms-kpi-label">
             <span>Total Shop Products</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D04515" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D04515" stroke-width="2">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
           </div>
           <div class="cms-kpi-val" id="kpiTotalProducts">0</div>
           <div class="cms-kpi-sub">Active & disabled subscriptions</div>
@@ -617,7 +640,10 @@
         <div class="cms-card">
           <div class="cms-kpi-label">
             <span>Total Stock Units</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#190D08" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#190D08" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
           </div>
           <div class="cms-kpi-val" id="kpiTotalUnits">0</div>
           <div class="cms-kpi-sub">Total physical & digital licenses</div>
@@ -626,7 +652,10 @@
         <div class="cms-card">
           <div class="cms-kpi-label">
             <span style="color: #D95A22;">Reserved Stock</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D95A22" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D95A22" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
           </div>
           <div class="cms-kpi-val" id="kpiReservedUnits" style="color: #D95A22;">0</div>
           <div class="cms-kpi-sub">Held in active customer checkouts</div>
@@ -635,7 +664,9 @@
         <div class="cms-card">
           <div class="cms-kpi-label">
             <span style="color: #15803D;">Available to Purchase</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
           </div>
           <div class="cms-kpi-val" id="kpiAvailableUnits" style="color: #15803D;">0</div>
           <div class="cms-kpi-sub">Live stock units ready for checkout</div>
@@ -645,8 +676,12 @@
       <!-- Action & Filter Bar -->
       <div class="cms-toolbar">
         <div class="cms-search-box">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="cmsSearchInput" class="cms-search-input" placeholder="Search product by name, brand, or ID..." oninput="handleSearch()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" id="cmsSearchInput" class="cms-search-input"
+            placeholder="Search product by name, brand, or ID..." oninput="handleSearch()">
         </div>
 
         <div class="cms-filters">
@@ -668,12 +703,19 @@
           </select>
 
           <button type="button" class="cms-btn-primary" onclick="openAddProductModal()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
             <span>Add Product</span>
           </button>
 
-          <button type="button" class="secondary-btn" style="padding: 9px 12px;" onclick="loadInventory()" title="Refresh live stock">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <button type="button" class="secondary-btn" style="padding: 9px 12px;" onclick="loadInventory()"
+            title="Refresh live stock">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
           </button>
         </div>
       </div>
@@ -725,7 +767,8 @@
         <div class="cms-form-row">
           <div class="cms-form-group">
             <label>Brand / Publisher *</label>
-            <input type="text" id="addBrand" class="cms-form-input" placeholder="e.g. Netflix" required oninput="handleBrandTextInput(this.value, 'add')">
+            <input type="text" id="addBrand" class="cms-form-input" placeholder="e.g. Netflix" required
+              oninput="handleBrandTextInput(this.value, 'add')">
           </div>
           <div class="cms-form-group">
             <label>Category *</label>
@@ -741,19 +784,24 @@
         </div>
 
         <!-- Brand Logo Selector & Uploader -->
-        <div class="cms-form-group" style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
+        <div class="cms-form-group"
+          style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
             <label style="margin: 0; font-size: 12.5px; font-weight: 700; color: #190D08;">Brand Logo & Icon</label>
             <div style="display: flex; gap: 6px;">
-              <button type="button" class="cms-logo-tab active" id="tabAddPreloaded" onclick="switchLogoSource('preloaded', 'add')">Brand Library</button>
-              <button type="button" class="cms-logo-tab" id="tabAddUpload" onclick="switchLogoSource('upload', 'add')">Upload File</button>
-              <button type="button" class="cms-logo-tab" id="tabAddUrl" onclick="switchLogoSource('url', 'add')">Image URL</button>
+              <button type="button" class="cms-logo-tab active" id="tabAddPreloaded"
+                onclick="switchLogoSource('preloaded', 'add')">Brand Library</button>
+              <button type="button" class="cms-logo-tab" id="tabAddUpload"
+                onclick="switchLogoSource('upload', 'add')">Upload File</button>
+              <button type="button" class="cms-logo-tab" id="tabAddUrl" onclick="switchLogoSource('url', 'add')">Image
+                URL</button>
             </div>
           </div>
 
           <div style="display: flex; gap: 14px; align-items: center;">
             <!-- Live Preview Tile -->
-            <div id="addLogoPreviewTile" style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
+            <div id="addLogoPreviewTile"
+              style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
               <span id="addLogoPreviewPlaceholder" style="font-size: 20px;">🖼️</span>
             </div>
 
@@ -761,26 +809,40 @@
             <div style="flex: 1; min-width: 0;">
               <!-- 1. Preloaded Brand Select -->
               <div id="addLogoPreloadedWrap">
-                <select id="addBrandSelect" class="cms-form-select" onchange="handleBrandSelectChange(this.value, 'add')">
+                <select id="addBrandSelect" class="cms-form-select"
+                  onchange="handleBrandSelectChange(this.value, 'add')">
                   <option value="">-- Choose from 30+ Official Brand Logos --</option>
                 </select>
               </div>
 
               <!-- 2. Custom Upload File -->
               <div id="addLogoUploadWrap" class="hidden">
-                <input type="file" id="addLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon" style="display: none;" onchange="handleLogoFileUpload(this, 'add')">
-                <div onclick="document.getElementById('addLogoFile').click()" style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;" ondragover="event.preventDefault(); this.style.background='#FEEFEB';" ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'add')">
-                  <div style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <input type="file" id="addLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon"
+                  style="display: none;" onchange="handleLogoFileUpload(this, 'add')">
+                <div onclick="document.getElementById('addLogoFile').click()"
+                  style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;"
+                  ondragover="event.preventDefault(); this.style.background='#FEEFEB';"
+                  ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'add')">
+                  <div
+                    style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
                     <span>Click or Drag & Drop Logo Image</span>
                   </div>
-                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="addUploadStatusText">PNG, SVG, JPG, WebP (Transparent/Square recommended)</div>
+                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="addUploadStatusText">
+                    PNG, SVG, JPG, WebP (Transparent/Square recommended)</div>
                 </div>
               </div>
 
               <!-- 3. Direct Image URL -->
               <div id="addLogoUrlWrap" class="hidden">
-                <input type="url" id="addLogoUrlInput" class="cms-form-input" placeholder="Paste image URL (e.g. assets/icons/... or https://...)" oninput="handleLogoUrlInput(this.value, 'add')">
+                <input type="url" id="addLogoUrlInput" class="cms-form-input"
+                  placeholder="Paste image URL (e.g. assets/icons/... or https://...)"
+                  oninput="handleLogoUrlInput(this.value, 'add')">
               </div>
 
               <!-- Hidden State -->
@@ -808,17 +870,20 @@
 
         <div class="cms-form-group">
           <label>Product Description</label>
-          <textarea id="addDesc" class="cms-form-textarea" rows="2" placeholder="Verified private digital subscription with instant credentials dispatch..."></textarea>
+          <textarea id="addDesc" class="cms-form-textarea" rows="2"
+            placeholder="Verified private digital subscription with instant credentials dispatch..."></textarea>
         </div>
 
         <div class="cms-form-group">
           <label>Important Requirements</label>
-          <textarea id="addRequirements" class="cms-form-textarea" rows="3" placeholder="Enter key rules or requirements (e.g. 1 device per profile, PIN protection, web & mobile access)..."></textarea>
+          <textarea id="addRequirements" class="cms-form-textarea" rows="3"
+            placeholder="Enter key rules or requirements (e.g. 1 device per profile, PIN protection, web & mobile access)..."></textarea>
         </div>
 
         <div class="cms-form-group">
           <label>How It Is Delivered</label>
-          <textarea id="addDelivery" class="cms-form-textarea" rows="2" placeholder="e.g. Automated instant digital dispatch with verified credentials and setup instructions sent to your email."></textarea>
+          <textarea id="addDelivery" class="cms-form-textarea" rows="2"
+            placeholder="e.g. Automated instant digital dispatch with verified credentials and setup instructions sent to your email."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
@@ -835,7 +900,8 @@
       <div class="cms-modal-header">
         <div>
           <h3 class="cms-modal-title" id="mvModalProdTitle">Manage Options & Variants</h3>
-          <p style="font-size: 12px; color: #94A3B8; margin-top: 2px;">Configure separate stock quantities and pricing per duration tier.</p>
+          <p style="font-size: 12px; color: #94A3B8; margin-top: 2px;">Configure separate stock quantities and pricing
+            per duration tier.</p>
         </div>
         <button type="button" class="cms-close-btn" onclick="closeVariantsModal()">×</button>
       </div>
@@ -844,8 +910,10 @@
         <!-- Dynamic variant rows -->
       </div>
 
-      <div style="background: rgba(255, 255, 255, 0.03); border: 1.5px dashed rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 14px; margin-bottom: 24px;">
-        <span style="font-size: 12.5px; font-weight: 700; color: #FFFFFF; display: block; margin-bottom: 8px;">+ Add Another Option / Duration</span>
+      <div
+        style="background: rgba(255, 255, 255, 0.03); border: 1.5px dashed rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 14px; margin-bottom: 24px;">
+        <span style="font-size: 12.5px; font-weight: 700; color: #FFFFFF; display: block; margin-bottom: 8px;">+ Add
+          Another Option / Duration</span>
         <div style="display: grid; grid-template-columns: 1fr 90px 90px auto; gap: 8px;">
           <input type="text" id="newVarDuration" class="cms-form-input" placeholder="Duration (e.g. 6 Months)">
           <input type="number" step="0.01" min="0.5" id="newVarPrice" class="cms-form-input" placeholder="$ Price">
@@ -870,7 +938,8 @@
       </div>
       <div style="margin-bottom: 16px;">
         <p style="font-size: 13.5px; color: #190D08;" id="stockEditProdName">Product</p>
-        <p style="font-size: 12px; color: #705E51; margin-top: 4px;">Currently reserved in checkout: <strong id="stockEditReservedVal" style="color: #D95A22;">0</strong></p>
+        <p style="font-size: 12px; color: #705E51; margin-top: 4px;">Currently reserved in checkout: <strong
+            id="stockEditReservedVal" style="color: #D95A22;">0</strong></p>
       </div>
       <div class="cms-form-group">
         <label>Total Stock Quantity *</label>
@@ -902,7 +971,8 @@
         <div class="cms-form-row">
           <div class="cms-form-group">
             <label>Brand / Publisher *</label>
-            <input type="text" id="editBrand" class="cms-form-input" placeholder="e.g. Netflix" required oninput="handleBrandTextInput(this.value, 'edit')">
+            <input type="text" id="editBrand" class="cms-form-input" placeholder="e.g. Netflix" required
+              oninput="handleBrandTextInput(this.value, 'edit')">
           </div>
           <div class="cms-form-group">
             <label>Category *</label>
@@ -918,19 +988,24 @@
         </div>
 
         <!-- Brand Logo Selector & Uploader -->
-        <div class="cms-form-group" style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
+        <div class="cms-form-group"
+          style="background: #FBF6EA; border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 18px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
             <label style="margin: 0; font-size: 12.5px; font-weight: 700; color: #190D08;">Brand Logo & Icon</label>
             <div style="display: flex; gap: 6px;">
-              <button type="button" class="cms-logo-tab active" id="tabEditPreloaded" onclick="switchLogoSource('preloaded', 'edit')">Brand Library</button>
-              <button type="button" class="cms-logo-tab" id="tabEditUpload" onclick="switchLogoSource('upload', 'edit')">Upload File</button>
-              <button type="button" class="cms-logo-tab" id="tabEditUrl" onclick="switchLogoSource('url', 'edit')">Image URL</button>
+              <button type="button" class="cms-logo-tab active" id="tabEditPreloaded"
+                onclick="switchLogoSource('preloaded', 'edit')">Brand Library</button>
+              <button type="button" class="cms-logo-tab" id="tabEditUpload"
+                onclick="switchLogoSource('upload', 'edit')">Upload File</button>
+              <button type="button" class="cms-logo-tab" id="tabEditUrl" onclick="switchLogoSource('url', 'edit')">Image
+                URL</button>
             </div>
           </div>
 
           <div style="display: flex; gap: 14px; align-items: center;">
             <!-- Live Preview Tile -->
-            <div id="editLogoPreviewTile" style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
+            <div id="editLogoPreviewTile"
+              style="width: 50px; height: 50px; border-radius: 12px; background: #FFFFFF; border: 1px dashed rgba(25, 13, 8, 0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(25, 13, 8, 0.06); overflow: hidden; flex-shrink: 0;">
               <span id="editLogoPreviewPlaceholder" style="font-size: 20px;">🖼️</span>
             </div>
 
@@ -938,26 +1013,40 @@
             <div style="flex: 1; min-width: 0;">
               <!-- 1. Preloaded Brand Select -->
               <div id="editLogoPreloadedWrap">
-                <select id="editBrandSelect" class="cms-form-select" onchange="handleBrandSelectChange(this.value, 'edit')">
+                <select id="editBrandSelect" class="cms-form-select"
+                  onchange="handleBrandSelectChange(this.value, 'edit')">
                   <option value="">-- Choose from 30+ Official Brand Logos --</option>
                 </select>
               </div>
 
               <!-- 2. Custom Upload File -->
               <div id="editLogoUploadWrap" class="hidden">
-                <input type="file" id="editLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon" style="display: none;" onchange="handleLogoFileUpload(this, 'edit')">
-                <div onclick="document.getElementById('editLogoFile').click()" style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;" ondragover="event.preventDefault(); this.style.background='#FEEFEB';" ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'edit')">
-                  <div style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <input type="file" id="editLogoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp,image/x-icon"
+                  style="display: none;" onchange="handleLogoFileUpload(this, 'edit')">
+                <div onclick="document.getElementById('editLogoFile').click()"
+                  style="background: #FFFFFF; border: 1.5px dashed #D04515; border-radius: 10px; padding: 10px 14px; text-align: center; cursor: pointer; transition: all 0.2s;"
+                  ondragover="event.preventDefault(); this.style.background='#FEEFEB';"
+                  ondragleave="this.style.background='#FFFFFF';" ondrop="handleLogoDrop(event, 'edit')">
+                  <div
+                    style="font-size: 12px; font-weight: 700; color: #D04515; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
                     <span>Click or Drag & Drop Logo Image</span>
                   </div>
-                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="editUploadStatusText">PNG, SVG, JPG, WebP</div>
+                  <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;" id="editUploadStatusText">
+                    PNG, SVG, JPG, WebP</div>
                 </div>
               </div>
 
               <!-- 3. Direct Image URL -->
               <div id="editLogoUrlWrap" class="hidden">
-                <input type="url" id="editLogoUrlInput" class="cms-form-input" placeholder="Paste image URL (e.g. assets/icons/... or https://...)" oninput="handleLogoUrlInput(this.value, 'edit')">
+                <input type="url" id="editLogoUrlInput" class="cms-form-input"
+                  placeholder="Paste image URL (e.g. assets/icons/... or https://...)"
+                  oninput="handleLogoUrlInput(this.value, 'edit')">
               </div>
 
               <!-- Hidden State -->
@@ -980,17 +1069,20 @@
 
         <div class="cms-form-group">
           <label>Product Description</label>
-          <textarea id="editDesc" class="cms-form-textarea" rows="2" placeholder="Verified private digital subscription..."></textarea>
+          <textarea id="editDesc" class="cms-form-textarea" rows="2"
+            placeholder="Verified private digital subscription..."></textarea>
         </div>
 
         <div class="cms-form-group">
           <label>Important Requirements</label>
-          <textarea id="editRequirements" class="cms-form-textarea" rows="3" placeholder="Enter key rules or requirements..."></textarea>
+          <textarea id="editRequirements" class="cms-form-textarea" rows="3"
+            placeholder="Enter key rules or requirements..."></textarea>
         </div>
 
         <div class="cms-form-group">
           <label>How It Is Delivered</label>
-          <textarea id="editDelivery" class="cms-form-textarea" rows="2" placeholder="Automated instant digital dispatch..."></textarea>
+          <textarea id="editDelivery" class="cms-form-textarea" rows="2"
+            placeholder="Automated instant digital dispatch..."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
@@ -1082,7 +1174,7 @@
       let filtered = productsList;
 
       if (searchQ) {
-        filtered = filtered.filter(p => 
+        filtered = filtered.filter(p =>
           (p.name && p.name.toLowerCase().includes(searchQ)) ||
           (p.brand && p.brand.toLowerCase().includes(searchQ)) ||
           (p.id && p.id.toLowerCase().includes(searchQ))
@@ -1806,4 +1898,22 @@
     });
   </script>
 </body>
+
+</html>
+function escapeHtml(text) {
+if (!text) return '';
+return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;' ).replace( />/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+checkAdminAuth();
+populateBrandSelects();
+loadInventory();
+// Auto-poll inventory status every 15 seconds for live reservations
+setInterval(loadInventory, 15000);
+});
+</script>
+</body>
+
 </html>

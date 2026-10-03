@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CreditLog — Customer Intelligence & Directory</title>
-  <meta name="description" content="View registered customer directory, lifetime spend, order history, and contact channels.">
+  <meta name="description"
+    content="View registered customer directory, lifetime spend, order history, and contact channels.">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
   <style>
     .cust-filter-chip {
       padding: 6px 14px;
@@ -26,15 +31,18 @@
       align-items: center;
       gap: 6px;
     }
+
     .cust-filter-chip:hover {
       border-color: #D04515;
       color: #D04515;
     }
+
     .cust-filter-chip.active {
       background: #190D08;
       color: #FFFFFF;
       border-color: #190D08;
     }
+
     .cust-row-card {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.1);
@@ -46,11 +54,13 @@
       gap: 16px;
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
+
     .cust-row-card:hover {
       border-color: rgba(208, 69, 21, 0.4);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
       transform: translateY(-1px);
     }
+
     .cust-avatar-circle {
       width: 44px;
       height: 44px;
@@ -63,8 +73,9 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
+
     .channel-badge {
       display: inline-flex;
       align-items: center;
@@ -76,6 +87,7 @@
       background: rgba(25, 13, 8, 0.05);
       color: #705E51;
     }
+
     .channel-badge.whatsapp {
       background: rgba(22, 163, 74, 0.1);
       color: #16A34A;
@@ -83,6 +95,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="dashboard-layout admin-layout">
     <!-- Admin Sidebar -->
@@ -90,7 +103,7 @@
       <a href="index.html" class="dash-brand">
         <div class="logo-icon small" style="color: #D04515;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+            <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
           </svg>
         </div>
         <span class="logo-text">Credit<span class="accent-text" style="color: #D04515;">Log</span></span>
@@ -98,23 +111,46 @@
 
       <nav class="dash-menu">
         <a href="inventory.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+          </svg>
           Inventory & CMS
         </a>
         <a href="admin.html#orders" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
           Orders
         </a>
         <a href="activity-logs.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
           Activity Logs
         </a>
         <a href="customers.html" class="menu-item active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
           Customers
         </a>
         <a href="settings.html" class="menu-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
           Settings
         </a>
       </nav>
@@ -125,18 +161,26 @@
       <header class="dash-top-bar">
         <div>
           <h1 class="welcome-heading">Customer Directory & Insights</h1>
-          <p class="welcome-sub">Track buyer profiles, lifetime spend, order frequency, and direct delivery channels.</p>
+          <p class="welcome-sub">Track buyer profiles, lifetime spend, order frequency, and direct delivery channels.
+          </p>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
           <div class="user-profile-badge" id="adminUserBadge">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
             <div>
               <div class="badge-name" id="adminProfileName">Admin Manager</div>
               <div class="badge-tag">Admin</div>
             </div>
           </div>
-          <button class="secondary-btn" onclick="logoutUser()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Sign out of Admin Portal">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <button class="secondary-btn" onclick="logoutUser()"
+            style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;"
+            title="Sign out of Admin Portal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
             <span>Sign Out</span>
           </button>
         </div>
@@ -148,7 +192,9 @@
           <span class="metric-title">Total Customers</span>
           <div class="metric-val" id="kpiTotalCustomers">0</div>
           <div class="trend-badge positive" id="kpiCustomerGrowth">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)" />
+            </svg>
             Active Directory
           </div>
         </div>
@@ -177,39 +223,57 @@
         <div class="panel-header-row" style="margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
           <div>
             <h3 class="panel-title" style="margin-bottom: 4px;">Registered Buyers & Profiles</h3>
-            <p style="font-size: 13px; color: #705E51; margin: 0;">Comprehensive breakdown of customer accounts, delivery history, and orders.</p>
+            <p style="font-size: 13px; color: #705E51; margin: 0;">Comprehensive breakdown of customer accounts,
+              delivery history, and orders.</p>
           </div>
           <div style="display: flex; gap: 10px; align-items: center;">
-            <button type="button" onclick="loadCustomersData()" class="secondary-btn" style="padding: 8px 14px; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <button type="button" onclick="loadCustomersData()" class="secondary-btn"
+              style="padding: 8px 14px; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+              </svg>
               <span>Refresh</span>
             </button>
-            <button type="button" onclick="exportCustomersCSV()" class="primary-btn" style="padding: 8px 16px; font-size: 12.5px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <button type="button" onclick="exportCustomersCSV()" class="primary-btn"
+              style="padding: 8px 16px; font-size: 12.5px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
               <span>Export CSV</span>
             </button>
           </div>
         </div>
 
-        <!-- Filter Controls Strip (Sticky Tab Options & Search) -->
-        <div class="cust-filter-bar-sticky" style="position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; background: #FFFFFF; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(25, 13, 8, 0.1); box-shadow: 0 6px 20px rgba(25, 13, 8, 0.07);">
+        <!-- Filter Controls Strip -->
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; background: rgba(25, 13, 8, 0.02); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(25, 13, 8, 0.06);">
           <div style="position: relative; flex: 1; min-width: 240px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #705E51;">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #705E51;">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="text" id="searchInput" placeholder="Search by name, email, WhatsApp, or product..." oninput="filterCustomersUI()" style="width: 100%; padding: 9px 14px 9px 36px; border: 1px solid rgba(25,13,8,0.18); border-radius: 8px; font-size: 13px; background: #FFFFFF;">
+            <input type="text" id="searchInput" placeholder="Search by name, email, WhatsApp, or product..."
+              oninput="filterCustomersUI()"
+              style="width: 100%; padding: 9px 14px 9px 36px; border: 1px solid rgba(25,13,8,0.18); border-radius: 8px; font-size: 13px; background: #FFFFFF;">
           </div>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button type="button" class="cust-filter-chip active" id="chipAll" onclick="setFilter('all')">All Customers</button>
-            <button type="button" class="cust-filter-chip" id="chipRepeat" onclick="setFilter('repeat')">Repeat Buyers</button>
-            <button type="button" class="cust-filter-chip" id="chipFirst" onclick="setFilter('first')">First-Time</button>
-            <button type="button" class="cust-filter-chip" id="chipWhatsapp" onclick="setFilter('whatsapp')">WhatsApp Buyers</button>
+            <button type="button" class="cust-filter-chip active" id="chipAll" onclick="setFilter('all')">All
+              Customers</button>
+            <button type="button" class="cust-filter-chip" id="chipRepeat" onclick="setFilter('repeat')">Repeat
+              Buyers</button>
+            <button type="button" class="cust-filter-chip" id="chipFirst"
+              onclick="setFilter('first')">First-Time</button>
+            <button type="button" class="cust-filter-chip" id="chipWhatsapp" onclick="setFilter('whatsapp')">WhatsApp
+              Buyers</button>
           </div>
         </div>
 
-        <!-- Customers List Cards Container (Internal scrollable container while tabs remain fixed) -->
-        <div id="customersListContainer" class="admin-scroll-container" style="display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 430px); min-height: 440px; overflow-y: auto; padding-right: 6px;">
+        <!-- Customers List Cards Container -->
+        <div id="customersListContainer" style="display: flex; flex-direction: column; gap: 12px;">
           <div style="text-align: center; padding: 40px; color: #705E51;">Loading customer directory...</div>
         </div>
       </div>
@@ -299,7 +363,7 @@
       }
 
       if (q) {
-        list = list.filter(c => 
+        list = list.filter(c =>
           (c.name && c.name.toLowerCase().includes(q)) ||
           (c.email && c.email.toLowerCase().includes(q)) ||
           (c.phone && c.phone.includes(q)) ||
@@ -334,7 +398,7 @@
         `).join('') + ((c.products || []).length > 4 ? `<span style="font-size:11px; color:#705E51; font-weight:600;">+${c.products.length - 4} more</span>` : '');
 
         const isRepeat = c.orderCount > 1;
-        const lastOrderDateStr = c.lastOrderDate ? new Date(c.lastOrderDate).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : 'Recent';
+        const lastOrderDateStr = c.lastOrderDate ? new Date(c.lastOrderDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent';
 
         return `
           <div class="cust-row-card">
@@ -412,4 +476,5 @@
     }
   </script>
 </body>
+
 </html>
