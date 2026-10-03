@@ -135,7 +135,14 @@ class ResellerService {
 
     // Save Product Overrides
     if (updates.productOverrides && typeof updates.productOverrides === 'object') {
-      this.config.productOverrides = updates.productOverrides;
+      const sanitized = {};
+      Object.keys(updates.productOverrides).forEach(key => {
+        const val = parseFloat(updates.productOverrides[key]);
+        if (!isNaN(val) && val > 0) {
+          sanitized[String(key).trim()] = Math.round(val * 100) / 100;
+        }
+      });
+      this.config.productOverrides = sanitized;
     }
 
     // Save Category Multipliers
@@ -160,11 +167,22 @@ class ResellerService {
     let ruleMatched = '';
     let ruleType = '';
 
-    // 1. Specific Product ID / Key Override
-    if (productId && overrides[productId] !== undefined && Number(overrides[productId]) > 0) {
-      multiplier = Number(overrides[productId]);
-      ruleMatched = `Product Custom (${productId})`;
-      ruleType = 'product_override';
+    // 1. Specific Product ID / Key Override (Highest Priority)
+    if (productId !== null && productId !== undefined) {
+      const pKey = String(productId).trim();
+      const pKeyLower = pKey.toLowerCase();
+      let matchedKey = null;
+      if (overrides[pKey] !== undefined && Number(overrides[pKey]) > 0) {
+        matchedKey = pKey;
+      } else if (overrides[pKeyLower] !== undefined && Number(overrides[pKeyLower]) > 0) {
+        matchedKey = pKeyLower;
+      }
+
+      if (matchedKey) {
+        multiplier = Number(overrides[matchedKey]);
+        ruleMatched = `Product Custom (${pKey})`;
+        ruleType = 'product_override';
+      }
     }
 
     // 2. Price Range Tier (if cost falls in [min, max])

@@ -5,5 +5,60 @@
   "usdToNgnRate": 1550,
   "autoFulfill": true,
   "mode": "simulation",
-  "lowBalanceThreshold": 5
+  "lowBalanceThreshold": 5,
+  "priceTiers": [
+    {
+      "id": "tier_nano",
+      "min": 0,
+      "max": 0.99,
+      "multiplier": 3.5,
+      "label": "Sub-Dollar ($0.00 – $0.99)"
+    },
+    {
+      "id": "tier_micro",
+      "min": 1,
+      "max": 2,
+      "multiplier": 2,
+      "label": "Micro ($1.00 – $2.00)"
+    },
+    {
+      "id": "tier_low",
+      "min": 2.01,
+      "max": 5,
+      "multiplier": 1.8,
+      "label": "Low ($2.01 – $5.00)"
+    },
+    {
+      "id": "tier_mid",
+      "min": 5.01,
+      "max": 15,
+      "multiplier": 1.6,
+      "label": "Mid ($5.01 – $15.00)"
+    },
+    {
+      "id": "tier_upper",
+      "min": 15.01,
+      "max": 40,
+      "multiplier": 1.35,
+      "label": "Upper ($15.01 – $40.00)"
+    },
+    {
+      "id": "tier_high",
+      "min": 40.01,
+      "max": 999999,
+      "multiplier": 1.2,
+      "label": "High ($40.01+)"
+    }
+  ],
+  "productOverrides": {
+    "1": 3.2,
+    "chatgpt-plus": 1.45
+  },
+  "categoryMultipliers": {
+    "ai": 1.75,
+    "gaming": 1.5,
+    "streaming": 1.4,
+    "productivity": 1.5,
+    "security": 1.6
+  }
 }

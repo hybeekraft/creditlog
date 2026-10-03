@@ -86,6 +86,26 @@
     .price-tier-row:hover {
       border-color: rgba(208, 69, 21, 0.3);
     }
+    .product-override-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr 38px;
+      gap: 12px;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid rgba(25, 13, 8, 0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      transition: border-color 0.15s ease;
+    }
+    .product-override-row:hover {
+      border-color: rgba(208, 69, 21, 0.3);
+    }
+    @media (max-width: 820px) {
+      .product-override-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -181,6 +201,9 @@
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnTiers" onclick="switchSettingsTab('tiers')">
           📈 Dynamic Price Tiers
+        </button>
+        <button type="button" class="settings-tab-btn" id="tabBtnProducts" onclick="switchSettingsTab('products')">
+          🎯 Product Multipliers
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnCategories" onclick="switchSettingsTab('categories')">
           🏷️ Category Multipliers
@@ -311,6 +334,102 @@
           </div>
         </div>
 
+        <!-- TAB: Product Multipliers -->
+        <div id="tabContentProducts" class="settings-card" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">🎯 Product-Specific Multiplier Overrides</h3>
+                <span style="background: rgba(208, 69, 21, 0.12); color: #D04515; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.04em;">Highest Priority #1</span>
+              </div>
+              <p style="margin: 4px 0 0; font-size: 12.5px; color: #705E51;">
+                Set custom multipliers for particular individual products instead of whole categories or brands. Product overrides strictly supersede range tiers and category rules.
+              </p>
+            </div>
+            <button type="button" onclick="loadAllProductsCatalog(true)" class="secondary-btn" style="padding: 7px 12px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Refresh Catalog</span>
+            </button>
+          </div>
+
+          <!-- Add Product Override Card -->
+          <div style="background: #FFFDF8; border: 1px solid rgba(208,69,21,0.2); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
+            <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #D04515; letter-spacing: 0.05em; margin-bottom: 12px;">
+              + Add Custom Multiplier For Product
+            </div>
+            <div style="display: grid; grid-template-columns: minmax(240px, 2fr) minmax(110px, 1fr) minmax(110px, 1fr) auto; gap: 12px; align-items: flex-end;">
+              <div>
+                <label class="form-group-label" style="margin-bottom: 4px;">Choose Product</label>
+                <select id="selectOverrideProduct" class="settings-input" style="font-weight: 600; font-size: 13px;" onchange="handleOverrideProductSelect()">
+                  <option value="">-- Select Product from Catalog --</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-group-label" style="margin-bottom: 4px;">Wholesale ($)</label>
+                <div style="position: relative;">
+                  <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #705E51; font-size: 12px;">$</span>
+                  <input type="number" id="inputOverrideCost" step="0.01" min="0" placeholder="0.00" class="settings-input" style="padding-left: 24px; font-size: 13px;" oninput="updateOverrideLiveCalc()">
+                </div>
+              </div>
+              <div>
+                <label class="form-group-label" style="margin-bottom: 4px;">Custom Multiplier</label>
+                <div style="position: relative;">
+                  <input type="number" id="inputOverrideMultiplier" step="0.05" min="1.0" max="20.0" value="2.00" class="settings-input" style="font-weight: 800; color: #D04515; font-size: 13px;" oninput="updateOverrideLiveCalc()">
+                </div>
+              </div>
+              <div>
+                <button type="button" onclick="addSelectedProductOverride()" class="primary-btn" style="padding: 10px 18px; font-size: 13px; border-radius: 8px; white-space: nowrap; height: 38px;">
+                  + Add Override
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Calculation Preview -->
+            <div id="overridePreviewBar" style="display: none; margin-top: 12px; font-size: 12px; color: #190D08; font-weight: 600; padding: 8px 12px; background: #FFFFFF; border-radius: 8px; border: 1px dashed rgba(208,69,21,0.3);">
+              Calculated Retail: <span id="overridePreviewText" style="color: #D04515; font-weight: 800;"></span>
+            </div>
+          </div>
+
+          <!-- Active Overrides Header & Container -->
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 13px; font-weight: 800; color: #190D08;">Configured Product Overrides</span>
+                <span id="overrideCountBadge" style="margin-left: 6px; background: #190D08; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px;">0</span>
+              </div>
+              <div style="font-size: 11.5px; color: #705E51;">
+                Edit multiplier inline anytime. Press "Save Product Multipliers" to persist.
+              </div>
+            </div>
+
+            <!-- Table Header Labels -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr 38px; gap: 12px; padding: 0 14px 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #705E51; letter-spacing: 0.05em;">
+              <div>Product & Identifier</div>
+              <div>Wholesale Cost</div>
+              <div>Multiplier</div>
+              <div>Retail (USD / NGN)</div>
+              <div></div>
+            </div>
+
+            <div id="productOverridesContainer" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Dynamically populated via renderProductOverrides -->
+            </div>
+
+            <div id="emptyOverridesNotice" style="padding: 28px; text-align: center; color: #705E51; font-size: 13px; background: rgba(25,13,8,0.02); border-radius: 8px; border: 1px dashed rgba(25,13,8,0.12);">
+              No product-specific multipliers configured yet. Use the selector above to add custom pricing for any product.
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(25,13,8,0.08);">
+            <button type="button" onclick="applyMultipliersToStore()" class="secondary-btn" style="padding: 9px 16px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px;">
+              ⚡ Sync Multipliers to All Store Inventory Now
+            </button>
+            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+              Save Product Multipliers
+            </button>
+          </div>
+        </div>
+
         <!-- TAB 3: Category Multipliers -->
         <div id="tabContentCategories" class="settings-card" style="display: none;">
           <div style="margin-bottom: 16px;">
@@ -375,6 +494,16 @@
         <div style="margin-bottom: 18px;">
           <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Interactive Retail Price Simulator</h3>
           <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Test wholesale costs to see what retail selling prices, conversions, and profit margins will be generated.</p>
+        </div>
+
+        <div style="margin-bottom: 16px; background: rgba(25,13,8,0.02); border: 1px solid rgba(25,13,8,0.08); border-radius: 10px; padding: 14px;">
+          <label class="form-group-label" style="margin-bottom: 6px;">🎯 Test Specific Product Override (Optional)</label>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <select id="simProductSelect" class="settings-input" style="max-width: 440px; font-weight: 600; font-size: 13px;" onchange="handleSimulatorProductSelect()">
+              <option value="">-- Manual Wholesale Cost (Use buttons below) --</option>
+            </select>
+            <button type="button" onclick="clearSimulatorProductSelect()" class="secondary-btn" style="padding: 7px 12px; font-size: 12px;">Reset</button>
+          </div>
         </div>
 
         <div style="margin-bottom: 20px;">
@@ -463,6 +592,7 @@
         if (el) el.textContent = user.name;
       }
       fetchResellerStatus();
+      loadAllProductsCatalog();
     });
 
     async function fetchResellerStatus() {
@@ -558,10 +688,13 @@
 
       // Price Tiers
       renderPriceTiers(settings.priceTiers);
+
+      // Product Multipliers (Overrides)
+      renderProductOverrides(settings.productOverrides || {});
     }
 
     function switchSettingsTab(tabKey) {
-      const tabs = ['credentials', 'tiers', 'categories', 'simulator', 'catalog'];
+      const tabs = ['credentials', 'tiers', 'products', 'categories', 'simulator', 'catalog'];
       tabs.forEach(t => {
         const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
         const content = document.getElementById('tabContent' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -668,11 +801,311 @@
       return tiers.sort((a, b) => a.min - b.min);
     }
 
+    // --- Product-Specific Multipliers Manager ---
+    window.allProductsCatalog = {};
+
+    async function loadAllProductsCatalog(forceRefresh = false) {
+      const select = document.getElementById('selectOverrideProduct');
+      const simSelect = document.getElementById('simProductSelect');
+      if (!select) return;
+
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const [storeRes, resellerRes] = await Promise.all([
+          fetch('/api/admin/inventory', { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch('/api/admin/reseller/products', { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
+
+        const storeData = await storeRes.json();
+        const resellerData = await resellerRes.json();
+
+        window.allProductsCatalog = {};
+
+        // 1. Supplier items
+        if (resellerData.ok && Array.isArray(resellerData.products)) {
+          resellerData.products.forEach(p => {
+            const cost = parseFloat(p.price || 0);
+            window.allProductsCatalog[p.id] = {
+              id: p.id,
+              name: p.name || p.title,
+              cost,
+              category: p.category || 'Wholesale',
+              type: 'reseller'
+            };
+          });
+        }
+
+        // 2. Store items
+        if (storeData.success && Array.isArray(storeData.products)) {
+          storeData.products.forEach(p => {
+            const cost = p.wholesaleUsd ? parseFloat(p.wholesaleUsd) : (p.usdPrice ? parseFloat(p.usdPrice) : 0);
+            window.allProductsCatalog[p.id] = {
+              id: p.id,
+              name: p.name,
+              cost,
+              category: p.category || 'Store Item',
+              type: 'store'
+            };
+          });
+        }
+
+        populateProductDropdowns();
+        const currentOverrides = collectProductOverridesFromUI();
+        if (Object.keys(currentOverrides).length > 0) {
+          renderProductOverrides(currentOverrides);
+        }
+        if (forceRefresh) showToast('Product catalog refreshed successfully.');
+      } catch (err) {
+        console.error('Error loading product catalog:', err);
+      }
+    }
+
+    function populateProductDropdowns() {
+      const select = document.getElementById('selectOverrideProduct');
+      const simSelect = document.getElementById('simProductSelect');
+      if (!select) return;
+
+      const items = Object.values(window.allProductsCatalog);
+      const resellerItems = items.filter(i => i.type === 'reseller');
+      const storeItems = items.filter(i => i.type === 'store');
+
+      let html = '<option value="">-- Choose a Product --</option>';
+
+      if (resellerItems.length > 0) {
+        html += '<optgroup label="⚡ Supplier Wholesale Items">';
+        resellerItems.forEach(i => {
+          html += `<option value="${i.id}" data-cost="${i.cost}">[Supplier #${i.id}] ${i.name} ($${i.cost.toFixed(2)})</option>`;
+        });
+        html += '</optgroup>';
+      }
+
+      if (storeItems.length > 0) {
+        html += '<optgroup label="🛍️ Store Digital Products">';
+        storeItems.forEach(i => {
+          const costStr = i.cost > 0 ? ` ($${i.cost.toFixed(2)})` : '';
+          html += `<option value="${i.id}" data-cost="${i.cost}">${i.name}${costStr}</option>`;
+        });
+        html += '</optgroup>';
+      }
+
+      select.innerHTML = html;
+      if (simSelect) {
+        simSelect.innerHTML = '<option value="">-- Manual Wholesale Cost (Use buttons below) --</option>' + html.replace('<option value="">-- Choose a Product --</option>', '');
+      }
+    }
+
+    function handleOverrideProductSelect() {
+      const select = document.getElementById('selectOverrideProduct');
+      const selected = select.options[select.selectedIndex];
+      if (!selected || !selected.value) {
+        document.getElementById('overridePreviewBar').style.display = 'none';
+        return;
+      }
+
+      const cost = parseFloat(selected.getAttribute('data-cost')) || 0;
+      if (cost > 0) {
+        document.getElementById('inputOverrideCost').value = cost.toFixed(2);
+      }
+      updateOverrideLiveCalc();
+    }
+
+    function updateOverrideLiveCalc() {
+      const previewBar = document.getElementById('overridePreviewBar');
+      const previewText = document.getElementById('overridePreviewText');
+      if (!previewBar || !previewText) return;
+
+      const cost = parseFloat(document.getElementById('inputOverrideCost')?.value) || 0;
+      const mult = parseFloat(document.getElementById('inputOverrideMultiplier')?.value) || 2.0;
+      const rate = parseFloat(document.getElementById('inputRate')?.value) || 1550;
+
+      if (cost <= 0) {
+        previewBar.style.display = 'none';
+        return;
+      }
+
+      const retailUsd = cost * mult;
+      const retailNgn = Math.round(retailUsd * rate);
+      const profitUsd = retailUsd - cost;
+      const margin = retailUsd > 0 ? Math.round((profitUsd / retailUsd) * 100) : 0;
+
+      previewBar.style.display = 'block';
+      previewText.innerHTML = `$${cost.toFixed(2)} × ${mult.toFixed(2)}x = <strong style="color:#16A34A;">$${retailUsd.toFixed(2)} (₦${retailNgn.toLocaleString('en-US')})</strong> · Profit: +$${profitUsd.toFixed(2)} (${margin}% margin)`;
+    }
+
+    function addSelectedProductOverride() {
+      const select = document.getElementById('selectOverrideProduct');
+      const selected = select.options[select.selectedIndex];
+      const prodId = select.value;
+      if (!prodId) {
+        alert('Please select a product from the dropdown.');
+        return;
+      }
+
+      const mult = parseFloat(document.getElementById('inputOverrideMultiplier').value) || 2.0;
+      const cost = parseFloat(document.getElementById('inputOverrideCost').value) || 0;
+      const name = window.allProductsCatalog[prodId]?.name || selected.text || prodId;
+
+      addProductOverrideRow(prodId, mult, name, cost);
+      select.value = '';
+      document.getElementById('overridePreviewBar').style.display = 'none';
+      showToast(`Added custom multiplier (${mult.toFixed(2)}x) for ${name}`);
+    }
+
+    function addProductOverrideRow(prodId, multiplier, name, cost) {
+      const container = document.getElementById('productOverridesContainer');
+      const emptyNotice = document.getElementById('emptyOverridesNotice');
+      if (!container) return;
+      if (emptyNotice) emptyNotice.style.display = 'none';
+
+      const existing = container.querySelector(`[data-product-id="${prodId}"]`);
+      if (existing) {
+        const multInput = existing.querySelector('.override-mult-input');
+        if (multInput) {
+          multInput.value = Number(multiplier).toFixed(2);
+          updateOverrideRowCalc(existing);
+        }
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'product-override-row';
+      row.setAttribute('data-product-id', prodId);
+
+      row.innerHTML = `
+        <div>
+          <div style="font-weight:700; color:#190D08; font-size:13.5px;" class="override-prod-name">${name || prodId}</div>
+          <div style="font-size:11px; color:#705E51; margin-top:2px;">
+            ID: <span class="override-prod-id" style="font-family:monospace; background:rgba(25,13,8,0.06); padding:1px 5px; border-radius:4px;">${prodId}</span>
+          </div>
+        </div>
+        <div>
+          <div style="position:relative;">
+            <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:700; color:#705E51; font-size:11px;">$</span>
+            <input type="number" step="0.01" min="0" value="${cost ? Number(cost).toFixed(2) : '0.00'}" class="override-cost-input settings-input" style="padding:5px 8px 5px 18px; font-size:12.5px; font-weight:600;" oninput="updateOverrideRowCalc(this.closest('.product-override-row'))">
+          </div>
+        </div>
+        <div>
+          <div style="position:relative;">
+            <input type="number" step="0.05" min="1.0" max="20" value="${Number(multiplier).toFixed(2)}" class="override-mult-input settings-input" style="padding:5px 8px; font-size:12.5px; font-weight:800; color:#D04515;" oninput="updateOverrideRowCalc(this.closest('.product-override-row'))">
+          </div>
+        </div>
+        <div>
+          <div class="override-retail-preview" style="font-size:13px; font-weight:800; color:#16A34A;">—</div>
+          <div class="override-margin-preview" style="font-size:11px; color:#705E51; margin-top:1px;">—</div>
+        </div>
+        <div style="text-align:right;">
+          <button type="button" onclick="deleteProductOverrideRow(this)" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Remove Override">✕</button>
+        </div>
+      `;
+
+      container.appendChild(row);
+      updateOverrideRowCalc(row);
+      updateOverrideCounter();
+    }
+
+    function updateOverrideRowCalc(rowEl) {
+      if (!rowEl) return;
+      const costInput = rowEl.querySelector('.override-cost-input');
+      const multInput = rowEl.querySelector('.override-mult-input');
+      const retailEl = rowEl.querySelector('.override-retail-preview');
+      const marginEl = rowEl.querySelector('.override-margin-preview');
+
+      const cost = Math.max(0, parseFloat(costInput?.value) || 0);
+      const mult = Math.max(1.0, parseFloat(multInput?.value) || 1.5);
+      const rate = Math.max(1, parseFloat(document.getElementById('inputRate')?.value) || 1550);
+
+      const retailUsd = cost * mult;
+      const retailNgn = Math.round(retailUsd * rate);
+      const profitUsd = retailUsd - cost;
+      const margin = retailUsd > 0 ? Math.round((profitUsd / retailUsd) * 100) : 0;
+
+      if (retailEl) retailEl.textContent = `$${retailUsd.toFixed(2)} (₦${retailNgn.toLocaleString('en-US')})`;
+      if (marginEl) marginEl.innerHTML = `+$${profitUsd.toFixed(2)} <span style="font-weight:700; color:#D04515;">(${margin}% margin)</span>`;
+    }
+
+    function deleteProductOverrideRow(btn) {
+      const row = btn.closest('.product-override-row');
+      if (row) {
+        row.remove();
+        updateOverrideCounter();
+        const container = document.getElementById('productOverridesContainer');
+        const emptyNotice = document.getElementById('emptyOverridesNotice');
+        if (container && container.children.length === 0 && emptyNotice) {
+          emptyNotice.style.display = 'block';
+        }
+      }
+    }
+
+    function updateOverrideCounter() {
+      const rows = document.querySelectorAll('.product-override-row');
+      const badge = document.getElementById('overrideCountBadge');
+      if (badge) badge.textContent = rows.length;
+    }
+
+    function renderProductOverrides(overrides) {
+      const container = document.getElementById('productOverridesContainer');
+      const emptyNotice = document.getElementById('emptyOverridesNotice');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const keys = Object.keys(overrides || {});
+      if (keys.length === 0) {
+        if (emptyNotice) emptyNotice.style.display = 'block';
+        updateOverrideCounter();
+        return;
+      }
+
+      if (emptyNotice) emptyNotice.style.display = 'none';
+      keys.forEach(key => {
+        const mult = overrides[key];
+        const item = window.allProductsCatalog[key] || {};
+        const name = item.name || `Product #${key}`;
+        const cost = item.cost || 0;
+        addProductOverrideRow(key, mult, name, cost);
+      });
+      updateOverrideCounter();
+    }
+
+    function collectProductOverridesFromUI() {
+      const rows = document.querySelectorAll('.product-override-row');
+      const overrides = {};
+      rows.forEach(r => {
+        const id = r.getAttribute('data-product-id') || r.querySelector('.override-prod-id')?.textContent.trim();
+        const mult = parseFloat(r.querySelector('.override-mult-input')?.value);
+        if (id && !isNaN(mult) && mult > 0) {
+          overrides[id] = Math.round(mult * 100) / 100;
+        }
+      });
+      return overrides;
+    }
+
+    function handleSimulatorProductSelect() {
+      const simSelect = document.getElementById('simProductSelect');
+      if (!simSelect) return;
+      const selected = simSelect.options[simSelect.selectedIndex];
+      if (!selected || !selected.value) {
+        updateSimulatorPreview();
+        return;
+      }
+      const prodId = selected.value;
+      const item = window.allProductsCatalog[prodId];
+      if (item && item.cost > 0) {
+        document.getElementById('inputSimulatorCost').value = item.cost.toFixed(2);
+      }
+      updateSimulatorPreview();
+    }
+
+    function clearSimulatorProductSelect() {
+      const simSelect = document.getElementById('simProductSelect');
+      if (simSelect) simSelect.value = '';
+      updateSimulatorPreview();
+    }
+
     function setSimulatorSample(val) {
       const input = document.getElementById('inputSimulatorCost');
       if (input) {
         input.value = val;
-        updateSimulatorPreview();
+        clearSimulatorProductSelect();
       }
     }
 
@@ -682,10 +1115,20 @@
       const cost = Math.max(0, parseFloat(costInput.value) || 0);
       const rate = Math.max(1, parseFloat(document.getElementById('inputRate')?.value) || 1550);
       const tiers = collectTiersFromUI();
+      const overrides = collectProductOverridesFromUI();
+      const simSelect = document.getElementById('simProductSelect');
+      const selectedProdId = simSelect ? simSelect.value : null;
 
       let matchedTier = tiers.find(t => cost >= t.min && cost <= t.max);
       let multiplier = matchedTier ? matchedTier.multiplier : (1 + (parseFloat(document.getElementById('inputMarkup')?.value || 25) / 100));
       let ruleName = matchedTier ? matchedTier.label : 'Default Store Markup';
+
+      // Check if chosen product has a specific override
+      if (selectedProdId && overrides[selectedProdId]) {
+        multiplier = overrides[selectedProdId];
+        const pName = window.allProductsCatalog[selectedProdId]?.name || `Product #${selectedProdId}`;
+        ruleName = `🎯 Product Override (${pName})`;
+      }
 
       const retailUsd = Number((cost * multiplier).toFixed(2));
       const retailNgn = Math.round(retailUsd * rate);
@@ -710,6 +1153,7 @@
       const lowBalanceThreshold = parseFloat(document.getElementById('inputLowBalanceThreshold').value);
       const autoFulfill = document.getElementById('inputAutoFulfill').checked;
       const priceTiers = collectTiersFromUI();
+      const productOverrides = collectProductOverridesFromUI();
 
       const categoryMultipliers = {
         ai: parseFloat(document.getElementById('catMult_ai')?.value) || 1.75,
@@ -726,7 +1170,8 @@
         lowBalanceThreshold,
         autoFulfill,
         priceTiers,
-        categoryMultipliers
+        categoryMultipliers,
+        productOverrides
       };
 
       if (apiKey) payload.apiKey = apiKey;
