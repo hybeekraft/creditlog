@@ -58,6 +58,23 @@
       padding: 24px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
+      max-height: calc(100vh - 430px);
+      min-height: 480px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(208, 69, 21, 0.4) rgba(25, 13, 8, 0.05);
+    }
+    .settings-card::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .settings-card::-webkit-scrollbar-track {
+      background: rgba(25, 13, 8, 0.04);
+      border-radius: 8px;
+    }
+    .settings-card::-webkit-scrollbar-thumb {
+      background: rgba(208, 69, 21, 0.35);
+      border-radius: 8px;
     }
     .form-group-label {
       display: block;

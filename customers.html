@@ -208,8 +208,8 @@
           </div>
         </div>
 
-        <!-- Customers List Cards Container -->
-        <div id="customersListContainer" style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Customers List Cards Container (Internal scrollable container while tabs remain fixed) -->
+        <div id="customersListContainer" class="admin-scroll-container" style="display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 430px); min-height: 440px; overflow-y: auto; padding-right: 6px;">
           <div style="text-align: center; padding: 40px; color: #705E51;">Loading customer directory...</div>
         </div>
       </div>
