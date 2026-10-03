@@ -2661,6 +2661,28 @@ select, option {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  align-self: flex-start;
+  flex-shrink: 0;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.dash-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dash-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dash-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
 }
 
 .dash-brand {
@@ -2728,6 +2750,7 @@ select, option {
 
 .dash-main-area {
   flex: 1;
+  min-width: 0;
   padding: 32px 36px;
   background: var(--bg-main, #F4ECD8);
 }
@@ -3340,6 +3363,10 @@ select, option {
   }
   .dash-sidebar {
     width: 100%;
+    height: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     padding: 12px 16px;
     gap: 12px;
     border-right: none;
