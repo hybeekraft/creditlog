@@ -1663,24 +1663,4 @@
     }
   </script>
 </body>
-
-</html>
-},
-body: JSON.stringify({ productId: 1, quantity: 1, vendorId })
-});
-const data = await res.json();
-if (data.ok && data.order) {
-alert(`Test Order Succeeded!\n\nSupplier Order Code: ${data.order.orderCode}\nStatus: ${data.order.status}\nDelivered
-Value: ${data.order.value}`);
-fetchResellerStatus();
-} else {
-alert('Test Order Failed: ' + (data.message || data.error || JSON.stringify(data)));
-}
-} catch (err) {
-alert('Error placing test order: ' + err.message);
-}
-}
-</script>
-</body>
-
 </html>
