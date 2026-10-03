@@ -208,9 +208,6 @@
         <button type="button" class="settings-tab-btn" id="tabBtnCategories" onclick="switchSettingsTab('categories')">
           🏷️ Category Multipliers
         </button>
-        <button type="button" class="settings-tab-btn" id="tabBtnSimulator" onclick="switchSettingsTab('simulator')">
-          🧪 Live Retail Price Tester
-        </button>
         <button type="button" class="settings-tab-btn" id="tabBtnCatalog" onclick="switchSettingsTab('catalog')">
           📦 Supplier Catalog & Tests
         </button>
@@ -258,7 +255,7 @@
               <label class="form-group-label">USD to NGN Exchange Rate</label>
               <div style="position: relative;">
                 <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">₦</span>
-                <input type="number" id="inputRate" min="100" max="10000" step="10" required class="settings-input" style="padding-left: 28px;" value="1550" oninput="updateSimulatorPreview()">
+                <input type="number" id="inputRate" min="100" max="10000" step="10" required class="settings-input" style="padding-left: 28px;" value="1550">
               </div>
               <div class="form-helper-text">Base conversion rate for converting wholesale USD to retail Naira.</div>
             </div>
@@ -266,7 +263,7 @@
             <div>
               <label class="form-group-label">Default Fallback Markup (%)</label>
               <div style="position: relative;">
-                <input type="number" id="inputMarkup" min="0" max="500" step="1" required class="settings-input" value="25" oninput="updateSimulatorPreview()">
+                <input type="number" id="inputMarkup" min="0" max="500" step="1" required class="settings-input" value="25">
                 <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">%</span>
               </div>
               <div class="form-helper-text">Applied only if an item does not match any tier or category rule.</div>
@@ -489,74 +486,7 @@
         </div>
       </form>
 
-      <!-- TAB 4: Live Price Simulator -->
-      <div id="tabContentSimulator" class="settings-card" style="display: none;">
-        <div style="margin-bottom: 18px;">
-          <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Interactive Retail Price Simulator</h3>
-          <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Test wholesale costs to see what retail selling prices, conversions, and profit margins will be generated.</p>
-        </div>
-
-        <div style="margin-bottom: 16px; background: rgba(25,13,8,0.02); border: 1px solid rgba(25,13,8,0.08); border-radius: 10px; padding: 14px;">
-          <label class="form-group-label" style="margin-bottom: 6px;">🎯 Test Specific Product Override (Optional)</label>
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <select id="simProductSelect" class="settings-input" style="max-width: 440px; font-weight: 600; font-size: 13px;" onchange="handleSimulatorProductSelect()">
-              <option value="">-- Manual Wholesale Cost (Use buttons below) --</option>
-            </select>
-            <button type="button" onclick="clearSimulatorProductSelect()" class="secondary-btn" style="padding: 7px 12px; font-size: 12px;">Reset</button>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-          <label class="form-group-label">Sample Wholesale Cost ($ USD)</label>
-          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <div style="position: relative; width: 180px;">
-              <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">$</span>
-              <input type="number" id="inputSimulatorCost" step="0.10" min="0.10" max="1000" value="0.80" class="settings-input" style="padding-left: 28px; font-weight: 800; font-size: 16px;" oninput="updateSimulatorPreview()">
-            </div>
-            <button type="button" onclick="setSimulatorSample(0.80)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$0.80 (Sub-Dollar)</button>
-            <button type="button" onclick="setSimulatorSample(1.50)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$1.50 (Micro)</button>
-            <button type="button" onclick="setSimulatorSample(3.50)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$3.50 (Low)</button>
-            <button type="button" onclick="setSimulatorSample(10.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$10.00 (Mid)</button>
-            <button type="button" onclick="setSimulatorSample(25.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$25.00 (Upper)</button>
-            <button type="button" onclick="setSimulatorSample(50.00)" class="secondary-btn" style="padding: 8px 12px; font-size: 12px;">$50.00 (High)</button>
-          </div>
-        </div>
-
-        <!-- Simulator Result Panel -->
-        <div style="background: #FFFDF8; border: 1px solid rgba(25,13,8,0.12); border-radius: 12px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
-            <div>
-              <span style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #705E51; letter-spacing: 0.05em;">Matched Tier Rule</span>
-              <div id="simRuleMatched" style="font-size: 17px; font-weight: 800; color: #190D08; margin-top: 2px;">Sub-Dollar ($0.00 – $0.99)</div>
-            </div>
-            <div style="text-align: right;">
-              <span style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #705E51; letter-spacing: 0.05em;">Applied Multiplier</span>
-              <div id="simMultiplier" style="font-size: 22px; font-weight: 800; color: #D04515; margin-top: 2px;">3.50x</div>
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-top: 16px; border-top: 1px solid rgba(25,13,8,0.08);">
-            <div>
-              <span style="font-size: 12px; color: #705E51;">Wholesale Cost</span>
-              <div id="simCostUsd" style="font-size: 18px; font-weight: 800; color: #190D08; margin-top: 2px;">$0.80</div>
-            </div>
-            <div>
-              <span style="font-size: 12px; color: #705E51;">Retail USD</span>
-              <div id="simRetailUsd" style="font-size: 18px; font-weight: 800; color: #190D08; margin-top: 2px;">$2.00</div>
-            </div>
-            <div>
-              <span style="font-size: 12px; color: #705E51;">Retail NGN (@ ₦1,550)</span>
-              <div id="simRetailNgn" style="font-size: 18px; font-weight: 800; color: #16A34A; margin-top: 2px;">₦3,100</div>
-            </div>
-            <div>
-              <span style="font-size: 12px; color: #705E51;">Net Profit & Gross Margin</span>
-              <div id="simProfit" style="font-size: 18px; font-weight: 800; color: #D04515; margin-top: 2px;">+$1.20 (60%)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 5: Supplier Catalog & Tests -->
+      <!-- TAB: Supplier Catalog & Tests -->
       <div id="tabContentCatalog" class="settings-card" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
           <div>
@@ -605,7 +535,6 @@
           const data = await res.json();
           currentResellerSettings = data.settings;
           populateForm(data);
-          updateSimulatorPreview();
         }
       } catch (err) {
         console.warn('Failed to fetch reseller status:', err);
@@ -694,7 +623,7 @@
     }
 
     function switchSettingsTab(tabKey) {
-      const tabs = ['credentials', 'tiers', 'products', 'categories', 'simulator', 'catalog'];
+      const tabs = ['credentials', 'tiers', 'products', 'categories', 'catalog'];
       tabs.forEach(t => {
         const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
         const content = document.getElementById('tabContent' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -708,9 +637,7 @@
           }
         }
       });
-      if (tabKey === 'simulator') {
-        updateSimulatorPreview();
-      } else if (tabKey === 'catalog') {
+      if (tabKey === 'catalog') {
         loadSupplierCatalog();
       }
     }
@@ -742,18 +669,18 @@
           </div>
           <div>
             <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Min ($)</div>
-            <input type="number" step="0.01" min="0" class="tier-min settings-input" value="${tier.min !== undefined ? tier.min : 0}" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+            <input type="number" step="0.01" min="0" class="tier-min settings-input" value="${tier.min !== undefined ? tier.min : 0}" style="padding:6px 10px; font-size:12.5px;">
           </div>
           <div>
             <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Max ($)</div>
-            <input type="number" step="0.01" min="0" class="tier-max settings-input" value="${tier.max !== undefined ? tier.max : 9999}" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+            <input type="number" step="0.01" min="0" class="tier-max settings-input" value="${tier.max !== undefined ? tier.max : 9999}" style="padding:6px 10px; font-size:12.5px;">
           </div>
           <div>
             <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Multiplier (x)</div>
-            <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="${tier.multiplier || 1.5}" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;" oninput="updateSimulatorPreview()">
+            <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="${tier.multiplier || 1.5}" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;">
           </div>
           <div style="text-align:right;">
-            <button type="button" onclick="this.closest('.price-tier-row').remove(); updateSimulatorPreview();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
+            <button type="button" onclick="this.closest('.price-tier-row').remove();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
           </div>
         `;
         container.appendChild(row);
@@ -771,18 +698,18 @@
         </div>
         <div>
           <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Min ($)</div>
-          <input type="number" step="0.01" min="0" class="tier-min settings-input" value="0.00" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+          <input type="number" step="0.01" min="0" class="tier-min settings-input" value="0.00" style="padding:6px 10px; font-size:12.5px;">
         </div>
         <div>
           <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Max ($)</div>
-          <input type="number" step="0.01" min="0" class="tier-max settings-input" value="10.00" style="padding:6px 10px; font-size:12.5px;" oninput="updateSimulatorPreview()">
+          <input type="number" step="0.01" min="0" class="tier-max settings-input" value="10.00" style="padding:6px 10px; font-size:12.5px;">
         </div>
         <div>
           <div style="font-size:10px; color:#705E51; margin-bottom:2px; font-weight:700;">Multiplier (x)</div>
-          <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="1.80" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;" oninput="updateSimulatorPreview()">
+          <input type="number" step="0.05" min="1.0" max="20" class="tier-multiplier settings-input" value="1.80" style="padding:6px 10px; font-size:12.5px; font-weight:800; color:#D04515;">
         </div>
         <div style="text-align:right;">
-          <button type="button" onclick="this.closest('.price-tier-row').remove(); updateSimulatorPreview();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
+          <button type="button" onclick="this.closest('.price-tier-row').remove();" style="background:none; border:none; color:#DC2626; font-size:18px; cursor:pointer; padding:4px;" title="Delete Tier">✕</button>
         </div>
       `;
       container.appendChild(row);
@@ -862,7 +789,6 @@
 
     function populateProductDropdowns() {
       const select = document.getElementById('selectOverrideProduct');
-      const simSelect = document.getElementById('simProductSelect');
       if (!select) return;
 
       const items = Object.values(window.allProductsCatalog);
@@ -889,9 +815,6 @@
       }
 
       select.innerHTML = html;
-      if (simSelect) {
-        simSelect.innerHTML = '<option value="">-- Manual Wholesale Cost (Use buttons below) --</option>' + html.replace('<option value="">-- Choose a Product --</option>', '');
-      }
     }
 
     function handleOverrideProductSelect() {
@@ -1077,70 +1000,6 @@
         }
       });
       return overrides;
-    }
-
-    function handleSimulatorProductSelect() {
-      const simSelect = document.getElementById('simProductSelect');
-      if (!simSelect) return;
-      const selected = simSelect.options[simSelect.selectedIndex];
-      if (!selected || !selected.value) {
-        updateSimulatorPreview();
-        return;
-      }
-      const prodId = selected.value;
-      const item = window.allProductsCatalog[prodId];
-      if (item && item.cost > 0) {
-        document.getElementById('inputSimulatorCost').value = item.cost.toFixed(2);
-      }
-      updateSimulatorPreview();
-    }
-
-    function clearSimulatorProductSelect() {
-      const simSelect = document.getElementById('simProductSelect');
-      if (simSelect) simSelect.value = '';
-      updateSimulatorPreview();
-    }
-
-    function setSimulatorSample(val) {
-      const input = document.getElementById('inputSimulatorCost');
-      if (input) {
-        input.value = val;
-        clearSimulatorProductSelect();
-      }
-    }
-
-    function updateSimulatorPreview() {
-      const costInput = document.getElementById('inputSimulatorCost');
-      if (!costInput) return;
-      const cost = Math.max(0, parseFloat(costInput.value) || 0);
-      const rate = Math.max(1, parseFloat(document.getElementById('inputRate')?.value) || 1550);
-      const tiers = collectTiersFromUI();
-      const overrides = collectProductOverridesFromUI();
-      const simSelect = document.getElementById('simProductSelect');
-      const selectedProdId = simSelect ? simSelect.value : null;
-
-      let matchedTier = tiers.find(t => cost >= t.min && cost <= t.max);
-      let multiplier = matchedTier ? matchedTier.multiplier : (1 + (parseFloat(document.getElementById('inputMarkup')?.value || 25) / 100));
-      let ruleName = matchedTier ? matchedTier.label : 'Default Store Markup';
-
-      // Check if chosen product has a specific override
-      if (selectedProdId && overrides[selectedProdId]) {
-        multiplier = overrides[selectedProdId];
-        const pName = window.allProductsCatalog[selectedProdId]?.name || `Product #${selectedProdId}`;
-        ruleName = `🎯 Product Override (${pName})`;
-      }
-
-      const retailUsd = Number((cost * multiplier).toFixed(2));
-      const retailNgn = Math.round(retailUsd * rate);
-      const profitUsd = Number((retailUsd - cost).toFixed(2));
-      const margin = retailUsd > 0 ? Math.round(((retailUsd - cost) / retailUsd) * 100) : 0;
-
-      document.getElementById('simRuleMatched').textContent = ruleName;
-      document.getElementById('simMultiplier').textContent = `${multiplier.toFixed(2)}x`;
-      document.getElementById('simCostUsd').textContent = `$${cost.toFixed(2)}`;
-      document.getElementById('simRetailUsd').textContent = `$${retailUsd.toFixed(2)}`;
-      document.getElementById('simRetailNgn').textContent = `₦${retailNgn.toLocaleString('en-US')}`;
-      document.getElementById('simProfit').innerHTML = `+$${profitUsd.toFixed(2)} <span style="font-size:12px; font-weight:600; color:#705E51;">(${margin}%)</span>`;
     }
 
     async function handleSettingsSubmit(e) {
