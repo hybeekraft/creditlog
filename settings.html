@@ -245,7 +245,7 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+      <div class="settings-tabs-bar" style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
         <button type="button" class="settings-tab-btn active" id="tabBtnCredentials"
           onclick="switchSettingsTab('credentials')">
           🔑 Supplier API & FX
@@ -317,7 +317,7 @@
 
             <input type="hidden" id="vendorFormId" value="">
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="settings-grid-2" style="margin-bottom: 14px;">
               <div>
                 <label class="form-group-label">Vendor Name / Wholesaler Label</label>
                 <input type="text" id="vendorFormName" class="settings-input"
@@ -332,7 +332,7 @@
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="settings-grid-vendor-keys" style="margin-bottom: 14px;">
               <div>
                 <label class="form-group-label">
                   Vendor API Key (<code style="color:#D04515;">X-API-Key</code>)
@@ -412,7 +412,7 @@
             <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 800; color: #190D08;">Global FX Exchange Rate &
               Store Markup</h4>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div class="settings-grid-3" style="margin-bottom: 20px;">
               <div>
                 <label class="form-group-label">USD to NGN Exchange Rate</label>
                 <div style="position: relative;">
@@ -551,8 +551,7 @@
               style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #D04515; letter-spacing: 0.05em; margin-bottom: 12px;">
               + Add Custom Multiplier For Product
             </div>
-            <div
-              style="display: grid; grid-template-columns: minmax(240px, 2fr) minmax(110px, 1fr) minmax(110px, 1fr) auto; gap: 12px; align-items: flex-end;">
+            <div class="settings-grid-override-add">
               <div>
                 <label class="form-group-label" style="margin-bottom: 4px;">Choose Product</label>
                 <select id="selectOverrideProduct" class="settings-input" style="font-weight: 600; font-size: 13px;"
@@ -608,8 +607,7 @@
             </div>
 
             <!-- Table Header Labels -->
-            <div
-              style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr 38px; gap: 12px; padding: 0 14px 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #705E51; letter-spacing: 0.05em;">
+            <div class="product-override-header">
               <div>Product & Identifier</div>
               <div>Wholesale Cost</div>
               <div>Multiplier</div>

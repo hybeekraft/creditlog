@@ -1,1 +1,80 @@
-# creditlog
+# CreditLog — Verified Digital Subscriptions Exchange & Management Platform
+
+CreditLog is an enterprise digital subscriptions marketplace and inventory management portal featuring automated wholesale fulfillment, dynamic price multipliers, real-time multi-currency conversions (USD/NGN), and an editorial, responsive administration suite.
+
+---
+
+## 🌟 Key Architecture & Capabilities
+
+### 1. Admin Portal Suite
+- **Analytics & Operations Dashboard (`admin.html`):** Store performance KPIs, interactive SVG revenue curve, recent orders list, and real-time wholesale supplier balance ribbon.
+- **Inventory & CMS Dashboard (`inventory.html`):** Real-time stock units, active customer reservations, product variant management, dynamic brand logos, and instant inventory toggles.
+- **Customer Directory & Intelligence (`customers.html`):** Customer lifetime value (LTV), repeat buyer retention, order history, and direct WhatsApp/Email dispatch.
+- **Settings & Wholesale Multi-Vendor Engine (`settings.html`):** Multi-supplier API configuration, sandbox simulation, real-time FX conversion rate, price tiers, and product/category overrides.
+- **System Audit Trail (`activity-logs.html`):** Comprehensive security logs, module filters, and CSV export.
+
+### 2. Multi-Vendor Wholesale API Engine
+- **Multiple Supplier Credentials:** Register multiple supplier accounts with unique base URLs and API keys (`X-API-Key`).
+- **Live vs. Sandbox Mode:** Toggle individual suppliers between Live production API and sandbox simulation.
+- **Automatic Default Routing:** Designate a primary supplier while maintaining secondary vendors for failover.
+
+### 3. Dynamic Multiplier & Pricing Hierarchy
+Pricing follows a strict 4-level deterministic priority structure:
+1. **Product Multiplier Override (Highest Priority):** Custom multiplier directly tied to a specific catalog product.
+2. **Dynamic Price Range Tiers:** Multipliers applied dynamically based on wholesale USD price brackets (e.g. `$0.00 – $2.00` = `2.50x`, `$2.00 – $10.00` = `1.80x`, `$40.00+` = `1.20x`).
+3. **Category Fallback Multipliers:** Category-level margins (AI Models, Gaming, Streaming, Productivity, Security).
+4. **Global FX Exchange Rate & Markup:** Base USD to NGN conversion rate + default fallback percentage.
+
+### 4. Zero-Regression Responsive Architecture
+- **Desktop (>= 900px):** Fixed Charcoal Ink sidebar (`#190D08`) pinned at 240px width with an independently scrollable main content canvas (`#F4ECD8`), ensuring navigation stays visible when managing thousands of products.
+- **Tablets & Laptops (768px – 900px):** Sticky top header with horizontal scrolling menu pills (`-webkit-overflow-scrolling: touch;`), balanced 2x2 KPI grids, and responsive data panels.
+- **Mobile Phones (375px – 520px):**
+  - Sticky top bar with instant access to all admin sections.
+  - Strict 44px minimum tap targets on all interactive controls.
+  - Multi-column grids collapse gracefully into single-column flows.
+  - Zero horizontal page overflow (`max-width: 100%; overflow-x: hidden;`).
+
+---
+
+## 🛠️ Technology Stack
+- **Frontend:** Vanilla HTML5, Modern CSS3 (CSS Grid, Flexbox, custom properties), Vanilla JavaScript.
+- **Backend:** Node.js HTTP & REST API services (`server/index.js`).
+- **Data Persistence:** Local JSON data store (`data/inventory.json`, `data/settings.json`, `data/customers.json`).
+- **Design System:** Editorial Warm Parchment (`#F4ECD8`), Charcoal Ink (`#190D08`), Terracotta Accent (`#D04515`). Follows `/stitch-design-taste` and `/impeccable`.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18.0.0 or higher recommended)
+
+### Installation & Run
+```bash
+# Clone the repository
+git clone https://github.com/hybeekraft/creditlog.git
+cd creditlog
+
+# Install dependencies
+npm install
+
+# Start the local development server
+npm start
+```
+
+The application is served at `http://localhost:3000`.
+
+- Customer Storefront: `http://localhost:3000/index.html`
+- Product Details & Checkout: `http://localhost:3000/shop.html`, `http://localhost:3000/product.html`, `http://localhost:3000/checkout.html`
+- Admin Analytics: `http://localhost:3000/admin.html`
+- Inventory & CMS: `http://localhost:3000/inventory.html`
+- Customer Directory: `http://localhost:3000/customers.html`
+- Store & Supplier Settings: `http://localhost:3000/settings.html`
+- Activity Logs: `http://localhost:3000/activity-logs.html`
+
+---
+
+## 🔒 Security & Standards
+- Protected admin routes with token-based authorization.
+- Zero client-side API secret leakage; vendor API keys are managed and dispatched strictly server-side.
+- Zero-regression engineering and safe component architecture.
