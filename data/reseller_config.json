@@ -6,6 +6,20 @@
   "autoFulfill": true,
   "mode": "simulation",
   "lowBalanceThreshold": 5,
+  "vendors": [
+    {
+      "id": "vendor_primary",
+      "name": "GeminiPro Wholesale API (Primary)",
+      "baseUrl": "https://api-geminipro.ignorelist.com/api/reseller/v1",
+      "apiKey": "",
+      "isDefault": true,
+      "mode": "simulation",
+      "balance": "50.00",
+      "currency": "USD",
+      "lastChecked": "2026-10-03T21:59:31.033Z",
+      "notes": "Default wholesale supplier account"
+    }
+  ],
   "priceTiers": [
     {
       "id": "tier_nano",

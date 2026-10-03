@@ -1,5 +1,45 @@
 [
   {
+    "id": "log_1791064771721_7nag",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Reseller",
+    "action": "Delete Vendor",
+    "details": "Removed supplier vendor ID: vendor_1791064771033",
+    "timestamp": "2026-10-03T21:59:31.721Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1791064771702_vizp",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Reseller",
+    "action": "Test Vendor",
+    "details": "Tested connection for vendor ID \"vendor_1791064771033\": Failed",
+    "timestamp": "2026-10-03T21:59:31.702Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1791064771231_zv6o",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Reseller",
+    "action": "Save Vendor",
+    "details": "Configured supplier vendor: Alpha Wholesale API",
+    "timestamp": "2026-10-03T21:59:31.231Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1791057882944_mmi3",
+    "user": "Admin",
+    "role": "Admin",
+    "module": "Reseller",
+    "action": "Update Settings",
+    "details": "Updated Reseller API settings (Mode: simulation, Markup: 30%, Rate: 1550)",
+    "timestamp": "2026-10-03T20:04:42.944Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1790782488322_kgh5",
     "user": "Admin",
     "role": "Admin",

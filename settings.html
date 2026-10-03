@@ -215,86 +215,172 @@
 
       <!-- Main Settings Form -->
       <form id="settingsForm" onsubmit="handleSettingsSubmit(event)">
-        <!-- TAB 1: Credentials & FX -->
+        <!-- TAB 1: Credentials, Multi-Vendor & FX -->
         <div id="tabContentCredentials" class="settings-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 14px; flex-wrap: wrap; gap: 10px;">
             <div>
-              <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Wholesale API Credentials & Exchange Rates</h3>
-              <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Connect your digital goods supplier API to enable automated ordering and real-time inventory.</p>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Wholesale Supplier API Keys & Multi-Vendor Setup</h3>
+                <span id="vendorCountBadge" style="background: rgba(208,69,21,0.12); color: #D04515; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px;">1 Vendor</span>
+              </div>
+              <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Configure multiple API keys and endpoints from different digital wholesale providers. Set a default supplier and route orders seamlessly.</p>
             </div>
-            <button type="button" onclick="fetchResellerStatus()" class="secondary-btn" style="padding: 7px 12px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-              <span>Refresh Balance</span>
-            </button>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" onclick="openAddVendorForm()" class="primary-btn" style="padding: 7px 14px; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Add Vendor API Key</span>
+              </button>
+              <button type="button" onclick="fetchResellerStatus()" class="secondary-btn" style="padding: 7px 12px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                <span>Refresh Status</span>
+              </button>
+            </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px;">
-            <div>
-              <label class="form-group-label">Supplier API Base URL</label>
-              <input type="url" id="inputBaseUrl" required class="settings-input" value="https://api-geminipro.ignorelist.com/api/reseller/v1">
-              <div class="form-helper-text">Official GeminiPro digital goods supplier endpoint.</div>
+          <!-- Add / Edit Vendor Inline Panel -->
+          <div id="vendorFormPanel" style="display: none; background: #FFFDF8; border: 1.5px solid rgba(208,69,21,0.25); border-radius: 12px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(208,69,21,0.06);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px dashed rgba(208,69,21,0.2); padding-bottom: 10px;">
+              <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #D04515; letter-spacing: 0.04em;" id="vendorFormTitle">
+                + Register New Supplier Vendor
+              </div>
+              <button type="button" onclick="closeVendorForm()" style="background:none; border:none; color:#705E51; font-size:16px; cursor:pointer;" title="Close Form">✕</button>
             </div>
 
-            <div>
-              <label class="form-group-label">
-                Reseller API Key (X-API-Key)
-                <span style="font-weight: normal; color: #705E51; font-size: 11.5px;">(Leave blank to keep server in safe Sandbox Simulation)</span>
+            <input type="hidden" id="vendorFormId" value="">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label class="form-group-label">Vendor Name / Wholesaler Label</label>
+                <input type="text" id="vendorFormName" class="settings-input" placeholder="e.g. GeminiPro Wholesale, Kinguin API, Alpha Digital Hub">
+                <div class="form-helper-text">Identifies this vendor in order dispatches and logs.</div>
+              </div>
+              <div>
+                <label class="form-group-label">Supplier API Base URL</label>
+                <input type="url" id="vendorFormBaseUrl" class="settings-input" placeholder="https://api-provider.com/api/reseller/v1">
+                <div class="form-helper-text">Target wholesale endpoint.</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label class="form-group-label">
+                  Vendor API Key (<code style="color:#D04515;">X-API-Key</code>)
+                  <span style="font-size: 11px; font-weight: normal; color: #705E51;" id="vendorApiKeyHint">(Required for live orders)</span>
+                </label>
+                <div style="position: relative;">
+                  <input type="password" id="vendorFormApiKey" class="settings-input" placeholder="Paste vendor secret API key here" style="padding-right: 70px;">
+                  <button type="button" onclick="toggleVendorApiKeyVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 12px; font-weight: 700; color: #D04515; cursor: pointer;">
+                    <span id="vendorApiKeyToggleText">Show</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="form-group-label">Operating Mode</label>
+                <select id="vendorFormMode" class="settings-input">
+                  <option value="live">🟢 Live API (Dispatch Real Orders)</option>
+                  <option value="simulation">🧪 Sandbox Simulation (Safe Testing)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="form-group-label">Account Currency</label>
+                <select id="vendorFormCurrency" class="settings-input">
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="NGN">NGN (₦)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <label class="form-group-label">Notes / Description (Optional)</label>
+              <input type="text" id="vendorFormNotes" class="settings-input" placeholder="e.g. Primary provider for AI subscriptions, SLA 99.9%">
+            </div>
+
+            <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="vendorFormIsDefault" style="width: 17px; height: 17px; accent-color: #D04515; cursor: pointer;">
+              <label for="vendorFormIsDefault" style="font-size: 13px; font-weight: 700; color: #190D08; cursor: pointer;">
+                Set as Primary / Default Supplier (CreditLog routes unassigned orders here)
               </label>
-              <div style="position: relative;">
-                <input type="password" id="inputApiKey" placeholder="Paste your private supplier API key here" class="settings-input" style="padding-right: 80px;">
-                <button type="button" onclick="toggleApiKeyVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 12px; font-weight: 700; color: #D04515; cursor: pointer;">
-                  <span id="apiKeyToggleText">Show</span>
-                </button>
-              </div>
-              <div id="currentMaskedNotice" style="font-size: 11.5px; color: #16A34A; margin-top: 5px; font-weight: 600; display: none;"></div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+              <button type="button" onclick="closeVendorForm()" class="secondary-btn" style="padding: 8px 16px; font-size: 12.5px;">
+                Cancel
+              </button>
+              <button type="button" onclick="submitVendorForm()" class="primary-btn" style="padding: 8px 20px; font-size: 12.5px; border-radius: 8px;">
+                Save Vendor API Key
+              </button>
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-            <div>
-              <label class="form-group-label">USD to NGN Exchange Rate</label>
-              <div style="position: relative;">
-                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">₦</span>
-                <input type="number" id="inputRate" min="100" max="10000" step="10" required class="settings-input" style="padding-left: 28px;" value="1550">
-              </div>
-              <div class="form-helper-text">Base conversion rate for converting wholesale USD to retail Naira.</div>
+          <!-- Configured Vendors List -->
+          <div style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div style="font-size: 13.5px; font-weight: 800; color: #190D08;">Connected Supplier Accounts</div>
+              <div style="font-size: 12px; color: #705E51;">Each vendor can supply distinct products or act as default fallback</div>
             </div>
-
-            <div>
-              <label class="form-group-label">Default Fallback Markup (%)</label>
-              <div style="position: relative;">
-                <input type="number" id="inputMarkup" min="0" max="500" step="1" required class="settings-input" value="25">
-                <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">%</span>
-              </div>
-              <div class="form-helper-text">Applied only if an item does not match any tier or category rule.</div>
-            </div>
-
-            <div>
-              <label class="form-group-label">Low Balance Warning ($)</label>
-              <div style="position: relative;">
-                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">$</span>
-                <input type="number" id="inputLowBalanceThreshold" min="1" max="500" step="1" required class="settings-input" style="padding-left: 28px;" value="5">
-              </div>
-              <div class="form-helper-text">Triggers an admin alert when supplier balance dips below this amount.</div>
+            <div id="vendorsListContainer" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Populated via renderVendorsList -->
             </div>
           </div>
 
-          <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); padding: 14px 18px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
-            <input type="checkbox" id="inputAutoFulfill" checked style="width: 18px; height: 18px; accent-color: #D04515; cursor: pointer;">
-            <div>
-              <label for="inputAutoFulfill" style="font-size: 13.5px; font-weight: 700; color: #190D08; cursor: pointer; display: block;">
-                Automated Instant Dispatch (Zero-Touch Fulfillment)
-              </label>
-              <span style="font-size: 12px; color: #705E51;">
-                When checked, CreditLog immediately dispatches an API order to the supplier upon successful customer payment, retrieving credentials and delivering them instantly.
-              </span>
-            </div>
-          </div>
+          <!-- FX Exchange Rate & Global Fulfillment Engine -->
+          <div style="border-top: 1px solid rgba(25,13,8,0.08); padding-top: 20px; margin-top: 10px;">
+            <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 800; color: #190D08;">Global FX Exchange Rate & Store Markup</h4>
 
-          <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
-              Save Credentials & FX Settings
-            </button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div>
+                <label class="form-group-label">USD to NGN Exchange Rate</label>
+                <div style="position: relative;">
+                  <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">₦</span>
+                  <input type="number" id="inputRate" min="100" max="10000" step="10" required class="settings-input" style="padding-left: 28px;" value="1550">
+                </div>
+                <div class="form-helper-text">Base conversion rate for converting wholesale USD to retail Naira.</div>
+              </div>
+
+              <div>
+                <label class="form-group-label">Default Fallback Markup (%)</label>
+                <div style="position: relative;">
+                  <input type="number" id="inputMarkup" min="0" max="500" step="1" required class="settings-input" value="25">
+                  <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">%</span>
+                </div>
+                <div class="form-helper-text">Applied only if an item does not match any tier or override.</div>
+              </div>
+
+              <div>
+                <label class="form-group-label">Low Balance Warning ($)</label>
+                <div style="position: relative;">
+                  <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #705E51;">$</span>
+                  <input type="number" id="inputLowBalanceThreshold" min="1" max="500" step="1" required class="settings-input" style="padding-left: 28px;" value="5">
+                </div>
+                <div class="form-helper-text">Triggers an alert when default balance dips below this threshold.</div>
+              </div>
+            </div>
+
+            <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); padding: 14px 18px; border-radius: 10px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+              <input type="checkbox" id="inputAutoFulfill" checked style="width: 18px; height: 18px; accent-color: #D04515; cursor: pointer;">
+              <div>
+                <label for="inputAutoFulfill" style="font-size: 13.5px; font-weight: 700; color: #190D08; cursor: pointer; display: block;">
+                  Automated Instant Dispatch (Zero-Touch Fulfillment)
+                </label>
+                <span style="font-size: 12px; color: #705E51;">
+                  When checked, CreditLog immediately dispatches an API order to the assigned supplier vendor upon successful customer payment, retrieving credentials and delivering them instantly.
+                </span>
+              </div>
+            </div>
+
+            <!-- Hidden inputs to retain backward compatibility if older scripts inspect inputBaseUrl / inputApiKey -->
+            <input type="hidden" id="inputBaseUrl" value="">
+            <input type="hidden" id="inputApiKey" value="">
+            <div id="currentMaskedNotice" style="display:none;"></div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+                Save FX & Global Store Settings
+              </button>
+            </div>
           </div>
         </div>
 
@@ -493,7 +579,10 @@
             <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">Supplier Wholesale Catalog & Test Orders</h3>
             <p style="margin: 3px 0 0; font-size: 12.5px; color: #705E51;">Inspect live products from your supplier and verify end-to-end order placement.</p>
           </div>
-          <div style="display: flex; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <select id="catalogVendorSelect" class="settings-input" style="padding: 7px 12px; font-size: 12px; width: auto; font-weight: 700; height: 35px;" onchange="loadSupplierCatalog()">
+              <option value="">-- All Suppliers / Default --</option>
+            </select>
             <button type="button" onclick="loadSupplierCatalog()" class="secondary-btn" style="padding: 8px 14px; font-size: 12px;">
               🔄 Refresh Catalog
             </button>
@@ -541,44 +630,46 @@
       }
     }
 
+    window.currentVendors = [];
+
     function populateForm(data) {
       const { settings, balance } = data;
-      const isLive = settings.mode === 'live' && settings.isConfigured;
+      const vendors = Array.isArray(settings.vendors) ? settings.vendors : [];
+      window.currentVendors = vendors;
 
-      // Status Ribbon
+      // Render Vendors Registry
+      renderVendorsList(vendors);
+
+      // Find active default vendor
+      const defaultVendor = vendors.find(v => v.isDefault) || vendors[0] || {};
+      const isDefaultLive = defaultVendor.mode === 'live' && defaultVendor.isConfigured;
+
+      // Status Ribbon Metric 1: Connected Vendors & Connection State
       const stText = document.getElementById('resellerStatusText');
       const stPill = document.getElementById('resellerStatusPill');
       if (stText && stPill) {
-        if (isLive) {
-          stText.textContent = 'Live Supplier Active';
+        stText.textContent = `${vendors.length} Vendor${vendors.length !== 1 ? 's' : ''} Configured`;
+        if (isDefaultLive) {
           stText.style.color = '#16A34A';
           stPill.className = 'order-status-pill status-fulfilled';
-          stPill.textContent = '● Live Connected';
+          stPill.textContent = '● Default: Live API';
         } else {
-          stText.textContent = 'Sandbox Simulation';
           stText.style.color = '#D97706';
           stPill.className = 'order-status-pill status-processing';
-          stPill.textContent = '● Sandbox Active';
+          stPill.textContent = '● Default: Sandbox';
         }
       }
 
-      // Balance
+      // Status Ribbon Metric 2: Default Supplier Balance
       const balVal = document.getElementById('resellerBalanceVal');
       const balSub = document.getElementById('resellerBalanceSub');
-      if (balVal && balance) {
-        const amt = parseFloat(balance.balance || '0.00');
-        balVal.textContent = `$${amt.toFixed(2)} ${balance.currency || 'USD'}`;
+      if (balVal) {
+        const amt = parseFloat(defaultVendor.balance || (balance ? balance.balance : '0.00'));
+        const curr = defaultVendor.currency || (balance ? balance.currency : 'USD');
+        balVal.textContent = `$${amt.toFixed(2)} ${curr}`;
         if (balSub) {
-          if (amt <= 0) {
-            balSub.textContent = '⚠️ Balance empty. Deposit funds at supplier.';
-            balSub.style.color = '#DC2626';
-          } else if (amt < (settings.lowBalanceThreshold || 5)) {
-            balSub.textContent = '⚠️ Low balance warning (< $5.00)';
-            balSub.style.color = '#D97706';
-          } else {
-            balSub.textContent = isLive ? '● Live funds ready for automated dispatch' : '● Sandbox test balance';
-            balSub.style.color = '#16A34A';
-          }
+          balSub.textContent = `Default: ${defaultVendor.name || 'Primary Supplier'}`;
+          balSub.style.color = '#705E51';
         }
       }
 
@@ -592,20 +683,15 @@
         engVal.style.color = settings.autoFulfill ? '#16A34A' : '#705E51';
       }
 
-      // Populate Inputs
-      document.getElementById('inputBaseUrl').value = settings.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+      // Populate FX & Global Store Inputs
       document.getElementById('inputRate').value = settings.usdToNgnRate || 1550;
       document.getElementById('inputMarkup').value = settings.markupPercent || 25;
       document.getElementById('inputLowBalanceThreshold').value = settings.lowBalanceThreshold || 5;
       document.getElementById('inputAutoFulfill').checked = settings.autoFulfill !== false;
 
-      const notice = document.getElementById('currentMaskedNotice');
-      if (settings.isConfigured && settings.maskedKey) {
-        notice.style.display = 'block';
-        notice.textContent = `Active Encrypted Key: ${settings.maskedKey}`;
-      } else {
-        notice.style.display = 'none';
-      }
+      // Keep hidden legacy inputs updated
+      const baseEl = document.getElementById('inputBaseUrl');
+      if (baseEl) baseEl.value = defaultVendor.baseUrl || settings.baseUrl || '';
 
       // Category multipliers
       const cats = settings.categoryMultipliers || {};
@@ -620,6 +706,139 @@
 
       // Product Multipliers (Overrides)
       renderProductOverrides(settings.productOverrides || {});
+    }
+
+    // --- Multi-Vendor Management Functions ---
+    function renderVendorsList(vendors) {
+      const container = document.getElementById('vendorsListContainer');
+      const badge = document.getElementById('vendorCountBadge');
+      if (badge) {
+        badge.textContent = `${vendors.length} Vendor${vendors.length !== 1 ? 's' : ''}`;
+      }
+      if (!container) return;
+
+      if (!vendors || vendors.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:28px; background:#FFFFFF; border:1px dashed rgba(25,13,8,0.2); border-radius:10px; color:#705E51;">
+            <div style="font-weight:700; color:#190D08; font-size:14px; margin-bottom:4px;">No Supplier Vendors Configured</div>
+            <div style="font-size:12px; margin-bottom:12px;">Click "+ Add Vendor API Key" above to configure your first wholesale supplier account.</div>
+            <button type="button" onclick="openAddVendorForm()" class="primary-btn" style="padding:6px 14px; font-size:12px; border-radius:6px;">
+              + Add First Vendor
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = vendors.map(v => {
+        const bal = parseFloat(v.balance || 0).toFixed(2);
+        const lastCheckedStr = v.lastChecked
+          ? `Tested ${new Date(v.lastChecked).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+          : 'Not tested recently';
+
+        return `
+          <div class="vendor-card" style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:12px; padding:16px 18px; box-shadow:0 1px 4px rgba(25,13,8,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <span style="font-size:15px; font-weight:800; color:#190D08;">${v.name}</span>
+                  ${v.isDefault ? `<span style="background:rgba(208,69,21,0.14); color:#D04515; font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:3px;">⭐ PRIMARY DEFAULT</span>` : ''}
+                  ${v.mode === 'live' && v.isConfigured
+                    ? `<span style="background:rgba(22,163,74,0.12); color:#16A34A; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">🟢 Live API</span>`
+                    : `<span style="background:rgba(217,119,6,0.12); color:#D97706; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">🧪 Sandbox Simulation</span>`}
+                </div>
+                <div style="font-family:monospace; font-size:12px; color:#705E51; margin-top:5px; word-break:break-all;">
+                  ${v.baseUrl}
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:18px; font-weight:800; color:#16A34A;">$${bal} <span style="font-size:12px; color:#705E51;">${v.currency || 'USD'}</span></div>
+                <div style="font-size:11px; color:#705E51; margin-top:2px;">${lastCheckedStr}</div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(25,13,8,0.06); margin-top:8px; flex-wrap:wrap; gap:8px;">
+              <div style="font-size:12px; color:#705E51; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span>API Key: <strong style="font-family:monospace; color:#190D08;">${v.apiKeyMasked || 'None (Simulated)'}</strong></span>
+                ${v.notes ? `<span style="color:rgba(25,13,8,0.25);">|</span><span style="font-style:italic;">${v.notes}</span>` : ''}
+              </div>
+
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <button type="button" onclick="testVendorConnection('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">
+                  ⚡ Test Balance
+                </button>
+                ${!v.isDefault ? `
+                  <button type="button" onclick="setVendorDefault('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px;">
+                    ⭐ Make Default
+                  </button>
+                ` : ''}
+                <button type="button" onclick="editVendor('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px;">
+                  ✏️ Edit
+                </button>
+                ${!v.isDefault && vendors.length > 1 ? `
+                  <button type="button" onclick="deleteVendor('${v.id}', '${v.name.replace(/'/g, "\\'")}')" style="background:none; border:none; color:#DC2626; font-size:12px; font-weight:700; cursor:pointer; padding:5px 8px;">
+                    🗑️ Delete
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openAddVendorForm() {
+      document.getElementById('vendorFormId').value = '';
+      document.getElementById('vendorFormTitle').textContent = '+ Register New Supplier Vendor';
+      document.getElementById('vendorFormName').value = '';
+      document.getElementById('vendorFormBaseUrl').value = 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+      document.getElementById('vendorFormApiKey').value = '';
+      document.getElementById('vendorApiKeyHint').textContent = '(Required for live orders)';
+      document.getElementById('vendorFormMode').value = 'live';
+      document.getElementById('vendorFormCurrency').value = 'USD';
+      document.getElementById('vendorFormNotes').value = '';
+      document.getElementById('vendorFormIsDefault').checked = window.currentVendors.length === 0;
+
+      const panel = document.getElementById('vendorFormPanel');
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeVendorForm() {
+      const panel = document.getElementById('vendorFormPanel');
+      panel.style.display = 'none';
+    }
+
+    function editVendor(vendorId) {
+      const vendor = (window.currentVendors || []).find(v => v.id === vendorId);
+      if (!vendor) return;
+
+      document.getElementById('vendorFormId').value = vendor.id;
+      document.getElementById('vendorFormTitle').textContent = `✏️ Edit Supplier Vendor: ${vendor.name}`;
+      document.getElementById('vendorFormName').value = vendor.name;
+      document.getElementById('vendorFormBaseUrl').value = vendor.baseUrl;
+      document.getElementById('vendorFormApiKey').value = '';
+      document.getElementById('vendorApiKeyHint').textContent = vendor.apiKeyMasked ? `(Leave blank to keep active ${vendor.apiKeyMasked})` : '(Enter new API key)';
+      document.getElementById('vendorFormMode').value = vendor.mode || 'live';
+      document.getElementById('vendorFormCurrency').value = vendor.currency || 'USD';
+      document.getElementById('vendorFormNotes').value = vendor.notes || '';
+      document.getElementById('vendorFormIsDefault').checked = Boolean(vendor.isDefault);
+
+      const panel = document.getElementById('vendorFormPanel');
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function toggleVendorApiKeyVisibility() {
+      const input = document.getElementById('vendorFormApiKey');
+      const text = document.getElementById('vendorApiKeyToggleText');
+      if (input.type === 'password') {
+        input.type = 'text';
+        text.textContent = 'Hide';
+      } else {
+        input.type = 'password';
+        text.textContent = 'Show';
+      }
     }
 
     function switchSettingsTab(tabKey) {
@@ -642,15 +861,141 @@
       }
     }
 
-    function toggleApiKeyVisibility() {
-      const input = document.getElementById('inputApiKey');
-      const text = document.getElementById('apiKeyToggleText');
-      if (input.type === 'password') {
-        input.type = 'text';
-        text.textContent = 'Hide';
-      } else {
-        input.type = 'password';
-        text.textContent = 'Show';
+    async function submitVendorForm() {
+      const id = document.getElementById('vendorFormId').value.trim();
+      const name = document.getElementById('vendorFormName').value.trim();
+      const baseUrl = document.getElementById('vendorFormBaseUrl').value.trim();
+      const apiKey = document.getElementById('vendorFormApiKey').value.trim();
+      const mode = document.getElementById('vendorFormMode').value;
+      const currency = document.getElementById('vendorFormCurrency').value;
+      const notes = document.getElementById('vendorFormNotes').value.trim();
+      const isDefault = document.getElementById('vendorFormIsDefault').checked;
+
+      if (!name) {
+        alert('Please enter a vendor name or wholesale label.');
+        document.getElementById('vendorFormName').focus();
+        return;
+      }
+      if (!baseUrl) {
+        alert('Please enter a valid supplier API base URL.');
+        document.getElementById('vendorFormBaseUrl').focus();
+        return;
+      }
+
+      const payload = {
+        name,
+        baseUrl,
+        mode,
+        currency,
+        notes,
+        isDefault
+      };
+      if (id) payload.id = id;
+      if (apiKey) payload.apiKey = apiKey;
+
+      showToast('Saving vendor API credentials...');
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch('/api/admin/reseller/vendors', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success && data.vendors) {
+          window.currentVendors = data.vendors;
+          renderVendorsList(data.vendors);
+          closeVendorForm();
+          fetchResellerStatus();
+          alert(`Supplier vendor "${name}" saved successfully!`);
+        } else {
+          alert('Error saving vendor: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Network error saving vendor: ' + err.message);
+      }
+    }
+
+    async function testVendorConnection(vendorId) {
+      showToast('Testing connection and checking supplier balance...');
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}/test`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        if (data.vendors) {
+          window.currentVendors = data.vendors;
+          renderVendorsList(data.vendors);
+        }
+        if (data.success && data.result) {
+          const bal = data.result.balance || {};
+          const storeName = (data.result.info && data.result.info.store) || data.result.vendor.name;
+          alert(`✅ Connection Test Successful!\n\nVendor: ${storeName}\nBalance: $${bal.balance || '0.00'} ${bal.currency || 'USD'}\nMode: ${data.result.vendor.mode}`);
+          fetchResellerStatus();
+        } else {
+          alert(`❌ Connection Test Failed: ${(data.result && data.result.balance && data.result.balance.message) || data.message || 'Unable to connect to vendor API.'}`);
+        }
+      } catch (err) {
+        alert('Network error testing vendor: ' + err.message);
+      }
+    }
+
+    async function setVendorDefault(vendorId) {
+      showToast('Updating default wholesale supplier...');
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}/default`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        if (data.success && data.vendors) {
+          window.currentVendors = data.vendors;
+          renderVendorsList(data.vendors);
+          fetchResellerStatus();
+          showToast('Default supplier updated!');
+        } else {
+          alert('Failed to set default: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error setting default: ' + err.message);
+      }
+    }
+
+    async function deleteVendor(vendorId, vendorName) {
+      if (!confirm(`Are you sure you want to remove the supplier vendor "${vendorName}"?\n\nThis will remove its API credentials from CreditLog.`)) return;
+
+      showToast('Removing supplier vendor...');
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      try {
+        const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        if (data.success && data.vendors) {
+          window.currentVendors = data.vendors;
+          renderVendorsList(data.vendors);
+          fetchResellerStatus();
+          showToast(`Vendor "${vendorName}" removed.`);
+        } else {
+          alert('Failed to delete vendor: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error deleting vendor: ' + err.message);
       }
     }
 
@@ -1005,8 +1350,9 @@
     async function handleSettingsSubmit(e) {
       e.preventDefault();
       const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
-      const baseUrl = document.getElementById('inputBaseUrl').value.trim();
-      const apiKey = document.getElementById('inputApiKey').value.trim();
+      const defaultVendor = (window.currentVendors || []).find(v => v.isDefault) || (window.currentVendors || [])[0] || {};
+      const baseUrl = (document.getElementById('inputBaseUrl')?.value.trim()) || defaultVendor.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+      const apiKey = document.getElementById('inputApiKey')?.value.trim() || '';
       const markupPercent = parseInt(document.getElementById('inputMarkup').value, 10);
       const usdToNgnRate = parseInt(document.getElementById('inputRate').value, 10);
       const lowBalanceThreshold = parseFloat(document.getElementById('inputLowBalanceThreshold').value);
@@ -1086,9 +1432,19 @@
       const list = document.getElementById('supplierProductsList');
       list.innerHTML = '<div style="text-align:center; padding:30px; color:#705E51;">Querying supplier wholesale API catalog...</div>';
 
+      const vSelect = document.getElementById('catalogVendorSelect');
+      if (vSelect && window.currentVendors && window.currentVendors.length > 0) {
+        const currentVal = vSelect.value;
+        vSelect.innerHTML = '<option value="">-- All Suppliers / Default --</option>' +
+          window.currentVendors.map(v => `<option value="${v.id}" ${v.id === currentVal ? 'selected' : ''}>${v.name} (${v.mode === 'live' ? 'Live' : 'Sandbox'})</option>`).join('');
+      }
+
+      const vendorId = vSelect ? vSelect.value : '';
+      const url = vendorId ? `/api/admin/reseller/products?vendorId=${encodeURIComponent(vendorId)}` : '/api/admin/reseller/products';
+
       const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
       try {
-        const res = await fetch('/api/admin/reseller/products', {
+        const res = await fetch(url, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -1100,11 +1456,15 @@
             const retailUsd = p.suggestedRetailUsd ? `$${p.suggestedRetailUsd.toFixed(2)}` : '—';
             const retailNgn = p.suggestedRetailNgn ? `₦${p.suggestedRetailNgn.toLocaleString('en-US')}` : '—';
             const profitStr = pricing.profitUsd !== undefined ? `+$${pricing.profitUsd.toFixed(2)} (${pricing.profitMarginPercent}%)` : '';
+            const vendorTag = p.vendorName ? `<span style="background:rgba(25,13,8,0.06); padding:2px 7px; border-radius:4px; font-size:11px; color:#705E51; font-weight:700;">🏪 ${p.vendorName}</span>` : '';
 
             return `
               <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:14px;">
                 <div style="flex:1;">
-                  <div style="font-weight:800; color:#190D08; font-size:14.5px;">${p.name || p.title}</div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="font-weight:800; color:#190D08; font-size:14.5px;">${p.name || p.title}</div>
+                    ${vendorTag}
+                  </div>
                   <div style="font-size:12px; color:#705E51; margin-top:3px;">
                     Supplier ID: #${p.id || p.productId} · Stock: <span style="font-weight:700; color:${p.inStock ? '#16A34A' : '#DC2626'};">${p.stock} units</span>
                   </div>
@@ -1132,7 +1492,8 @@
 
     async function testResellerOrder() {
       const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
-      showToast('Dispatching test order to reseller API...');
+      const vendorId = document.getElementById('catalogVendorSelect')?.value || null;
+      showToast('Dispatching test order to supplier API...');
       try {
         const res = await fetch('/api/admin/reseller/test-order', {
           method: 'POST',
@@ -1140,7 +1501,7 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ productId: 1, quantity: 1 })
+          body: JSON.stringify({ productId: 1, quantity: 1, vendorId })
         });
         const data = await res.json();
         if (data.ok && data.order) {

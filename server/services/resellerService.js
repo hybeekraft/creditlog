@@ -23,6 +23,22 @@ const DEFAULT_CONFIG = {
   mode: process.env.RESELLER_API_KEY ? 'live' : 'simulation',
   lowBalanceThreshold: 5.0,
 
+  // Multi-vendor API registry
+  vendors: [
+    {
+      id: 'vendor_gemini',
+      name: 'GeminiPro Wholesale API',
+      baseUrl: process.env.RESELLER_BASE_URL || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
+      apiKey: process.env.RESELLER_API_KEY || '',
+      isDefault: true,
+      mode: process.env.RESELLER_API_KEY ? 'live' : 'simulation',
+      balance: '50.00',
+      currency: 'USD',
+      lastChecked: null,
+      notes: 'Primary digital goods wholesaler'
+    }
+  ],
+
   // Range-based price multipliers:
   // If wholesale price falls in [min, max], this multiplier is applied
   priceTiers: [
@@ -49,13 +65,46 @@ function readConfig() {
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const parsed = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
-      return {
+      const config = {
         ...DEFAULT_CONFIG,
         ...parsed,
         priceTiers: parsed.priceTiers || DEFAULT_CONFIG.priceTiers,
         productOverrides: parsed.productOverrides || {},
-        categoryMultipliers: { ...DEFAULT_CONFIG.categoryMultipliers, ...(parsed.categoryMultipliers || {}) }
+        categoryMultipliers: { ...DEFAULT_CONFIG.categoryMultipliers, ...(parsed.categoryMultipliers || {}) },
+        vendors: Array.isArray(parsed.vendors) ? parsed.vendors : []
       };
+
+      // Seamless migration: If vendors array is empty, populate from legacy baseUrl & apiKey
+      if (config.vendors.length === 0) {
+        const legacyKey = (config.apiKey || '').trim();
+        config.vendors.push({
+          id: 'vendor_primary',
+          name: 'GeminiPro Wholesale API (Primary)',
+          baseUrl: config.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
+          apiKey: legacyKey,
+          isDefault: true,
+          mode: legacyKey && legacyKey !== 'not generated yet' ? 'live' : 'simulation',
+          balance: '50.00',
+          currency: 'USD',
+          lastChecked: new Date().toISOString(),
+          notes: 'Default wholesale supplier account'
+        });
+      } else {
+        // Ensure at least one vendor is set as default
+        if (!config.vendors.some(v => v.isDefault)) {
+          config.vendors[0].isDefault = true;
+        }
+      }
+
+      // Synchronize legacy top-level credentials with the active default vendor
+      const defaultVendor = config.vendors.find(v => v.isDefault) || config.vendors[0];
+      if (defaultVendor) {
+        config.baseUrl = defaultVendor.baseUrl || config.baseUrl;
+        config.apiKey = defaultVendor.apiKey || config.apiKey;
+        config.mode = defaultVendor.mode || config.mode;
+      }
+
+      return config;
     }
   } catch (err) {
     console.error('[ResellerService] Error reading config file:', err.message);
@@ -79,27 +128,193 @@ class ResellerService {
     this.config = readConfig();
   }
 
-  getSettings() {
+  // Resolve target vendor by ID or default vendor
+  resolveVendor(vendorId = null) {
     this.config = readConfig();
-    const isConfigured = Boolean(this.config.apiKey && this.config.apiKey.trim() !== '' && this.config.apiKey !== 'not generated yet');
-    let maskedKey = '';
-    if (isConfigured) {
-      const key = this.config.apiKey;
-      maskedKey = key.length > 8 ? `${key.substring(0, 4)}...${key.substring(key.length - 4)}` : '••••••••';
+    const vendors = Array.isArray(this.config.vendors) ? this.config.vendors : [];
+    if (vendorId) {
+      const match = vendors.find(v => v.id === String(vendorId).trim());
+      if (match) return match;
+    }
+    const def = vendors.find(v => v.isDefault) || vendors[0];
+    if (def) return def;
+
+    // Fallback object
+    return {
+      id: 'vendor_default',
+      name: 'Default Supplier',
+      baseUrl: this.config.baseUrl,
+      apiKey: this.config.apiKey,
+      mode: this.config.mode || 'simulation',
+      isDefault: true,
+      balance: '50.00',
+      currency: 'USD'
+    };
+  }
+
+  getVendors() {
+    this.config = readConfig();
+    return (this.config.vendors || []).map(v => {
+      const isConfigured = Boolean(v.apiKey && v.apiKey.trim() !== '' && v.apiKey !== 'not generated yet');
+      let maskedKey = '';
+      if (isConfigured) {
+        const key = v.apiKey;
+        maskedKey = key.length > 8 ? `${key.substring(0, 4)}...${key.substring(key.length - 4)}` : '••••••••';
+      }
+      return {
+        id: v.id,
+        name: v.name || 'Unnamed Vendor',
+        baseUrl: v.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
+        apiKeyMasked: maskedKey,
+        isConfigured,
+        isDefault: Boolean(v.isDefault),
+        mode: isConfigured ? (v.mode || 'live') : 'simulation',
+        balance: v.balance !== undefined ? String(v.balance) : '0.00',
+        currency: v.currency || 'USD',
+        lastChecked: v.lastChecked || null,
+        notes: v.notes || ''
+      };
+    });
+  }
+
+  saveVendor(vendorData = {}) {
+    this.config = readConfig();
+    if (!Array.isArray(this.config.vendors)) {
+      this.config.vendors = [];
     }
 
+    const id = vendorData.id ? String(vendorData.id).trim() : `vendor_${Date.now()}`;
+    const existingIndex = this.config.vendors.findIndex(v => v.id === id);
+
+    const name = (vendorData.name || '').trim() || 'Custom Wholesaler';
+    const baseUrl = (vendorData.baseUrl || '').trim() || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
+    let apiKey = vendorData.apiKey !== undefined ? String(vendorData.apiKey).trim() : '';
+
+    // If apiKey is empty or masked in an update, keep existing key
+    if (existingIndex >= 0 && (!apiKey || apiKey.includes('••••') || apiKey.includes('...'))) {
+      apiKey = this.config.vendors[existingIndex].apiKey || '';
+    }
+
+    const isConfigured = Boolean(apiKey && apiKey !== 'not generated yet');
+    const mode = isConfigured ? (vendorData.mode || 'live') : 'simulation';
+    const isDefault = Boolean(vendorData.isDefault);
+    const notes = vendorData.notes !== undefined ? String(vendorData.notes).trim() : '';
+
+    const vendorRecord = {
+      id,
+      name,
+      baseUrl,
+      apiKey,
+      isDefault,
+      mode,
+      balance: existingIndex >= 0 && this.config.vendors[existingIndex].balance !== undefined ? this.config.vendors[existingIndex].balance : '0.00',
+      currency: (vendorData.currency || (existingIndex >= 0 ? this.config.vendors[existingIndex].currency : 'USD')).toUpperCase(),
+      lastChecked: existingIndex >= 0 ? this.config.vendors[existingIndex].lastChecked : null,
+      notes
+    };
+
+    if (isDefault) {
+      this.config.vendors.forEach(v => { v.isDefault = false; });
+    }
+
+    if (existingIndex >= 0) {
+      this.config.vendors[existingIndex] = { ...this.config.vendors[existingIndex], ...vendorRecord };
+    } else {
+      if (this.config.vendors.length === 0) {
+        vendorRecord.isDefault = true;
+      }
+      this.config.vendors.push(vendorRecord);
+    }
+
+    // Ensure at least one default
+    if (!this.config.vendors.some(v => v.isDefault) && this.config.vendors.length > 0) {
+      this.config.vendors[0].isDefault = true;
+    }
+
+    // Synchronize legacy settings
+    const def = this.config.vendors.find(v => v.isDefault) || this.config.vendors[0];
+    if (def) {
+      this.config.baseUrl = def.baseUrl;
+      this.config.apiKey = def.apiKey;
+      this.config.mode = def.mode;
+    }
+
+    writeConfig(this.config);
+    return this.getVendors();
+  }
+
+  deleteVendor(vendorId) {
+    this.config = readConfig();
+    if (!Array.isArray(this.config.vendors)) return this.getVendors();
+
+    const targetId = String(vendorId).trim();
+    const wasDefault = (this.config.vendors.find(v => v.id === targetId) || {}).isDefault;
+    this.config.vendors = this.config.vendors.filter(v => v.id !== targetId);
+
+    // If removed vendor was default, assign new default
+    if (wasDefault && this.config.vendors.length > 0) {
+      this.config.vendors[0].isDefault = true;
+    }
+
+    // Synchronize legacy settings
+    const def = this.config.vendors.find(v => v.isDefault) || this.config.vendors[0];
+    if (def) {
+      this.config.baseUrl = def.baseUrl;
+      this.config.apiKey = def.apiKey;
+      this.config.mode = def.mode;
+    }
+
+    writeConfig(this.config);
+    return this.getVendors();
+  }
+
+  setDefaultVendor(vendorId) {
+    this.config = readConfig();
+    if (!Array.isArray(this.config.vendors)) return this.getVendors();
+
+    const targetId = String(vendorId).trim();
+    let found = false;
+    this.config.vendors.forEach(v => {
+      if (v.id === targetId) {
+        v.isDefault = true;
+        found = true;
+      } else {
+        v.isDefault = false;
+      }
+    });
+
+    if (found) {
+      const def = this.config.vendors.find(v => v.isDefault);
+      if (def) {
+        this.config.baseUrl = def.baseUrl;
+        this.config.apiKey = def.apiKey;
+        this.config.mode = def.mode;
+      }
+      writeConfig(this.config);
+    }
+    return this.getVendors();
+  }
+
+  getSettings() {
+    this.config = readConfig();
+    const vendors = this.getVendors();
+    const defVendor = vendors.find(v => v.isDefault) || vendors[0] || {};
+    const isConfigured = Boolean(defVendor.isConfigured);
+    const maskedKey = defVendor.apiKeyMasked || '';
+
     return {
-      baseUrl: this.config.baseUrl,
+      baseUrl: defVendor.baseUrl || this.config.baseUrl,
       isConfigured,
       maskedKey,
       markupPercent: this.config.markupPercent,
       usdToNgnRate: this.config.usdToNgnRate,
       autoFulfill: this.config.autoFulfill,
-      mode: isConfigured ? (this.config.mode || 'live') : 'simulation',
+      mode: isConfigured ? (defVendor.mode || this.config.mode || 'live') : 'simulation',
       lowBalanceThreshold: this.config.lowBalanceThreshold || 5.0,
       priceTiers: this.config.priceTiers || DEFAULT_CONFIG.priceTiers,
       productOverrides: this.config.productOverrides || {},
-      categoryMultipliers: this.config.categoryMultipliers || DEFAULT_CONFIG.categoryMultipliers
+      categoryMultipliers: this.config.categoryMultipliers || DEFAULT_CONFIG.categoryMultipliers,
+      vendors
     };
   }
 
@@ -121,6 +336,17 @@ class ResellerService {
     if (updates.autoFulfill !== undefined) this.config.autoFulfill = Boolean(updates.autoFulfill);
     if (updates.mode !== undefined) this.config.mode = updates.mode;
     if (updates.lowBalanceThreshold !== undefined) this.config.lowBalanceThreshold = Number(updates.lowBalanceThreshold) || 5.0;
+
+    // If top-level baseUrl or apiKey was updated, sync to default vendor
+    if (Array.isArray(this.config.vendors) && this.config.vendors.length > 0) {
+      const defIdx = this.config.vendors.findIndex(v => v.isDefault);
+      const targetIdx = defIdx >= 0 ? defIdx : 0;
+      if (updates.baseUrl !== undefined) this.config.vendors[targetIdx].baseUrl = this.config.baseUrl;
+      if (updates.apiKey !== undefined) {
+        this.config.vendors[targetIdx].apiKey = this.config.apiKey;
+        this.config.vendors[targetIdx].mode = this.config.mode;
+      }
+    }
 
     // Save Price Range Tiers
     if (updates.priceTiers && Array.isArray(updates.priceTiers)) {
@@ -227,22 +453,24 @@ class ResellerService {
     };
   }
 
-  isLive() {
-    this.config = readConfig();
-    return Boolean(this.config.apiKey && this.config.apiKey.trim() !== '' && this.config.apiKey !== 'not generated yet' && this.config.mode === 'live');
+  isLive(vendorId = null) {
+    const vendor = this.resolveVendor(vendorId);
+    return Boolean(vendor.apiKey && vendor.apiKey.trim() !== '' && vendor.apiKey !== 'not generated yet' && vendor.mode === 'live');
   }
 
-  async request(endpoint, options = {}) {
-    this.config = readConfig();
-    const live = this.isLive();
+  async request(endpoint, options = {}, vendorId = null) {
+    const vendor = this.resolveVendor(vendorId);
+    const live = this.isLive(vendor.id);
 
     if (!live) {
-      return this.mockResellerResponse(endpoint, options);
+      return this.mockResellerResponse(endpoint, options, vendor);
     }
 
-    const url = `${this.config.baseUrl.replace(/\/+$/, '')}${endpoint}`;
+    const baseUrl = (vendor.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1').replace(/\/+$/, '');
+    const url = `${baseUrl}${endpoint}`;
     const headers = {
-      'X-API-Key': this.config.apiKey,
+      'X-API-Key': vendor.apiKey,
+      'Authorization': `Bearer ${vendor.apiKey}`,
       'Content-Type': 'application/json',
       ...(options.headers || {})
     };
@@ -264,31 +492,65 @@ class ResellerService {
     } catch (err) {
       clearTimeout(timeout);
       if (err.name === 'AbortError') {
-        return { ok: false, error: 'timeout', message: 'Reseller API request timed out after 15s' };
+        return { ok: false, error: 'timeout', message: `Reseller API (${vendor.name}) request timed out after 15s` };
       }
       return { ok: false, error: 'network_error', message: err.message };
     }
   }
 
   // Account Information
-  async getInfo() {
-    return this.request('/account/info');
+  async getInfo(vendorId = null) {
+    return this.request('/account/info', {}, vendorId);
   }
 
   // Live Balance Check
-  async getBalance() {
-    return this.request('/account/balance');
+  async getBalance(vendorId = null) {
+    return this.request('/account/balance', {}, vendorId);
+  }
+
+  // Test Vendor Connection and Update Cached Balance
+  async testVendor(vendorId) {
+    const vendor = this.resolveVendor(vendorId);
+    if (!vendor) return { ok: false, error: 'vendor_not_found', message: 'Vendor not found' };
+
+    const balanceRes = await this.request('/account/balance', {}, vendor.id);
+    const infoRes = await this.request('/account/info', {}, vendor.id);
+
+    this.config = readConfig();
+    const vIdx = (this.config.vendors || []).findIndex(v => v.id === vendor.id);
+    if (vIdx >= 0) {
+      if (balanceRes && balanceRes.ok && balanceRes.balance !== undefined) {
+        this.config.vendors[vIdx].balance = String(balanceRes.balance);
+        this.config.vendors[vIdx].currency = balanceRes.currency || 'USD';
+      }
+      this.config.vendors[vIdx].lastChecked = new Date().toISOString();
+      writeConfig(this.config);
+    }
+
+    return {
+      ok: Boolean(balanceRes && balanceRes.ok),
+      vendor: {
+        id: vendor.id,
+        name: vendor.name,
+        mode: vendor.mode
+      },
+      balance: balanceRes,
+      info: infoRes
+    };
   }
 
   // Available Products with Calculated Retail Pricing
-  async getProducts() {
-    const res = await this.request('/products');
+  async getProducts(vendorId = null) {
+    const vendor = this.resolveVendor(vendorId);
+    const res = await this.request('/products', {}, vendor.id);
     if (res && res.products && Array.isArray(res.products)) {
       res.products = res.products.map(p => {
         const cost = parseFloat(p.price || 0);
         const pricing = this.calculatePricing(cost, p.id || p.productId, p.category);
         return {
           ...p,
+          vendorId: vendor.id,
+          vendorName: vendor.name,
           pricing,
           suggestedRetailUsd: pricing.retailUsd,
           suggestedRetailNgn: pricing.retailNgn,
@@ -301,29 +563,29 @@ class ResellerService {
   }
 
   // Single Product Detail
-  async getProduct(productId) {
-    return this.request(`/products/${productId}`);
+  async getProduct(productId, vendorId = null) {
+    return this.request(`/products/${productId}`, {}, vendorId);
   }
 
   // Create Order / Buy Goods
-  async createOrder(productId, quantity = 1) {
+  async createOrder(productId, quantity = 1, vendorId = null) {
     return this.request('/orders', {
       method: 'POST',
       body: {
         productId: Number(productId),
         quantity: Number(quantity)
       }
-    });
+    }, vendorId);
   }
 
   // List Orders
-  async getOrders() {
-    return this.request('/orders');
+  async getOrders(vendorId = null) {
+    return this.request('/orders', {}, vendorId);
   }
 
   // Get Single Order Status & Value
-  async getOrder(orderCode) {
-    return this.request(`/orders/${encodeURIComponent(orderCode)}`);
+  async getOrder(orderCode, vendorId = null) {
+    return this.request(`/orders/${encodeURIComponent(orderCode)}`, {}, vendorId);
   }
 
   // Automated CreditLog Order Fulfillment Engine
@@ -338,6 +600,10 @@ class ResellerService {
         message: 'Automated fulfillment is disabled in settings. Order awaits manual dispatch.'
       };
     }
+
+    // Determine target vendor (Variant Vendor > Product Vendor > Default Vendor)
+    const targetVendorId = (variant && variant.vendorId) || (product && product.vendorId) || null;
+    const vendor = this.resolveVendor(targetVendorId);
 
     // Determine supplier product ID
     let supplierProductId = null;
@@ -356,20 +622,24 @@ class ResellerService {
       return {
         success: false,
         pending: true,
+        vendorId: vendor.id,
+        vendorName: vendor.name,
         reason: 'no_supplier_mapping',
         message: `Product "${product ? product.name : order.productId}" is not mapped to an upstream reseller productId. Requires manual dispatch.`
       };
     }
 
     const qty = Math.max(1, parseInt(order.quantity || 1, 10));
-    console.log(`[ResellerService] Auto-dispatching Order #${order.id} to Supplier Product ID #${supplierProductId} (Qty: ${qty})`);
+    console.log(`[ResellerService] Auto-dispatching Order #${order.id} to Supplier "${vendor.name}" (Product ID #${supplierProductId}, Qty: ${qty})`);
 
-    const result = await this.createOrder(supplierProductId, qty);
+    const result = await this.createOrder(supplierProductId, qty, vendor.id);
 
     if (result && result.ok && result.order) {
       const supplierOrder = result.order;
       return {
         success: true,
+        vendorId: vendor.id,
+        vendorName: vendor.name,
         orderCode: supplierOrder.orderCode,
         deliveredValue: supplierOrder.value,
         supplierTotal: supplierOrder.total,
@@ -381,12 +651,14 @@ class ResellerService {
       };
     } else {
       const errMsg = (result && (result.message || result.error)) || 'Unknown supplier error';
-      console.error(`[ResellerService] Fulfillment failed for Order #${order.id}:`, errMsg);
+      console.error(`[ResellerService] Fulfillment failed for Order #${order.id} with Vendor "${vendor.name}":`, errMsg);
       return {
         success: false,
         pending: true,
+        vendorId: vendor.id,
+        vendorName: vendor.name,
         reason: 'supplier_error',
-        message: `Supplier fulfillment failed: ${errMsg}. Order saved for manual dispatch.`,
+        message: `Supplier "${vendor.name}" fulfillment failed: ${errMsg}. Order saved for manual dispatch.`,
         rawError: result
       };
     }
@@ -406,14 +678,15 @@ class ResellerService {
   }
 
   // High-fidelity local simulation for development & testing prior to live key generation
-  mockResellerResponse(endpoint, options = {}) {
-    console.log(`[ResellerService:Simulation] ${options.method || 'GET'} ${endpoint}`);
+  mockResellerResponse(endpoint, options = {}, vendor = null) {
+    const vendorName = vendor ? vendor.name : 'Gemini Pro Store';
+    console.log(`[ResellerService:Simulation][${vendorName}] ${options.method || 'GET'} ${endpoint}`);
 
     if (endpoint === '/account/info') {
       return {
         ok: true,
         ownerUserId: 7680379564,
-        store: 'Gemini Pro Store (Sandbox Simulation)',
+        store: `${vendorName} (Sandbox Simulation)`,
         apiVersion: 'v1',
         ordersEnabled: true,
         note: 'Orders simulated locally until live API key is set.'
@@ -423,8 +696,8 @@ class ResellerService {
     if (endpoint === '/account/balance') {
       return {
         ok: true,
-        balance: '50.00',
-        currency: 'USD',
+        balance: vendor && vendor.balance ? vendor.balance : '50.00',
+        currency: vendor && vendor.currency ? vendor.currency : 'USD',
         simulated: true
       };
     }

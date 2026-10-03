@@ -983,12 +983,92 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // GET /api/admin/reseller/products — Live Catalog from Reseller API
+  // GET /api/admin/reseller/vendors — List All Configured Supplier Vendors
+  if (pathname === '/api/admin/reseller/vendors' && req.method === 'GET') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const vendors = resellerService.getVendors();
+    return sendJSON(res, 200, {
+      success: true,
+      vendors
+    });
+  }
+
+  // POST /api/admin/reseller/vendors — Add or Update a Supplier Vendor
+  if (pathname === '/api/admin/reseller/vendors' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const body = await parseBody(req);
+    if (!body.name || !body.baseUrl) {
+      return sendJSON(res, 400, { success: false, message: 'Vendor name and base URL are required.' });
+    }
+    const vendors = resellerService.saveVendor(body);
+    recordLog('Admin', 'Admin', 'Reseller', 'Save Vendor', `Configured supplier vendor: ${body.name}`);
+    return sendJSON(res, 200, {
+      success: true,
+      message: `Supplier vendor "${body.name}" saved successfully.`,
+      vendors
+    });
+  }
+
+  // POST /api/admin/reseller/vendors/:id/test — Test Vendor Connection & Refresh Balance
+  if (pathname.startsWith('/api/admin/reseller/vendors/') && pathname.endsWith('/test') && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const vendorId = decodeURIComponent(pathname.replace('/api/admin/reseller/vendors/', '').replace(/\/test$/, ''));
+    const testResult = await resellerService.testVendor(vendorId);
+    recordLog('Admin', 'Admin', 'Reseller', 'Test Vendor', `Tested connection for vendor ID "${vendorId}": ${testResult.ok ? 'Success' : 'Failed'}`);
+    return sendJSON(res, 200, {
+      success: testResult.ok,
+      result: testResult,
+      vendors: resellerService.getVendors()
+    });
+  }
+
+  // POST /api/admin/reseller/vendors/:id/default — Set Primary/Default Supplier Vendor
+  if (pathname.startsWith('/api/admin/reseller/vendors/') && pathname.endsWith('/default') && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const vendorId = decodeURIComponent(pathname.replace('/api/admin/reseller/vendors/', '').replace(/\/default$/, ''));
+    const vendors = resellerService.setDefaultVendor(vendorId);
+    recordLog('Admin', 'Admin', 'Reseller', 'Default Vendor', `Set default supplier vendor to: ${vendorId}`);
+    return sendJSON(res, 200, {
+      success: true,
+      message: 'Default supplier vendor updated successfully.',
+      vendors
+    });
+  }
+
+  // DELETE /api/admin/reseller/vendors/:id — Remove Supplier Vendor
+  if (pathname.startsWith('/api/admin/reseller/vendors/') && req.method === 'DELETE' && !pathname.endsWith('/test') && !pathname.endsWith('/default')) {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const vendorId = decodeURIComponent(pathname.replace('/api/admin/reseller/vendors/', ''));
+    const vendors = resellerService.deleteVendor(vendorId);
+    recordLog('Admin', 'Admin', 'Reseller', 'Delete Vendor', `Removed supplier vendor ID: ${vendorId}`);
+    return sendJSON(res, 200, {
+      success: true,
+      message: 'Supplier vendor removed successfully.',
+      vendors
+    });
+  }
+
+  // GET /api/admin/reseller/products — Live Catalog from Reseller API (supports ?vendorId=...)
   if (pathname === '/api/admin/reseller/products' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
     }
-    const result = await resellerService.getProducts();
+    let targetVendorId = null;
+    try {
+      const parsedUrl = new URL(req.url, 'http://localhost');
+      targetVendorId = parsedUrl.searchParams.get('vendorId');
+    } catch (e) {}
+    const result = await resellerService.getProducts(targetVendorId);
     return sendJSON(res, 200, result);
   }
 
@@ -1000,7 +1080,8 @@ const server = http.createServer(async (req, res) => {
     const body = await parseBody(req);
     const productId = body.productId || 1;
     const quantity = body.quantity || 1;
-    const result = await resellerService.createOrder(productId, quantity);
+    const vendorId = body.vendorId || null;
+    const result = await resellerService.createOrder(productId, quantity, vendorId);
     recordLog('Admin', 'Admin', 'Reseller', 'Test Order', `Placed test order for supplier product #${productId}: ${result.ok ? 'Success' : 'Failed'}`);
     return sendJSON(res, result.ok ? 200 : 400, result);
   }
