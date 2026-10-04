@@ -6916,55 +6916,56 @@ html, body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: nowrap !important;
   width: auto;
+  margin-top: 8px;
 }
 
 .protocol-btn-dark {
   background: #190D08;
   color: #FFFFFF;
-  padding: 11px 24px;
+  padding: 15px 36px;
   line-height: 1.25;
   border-radius: var(--radius-full, 9999px);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 17px;
   letter-spacing: -0.01em;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(25, 13, 8, 0.16);
+  box-shadow: 0 4px 16px rgba(25, 13, 8, 0.2);
   flex: 0 1 auto;
 }
 
 .protocol-btn-dark:hover {
   background: #2D1E15;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(25, 13, 8, 0.24);
+  box-shadow: 0 8px 24px rgba(25, 13, 8, 0.28);
 }
 
 .protocol-btn-outline {
   background: #D04515;
   border: 1px solid #D04515;
   color: #FFFFFF;
-  padding: 11px 24px;
+  padding: 15px 36px;
   line-height: 1.25;
   border-radius: var(--radius-full, 9999px);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 17px;
   letter-spacing: -0.01em;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(208, 69, 21, 0.2);
+  box-shadow: 0 4px 16px rgba(208, 69, 21, 0.24);
   flex: 0 1 auto;
 }
 
@@ -6973,7 +6974,7 @@ html, body {
   border-color: #B83A0F;
   color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(208, 69, 21, 0.28);
+  box-shadow: 0 8px 24px rgba(208, 69, 21, 0.32);
 }
 
 /* RESPONSIVE DESIGN ADJUSTMENTS */
@@ -7011,16 +7012,17 @@ html, body {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 10px !important;
+    gap: 12px !important;
     width: 100% !important;
+    margin-top: 4px !important;
   }
 
   .protocol-btn-dark,
   .protocol-btn-outline {
     flex: 1 1 0 !important;
     min-width: 0 !important;
-    padding: 11px 12px !important;
-    font-size: 14px !important;
+    padding: 13px 16px !important;
+    font-size: 15px !important;
     justify-content: center !important;
     text-align: center !important;
     white-space: nowrap !important;
