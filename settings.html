@@ -16,19 +16,24 @@
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
   <style>
     .settings-tab-btn {
-      padding: 8px 18px;
+      padding: 7px 16px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      border: 1px solid rgba(25, 13, 8, 0.15);
+      border: 1px solid rgba(25, 13, 8, 0.14);
       background: #FFFFFF;
       color: #190D08;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       white-space: nowrap;
+    }
+
+    .settings-tab-btn svg {
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
 
     .settings-tab-btn:hover {
@@ -40,13 +45,175 @@
       background: #190D08;
       color: #FFFFFF;
       border-color: #190D08;
+      box-shadow: 0 2px 6px rgba(25, 13, 8, 0.15);
+    }
+
+    .settings-tab-btn.active svg {
+      stroke: #FFFFFF;
+    }
+
+    /* Minimalist Streamlined Settings Status Ribbon */
+    .settings-status-ribbon {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(25, 13, 8, 0.08);
+      border: 1px solid rgba(25, 13, 8, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(25, 13, 8, 0.03);
+    }
+
+    .status-ribbon-item {
+      background: #FFFFFF;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.15s ease;
+    }
+
+    .status-ribbon-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(208, 69, 21, 0.08);
+      color: #D04515;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .status-ribbon-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .status-ribbon-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #705E51;
+      margin-bottom: 2px;
+    }
+
+    .status-ribbon-val {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #190D08;
+    }
+
+    .status-ribbon-sub {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #705E51;
+    }
+
+    .badge-primary-default {
+      background: rgba(208, 69, 21, 0.12);
+      color: #D04515;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-live-api {
+      background: rgba(22, 163, 74, 0.1);
+      color: #16A34A;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-gateway {
+      background: rgba(217, 119, 6, 0.1);
+      color: #D97706;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-dot-green {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #16A34A;
+      display: inline-block;
+    }
+
+    .badge-dot-amber {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D97706;
+      display: inline-block;
+    }
+
+    .btn-sm {
+      padding: 5px 11px !important;
+      font-size: 12px !important;
+      border-radius: 6px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+    }
+
+    .delete-link-btn {
+      background: none;
+      border: none;
+      color: #DC2626;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 5px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+
+    .delete-link-btn:hover {
+      background: rgba(220, 38, 38, 0.08);
+    }
+
+    @media (max-width: 900px) {
+      .settings-status-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .settings-status-ribbon {
+        grid-template-columns: 1fr;
+      }
     }
 
     .settings-card {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.1);
       border-radius: 14px;
-      padding: 24px;
+      padding: 22px 24px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
     }
@@ -241,67 +408,67 @@
         </div>
       </header>
 
-      <!-- KPI Status Ribbon -->
-      <div class="admin-kpi-grid">
-        <div class="kpi-metric-card">
-          <div class="kpi-card-header">
-            <span class="metric-title">Connection Status</span>
-            <div class="kpi-icon-badge deliveries">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
+      <!-- Settings Status Ribbon -->
+      <div class="settings-status-ribbon">
+        <div class="status-ribbon-item">
+          <div class="status-ribbon-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
           </div>
-          <div class="metric-val" id="resellerStatusText">Checking...</div>
-          <div class="kpi-card-footer">
-            <span id="resellerStatusPill" class="order-status-pill status-processing">Connecting</span>
+          <div class="status-ribbon-info">
+            <span class="status-ribbon-label">Supplier API</span>
+            <div class="status-ribbon-val">
+              <span id="resellerStatusText">1 Vendor Configured</span>
+              <span id="resellerStatusPill" class="order-status-pill status-processing" style="font-size: 11px; padding: 2px 7px;">Connecting</span>
+            </div>
           </div>
         </div>
 
-        <div class="kpi-metric-card">
-          <div class="kpi-card-header">
-            <span class="metric-title">Wholesale Balance</span>
-            <div class="kpi-icon-badge sales">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <line x1="2" y1="10" x2="22" y2="10"/>
-              </svg>
-            </div>
+        <div class="status-ribbon-item">
+          <div class="status-ribbon-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
           </div>
-          <div class="metric-val" id="resellerBalanceVal">$0.00 USD</div>
-          <div class="kpi-card-footer">
-            <span id="resellerBalanceSub" class="kpi-subtext">Checking balance...</span>
+          <div class="status-ribbon-info">
+            <span class="status-ribbon-label">Wholesale Balance</span>
+            <div class="status-ribbon-val">
+              <span id="resellerBalanceVal" style="color: #16A34A; font-weight: 700;">$0.00 USD</span>
+              <span id="resellerBalanceSub" class="status-ribbon-sub">Checking balance...</span>
+            </div>
           </div>
         </div>
 
-        <div class="kpi-metric-card">
-          <div class="kpi-card-header">
-            <span class="metric-title">USD/NGN Rate</span>
-            <div class="kpi-icon-badge orders">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-            </div>
+        <div class="status-ribbon-item">
+          <div class="status-ribbon-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
           </div>
-          <div class="metric-val" id="resellerRateVal">₦1,550</div>
-          <div class="kpi-card-footer">
-            <span class="kpi-subtext">Conversion base rate</span>
+          <div class="status-ribbon-info">
+            <span class="status-ribbon-label">Exchange Rate</span>
+            <div class="status-ribbon-val">
+              <span id="resellerRateVal" style="font-weight: 700; color: #190D08;">₦1,550</span>
+              <span class="status-ribbon-sub">/ USD</span>
+            </div>
           </div>
         </div>
 
-        <div class="kpi-metric-card">
-          <div class="kpi-card-header">
-            <span class="metric-title">Fulfillment Engine</span>
-            <div class="kpi-icon-badge customers">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
+        <div class="status-ribbon-item">
+          <div class="status-ribbon-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
           </div>
-          <div class="metric-val" id="resellerEngineVal" style="color: #16A34A !important;">Automated</div>
-          <div class="kpi-card-footer">
-            <span class="kpi-pill kpi-pill-success">● Instant Dispatch</span>
+          <div class="status-ribbon-info">
+            <span class="status-ribbon-label">Fulfillment Engine</span>
+            <div class="status-ribbon-val">
+              <span id="resellerEngineVal" style="color: #16A34A; font-weight: 700;">Automated</span>
+              <span class="status-ribbon-sub">Instant Dispatch</span>
+            </div>
           </div>
         </div>
       </div>
@@ -310,19 +477,35 @@
       <div class="settings-tabs-bar" style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
         <button type="button" class="settings-tab-btn active" id="tabBtnCredentials"
           onclick="switchSettingsTab('credentials')">
-          🔑 Supplier API & FX
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 2l-2 2m-2-2l2 2m0 0l-7.5 7.5a5 5 0 1 0 2 2L21 4z"/>
+          </svg>
+          <span>Supplier API & FX</span>
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnTiers" onclick="switchSettingsTab('tiers')">
-          📈 Dynamic Price Tiers
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <span>Dynamic Price Tiers</span>
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnProducts" onclick="switchSettingsTab('products')">
-          🎯 Product Multipliers
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+          </svg>
+          <span>Product Multipliers</span>
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnCategories" onclick="switchSettingsTab('categories')">
-          🏷️ Category Multipliers
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+          <span>Category Multipliers</span>
         </button>
         <button type="button" class="settings-tab-btn" id="tabBtnCatalog" onclick="switchSettingsTab('catalog')">
-          📦 Supplier Catalog & Tests
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+          <span>Supplier Catalog & Tests</span>
         </button>
       </div>
 
@@ -414,8 +597,8 @@
               <div>
                 <label class="form-group-label">Operating Mode</label>
                 <select id="vendorFormMode" class="settings-input">
-                  <option value="live">🟢 Live API (Dispatch Real Orders)</option>
-                  <option value="simulation">⚡ Staging API Gateway</option>
+                  <option value="live">Live API (Dispatch Real Orders)</option>
+                  <option value="simulation">Staging / Simulation Gateway</option>
                 </select>
               </div>
 
@@ -542,24 +725,29 @@
         <!-- TAB 2: Dynamic Price Tiers -->
         <div id="tabContentTiers" class="settings-card" style="display: none;">
           <div
-            style="background: rgba(208, 69, 21, 0.06); border: 1px solid rgba(208, 69, 21, 0.2); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 12.5px; color: #190D08; line-height: 1.5;">
-            <strong>💡 How Range Multipliers Work:</strong>
-            When a product's wholesale cost falls inside a specific range, CreditLog automatically applies that range's
-            multiplier to calculate the retail price.
-            Low-cost items (e.g. $0.50 – $2.00) get higher multipliers (e.g. <strong>2.50x</strong>) to ensure strong
-            gross profits, while high-value products ($40+) use lower multipliers (e.g. <strong>1.20x</strong>) to stay
-            competitive.
+            style="background: rgba(208, 69, 21, 0.05); border: 1px solid rgba(208, 69, 21, 0.16); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 12.5px; color: #190D08; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D04515" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>How Range Multipliers Work:</strong>
+              When a product's wholesale cost falls inside a specific range, CreditLog automatically applies that range's
+              multiplier to calculate the retail price. Low-cost items (e.g. $0.50 – $2.00) get higher multipliers (e.g. <strong>2.50x</strong>) to ensure strong
+              gross profits, while high-value products ($40+) use lower multipliers (e.g. <strong>1.20x</strong>) to stay competitive.
+            </div>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div>
               <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #190D08;">Configured Price Ranges</h3>
-              <p style="margin: 2px 0 0; font-size: 12px; color: #705E51;">Modify or add ranges. Evaluated in order from
-                lowest to highest.</p>
+              <p style="margin: 2px 0 0; font-size: 12px; color: #705E51;">Modify or add ranges. Evaluated in order from lowest to highest.</p>
             </div>
             <button type="button" onclick="addNewPriceTierRow()" class="secondary-btn"
-              style="padding: 6px 12px; font-size: 12px; border-radius: 6px; cursor: pointer;">
-              + Add Range Tier
+              style="padding: 6px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Add Range Tier</span>
             </button>
           </div>
 
@@ -571,10 +759,11 @@
           <div
             style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(25,13,8,0.08);">
             <button type="button" onclick="applyMultipliersToStore()" class="secondary-btn"
-              style="padding: 9px 16px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px;">
-              ⚡ Sync Multipliers to All Store Inventory Now
+              style="padding: 8px 15px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Sync Multipliers to Store Inventory</span>
             </button>
-            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+            <button type="submit" class="primary-btn" style="padding: 9px 22px; font-size: 13px; border-radius: 8px;">
               Save Tier Rules
             </button>
           </div>
@@ -586,11 +775,15 @@
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
             <div>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08;">🎯 Product-Specific Multiplier
-                  Overrides</h3>
+                <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #190D08; display: inline-flex; align-items: center; gap: 7px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D04515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  <span>Product Multiplier Overrides</span>
+                </h3>
                 <span
                   style="background: rgba(208, 69, 21, 0.12); color: #D04515; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.04em;">Highest
-                  Priority #1</span>
+                  Priority</span>
               </div>
               <p style="margin: 4px 0 0; font-size: 12.5px; color: #705E51;">
                 Set custom multipliers for particular individual products instead of whole categories or brands. Product
@@ -691,10 +884,11 @@
           <div
             style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(25,13,8,0.08);">
             <button type="button" onclick="applyMultipliersToStore()" class="secondary-btn"
-              style="padding: 9px 16px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px;">
-              ⚡ Sync Multipliers to All Store Inventory Now
+              style="padding: 8px 15px; font-size: 12.5px; border-color: #D04515; color: #D04515; font-weight: 700; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Sync Multipliers to Store Inventory</span>
             </button>
-            <button type="submit" class="primary-btn" style="padding: 10px 24px; font-size: 13px; border-radius: 8px;">
+            <button type="submit" class="primary-btn" style="padding: 9px 22px; font-size: 13px; border-radius: 8px;">
               Save Product Multipliers
             </button>
           </div>
@@ -714,7 +908,7 @@
             style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
             <div
               style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
-              <label class="form-group-label">🤖 AI Models (ChatGPT, Gemini, Claude)</label>
+              <label class="form-group-label">AI Models (ChatGPT, Gemini, Claude)</label>
               <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
                 <input type="number" id="catMult_ai" step="0.05" min="1.0" max="10.0" value="1.75"
                   class="settings-input" style="font-weight: 700;">
@@ -724,7 +918,7 @@
 
             <div
               style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
-              <label class="form-group-label">🎮 Gaming (Xbox, Steam, PlayStation)</label>
+              <label class="form-group-label">Gaming (Xbox, Steam, PlayStation)</label>
               <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
                 <input type="number" id="catMult_gaming" step="0.05" min="1.0" max="10.0" value="1.50"
                   class="settings-input" style="font-weight: 700;">
@@ -734,7 +928,7 @@
 
             <div
               style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
-              <label class="form-group-label">🎬 Streaming & Media (Netflix, Spotify)</label>
+              <label class="form-group-label">Streaming & Media (Netflix, Spotify)</label>
               <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
                 <input type="number" id="catMult_streaming" step="0.05" min="1.0" max="10.0" value="1.40"
                   class="settings-input" style="font-weight: 700;">
@@ -744,7 +938,7 @@
 
             <div
               style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
-              <label class="form-group-label">💼 Productivity & Design (Canva, Office)</label>
+              <label class="form-group-label">Productivity & Design (Canva, Office)</label>
               <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
                 <input type="number" id="catMult_productivity" step="0.05" min="1.0" max="10.0" value="1.50"
                   class="settings-input" style="font-weight: 700;">
@@ -754,7 +948,7 @@
 
             <div
               style="background: rgba(25,13,8,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(25,13,8,0.08);">
-              <label class="form-group-label">🛡️ Security & VPNs (NordVPN, Surfshark)</label>
+              <label class="form-group-label">Security & VPNs (NordVPN, Surfshark)</label>
               <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
                 <input type="number" id="catMult_security" step="0.05" min="1.0" max="10.0" value="1.60"
                   class="settings-input" style="font-weight: 700;">
@@ -788,12 +982,14 @@
               <option value="">-- All Suppliers / Default --</option>
             </select>
             <button type="button" onclick="loadSupplierCatalog()" class="secondary-btn"
-              style="padding: 8px 14px; font-size: 12px;">
-              🔄 Refresh Catalog
+              style="padding: 7px 13px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Refresh Catalog</span>
             </button>
             <button type="button" onclick="testResellerOrder()" class="primary-btn"
-              style="padding: 8px 16px; font-size: 12px; border-radius: 8px;">
-              🚀 Place Test Order (#1)
+              style="padding: 7px 15px; font-size: 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Place Test Order (#1)</span>
             </button>
           </div>
         </div>
@@ -949,10 +1145,10 @@
               <div>
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                   <span style="font-size:15px; font-weight:800; color:#190D08;">${v.name}</span>
-                  ${v.isDefault ? `<span style="background:rgba(208,69,21,0.14); color:#D04515; font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:3px;">⭐ PRIMARY DEFAULT</span>` : ''}
+                  ${v.isDefault ? `<span class="badge-primary-default"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Primary Default</span>` : ''}
                   ${v.mode === 'live' && v.isConfigured
-            ? `<span style="background:rgba(22,163,74,0.12); color:#16A34A; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">🟢 Live API</span>`
-            : `<span style="background:rgba(217,119,6,0.12); color:#D97706; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">⚡ Active Gateway</span>`}
+            ? `<span class="badge-live-api"><span class="badge-dot-green"></span> Live API</span>`
+            : `<span class="badge-gateway"><span class="badge-dot-amber"></span> Active Gateway</span>`}
                 </div>
                 <div style="font-family:monospace; font-size:12px; color:#705E51; margin-top:5px; word-break:break-all;">
                   ${v.baseUrl}
@@ -971,20 +1167,24 @@
               </div>
 
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                <button type="button" onclick="testVendorConnection('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">
-                  ⚡ Test Balance
+                <button type="button" onclick="testVendorConnection('${v.id}')" class="secondary-btn btn-sm">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span>Test Balance</span>
                 </button>
                 ${!v.isDefault ? `
-                  <button type="button" onclick="setVendorDefault('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px;">
-                    ⭐ Make Default
+                  <button type="button" onclick="setVendorDefault('${v.id}')" class="secondary-btn btn-sm">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Set Default</span>
                   </button>
                 ` : ''}
-                <button type="button" onclick="editVendor('${v.id}')" class="secondary-btn" style="padding:5px 11px; font-size:12px; border-radius:6px;">
-                  ✏️ Edit
+                <button type="button" onclick="editVendor('${v.id}')" class="secondary-btn btn-sm">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>Edit</span>
                 </button>
                 ${!v.isDefault && vendors.length > 1 ? `
-                  <button type="button" onclick="deleteVendor('${v.id}', '${v.name.replace(/'/g, "\\'")}')" style="background:none; border:none; color:#DC2626; font-size:12px; font-weight:700; cursor:pointer; padding:5px 8px;">
-                    🗑️ Delete
+                  <button type="button" onclick="deleteVendor('${v.id}', '${v.name.replace(/'/g, "\\'")}')" class="delete-link-btn">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    <span>Delete</span>
                   </button>
                 ` : ''}
               </div>
@@ -996,7 +1196,7 @@
 
     function openAddVendorForm() {
       document.getElementById('vendorFormId').value = '';
-      document.getElementById('vendorFormTitle').textContent = '+ Register New Supplier Vendor';
+      document.getElementById('vendorFormTitle').textContent = 'Register New Supplier Vendor';
       document.getElementById('vendorFormName').value = '';
       document.getElementById('vendorFormBaseUrl').value = 'https://api-geminipro.ignorelist.com/api/reseller/v1';
       document.getElementById('vendorFormApiKey').value = '';
@@ -1021,7 +1221,7 @@
       if (!vendor) return;
 
       document.getElementById('vendorFormId').value = vendor.id;
-      document.getElementById('vendorFormTitle').textContent = `✏️ Edit Supplier Vendor: ${vendor.name}`;
+      document.getElementById('vendorFormTitle').textContent = `Edit Supplier Vendor: ${vendor.name}`;
       document.getElementById('vendorFormName').value = vendor.name;
       document.getElementById('vendorFormBaseUrl').value = vendor.baseUrl;
       document.getElementById('vendorFormApiKey').value = '';
@@ -1350,7 +1550,7 @@
       let html = '<option value="">-- Choose a Product --</option>';
 
       if (resellerItems.length > 0) {
-        html += '<optgroup label="⚡ Supplier Wholesale Items">';
+        html += '<optgroup label="Supplier Wholesale Items">';
         resellerItems.forEach(i => {
           html += `<option value="${i.id}" data-cost="${i.cost}">[Supplier #${i.id}] ${i.name} ($${i.cost.toFixed(2)})</option>`;
         });
@@ -1358,7 +1558,7 @@
       }
 
       if (storeItems.length > 0) {
-        html += '<optgroup label="🛍️ Store Digital Products">';
+        html += '<optgroup label="Store Digital Products">';
         storeItems.forEach(i => {
           const costStr = i.cost > 0 ? ` ($${i.cost.toFixed(2)})` : '';
           html += `<option value="${i.id}" data-cost="${i.cost}">${i.name}${costStr}</option>`;
@@ -1663,7 +1863,7 @@
             const retailUsd = p.suggestedRetailUsd ? `$${p.suggestedRetailUsd.toFixed(2)}` : '—';
             const retailNgn = p.suggestedRetailNgn ? `₦${p.suggestedRetailNgn.toLocaleString('en-US')}` : '—';
             const profitStr = pricing.profitUsd !== undefined ? `+$${pricing.profitUsd.toFixed(2)} (${pricing.profitMarginPercent}%)` : '';
-            const vendorTag = p.vendorName ? `<span style="background:rgba(25,13,8,0.06); padding:2px 7px; border-radius:4px; font-size:11px; color:#705E51; font-weight:700;">🏪 ${p.vendorName}</span>` : '';
+            const vendorTag = p.vendorName ? `<span style="background:rgba(25,13,8,0.06); padding:2px 7px; border-radius:4px; font-size:11px; color:#705E51; font-weight:700; display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>${p.vendorName}</span>` : '';
 
             return `
               <div style="background:#FFFFFF; border:1px solid rgba(25,13,8,0.1); border-radius:10px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:14px;">
@@ -1676,7 +1876,7 @@
                     Supplier ID: #${p.id || p.productId} · Stock: <span style="font-weight:700; color:${p.inStock ? '#16A34A' : '#DC2626'};">${p.stock} units</span>
                   </div>
                   <div style="margin-top:6px; display:inline-flex; align-items:center; gap:6px; background:rgba(208,69,21,0.08); padding:3px 8px; border-radius:6px; font-size:11.5px; font-weight:700; color:#D04515;">
-                    <span>⚡ Rule: ${ruleStr}</span>
+                    <span>Rule: ${ruleStr}</span>
                     <span>·</span>
                     <span>${multiplierStr} Multiplier</span>
                   </div>

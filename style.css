@@ -7123,38 +7123,30 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  padding: 14px 0;
   border-bottom: 1px solid rgba(25, 13, 8, 0.08);
+  font-size: 14px;
 }
 
 .spec-name {
-  font-size: 16.5px;
-  font-weight: 500;
-  color: #635246;
-  line-height: 1.4;
+  color: #705E51;
 }
 
 .spec-value {
-  font-size: 18px;
   font-weight: 700;
   color: #190D08;
-  letter-spacing: -0.015em;
   margin-left: auto;
-  margin-right: 16px;
-  line-height: 1.3;
+  margin-right: 14px;
 }
 
 .spec-pill {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 4.5px 12px;
+  padding: 3px 9px;
   border-radius: var(--radius-full);
   background: rgba(208, 69, 21, 0.08);
   color: #D04515;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .protocol-actions {
@@ -7271,40 +7263,6 @@ html, body {
     justify-content: center !important;
     text-align: center !important;
     white-space: nowrap !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .spec-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "name name"
-      "val pill";
-    row-gap: 6px;
-    column-gap: 12px;
-    align-items: center;
-    padding: 15px 0;
-  }
-
-  .spec-name {
-    grid-area: name;
-    font-size: 14.5px;
-    line-height: 1.35;
-  }
-
-  .spec-value {
-    grid-area: val;
-    margin: 0;
-    font-size: 17px;
-    line-height: 1.3;
-  }
-
-  .spec-pill {
-    grid-area: pill;
-    justify-self: end;
-    font-size: 11px;
-    padding: 4px 10px;
   }
 }
 
