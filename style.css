@@ -2796,32 +2796,185 @@ option {
   color: var(--text-muted);
 }
 
+/* Admin Profile Dropdown Menu */
+.admin-profile-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .user-profile-badge {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.7);
   padding: 6px 14px 6px 8px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--border-light, #E6DCCD);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(25, 13, 8, 0.03);
+}
+
+.user-profile-badge:hover,
+.admin-profile-wrapper.active .user-profile-badge {
+  background: #FFFFFF;
+  border-color: #D6C8B5;
+  box-shadow: 0 3px 10px rgba(25, 13, 8, 0.08);
 }
 
 .avatar-img-sm {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid #FFFFFF;
+  box-shadow: 0 1px 3px rgba(25, 13, 8, 0.1);
 }
 
 .badge-name {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-dark, #190D08);
+  line-height: 1.2;
 }
 
 .badge-tag {
-  font-size: 10.5px;
-  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted, #705E51);
+  line-height: 1.2;
+}
+
+.profile-chevron-icon {
+  width: 14px;
+  height: 14px;
+  color: #908681;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+
+.admin-profile-wrapper.active .profile-chevron-icon {
+  transform: rotate(180deg);
+  color: var(--color-terracotta, #D04515);
+}
+
+/* Dropdown Menu Panel */
+.admin-profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: #FFFFFF;
+  border: 1px solid #E8DFD1;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(25, 13, 8, 0.12), 0 2px 8px rgba(25, 13, 8, 0.04);
+  padding: 8px 6px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top right;
+  transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.18s;
+  pointer-events: none;
+}
+
+.admin-profile-wrapper.active .admin-profile-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .admin-profile-menu {
+    left: 0;
+    right: auto;
+    transform-origin: top left;
+  }
+}
+
+.admin-profile-menu-header {
+  padding: 10px 12px 10px;
+  border-bottom: 1px solid #F0E8DC;
+  margin-bottom: 6px;
+}
+
+.admin-menu-user-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #190D08;
+  line-height: 1.25;
+}
+
+.admin-menu-user-role {
+  font-size: 11px;
+  color: #705E51;
+  margin-top: 2px;
+}
+
+.admin-profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #2D1E15;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.admin-profile-menu-item:hover {
+  background: #FBF6EA;
+  color: #190D08;
+}
+
+.admin-profile-menu-item svg {
+  width: 16px;
+  height: 16px;
+  color: #705E51;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.admin-profile-menu-item:hover svg {
+  color: var(--color-terracotta, #D04515);
+}
+
+.admin-profile-menu-item.signout-item {
+  color: #B91C1C;
+}
+
+.admin-profile-menu-item.signout-item svg {
+  color: #B91C1C;
+}
+
+.admin-profile-menu-item.signout-item:hover {
+  background: rgba(185, 28, 28, 0.08);
+  color: #991B1B;
+}
+
+.admin-profile-menu-item.signout-item:hover svg {
+  color: #991B1B;
+}
+
+.admin-profile-menu-divider {
+  height: 1px;
+  background: #F0E8DC;
+  margin: 6px 4px;
 }
 
 /* KPI Cards */

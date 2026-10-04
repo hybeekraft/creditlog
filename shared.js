@@ -4977,6 +4977,67 @@ window.clearSystemCache = async function(silent = false) {
   }
 };
 
+// Admin Profile Dropdown Controller
+function initAdminProfileDropdown() {
+  document.querySelectorAll('.admin-profile-wrapper').forEach(wrapper => {
+    const trigger = wrapper.querySelector('.user-profile-badge') || wrapper;
+    const menu = wrapper.querySelector('.admin-profile-menu');
+    if (!menu) return;
+
+    trigger.setAttribute('tabindex', '0');
+    trigger.setAttribute('role', 'button');
+    trigger.setAttribute('aria-haspopup', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    const toggle = (e) => {
+      e.stopPropagation();
+      const isActive = wrapper.classList.contains('active');
+      document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
+        if (w !== wrapper) {
+          w.classList.remove('active');
+          const btn = w.querySelector('.user-profile-badge');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      wrapper.classList.toggle('active', !isActive);
+      trigger.setAttribute('aria-expanded', String(!isActive));
+    };
+
+    trigger.onclick = toggle;
+    trigger.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(e);
+      } else if (e.key === 'Escape') {
+        wrapper.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    };
+  });
+}
+
+// Global click outside listener for admin profile dropdown
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.admin-profile-wrapper')) {
+    document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
+      w.classList.remove('active');
+      const btn = w.querySelector('.user-profile-badge');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+// Close admin profile dropdown on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
+      w.classList.remove('active');
+      const btn = w.querySelector('.user-profile-badge');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
 // Run UI setups on load
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderAuth();
@@ -4987,6 +5048,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initSegmentedSlidingPill();
   initCardSpotlights();
   initAdminMobileNav();
+  initAdminProfileDropdown();
 });
+
+// In case script runs after DOMContentLoaded
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  initAdminProfileDropdown();
+}
+
 
 
