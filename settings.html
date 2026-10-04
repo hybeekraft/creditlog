@@ -244,28 +244,65 @@
       <!-- KPI Status Ribbon -->
       <div class="admin-kpi-grid">
         <div class="kpi-metric-card">
-          <span class="metric-title">Connection Status</span>
-          <div class="metric-val" id="resellerStatusText" style="font-size: 20px;">Checking...</div>
-          <span id="resellerStatusPill" class="order-status-pill status-processing"
-            style="font-size: 11px; padding: 2px 8px;">Connecting</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">Connection Status</span>
+            <div class="kpi-icon-badge deliveries">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="metric-val" id="resellerStatusText">Checking...</div>
+          <div class="kpi-card-footer">
+            <span id="resellerStatusPill" class="order-status-pill status-processing">Connecting</span>
+          </div>
         </div>
 
         <div class="kpi-metric-card">
-          <span class="metric-title">Wholesale Supplier Balance</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">Wholesale Balance</span>
+            <div class="kpi-icon-badge sales">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+            </div>
+          </div>
           <div class="metric-val" id="resellerBalanceVal">$0.00 USD</div>
-          <div id="resellerBalanceSub" class="cms-kpi-sub" style="color: #705E51;">Checking balance...</div>
+          <div class="kpi-card-footer">
+            <span id="resellerBalanceSub" class="kpi-subtext">Checking balance...</span>
+          </div>
         </div>
 
         <div class="kpi-metric-card">
-          <span class="metric-title">USD/NGN Exchange Rate</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">USD/NGN Rate</span>
+            <div class="kpi-icon-badge orders">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+          </div>
           <div class="metric-val" id="resellerRateVal">₦1,550</div>
-          <div class="cms-kpi-sub" style="color: #705E51;">Conversion base rate</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-subtext">Conversion base rate</span>
+          </div>
         </div>
 
         <div class="kpi-metric-card">
-          <span class="metric-title">Fulfillment Engine</span>
-          <div class="metric-val" id="resellerEngineVal" style="color: #16A34A;">Automated</div>
-          <div class="cms-kpi-sub" style="color: #705E51;">Instant dispatch enabled</div>
+          <div class="kpi-card-header">
+            <span class="metric-title">Fulfillment Engine</span>
+            <div class="kpi-icon-badge customers">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="metric-val" id="resellerEngineVal" style="color: #16A34A !important;">Automated</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-pill kpi-pill-success">● Instant Dispatch</span>
+          </div>
         </div>
       </div>
 

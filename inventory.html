@@ -17,7 +17,7 @@
     /* CMS & Inventory Specific Layouts */
     .cms-kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-bottom: 24px;
     }
@@ -127,6 +127,24 @@
     .cms-select option {
       background: #FFFFFF;
       color: var(--text-dark);
+    }
+
+    .cms-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cms-btn-refresh {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      padding: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      flex-shrink: 0;
     }
 
     .cms-btn-primary {
@@ -668,39 +686,50 @@
 
       <!-- 3-Card KPI Stat Strip -->
       <div class="cms-kpi-grid">
-        <div class="cms-card">
-          <div class="cms-kpi-label">
-            <span>Total Shop Products</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D04515" stroke-width="2">
-              <path
-                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            </svg>
+        <div class="kpi-metric-card">
+          <div class="kpi-card-header">
+            <span class="metric-title">Total Products</span>
+            <div class="kpi-icon-badge sales">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              </svg>
+            </div>
           </div>
-          <div class="cms-kpi-val" id="kpiTotalProducts">0</div>
-          <div class="cms-kpi-sub">Active & disabled subscriptions</div>
+          <div class="metric-val" id="kpiTotalProducts">0</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-subtext">Active & disabled</span>
+          </div>
         </div>
 
-        <div class="cms-card">
-          <div class="cms-kpi-label">
-            <span>Total Stock Units</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#190D08" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" />
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
+        <div class="kpi-metric-card">
+          <div class="kpi-card-header">
+            <span class="metric-title">Total Units</span>
+            <div class="kpi-icon-badge orders">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+            </div>
           </div>
-          <div class="cms-kpi-val" id="kpiTotalUnits">0</div>
-          <div class="cms-kpi-sub">Total physical & digital licenses</div>
+          <div class="metric-val" id="kpiTotalUnits">0</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-subtext">Licenses in stock</span>
+          </div>
         </div>
 
-        <div class="cms-card">
-          <div class="cms-kpi-label">
-            <span style="color: #15803D;">Available to Purchase</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+        <div class="kpi-metric-card">
+          <div class="kpi-card-header">
+            <span class="metric-title">Available to Buy</span>
+            <div class="kpi-icon-badge customers">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
           </div>
-          <div class="cms-kpi-val" id="kpiAvailableUnits" style="color: #15803D;">0</div>
-          <div class="cms-kpi-sub">Live stock units ready for checkout</div>
+          <div class="metric-val" id="kpiAvailableUnits" style="color: #15803D !important;">0</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-pill kpi-pill-success">● Ready for checkout</span>
+          </div>
         </div>
       </div>
 
@@ -733,21 +762,22 @@
             <option value="disabled">Disabled Products</option>
           </select>
 
-          <button type="button" class="cms-btn-primary" onclick="openAddProductModal()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            <span>Add Product</span>
-          </button>
+          <div class="cms-actions-group">
+            <button type="button" class="primary-btn cms-btn-primary" onclick="openAddProductModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Add Product</span>
+            </button>
 
-          <button type="button" class="secondary-btn" style="padding: 9px 12px;" onclick="loadInventory()"
-            title="Refresh live stock">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="23 4 23 10 17 10" />
-              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-            </svg>
-          </button>
+            <button type="button" class="secondary-btn cms-btn-refresh" onclick="loadInventory()" title="Refresh live stock">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 

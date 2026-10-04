@@ -62,7 +62,7 @@ CreditLog strictly rejects "AI slop" typography—the unconsidered use of overus
 ## 5. Layout & Responsive Principles
 - **Zero Horizontal Spillover:** `max-width: 100%; overflow-x: hidden;` on root viewports prevents unwanted horizontal page wobbling on mobile phones.
 - **Mobile-First Collapse:**
-  - KPI cards: 4 columns on desktop → 2 columns on tablet (<= 900px) → 1 column on mobile (<= 520px).
+  - KPI cards: 4 columns on desktop → 2 columns on tablet and mobile (<= 768px & <= 520px) in a compact, scannable 2x2 grid layout (3-card CMS layouts: 2 top cards + 1 full-width bottom card). Zero giant stacked towers.
   - Form grids: 2-column and 3-column layouts collapse to single-column flows on screens <= 768px.
   - Price Tier Rows: Desktop 5-column grid transforms into structured 2-column cards on touchscreens with dedicated removal buttons.
   - Customer Intelligence Cards: Flex layout adapts from horizontal row into stacked customer summary cards with full-width communication actions (WhatsApp, Email, Order History).
