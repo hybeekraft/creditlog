@@ -22,26 +22,30 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
 - **Whisper Border** (`rgba(25, 13, 8, 0.08)` to `rgba(25, 13, 8, 0.14)`) — Structural dividers and subtle card outlines.
 
 ## 3. Typographic Architecture & Anti-Slop Discipline
-CreditLog strictly rejects "AI slop" typography—the unconsidered use of a single neutral sans-serif doing every job at default weights and spacing. To ensure every screen reads as decided and human-crafted rather than machine-generated:
+CreditLog strictly rejects "AI slop" typography—the unconsidered use of overused AI default fonts like `Inter`, `Roboto`, or `Geist` applied uniformly across an entire application without character or intentional hierarchy.
 
-### A. Intentional Typographic Pairing (Statement vs. Workhorse)
-- **Display & Headlines (`Plus Jakarta Sans`):** Characterful geometric sans with distinctive structural ink traps, assertive weight (`font-weight: 700` to `800`), and personality. Carries the editorial perspective of the application.
-- **Body, UI Controls & Descriptions (`Inter`):** Quiet, neutral workhorse. Rendered at relaxed leading (`line-height: 1.6` to `1.65`) and normal tracking for effortless scanning across long sessions.
-- **Financial Telemetry & Monospace (`Geist Mono` / `SF Mono`):** Tabular numerals (`font-feature-settings: 'tnum' 1; font-variant-numeric: tabular-nums`) for currency figures (₦), exchange multipliers, transaction hashes, and status tags.
+### A. Intentional Three-Tier Font System (The Statement vs. The Quiet UI)
+1. **The Statement Headlines (`Plus Jakarta Sans` & `Instrument Serif`):**
+   - **Primary Display Sans:** `Plus Jakarta Sans` (weights `700`, `800`) with assertive structural ink traps and tight negative tracking (`letter-spacing: -0.025em` to `-0.035em`).
+   - **Editorial Serif Accent:** `Instrument Serif` (Google Fonts, italic & regular), an elegant, condensed serif that injects an editorial, high-end 1980s print/financial prestige feel to key titles and callouts.
+2. **The Quiet UI Body (`Outfit`):**
+   - Replaces generic `Inter` as the primary application body font. `Outfit` is a warm, friendly geometric sans-serif with open apertures and high legibility across mobile and desktop displays. Rendered with generous line-height (`line-height: 1.6` to `1.65`) and normal tracking.
+3. **The Technical Telemetry & Ledger (`Space Mono`):**
+   - A quirky, distinctive monospace font for financial tickers, timestamp badges, transaction IDs, rate chips (`FX: ₦1,500 / $1.00 USD`), and dispatch pills (`< 60s INSTANT`). Paired with tabular figures (`font-feature-settings: 'tnum' 1; font-variant-numeric: tabular-nums`).
 
 ### B. Decisive Type Scale & Spacing Rules
-1. **Hero & Display Headlines (`44px` – `56px`):** Tight negative tracking (`letter-spacing: -0.03em` to `-0.035em`), bold leading (`line-height: 1.08` – `1.12`), weight `800`. Prevents floaty, disconnected display titles.
+1. **Hero & Display Headlines (`44px` – `56px`):** Tight negative tracking (`letter-spacing: -0.03em` to `-0.035em`), bold leading (`line-height: 1.08` – `1.12`), weight `800`.
 2. **Section Titles (`28px` – `34px`):** Tight tracking (`letter-spacing: -0.025em`), weight `800`, line-height `1.18`.
 3. **Card & Panel Headers (`18px` – `22px`):** Slight negative tracking (`letter-spacing: -0.015em`), weight `750`.
-4. **Body Copy & Subheads (`14px` – `16px`):** Generous line height (`1.6` – `1.65`), neutral tracking (`0`), color `--text-muted` (`#705E51`) or `--text-dark` (`#190D08`).
-5. **Micro-Labels & Tickers (`10.5px` – `12px`):** Uppercase, letter-spaced (`letter-spacing: +0.03em` to `+0.05em`), weight `700`, monospace or sans-serif pills.
+4. **Body Copy & Subheads (`14px` – `16px`):** `Outfit`, generous line height (`1.6` – `1.65`), neutral tracking (`0`), color `--text-muted` (`#705E51`) or `--text-dark` (`#190D08`).
+5. **Micro-Labels & Tickers (`10.5px` – `12px`):** `Space Mono`, uppercase, letter-spaced (`letter-spacing: +0.03em` to `+0.05em`), weight `700`.
 
 ### C. The Five Anti-Slop Rules (Mandatory Contract)
-1. **Never use one font for everything:** Avoid Inter-on-Inter or scaling up body text to make a headline. Maintain deliberate contrast between headline personality and body neutrality.
-2. **Never leave display tracking at default `0`:** Large text looks generic without tightened letter-spacing. Display headings must have negative tracking (`-0.02em` to `-0.035em`).
-3. **Never crush body line-height:** Body text must have generous line height (`1.6`+); tight body copy causes eye strain and signals rushed builder defaults.
-4. **Never use emojis as icons:** Use precise, single-color SVG vectors with explicit dimensions.
-5. **Always enforce tabular numbers in financial data:** Currency amounts (`₦1,043,000`), counts, and multipliers must align vertically with fixed glyph widths (`tnum`).
+1. **Never use one font for everything:** Never scale up body text to make a headline. Maintain deliberate contrast between headline personality (`Plus Jakarta Sans` / `Instrument Serif`) and body neutrality (`Outfit`).
+2. **Escape AI default fonts:** Reject reflexive defaults like pure Inter-on-Inter or Geist. Give the UI a distinct, human voice.
+3. **Never leave display tracking at default `0`:** Display headings must have negative tracking (`-0.02em` to `-0.035em`).
+4. **Never crush body line-height:** Body text must have generous line height (`1.6`+); tight body copy causes eye strain and signals rushed builder defaults.
+5. **Enforce tabular numbers in financial data:** Currency amounts (`₦1,043,000`), rates, and multipliers must align vertically with fixed glyph widths (`tnum`).
 
 ## 4. Component Stylings & Interaction States
 - **Sidebar Navigation:**
