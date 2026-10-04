@@ -6977,13 +6977,16 @@ body {
 }
 
 .hero-slab-sub {
-  font-size: clamp(16px, 1.8vw, 19px);
-  color: rgba(255, 255, 255, 0.92);
-  line-height: 1.65;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.9vw, 21px);
+  color: rgba(255, 255, 255, 0.94);
+  line-height: 1.55;
+  letter-spacing: -0.015em;
   text-align: center;
-  max-width: 740px;
+  max-width: 680px;
   margin: 0 auto 36px;
-  font-weight: 400;
+  font-weight: 500;
+  text-wrap: balance;
 }
 
 .hero-slab-actions {
@@ -7557,8 +7560,9 @@ body {
   }
 
   .hero-slab-sub {
-    font-size: 14.5px;
-    line-height: 1.55;
+    font-size: 15.5px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
     margin-bottom: 26px;
   }
 
