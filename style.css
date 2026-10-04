@@ -2802,28 +2802,19 @@ option {
 }
 
 .menu-item.active {
-  background: #D04515;
+  background: var(--color-terracotta, #D04515);
   color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(208, 69, 21, 0.35);
-}
-
-.menu-item.logout {
-  margin-top: 40px;
-  color: #EF4444;
-}
-
-.menu-item.logout:hover {
-  background: rgba(239, 68, 68, 0.1);
-  color: #F87171;
 }
 
 .dash-main-area {
   flex: 1;
   margin-left: 240px;
+  width: calc(100% - 240px);
+  min-width: 0;
+  min-height: 100vh;
   padding: 32px 36px;
   background: var(--bg-main, #F4ECD8);
-  min-width: 0;
-  max-width: 1440px;
   box-sizing: border-box;
 }
 
@@ -2831,6 +2822,7 @@ option {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   margin-bottom: 28px;
 }
 
@@ -2838,11 +2830,13 @@ option {
   font-size: 24px;
   font-weight: 800;
   color: var(--text-dark, #190D08);
+  letter-spacing: -0.02em;
 }
 
 .welcome-sub {
   font-size: 13.5px;
-  color: var(--text-muted);
+  color: var(--text-muted, #705E51);
+  margin-top: 4px;
 }
 
 /* Admin Profile Dropdown Menu */
