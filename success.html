@@ -68,8 +68,9 @@
               </p>
             </div>
           </div>
-          <button type="button" onclick="resendReceiptEmail()" class="copy-cred-btn" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.3); color: #34D399;">
-            Resend Email ↻
+          <button type="button" onclick="resendReceiptEmail()" class="copy-cred-btn" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.3); color: #34D399; display: inline-flex; align-items: center; gap: 6px;">
+            <span>Resend Email</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
           </button>
         </div>
 
@@ -91,7 +92,10 @@
                 <span id="directActivationLinkText" style="font-family: monospace; font-size: 13px; word-break: break-all; color: #190D08; font-weight: 600;"></span>
               </div>
               <div style="display: flex; gap: 8px; flex-shrink: 0;">
-                <a id="directActivationLinkBtn" href="#" target="_blank" rel="noopener" class="primary-btn" style="padding: 9px 18px; font-size: 13px; text-decoration: none; border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;">Open Activation Link ↗</a>
+                <a id="directActivationLinkBtn" href="#" target="_blank" rel="noopener" class="primary-btn" style="padding: 9px 18px; font-size: 13px; text-decoration: none; border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;">
+                  <span>Open Activation Link</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
                 <button type="button" class="copy-cred-btn" onclick="copyDirectActivationLink()" style="padding: 9px 14px; font-size: 13px;">Copy Link</button>
               </div>
             </div>

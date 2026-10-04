@@ -218,11 +218,13 @@
           </div>
 
           <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
-            <button type="button" class="secondary-btn" onclick="verifyWholesaleConnection()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
-              ⚡ Verify Wholesale Dispatch
+            <button type="button" class="secondary-btn" onclick="verifyWholesaleConnection()" style="padding: 8px 12px; font-size: 12px; justify-content: center; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Verify Wholesale Dispatch</span>
             </button>
-            <button type="button" class="secondary-btn" onclick="viewSupplierProducts()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
-              📦 View Supplier Catalog
+            <button type="button" class="secondary-btn" onclick="viewSupplierProducts()" style="padding: 8px 12px; font-size: 12px; justify-content: center; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              <span>View Supplier Catalog</span>
             </button>
           </div>
         </div>
@@ -574,10 +576,10 @@
         balVal.textContent = `$${amt.toFixed(2)} ${balance.currency || 'USD'}`;
         if (balSub) {
           if (amt <= 0) {
-            balSub.textContent = '⚠️ Balance empty. Deposit funds at supplier.';
+            balSub.textContent = '● Balance empty. Deposit funds at supplier.';
             balSub.style.color = '#DC2626';
           } else if (amt < (settings.lowBalanceThreshold || 5)) {
-            balSub.textContent = '⚠️ Low balance alert (< $5.00)';
+            balSub.textContent = '● Low balance alert (< $5.00)';
             balSub.style.color = '#D97706';
           } else {
             balSub.textContent = '● Operational wholesale balance active';

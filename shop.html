@@ -124,23 +124,23 @@
             <div class="apple-dropdown-menu hidden" id="sortDropdownMenu" role="menu">
               <button type="button" class="apple-dropdown-item active" data-sort="name-asc" onclick="selectSortOption('name-asc', 'Alphabetical: A to Z')">
                 <span>Alphabetical: A to Z</span>
-                <span class="sort-check">✓</span>
+                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
               <button type="button" class="apple-dropdown-item" data-sort="brand-asc" onclick="selectSortOption('brand-asc', 'Brand: A to Z')">
                 <span>Brand: A to Z</span>
-                <span class="sort-check">✓</span>
+                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
               <button type="button" class="apple-dropdown-item" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
                 <span>Featured First</span>
-                <span class="sort-check">✓</span>
+                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
               <button type="button" class="apple-dropdown-item" data-sort="price-asc" onclick="selectSortOption('price-asc', 'Price: Lowest to Highest')">
                 <span>Price: Lowest to Highest</span>
-                <span class="sort-check">✓</span>
+                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
               <button type="button" class="apple-dropdown-item" data-sort="price-desc" onclick="selectSortOption('price-desc', 'Price: Highest to Lowest')">
                 <span>Price: Highest to Lowest</span>
-                <span class="sort-check">✓</span>
+                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
             </div>
           </div>
@@ -382,7 +382,7 @@
               ${renderBrandIcon(prod)}
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span class="card-cat-badge">${catLabel}</span>
-                ${!inStock ? '<span class="card-stock-pill sold-out">✖ Out of Stock</span>' : ''}
+                ${!inStock ? '<span class="card-stock-pill sold-out">● Out of Stock</span>' : ''}
               </div>
             </div>
 
