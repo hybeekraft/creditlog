@@ -313,20 +313,6 @@
       transform: scale(0.98);
     }
 
-    .server-notice-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(21, 128, 61, 0.08);
-      border: 1px solid rgba(21, 128, 61, 0.22);
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 11.5px;
-      color: #15803D;
-      font-weight: 600;
-      margin-top: 14px;
-    }
-
     @media (max-width: 820px) {
       .checkout-layout-grid {
         grid-template-columns: 1fr;
@@ -354,13 +340,6 @@
           </svg>
           <span>Cancel & Return</span>
         </a>
-
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-size: 12px; color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-            256-bit Encrypted
-          </span>
-        </div>
       </div>
 
       <div class="checkout-layout-grid">
@@ -385,7 +364,7 @@
               </div>
             </div>
             <div class="form-group-item">
-              <label for="custEmail">Email Address (For Instant Digital Delivery) *</label>
+              <label for="custEmail">Email Address *</label>
               <input type="email" id="custEmail" placeholder="e.g. alex@example.com" required>
               <span class="form-help-hint">Your login credentials, profile PIN, and official receipt will be sent directly to this address.</span>
             </div>
@@ -523,9 +502,6 @@
               <span style="font-size: 12px; color: #705E51; display: block;">Total Due</span>
               <span class="total-big-val" id="summaryTotalBig">$0.00</span>
             </div>
-            <div style="text-align: right;">
-              <span style="font-size: 12px; color: #15803D; font-weight: 600;" id="summaryDualTotal">Instant Digital Delivery</span>
-            </div>
           </div>
 
           <button type="button" class="checkout-pay-btn" id="proceedPayBtn" onclick="handleProceedToPayment()">
@@ -534,11 +510,6 @@
               <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-
-          <div class="server-notice-pill">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <span>Server calculates and validates all pricing</span>
-          </div>
         </aside>
 
       </div>
