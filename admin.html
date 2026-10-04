@@ -87,42 +87,72 @@
           </button>
         </div>
       </header>
-
       <!-- Admin KPI 4-Card Grid -->
       <div class="admin-kpi-grid">
         <div class="kpi-metric-card">
-          <span class="metric-title">Total Sales</span>
-          <div class="metric-val" id="kpiTotalSales">₦0</div>
-          <div class="trend-badge positive" id="kpiSalesTrend">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            <span>↑ 12%</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">Total Sales</span>
+            <div class="kpi-icon-badge sales">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+          </div>
+          <div class="metric-val" id="kpiTotalSales">₦1,043,000</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-pill kpi-pill-success" id="kpiSalesTrend">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+              <span>+12.5%</span>
+            </span>
+            <span class="kpi-subtext">vs last week</span>
           </div>
         </div>
 
         <div class="kpi-metric-card">
-          <span class="metric-title">Total Orders</span>
-          <div class="metric-val" id="kpiTotalOrders">0</div>
-          <div class="trend-badge positive" id="kpiOrdersTrend">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            <span>↑ 8%</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">Total Orders</span>
+            <div class="kpi-icon-badge orders">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+          </div>
+          <div class="metric-val" id="kpiTotalOrders">48</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-pill kpi-pill-success" id="kpiOrdersTrend">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+              <span>+8.0%</span>
+            </span>
+            <span class="kpi-subtext">store volume</span>
           </div>
         </div>
 
-        <a href="customers.html" class="kpi-metric-card" style="text-decoration:none; display:block; cursor:pointer; color:inherit;">
-          <span class="metric-title">Active Customers</span>
-          <div class="metric-val" id="kpiActiveCustomers">0</div>
-          <div class="trend-badge positive">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            <span>View Directory →</span>
+        <div class="kpi-metric-card">
+          <div class="kpi-card-header">
+            <span class="metric-title">Active Customers</span>
+            <div class="kpi-icon-badge customers">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
           </div>
-        </a>
+          <div class="metric-val" id="kpiActiveCustomers">15</div>
+          <div class="kpi-card-footer">
+            <a href="customers.html" class="kpi-directory-link">
+              <span>View Directory</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+        </div>
 
         <div class="kpi-metric-card">
-          <span class="metric-title">Pending Deliveries</span>
-          <div class="metric-val" id="kpiPendingDeliveries">0</div>
-          <div class="trend-badge negative" id="kpiPendingTrend">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(45 10 10)"/></svg>
-            <span>Active</span>
+          <div class="kpi-card-header">
+            <span class="metric-title">Pending Deliveries</span>
+            <div class="kpi-icon-badge deliveries">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+          </div>
+          <div class="metric-val" id="kpiPendingDeliveries">2</div>
+          <div class="kpi-card-footer">
+            <span class="kpi-pill kpi-pill-warning" id="kpiPendingTrend">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Awaiting Dispatch</span>
+            </span>
+            <span class="kpi-subtext" id="kpiPendingSubtext">needs action</span>
           </div>
         </div>
       </div>
@@ -293,18 +323,37 @@
 
       const salesTrendEl = document.getElementById('kpiSalesTrend');
       if (salesTrendEl && kpis.salesTrendPercent !== undefined) {
-        const sign = kpis.salesTrendPercent >= 0 ? '↑' : '↓';
-        salesTrendEl.className = 'trend-badge ' + (kpis.salesTrendPercent >= 0 ? 'positive' : 'negative');
-        const span = salesTrendEl.querySelector('span') || salesTrendEl;
-        span.textContent = `${sign} ${Math.abs(kpis.salesTrendPercent)}%`;
+        const isUp = kpis.salesTrendPercent >= 0;
+        salesTrendEl.className = 'kpi-pill ' + (isUp ? 'kpi-pill-success' : 'kpi-pill-danger');
+        const iconSvg = isUp
+          ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>'
+          : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+        salesTrendEl.innerHTML = `${iconSvg}<span>${isUp ? '+' : ''}${kpis.salesTrendPercent}%</span>`;
       }
 
       const ordersTrendEl = document.getElementById('kpiOrdersTrend');
       if (ordersTrendEl && kpis.ordersTrendPercent !== undefined) {
-        const sign = kpis.ordersTrendPercent >= 0 ? '↑' : '↓';
-        ordersTrendEl.className = 'trend-badge ' + (kpis.ordersTrendPercent >= 0 ? 'positive' : 'negative');
-        const span = ordersTrendEl.querySelector('span') || ordersTrendEl;
-        span.textContent = `${sign} ${Math.abs(kpis.ordersTrendPercent)}%`;
+        const isUp = kpis.ordersTrendPercent >= 0;
+        ordersTrendEl.className = 'kpi-pill ' + (isUp ? 'kpi-pill-success' : 'kpi-pill-danger');
+        const iconSvg = isUp
+          ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>'
+          : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+        ordersTrendEl.innerHTML = `${iconSvg}<span>${isUp ? '+' : ''}${kpis.ordersTrendPercent}%</span>`;
+      }
+
+      const pendingTrendEl = document.getElementById('kpiPendingTrend');
+      const pendingSubtextEl = document.getElementById('kpiPendingSubtext');
+      if (pendingTrendEl) {
+        const pendingCount = Number(kpis.pendingDeliveries || 0);
+        if (pendingCount > 0) {
+          pendingTrendEl.className = 'kpi-pill kpi-pill-warning';
+          pendingTrendEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Awaiting Dispatch</span>`;
+          if (pendingSubtextEl) pendingSubtextEl.textContent = 'needs action';
+        } else {
+          pendingTrendEl.className = 'kpi-pill kpi-pill-success';
+          pendingTrendEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>All Fulfilled</span>`;
+          if (pendingSubtextEl) pendingSubtextEl.textContent = 'zero backlog';
+        }
       }
     }
 
