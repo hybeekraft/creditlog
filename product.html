@@ -95,6 +95,16 @@
 
     .product-meta-wrap {
       flex: 1;
+      min-width: 0;
+    }
+
+    .product-tags-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 8px;
+      gap: 12px;
     }
 
     .product-cat-tag {
@@ -107,8 +117,12 @@
       border: 1px solid rgba(208, 69, 21, 0.2);
       padding: 3px 10px;
       border-radius: 9999px;
-      display: inline-block;
-      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
+      margin: 0;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .product-headline {
@@ -372,9 +386,13 @@
       gap: 5px;
       font-size: 11px;
       font-weight: 800;
-      padding: 3px 9px;
+      padding: 3px 10px;
       border-radius: 9999px;
       letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin: 0 0 0 auto;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .stock-pill-badge.in-stock {
       background: rgba(16, 185, 129, 0.12);
@@ -417,7 +435,7 @@
         <div class="product-brand-row">
           <div class="product-icon-tile" id="productIconTile"></div>
           <div class="product-meta-wrap">
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <div class="product-tags-header">
               <span class="product-cat-tag" id="productCategoryTag">AI & LLMs</span>
               <span class="stock-pill-badge in-stock" id="productStockBadge">● In Stock</span>
             </div>
