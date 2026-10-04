@@ -2051,8 +2051,9 @@ const server = http.createServer(async (req, res) => {
       } else {
         const headers = { 'Content-Type': contentType };
         if (['.html', '.json', '.js', '.css'].includes(ext)) {
-          headers['Cache-Control'] = 'no-cache, must-revalidate, max-age=0';
+          headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0';
           headers['Pragma'] = 'no-cache';
+          headers['Expires'] = '0';
         }
         res.writeHead(200, headers);
         res.end(content);
