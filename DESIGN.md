@@ -21,11 +21,27 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
 - **Crimson Red** (`#DC2626` / `#EF4444`) — Destructive actions, out of stock alerts, low balance warnings.
 - **Whisper Border** (`rgba(25, 13, 8, 0.08)` to `rgba(25, 13, 8, 0.14)`) — Structural dividers and subtle card outlines.
 
-## 3. Typographic Architecture
-- **Display & Headlines:** `Plus Jakarta Sans` — Tight tracking (`letter-spacing: -0.02em`), weight-driven hierarchy (`font-weight: 800`).
-- **Body & Controls:** `Plus Jakarta Sans` / `Inter` — Relaxed leading, high legibility across all screen densities.
-- **Numbers & Telemetry:** Tabular figures (`font-variant-numeric: tabular-nums`) for currency amounts, multipliers, and inventory counts.
-- **Banned:** Generic system serifs (`Times New Roman`, `Georgia`), oversaturated neon typography, and emoji decoration in functional labels.
+## 3. Typographic Architecture & Anti-Slop Discipline
+CreditLog strictly rejects "AI slop" typography—the unconsidered use of a single neutral sans-serif doing every job at default weights and spacing. To ensure every screen reads as decided and human-crafted rather than machine-generated:
+
+### A. Intentional Typographic Pairing (Statement vs. Workhorse)
+- **Display & Headlines (`Plus Jakarta Sans`):** Characterful geometric sans with distinctive structural ink traps, assertive weight (`font-weight: 700` to `800`), and personality. Carries the editorial perspective of the application.
+- **Body, UI Controls & Descriptions (`Inter`):** Quiet, neutral workhorse. Rendered at relaxed leading (`line-height: 1.6` to `1.65`) and normal tracking for effortless scanning across long sessions.
+- **Financial Telemetry & Monospace (`Geist Mono` / `SF Mono`):** Tabular numerals (`font-feature-settings: 'tnum' 1; font-variant-numeric: tabular-nums`) for currency figures (₦), exchange multipliers, transaction hashes, and status tags.
+
+### B. Decisive Type Scale & Spacing Rules
+1. **Hero & Display Headlines (`44px` – `56px`):** Tight negative tracking (`letter-spacing: -0.03em` to `-0.035em`), bold leading (`line-height: 1.08` – `1.12`), weight `800`. Prevents floaty, disconnected display titles.
+2. **Section Titles (`28px` – `34px`):** Tight tracking (`letter-spacing: -0.025em`), weight `800`, line-height `1.18`.
+3. **Card & Panel Headers (`18px` – `22px`):** Slight negative tracking (`letter-spacing: -0.015em`), weight `750`.
+4. **Body Copy & Subheads (`14px` – `16px`):** Generous line height (`1.6` – `1.65`), neutral tracking (`0`), color `--text-muted` (`#705E51`) or `--text-dark` (`#190D08`).
+5. **Micro-Labels & Tickers (`10.5px` – `12px`):** Uppercase, letter-spaced (`letter-spacing: +0.03em` to `+0.05em`), weight `700`, monospace or sans-serif pills.
+
+### C. The Five Anti-Slop Rules (Mandatory Contract)
+1. **Never use one font for everything:** Avoid Inter-on-Inter or scaling up body text to make a headline. Maintain deliberate contrast between headline personality and body neutrality.
+2. **Never leave display tracking at default `0`:** Large text looks generic without tightened letter-spacing. Display headings must have negative tracking (`-0.02em` to `-0.035em`).
+3. **Never crush body line-height:** Body text must have generous line height (`1.6`+); tight body copy causes eye strain and signals rushed builder defaults.
+4. **Never use emojis as icons:** Use precise, single-color SVG vectors with explicit dimensions.
+5. **Always enforce tabular numbers in financial data:** Currency amounts (`₦1,043,000`), counts, and multipliers must align vertically with fixed glyph widths (`tnum`).
 
 ## 4. Component Stylings & Interaction States
 - **Sidebar Navigation:**

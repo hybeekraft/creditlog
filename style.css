@@ -4,8 +4,10 @@
 
 :root {
   color-scheme: light;
-  --font-primary: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
-  --font-mono: "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-primary: var(--font-display);
+  --font-mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
 
   /* Official Brand Palette Tokens */
   --parchment: #F4ECD8;
@@ -103,11 +105,11 @@ html {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   background-color: var(--bg-main);
   background-image: none;
   color: var(--text-dark);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -115,6 +117,35 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   position: relative;
+}
+
+h1, h2, h3, h4, h5, h6,
+.hero-title,
+.welcome-heading,
+.section-main-title,
+.panel-title,
+.product-title,
+.brand-name {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+h1,
+.hero-title,
+.welcome-heading {
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.metric-val,
+.spec-value,
+.price-tag,
+.order-price-col,
+.summary-val,
+.currency-figure {
+  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
 }
 
 button {
