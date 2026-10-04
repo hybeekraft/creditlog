@@ -8,7 +8,7 @@ CreditLog is an enterprise digital subscriptions marketplace and inventory manag
 
 ### 1. Admin Portal Suite
 - **Analytics & Operations Dashboard (`admin.html`):** Store performance KPIs, interactive SVG revenue curve, recent orders list, and real-time wholesale supplier balance ribbon.
-- **Inventory & CMS Dashboard (`inventory.html`):** Real-time stock units, active customer reservations, product variant management, dynamic brand logos, and instant inventory toggles.
+- **Inventory & CMS Dashboard (`inventory.html`):** Real-time stock units, live availability counters, product variant options, dynamic brand logos, price overrides, and instant inventory toggles. Streamlined with a 3-card KPI overview and clean 7-column CMS registry.
 - **Customer Directory & Intelligence (`customers.html`):** Customer lifetime value (LTV), repeat buyer retention, order history, and direct WhatsApp/Email dispatch.
 - **Settings & Wholesale Multi-Vendor Engine (`settings.html`):** Multi-supplier API configuration, sandbox simulation, real-time FX conversion rate, price tiers, and product/category overrides.
 - **System Audit Trail (`activity-logs.html`):** Comprehensive security logs, module filters, and CSV export.
@@ -34,13 +34,17 @@ Pricing follows a strict 4-level deterministic priority structure:
   - Multi-column grids collapse gracefully into single-column flows.
   - Zero horizontal page overflow (`max-width: 100%; overflow-x: hidden;`).
 
+### 5. Crawler Governance & SEO Architecture
+- **Robots Directives (`robots.txt`):** Protects all backoffice portals (`/admin`, `/inventory`, `/customers`, `/settings`, `/activity-logs`), private customer checkouts, receipts, and internal REST API routes. Permits public storefront pages (`/`, `/shop`, `/product`, `/style.css`, `/shared.js`, `/assets/`).
+- **Canonical XML Sitemap (`sitemap.xml`):** Fully indexes public storefront entries (`/`, `/shop`, `/product.html`) with proper change frequency and priority weighting.
+
 ---
 
 ## 🛠️ Technology Stack
 - **Frontend:** Vanilla HTML5, Modern CSS3 (CSS Grid, Flexbox, custom properties), Vanilla JavaScript.
 - **Backend:** Node.js HTTP & REST API services (`server/index.js`).
 - **Data Persistence:** Local JSON data store (`data/inventory.json`, `data/settings.json`, `data/customers.json`).
-- **Design System:** Editorial Warm Parchment (`#F4ECD8`), Charcoal Ink (`#190D08`), Terracotta Accent (`#D04515`). Follows `/stitch-design-taste` and `/impeccable`.
+- **Design System:** Editorial Warm Parchment (`#F4ECD8`), Charcoal Ink (`#190D08`), Terracotta Accent (`#D04515`). Follows `/stitch-design-taste`, `/impeccable`, `/clean-code`, and `/clean-code-safe-cleanup`.
 
 ---
 
@@ -77,4 +81,4 @@ The application is served at `http://localhost:3000`.
 ## 🔒 Security & Standards
 - Protected admin routes with token-based authorization.
 - Zero client-side API secret leakage; vendor API keys are managed and dispatched strictly server-side.
-- Zero-regression engineering and safe component architecture.
+- Zero-regression engineering, clean code conventions, and safe component deletion protocol.

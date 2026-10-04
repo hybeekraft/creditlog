@@ -47,11 +47,13 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
   - Price Tier Rows: Desktop 5-column grid transforms into structured 2-column cards on touchscreens with dedicated removal buttons.
   - Customer Intelligence Cards: Flex layout adapts from horizontal row into stacked customer summary cards with full-width communication actions (WhatsApp, Email, Order History).
 
-## 6. Current Feature Architecture
-- **Wholesale Reseller Multi-Vendor Engine:** Supports multiple supplier credentials, live API vs. sandbox simulation toggling, and automated wholesale routing.
-- **Dynamic Price Range Tiers:** Configurable cost brackets with custom price multipliers (e.g., higher multipliers for micro-purchases to protect margins).
-- **Product & Category Multipliers:** Priority hierarchy: Product Override > Dynamic Price Tier > Category Multiplier > Store Default FX Markup.
-- **Dual Currency Engine:** Real-time USD/NGN exchange rate calculations across checkout, catalog, and inventory.
+## 6. Current Feature Architecture & Backoffice Suite
+- **Analytics & Operations Dashboard (`admin.html`):** Real-time revenue curve, orders management, and balance ribbons.
+- **Inventory CMS (`inventory.html`):** 3-card overview (`Total Products`, `Total Stock Units`, `Available to Purchase`), clean 7-column registry (`Product & ID`, `Price`, `Total Stock`, `Available`, `Status`, `Enabled`, `Actions`), live steppers, and variant manager.
+- **Customer Directory (`customers.html`):** Customer retention telemetry, LTV aggregation, search filter chips, and omnichannel contact actions.
+- **Wholesale Reseller & Settings (`settings.html`):** Multi-supplier credentials, sandbox vs. live switching, FX exchange rates, dynamic price tiers, and product overrides.
+- **System Audit Trail (`activity-logs.html`):** Live audit logging, module filter badges, and CSV export.
+- **Crawler & Indexing Protection (`robots.txt` & `sitemap.xml`):** Comprehensive directives blocking sensitive backoffice portals and checkout sessions while cleanly exposing public storefront routes.
 
 ## 7. Anti-Patterns & Banned AI Tells
 - No pure black `#000000`.
@@ -59,3 +61,4 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
 - No centered hero sections or cluttered multi-column mobile overflows.
 - No emojis as substitute for functional UI icons.
 - No generic AI copy ("seamless", "elevate", "next-gen").
+- No obsolete, dead, or unverified code left in production paths.

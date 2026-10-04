@@ -254,9 +254,7 @@
         card.className = 'directory-card';
         card.style.setProperty('--card-index', idx);
 
-        const total = prod.totalStock !== undefined ? prod.totalStock : 10;
-        const reserved = prod.reservedStock || 0;
-        const available = prod.availableStock !== undefined ? prod.availableStock : Math.max(0, total - reserved);
+        const available = prod.availableStock !== undefined ? prod.availableStock : (prod.totalStock !== undefined ? prod.totalStock : 10);
         const isAvailable = prod.enabled !== false && available > 0 && prod.inStock !== false;
 
         const stockBadge = !isAvailable

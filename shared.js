@@ -46,7 +46,7 @@ function logoutUser() {
 }
 
 function renderHeaderAuth() {
-  // Profile avatar and admin menu are strictly reserved for backoffice admin pages (admin.html, inventory.html, activity-logs.html)
+  // Profile avatar and admin menu are strictly reserved for backoffice admin pages (admin.html, inventory.html, customers.html, settings.html, activity-logs.html)
   // Ensure no profile avatar or admin menu is ever injected into the public storefront header
   const existingAuthWrap = document.getElementById('headerAuthContainer');
   if (existingAuthWrap) {

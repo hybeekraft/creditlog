@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CreditLog — Inventory & CMS Dashboard</title>
-  <meta name="description" content="Real-time stock management, shop inventory CMS, reservations, and pricing control.">
+  <meta name="description" content="Real-time stock management, shop inventory CMS, catalog, and pricing control.">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -617,7 +617,7 @@
       <header class="dash-top-bar">
         <div>
           <h1 class="welcome-heading">Inventory & CMS Dashboard</h1>
-          <p class="welcome-sub">Manage shop inventory, real-time stock levels, checkouts, reservations, and prices.</p>
+          <p class="welcome-sub">Manage shop inventory, real-time stock levels, pricing, and catalog subscriptions.</p>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
           <div class="user-profile-badge" id="adminUserBadge">
@@ -641,7 +641,7 @@
         </div>
       </header>
 
-      <!-- 4-Card KPI Stat Strip -->
+      <!-- 3-Card KPI Stat Strip -->
       <div class="cms-kpi-grid">
         <div class="cms-card">
           <div class="cms-kpi-label">
@@ -1211,8 +1211,7 @@
       tbody.innerHTML = filtered.map(prod => {
         const isEnabled = prod.enabled !== false;
         const total = prod.totalStock || 0;
-        const reserved = prod.reservedStock || 0;
-        const available = prod.availableStock !== undefined ? prod.availableStock : Math.max(0, total - reserved);
+        const available = prod.availableStock !== undefined ? prod.availableStock : total;
 
         let stockBadgeClass = 'in-stock';
         let stockStatusText = '● In Stock';
@@ -1890,7 +1889,7 @@
       checkAdminAuth();
       populateBrandSelects();
       loadInventory();
-      // Auto-poll inventory status every 15 seconds for live reservations
+      // Auto-poll inventory status every 15 seconds for live stock updates
       setInterval(loadInventory, 15000);
     });
   </script>

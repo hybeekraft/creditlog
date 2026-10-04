@@ -1,23 +1,27 @@
 # https://www.robotstxt.org/robotstxt.html
-# CreditLog — Crawling and Indexing Directives
+# CreditLog — Search Engine & Web Crawler Directives
 
 User-agent: *
 
-# Block administrative panels, inventory CMS, and internal logs
+# Block administrative panels, inventory CMS, customer directory, and system logs
 Disallow: /admin.html
 Disallow: /admin
 Disallow: /inventory.html
 Disallow: /inventory
+Disallow: /customers.html
+Disallow: /customers
+Disallow: /settings.html
+Disallow: /settings
 Disallow: /activity-logs.html
 Disallow: /activity-logs
 
-# Block checkout sessions, private reservations, and customer receipts
+# Block private customer checkout sessions and order receipt pages
 Disallow: /checkout.html
 Disallow: /checkout
 Disallow: /success.html
 Disallow: /success
 
-# Block backend API routes & data persistence files
+# Block backend REST API routes and data persistence directories
 Disallow: /api/
 Disallow: /data/
 
@@ -28,7 +32,9 @@ Crawl-delay: 10
 Allow: /
 Allow: /index.html
 Allow: /shop.html
+Allow: /shop
 Allow: /product.html
+Allow: /product
 Allow: /style.css
 Allow: /shared.js
 Allow: /assets/
