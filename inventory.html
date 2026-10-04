@@ -279,18 +279,6 @@
     }
 
     /* Stock Metric Badges */
-    .stock-badge-reserved {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: rgba(217, 90, 34, 0.1);
-      color: #D95A22;
-      border: 1px solid rgba(217, 90, 34, 0.25);
-    }
-
     .stock-badge-available {
       display: inline-flex;
       align-items: center;
@@ -681,18 +669,6 @@
 
         <div class="cms-card">
           <div class="cms-kpi-label">
-            <span style="color: #D95A22;">Reserved Stock</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D95A22" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </div>
-          <div class="cms-kpi-val" id="kpiReservedUnits" style="color: #D95A22;">0</div>
-          <div class="cms-kpi-sub">Held in active customer checkouts</div>
-        </div>
-
-        <div class="cms-card">
-          <div class="cms-kpi-label">
             <span style="color: #15803D;">Available to Purchase</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2">
               <polyline points="20 6 9 17 4 12" />
@@ -759,7 +735,6 @@
                 <th>Product & ID</th>
                 <th>Price (USD)</th>
                 <th>Total Stock</th>
-                <th>Reserved</th>
                 <th>Available</th>
                 <th>Status</th>
                 <th>Enabled</th>
@@ -768,7 +743,7 @@
             </thead>
             <tbody id="inventoryTableBody">
               <tr>
-                <td colspan="8" style="text-align: center; padding: 40px; color: #64748B;">
+                <td colspan="7" style="text-align: center; padding: 40px; color: #64748B;">
                   Loading real-time CMS inventory...
                 </td>
               </tr>
@@ -967,9 +942,7 @@
         <button type="button" class="cms-close-btn" onclick="closeStockEditModal()">×</button>
       </div>
       <div style="margin-bottom: 16px;">
-        <p style="font-size: 13.5px; color: #190D08;" id="stockEditProdName">Product</p>
-        <p style="font-size: 12px; color: #705E51; margin-top: 4px;">Currently reserved in checkout: <strong
-            id="stockEditReservedVal" style="color: #D95A22;">0</strong></p>
+        <p style="font-size: 13.5px; font-weight: 700; color: #190D08;" id="stockEditProdName">Product</p>
       </div>
       <div class="cms-form-group">
         <label>Total Stock Quantity *</label>
@@ -1186,10 +1159,9 @@
 
     function updateKpis(summary) {
       if (!summary) return;
-      document.getElementById('kpiTotalProducts').textContent = summary.totalProducts.toLocaleString();
-      document.getElementById('kpiTotalUnits').textContent = summary.totalStockUnits.toLocaleString();
-      document.getElementById('kpiReservedUnits').textContent = summary.totalReservedUnits.toLocaleString();
-      document.getElementById('kpiAvailableUnits').textContent = summary.totalAvailableUnits.toLocaleString();
+      if (document.getElementById('kpiTotalProducts')) document.getElementById('kpiTotalProducts').textContent = summary.totalProducts.toLocaleString();
+      if (document.getElementById('kpiTotalUnits')) document.getElementById('kpiTotalUnits').textContent = summary.totalStockUnits.toLocaleString();
+      if (document.getElementById('kpiAvailableUnits')) document.getElementById('kpiAvailableUnits').textContent = summary.totalAvailableUnits.toLocaleString();
     }
 
     // Render Table Rows
@@ -1228,7 +1200,7 @@
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; padding: 40px; color: #64748B;">
+            <td colspan="7" style="text-align: center; padding: 40px; color: #64748B;">
               No products found matching your current filter criteria.
             </td>
           </tr>
@@ -1282,13 +1254,9 @@
             <td>
               <div class="cms-stepper">
                 <button type="button" class="cms-step-btn" onclick="adjustStock('${prod.id}', -1)" title="Reduce by 1">−</button>
-                <span class="cms-step-val" onclick="openExactStockModal('${prod.id}', ${total}, ${reserved})" title="Click to set exact quantity">${total}</span>
+                <span class="cms-step-val" onclick="openExactStockModal('${prod.id}', ${total})" title="Click to set exact quantity">${total}</span>
                 <button type="button" class="cms-step-btn" onclick="adjustStock('${prod.id}', 1)" title="Increase by 1">+</button>
               </div>
-            </td>
-
-            <td>
-              <span class="stock-badge-reserved">${reserved}</span>
             </td>
 
             <td>
@@ -1355,11 +1323,10 @@
     }
 
     // Set Exact Stock Modal
-    function openExactStockModal(prodId, currentTotal, reserved) {
+    function openExactStockModal(prodId, currentTotal) {
       activeEditingProdId = prodId;
       const prod = productsList.find(p => p.id === prodId);
       document.getElementById('stockEditProdName').textContent = prod ? prod.name : prodId;
-      document.getElementById('stockEditReservedVal').textContent = reserved;
       document.getElementById('exactStockInput').value = currentTotal;
       document.getElementById('stockEditModal').classList.remove('hidden');
     }
