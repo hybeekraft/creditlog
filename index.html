@@ -47,44 +47,188 @@
   <main class="main-content">
 
     <!-- 1. TANGERINE CAPITAL INSPIRED HERO SLAB -->
-    <section class="hero-section-editorial">
-      <div class="editorial-hero-slab">
+    <!-- 1. SLEEK DARK LUXURY GLASSMORPHIC HERO -->
+    <section class="hero-section-editorial" id="heroSection">
+      <div class="editorial-hero-slab hero-luxury-glass">
+        <!-- Ambient decorative glow backdrops -->
+        <div class="hero-ambient-glow glow-top-right" aria-hidden="true"></div>
+        <div class="hero-ambient-glow glow-bottom-left" aria-hidden="true"></div>
+        <div class="hero-grid-mesh" aria-hidden="true"></div>
 
-        <!-- High-impact headline with golden highlighter box -->
-        <h1 class="hero-slab-headline">
-          The <span class="highlight-badge-gold"><em class="editorial-serif">Verified</em></span> Exchange for Premium Digital Subscriptions.
-        </h1>
+        <div class="hero-split-grid">
+          <!-- Left Column: Copy & Actions -->
+          <div class="hero-copy-column">
+            <!-- Live Status Pulse Badge -->
+            <div class="hero-live-status-pill">
+              <span class="live-dot-pulse">
+                <span class="pulse-ring"></span>
+                <span class="pulse-core"></span>
+              </span>
+              <span class="live-pill-text">AUTOMATED DISPATCH ACTIVE</span>
+              <span class="live-pill-separator">/</span>
+              <span class="live-pill-metric">&lt; 60s DELIVERY</span>
+            </div>
 
-        <!-- Subtitle -->
-        <p class="hero-slab-sub">
-          Instant, private access to premium developer, AI, media, and design suites. No account creation walls, no wallet pre-funding—select duration and receive immediate automated delivery.
-        </p>
+            <!-- High-impact headline with glowing gold highlighter box -->
+            <h1 class="hero-slab-headline">
+              Private access built for the <span class="highlight-badge-gold"><em class="editorial-serif">smart</em></span> digital operator.
+            </h1>
 
-        <!-- CTA Buttons -->
-        <div class="hero-slab-actions">
-          <a href="shop.html" class="slab-btn-dark">
-            <span>Browse Subscriptions</span>
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-            </svg>
-          </a>
-          <a href="#protocolSection" class="slab-btn-outline">
-            <span>Delivery Protocol</span>
-          </a>
+            <!-- Subtitle -->
+            <p class="hero-slab-sub">
+              Instant, private access to premium developer, AI, media, and design suites. Direct automated credential dispatch, zero signup walls, wholesale rates, and 100% replacement warranty.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="hero-slab-actions">
+              <a href="shop.html" class="slab-btn-primary-glow">
+                <span>Browse Subscriptions</span>
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </a>
+              <a href="#protocolSection" class="slab-btn-glass">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <span>Delivery Protocol</span>
+              </a>
+            </div>
+
+            <!-- Trust Meta Micro-Strip -->
+            <div class="hero-trust-row">
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Zero Account Signup</span>
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Wholesale Direct Pricing</span>
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>100% Replacement Warranty</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Live Product Preview Card Stage -->
+          <div class="hero-preview-column">
+            <!-- Floating Accent Badge 1: Verification -->
+            <div class="hero-floating-pill float-top-right">
+              <span class="float-icon">✦</span>
+              <span>VERIFIED ACCESS SEATS</span>
+            </div>
+
+            <!-- Main Interactive Glass Preview Card -->
+            <div class="hero-interactive-card" id="heroInteractiveCard">
+              <!-- Card Header -->
+              <div class="preview-card-header">
+                <div class="preview-brand-info">
+                  <div class="preview-brand-icon" id="previewBrandIcon" style="background: rgba(208, 69, 21, 0.15);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D04515">
+                      <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="preview-title" id="previewTitle">Claude Pro</div>
+                    <div class="preview-sub" id="previewSub">Anthropic AI • Extended Limits</div>
+                  </div>
+                </div>
+                <div class="preview-stock-badge" id="previewStockBadge">
+                  <span class="preview-badge-dot"></span>
+                  <span id="previewStockText">IN STOCK</span>
+                </div>
+              </div>
+
+              <!-- Price and Tier Info -->
+              <div class="preview-price-box">
+                <div class="preview-price-row">
+                  <span class="preview-price-val" id="previewPriceVal">₦9,450</span>
+                  <span class="preview-price-cycle">/ month</span>
+                  <span class="preview-discount-tag" id="previewDiscountTag">55% OFF</span>
+                </div>
+                <div class="preview-delivery-eta">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>Instant dispatch to screen & email upon payment</span>
+                </div>
+              </div>
+
+              <!-- Feature List -->
+              <div class="preview-features-list" id="previewFeaturesList">
+                <div class="preview-feat-item">
+                  <span class="feat-check">✓</span>
+                  <span>Full Claude 3.5 Sonnet & Opus priority capacity</span>
+                </div>
+                <div class="preview-feat-item">
+                  <span class="feat-check">✓</span>
+                  <span>200,000 token context window & document analysis</span>
+                </div>
+                <div class="preview-feat-item">
+                  <span class="feat-check">✓</span>
+                  <span>30-Day automated replacement protection</span>
+                </div>
+              </div>
+
+              <!-- Card Action Bar -->
+              <div class="preview-card-cta-row">
+                <a href="shop.html" class="preview-select-btn" id="previewSelectBtn">
+                  <span>Get Instant Access</span>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                  </svg>
+                </a>
+              </div>
+
+              <!-- Interactive Switcher Tabs -->
+              <div class="preview-switcher-row" role="tablist" aria-label="Featured Subscriptions">
+                <button type="button" class="preview-chip active" data-index="0" role="tab" aria-selected="true">
+                  <span>Claude Pro</span>
+                </button>
+                <button type="button" class="preview-chip" data-index="1" role="tab" aria-selected="false">
+                  <span>ChatGPT Plus</span>
+                </button>
+                <button type="button" class="preview-chip" data-index="2" role="tab" aria-selected="false">
+                  <span>Netflix 4K</span>
+                </button>
+                <button type="button" class="preview-chip" data-index="3" role="tab" aria-selected="false">
+                  <span>Canva Pro</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Floating Accent Badge 2: Dispatch ETA -->
+            <div class="hero-floating-pill float-bottom-left">
+              <span class="pulse-mini-dot"></span>
+              <span>LIVE: 24/7 AUTOMATED CREDENTIAL BOT</span>
+            </div>
+          </div>
         </div>
 
-
-        <!-- Running Live Ticker Strip at the bottom of the slab -->
+        <!-- Reimagined Glass Stock Ticker Strip -->
         <div class="hero-slab-ticker">
-          <div class="ticker-track">
-            <span>✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pos">+INSTANT</span></span>
-            <span>✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pos">+IN STOCK</span></span>
-            <span>✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pos">+VERIFIED</span></span>
-            <span>✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pos">+DISPATCHED</span></span>
-            <span>✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pos">+INSTANT</span></span>
-            <span>✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pos">+IN STOCK</span></span>
-            <span>✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pos">+INSTANT</span></span>
-            <span>✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pos">+IN STOCK</span></span>
+          <div class="ticker-header-badge">
+            <span class="ticker-live-dot"></span>
+            <span>LIVE FEED</span>
+          </div>
+          <div class="ticker-marquee-viewport">
+            <div class="ticker-track">
+              <div class="ticker-node">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
+              <div class="ticker-node">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <!-- Seamless Loop Duplication -->
+              <div class="ticker-node">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
+              <div class="ticker-node">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -320,8 +464,156 @@
       });
     }
 
+    // Featured Live Preview Switcher Data & Interaction
+    const FEATURED_PREVIEWS = [
+      {
+        name: 'Claude Pro',
+        sub: 'Anthropic AI • Extended Limits',
+        stock: 'IN STOCK',
+        price: '₦9,450',
+        cycle: '/ month',
+        discount: '55% OFF',
+        iconBg: 'rgba(208, 69, 21, 0.15)',
+        iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#D04515"><path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/></svg>`,
+        features: [
+          'Full Claude 3.5 Sonnet & Opus priority capacity',
+          '200,000 token context window & document analysis',
+          '30-Day automated replacement protection'
+        ],
+        href: 'shop.html'
+      },
+      {
+        name: 'ChatGPT Plus',
+        sub: 'OpenAI Suite • GPT-4o & o1 Reasoning',
+        stock: 'IN STOCK',
+        price: '₦6,800',
+        cycle: '/ month',
+        discount: '60% OFF',
+        iconBg: 'rgba(16, 163, 127, 0.15)',
+        iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10A37F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
+        features: [
+          'Instant access to GPT-4o, o1-preview & Advanced Voice',
+          'DALL·E 3 generation, custom GPTs & Canvas workspace',
+          'Automated credentials delivery with zero wait'
+        ],
+        href: 'shop.html'
+      },
+      {
+        name: 'Netflix 4K UHD',
+        sub: 'Premium 4-Screen Ultra HD',
+        stock: 'VERIFIED',
+        price: '₦5,985',
+        cycle: '/ month',
+        discount: '40% OFF',
+        iconBg: 'rgba(229, 9, 20, 0.15)',
+        iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E50914"><path d="M6 2v20l6-10 6 10V2h-3v12.5L9.5 5H6z"/></svg>`,
+        features: [
+          '4K Ultra HD & Dolby Atmos spatial audio profile',
+          'Private locked profile with custom 4-digit PIN',
+          'Uninterrupted 30-day stability guarantee'
+        ],
+        href: 'shop.html'
+      },
+      {
+        name: 'Canva Pro',
+        sub: 'Design Studio & Brand Hub',
+        stock: 'INSTANT',
+        price: '₦2,250',
+        cycle: '/ month',
+        discount: '70% OFF',
+        iconBg: 'rgba(125, 42, 232, 0.15)',
+        iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#7D2AE8"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8" stroke="#FFFFFF" stroke-width="2"/></svg>`,
+        features: [
+          '100M+ premium stock photos, graphics & video library',
+          '1-Click AI Magic Eraser & Background Remover',
+          'Direct team invite delivery with cloud storage'
+        ],
+        href: 'shop.html'
+      }
+    ];
+
+    let currentPreviewIdx = 0;
+    let previewAutoTimer = null;
+
+    function setHeroPreview(idx) {
+      const data = FEATURED_PREVIEWS[idx];
+      if (!data) return;
+      currentPreviewIdx = idx;
+
+      const titleEl = document.getElementById('previewTitle');
+      const subEl = document.getElementById('previewSub');
+      const iconEl = document.getElementById('previewBrandIcon');
+      const priceEl = document.getElementById('previewPriceVal');
+      const discEl = document.getElementById('previewDiscountTag');
+      const stockText = document.getElementById('previewStockText');
+      const listEl = document.getElementById('previewFeaturesList');
+      const btnEl = document.getElementById('previewSelectBtn');
+
+      if (titleEl) titleEl.textContent = data.name;
+      if (subEl) subEl.textContent = data.sub;
+      if (iconEl) {
+        iconEl.innerHTML = data.iconSvg;
+        iconEl.style.background = data.iconBg;
+      }
+      if (priceEl) priceEl.textContent = data.price;
+      if (discEl) discEl.textContent = data.discount;
+      if (stockText) stockText.textContent = data.stock;
+      if (btnEl) btnEl.href = data.href;
+
+      if (listEl) {
+        listEl.innerHTML = data.features.map(f => `
+          <div class="preview-feat-item">
+            <span class="feat-check">✓</span>
+            <span>${f}</span>
+          </div>
+        `).join('');
+      }
+
+      document.querySelectorAll('.preview-chip').forEach((chip, i) => {
+        const isActive = i === idx;
+        chip.classList.toggle('active', isActive);
+        chip.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+
+    function initHeroInteractivePreview() {
+      const chips = document.querySelectorAll('.preview-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const idx = parseInt(chip.getAttribute('data-index'), 10);
+          setHeroPreview(idx);
+          resetAutoRotation();
+        });
+      });
+
+      const card = document.getElementById('heroInteractiveCard');
+      if (card) {
+        card.addEventListener('mouseenter', () => clearInterval(previewAutoTimer));
+        card.addEventListener('mouseleave', () => startAutoRotation());
+      }
+
+      startAutoRotation();
+    }
+
+    function startAutoRotation() {
+      clearInterval(previewAutoTimer);
+      previewAutoTimer = setInterval(() => {
+        const nextIdx = (currentPreviewIdx + 1) % FEATURED_PREVIEWS.length;
+        setHeroPreview(nextIdx);
+      }, 5500);
+    }
+
+    function resetAutoRotation() {
+      clearInterval(previewAutoTimer);
+      clearTimeout(previewAutoTimer);
+      previewAutoTimer = setTimeout(() => {
+        startAutoRotation();
+      }, 12000);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       renderCuratedCards();
+      initHeroInteractivePreview();
     });
   </script>
 
