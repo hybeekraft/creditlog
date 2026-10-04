@@ -6875,15 +6875,15 @@ html, body {
 }
 
 .editorial-hero-slab {
-  background: linear-gradient(135deg, #120A06 0%, #1A0D08 35%, #0B0604 70%, #150905 100%);
+  background: linear-gradient(135deg, #BD490A 0%, #D04515 45%, #9E330B 75%, #7A2403 100%);
   border-radius: var(--radius-slab, 32px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
   padding: 56px 48px 40px;
   color: #FFFFFF;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 32px 80px -15px rgba(0, 0, 0, 0.8), 0 0 70px -10px rgba(208, 69, 21, 0.18);
+  box-shadow: 0 32px 80px -15px rgba(208, 69, 21, 0.45), 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Ambient glow & mesh backdrops */
@@ -6899,7 +6899,7 @@ html, body {
   right: -80px;
   width: 520px;
   height: 520px;
-  background: radial-gradient(circle, rgba(208, 69, 21, 0.32) 0%, rgba(208, 69, 21, 0) 70%);
+  background: radial-gradient(circle, rgba(254, 215, 170, 0.22) 0%, rgba(208, 69, 21, 0) 70%);
   filter: blur(60px);
 }
 
@@ -6908,14 +6908,14 @@ html, body {
   left: -80px;
   width: 440px;
   height: 440px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0) 70%);
+  background: radial-gradient(circle, rgba(135, 40, 3, 0.45) 0%, rgba(135, 40, 3, 0) 70%);
   filter: blur(55px);
 }
 
 .hero-grid-mesh {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 26px 26px;
   opacity: 0.55;
   pointer-events: none;
@@ -6938,23 +6938,24 @@ html, body {
   flex-direction: column;
 }
 
-/* Live status pulse badge */
+/* Live status pulse badge - Deep Obsidian Glass */
 .hero-live-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(18, 10, 6, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 9999px;
   margin-bottom: 22px;
   font-family: var(--font-mono, monospace);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   width: fit-content;
 }
 
@@ -7010,7 +7011,7 @@ html, body {
   font-weight: 800;
   letter-spacing: -0.02em;
   transform: rotate(-0.5deg);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -7024,7 +7025,7 @@ html, body {
 
 .hero-slab-sub {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.62;
   max-width: 640px;
   margin-bottom: 30px;
@@ -7039,8 +7040,9 @@ html, body {
   flex-wrap: wrap;
 }
 
+/* Deep Obsidian Primary Action Button */
 .slab-btn-primary-glow {
-  background: linear-gradient(135deg, #E24F1A 0%, #BD3E10 100%);
+  background: #140C07;
   color: #FFFFFF;
   padding: 14px 28px;
   border-radius: var(--radius-full, 9999px);
@@ -7050,20 +7052,21 @@ html, body {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  box-shadow: 0 8px 24px -4px rgba(208, 69, 21, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .slab-btn-primary-glow:hover {
-  background: linear-gradient(135deg, #F0551E 0%, #CE4412 100%);
+  background: #000000;
   transform: translateY(-2px);
-  box-shadow: 0 14px 34px -4px rgba(208, 69, 21, 0.72), 0 0 24px rgba(208, 69, 21, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(25, 13, 8, 0.4);
   color: #FFFFFF;
 }
 
+/* Translucent Glass Secondary Action Button */
 .slab-btn-glass {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #FFFFFF;
@@ -7079,14 +7082,14 @@ html, body {
 }
 
 .slab-btn-glass:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #FFFFFF;
   transform: translateY(-2px);
   color: #FFFFFF;
 }
 
 .slab-btn-dark {
-  background: #190D08;
+  background: #140C07;
   color: #FFFFFF;
   padding: 13px 26px;
   border-radius: var(--radius-full);
@@ -7137,7 +7140,7 @@ html, body {
   align-items: center;
   gap: 6px;
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.88);
   font-weight: 500;
 }
 
@@ -7146,7 +7149,7 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   INTERACTIVE FLOATING PRODUCT PREVIEW STAGE
+   INTERACTIVE FLOATING PRODUCT PREVIEW STAGE (DEEP OBSIDIAN GLASS)
    -------------------------------------------------------------------------- */
 .hero-preview-column {
   position: relative;
@@ -7155,8 +7158,8 @@ html, body {
 
 .hero-floating-pill {
   position: absolute;
-  background: rgba(22, 14, 10, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(18, 10, 6, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 9999px;
@@ -7164,7 +7167,7 @@ html, body {
   font-size: 11px;
   font-weight: 700;
   color: #FFFFFF;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -7186,7 +7189,7 @@ html, body {
 }
 
 .float-icon {
-  color: #D04515;
+  color: #FF7A45;
 }
 
 .pulse-mini-dot {
@@ -7198,13 +7201,14 @@ html, body {
 }
 
 .hero-interactive-card {
-  background: rgba(22, 14, 10, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(18, 10, 6, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 24px;
   padding: 24px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   position: relative;
   z-index: 3;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -7273,8 +7277,8 @@ html, body {
 }
 
 .preview-price-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 14px 16px;
   margin-bottom: 18px;
@@ -7305,9 +7309,9 @@ html, body {
   font-size: 11px;
   font-weight: 800;
   padding: 2px 7px;
-  background: rgba(208, 69, 21, 0.22);
-  border: 1px solid rgba(208, 69, 21, 0.45);
-  color: #FF7A45;
+  background: rgba(208, 69, 21, 0.3);
+  border: 1px solid rgba(208, 69, 21, 0.55);
+  color: #FF8F60;
   border-radius: 6px;
   margin-left: auto;
 }
@@ -7337,7 +7341,7 @@ html, body {
   align-items: flex-start;
   gap: 9px;
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.4;
 }
 
@@ -7361,8 +7365,8 @@ html, body {
   justify-content: center;
   gap: 8px;
   padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.09);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   color: #FFFFFF;
   font-size: 13.5px;
@@ -7377,7 +7381,7 @@ html, body {
   color: #160D08;
   border-color: #FFFFFF;
   transform: translateY(-1.5px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
 }
 
 .preview-switcher-row {
@@ -7390,10 +7394,10 @@ html, body {
 
 .preview-chip {
   padding: 7px 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -7406,23 +7410,23 @@ html, body {
 }
 
 .preview-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   color: #FFFFFF;
 }
 
 .preview-chip.active {
-  background: rgba(208, 69, 21, 0.25);
-  border-color: rgba(208, 69, 21, 0.55);
+  background: #D04515;
+  border-color: #FF7A45;
   color: #FFFFFF;
-  box-shadow: 0 0 12px rgba(208, 69, 21, 0.25);
+  box-shadow: 0 0 14px rgba(208, 69, 21, 0.45);
 }
 
 /* --------------------------------------------------------------------------
-   REIMAGINED GLASS STOCK TICKER STRIP
+   REIMAGINED DEEP OBSIDIAN STOCK TICKER STRIP
    -------------------------------------------------------------------------- */
 .hero-slab-ticker {
-  background: rgba(10, 6, 4, 0.94);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(14, 8, 5, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin: 0 -48px -40px;
   padding: 11px 24px;
   display: flex;
