@@ -29,8 +29,8 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
 
 ## 4. Component Stylings & Interaction States
 - **Sidebar Navigation:**
-  - **Desktop (>= 900px):** `position: fixed; width: 240px; height: 100vh;` with Charcoal Ink background (`#190D08`). The main content area scrolls independently with `margin-left: 240px`, ensuring menu items never disappear when auditing lengthy inventories or order lists.
-  - **Mobile & Tablet (< 900px):** `position: sticky; top: 0; z-index: 1000;` with smooth horizontal touch-scrolling pills (`-webkit-overflow-scrolling: touch;`). Brand and navigation remain immediately accessible at all scroll depths.
+  - **Desktop & Tablet (>= 768px):** Fixed vertical sidebar (`position: fixed; width: 220px–240px; height: 100vh;`) with Charcoal Ink background (`#190D08`). The main content canvas scrolls independently with corresponding margin-left, ensuring menu items never disappear when auditing lengthy inventories or order lists.
+  - **Mobile (< 768px):** Collapsible top navigation bar with a dedicated hamburger toggle button (`#dashMobileToggle`). Expands smoothly on demand into a full-width vertical menu with 44px tap targets, and collapses by default to preserve maximum vertical screen space for catalog tables and analytics. Auto-closes upon link selection or backdrop click.
 - **Buttons & Interactive Elements:**
   - **Touch Targets:** Minimum `44px` tap target across all mobile viewports.
   - **Tactile Feedback:** Subtle `-1px` vertical translation on hover/active states; zero outer blur/glow.

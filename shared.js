@@ -4884,14 +4884,68 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeQuickViewModal();
 });
 
+// --- Responsive Admin Mobile Navbar Toggle ---
+function initAdminMobileNav() {
+  const sidebar = document.getElementById('dashSidebar') || document.querySelector('.dash-sidebar');
+  if (!sidebar) return;
+
+  const toggleBtn = document.getElementById('dashMobileToggle') || sidebar.querySelector('.dash-mobile-toggle');
+  if (!toggleBtn) return;
+
+  toggleBtn.onclick = function(e) {
+    e.stopPropagation();
+    const isOpen = sidebar.classList.toggle('menu-open');
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const ham = toggleBtn.querySelector('.hamburger-icon');
+    const cls = toggleBtn.querySelector('.close-icon');
+    if (ham && cls) {
+      ham.style.display = isOpen ? 'none' : 'block';
+      cls.style.display = isOpen ? 'block' : 'none';
+    }
+  };
+
+  // Auto-close on link click when on mobile
+  sidebar.querySelectorAll('.menu-item').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 768 && sidebar.classList.contains('menu-open')) {
+        sidebar.classList.remove('menu-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        const ham = toggleBtn.querySelector('.hamburger-icon');
+        const cls = toggleBtn.querySelector('.close-icon');
+        if (ham && cls) {
+          ham.style.display = 'block';
+          cls.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Auto-close when clicking outside
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth < 768 && sidebar.classList.contains('menu-open')) {
+      if (!sidebar.contains(e.target)) {
+        sidebar.classList.remove('menu-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        const ham = toggleBtn.querySelector('.hamburger-icon');
+        const cls = toggleBtn.querySelector('.close-icon');
+        if (ham && cls) {
+          ham.style.display = 'block';
+          cls.style.display = 'none';
+        }
+      }
+    }
+  });
+}
+
 // Run UI setups on load
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderAuth();
   updateCartBadge();
   updateCurrencyUI();
-  removeMobileNavDrawer();
-  removeMobileBottomNav();
+  if (typeof removeMobileNavDrawer === 'function') removeMobileNavDrawer();
+  if (typeof removeMobileBottomNav === 'function') removeMobileBottomNav();
   initSegmentedSlidingPill();
   initCardSpotlights();
+  initAdminMobileNav();
 });
 

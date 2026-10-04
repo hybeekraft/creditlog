@@ -99,8 +99,9 @@
 <body>
   <div class="dashboard-layout admin-layout">
     <!-- Admin Sidebar -->
-    <aside class="dash-sidebar admin-sidebar">
-      <a href="index.html" class="dash-brand">
+    <aside class="dash-sidebar admin-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <a href="index.html" class="dash-brand">
         <div class="logo-icon small" style="color: #D04515;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
@@ -108,8 +109,20 @@
         </div>
         <span class="logo-text">Credit<span class="accent-text" style="color: #D04515;">Log</span></span>
       </a>
+        <button type="button" class="dash-mobile-toggle" id="dashMobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg class="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg class="close-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
 
-      <nav class="dash-menu">
+      <nav class="dash-menu" id="dashMenu">
         <a href="inventory.html" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path

@@ -26,10 +26,10 @@ Pricing follows a strict 4-level deterministic priority structure:
 4. **Global FX Exchange Rate & Markup:** Base USD to NGN conversion rate + default fallback percentage.
 
 ### 4. Zero-Regression Responsive Architecture
-- **Desktop (>= 900px):** Fixed Charcoal Ink sidebar (`#190D08`) pinned at 240px width with an independently scrollable main content canvas (`#F4ECD8`), ensuring navigation stays visible when managing thousands of products.
-- **Tablets & Laptops (768px – 900px):** Sticky top header with horizontal scrolling menu pills (`-webkit-overflow-scrolling: touch;`), balanced 2x2 KPI grids, and responsive data panels.
-- **Mobile Phones (375px – 520px):**
-  - Sticky top bar with instant access to all admin sections.
+- **Desktop & Tablets (>= 768px):** Fixed Charcoal Ink sidebar (`#190D08`) pinned on the left (220px on tablets, 240px on desktops) with an independently scrollable main content canvas (`#F4ECD8`), ensuring navigation stays visible when managing thousands of products.
+- **Mobile Phones (< 768px):**
+  - Collapsible top navbar with an animated hamburger toggle button (`#dashMobileToggle`) that expands into a full-width vertical menu.
+  - Collapses cleanly by default so content is not pushed down or obstructed by horizontal scrolling bars.
   - Strict 44px minimum tap targets on all interactive controls.
   - Multi-column grids collapse gracefully into single-column flows.
   - Zero horizontal page overflow (`max-width: 100%; overflow-x: hidden;`).
