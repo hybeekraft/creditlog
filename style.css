@@ -6914,26 +6914,31 @@ html, body {
 
 .protocol-actions {
   display: flex;
-  gap: 18px;
+  flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap !important;
+  width: auto;
 }
 
 .protocol-btn-dark {
   background: #190D08;
   color: #FFFFFF;
-  padding: 11px 32px;
+  padding: 11px 24px;
   line-height: 1.25;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full, 9999px);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: -0.01em;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(25, 13, 8, 0.16);
+  flex: 0 1 auto;
 }
 
 .protocol-btn-dark:hover {
@@ -6946,17 +6951,21 @@ html, body {
   background: #D04515;
   border: 1px solid #D04515;
   color: #FFFFFF;
-  padding: 11px 32px;
+  padding: 11px 24px;
   line-height: 1.25;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full, 9999px);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: -0.01em;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(208, 69, 21, 0.2);
+  flex: 0 1 auto;
 }
 
 .protocol-btn-outline:hover {
@@ -6996,6 +7005,25 @@ html, body {
 
   .protocol-visual-box {
     height: 240px;
+  }
+
+  .protocol-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .protocol-btn-dark,
+  .protocol-btn-outline {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 11px 12px !important;
+    font-size: 14px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
   }
 }
 
