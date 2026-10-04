@@ -1,5 +1,25 @@
 [
   {
+    "id": "log_1791079443422_h8hn",
+    "user": "Admin Manager",
+    "role": "Admin",
+    "module": "System",
+    "action": "Clear Cache",
+    "details": "All server-side caches and temporary session states purged.",
+    "timestamp": "2026-10-04T02:04:03.422Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1791079422754_cfs3",
+    "user": "Admin Manager",
+    "role": "Admin",
+    "module": "System",
+    "action": "Clear Cache",
+    "details": "All server-side caches and temporary session states purged.",
+    "timestamp": "2026-10-04T02:03:42.754Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1791064771721_7nag",
     "user": "Admin",
     "role": "Admin",

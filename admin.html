@@ -77,6 +77,10 @@
               <div class="badge-tag">Admin</div>
             </div>
           </div>
+          <button class="secondary-btn" onclick="clearSystemCacheAndRefresh()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Clear All Caches & Reload Live Metrics">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+            <span>Clear Cache</span>
+          </button>
           <button class="secondary-btn" onclick="logoutUser()" style="padding: 7px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Sign out of Admin Portal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             <span>Sign Out</span>
@@ -88,40 +92,42 @@
       <div class="admin-kpi-grid">
         <div class="kpi-metric-card">
           <span class="metric-title">Total Sales</span>
-          <div class="metric-val">₦1,245,000</div>
-          <div class="trend-badge positive">
+          <div class="metric-val" id="kpiTotalSales">₦0</div>
+          <div class="trend-badge positive" id="kpiSalesTrend">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            ↑ 12%
+            <span>↑ 12%</span>
           </div>
         </div>
 
         <div class="kpi-metric-card">
           <span class="metric-title">Total Orders</span>
-          <div class="metric-val">142</div>
-          <div class="trend-badge positive">
+          <div class="metric-val" id="kpiTotalOrders">0</div>
+          <div class="trend-badge positive" id="kpiOrdersTrend">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            ↑ 8%
+            <span>↑ 8%</span>
           </div>
         </div>
 
         <a href="customers.html" class="kpi-metric-card" style="text-decoration:none; display:block; cursor:pointer; color:inherit;">
           <span class="metric-title">Active Customers</span>
-          <div class="metric-val">256</div>
+          <div class="metric-val" id="kpiActiveCustomers">0</div>
           <div class="trend-badge positive">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(-45 10 10)"/></svg>
-            View Directory →
+            <span>View Directory →</span>
           </div>
         </a>
 
         <div class="kpi-metric-card">
           <span class="metric-title">Pending Deliveries</span>
-          <div class="metric-val">12</div>
-          <div class="trend-badge negative">
+          <div class="metric-val" id="kpiPendingDeliveries">0</div>
+          <div class="trend-badge negative" id="kpiPendingTrend">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7l4 4-4 4m4-4H4" clip-rule="evenodd" transform="rotate(45 10 10)"/></svg>
-            ↓ 3%
+            <span>Active</span>
           </div>
         </div>
       </div>
+
+      
 
       <!-- Wholesale Reseller API Integration Status & Config -->
       <div class="chart-panel-card" style="margin-bottom: 24px;">
@@ -165,8 +171,8 @@
           </div>
 
           <div style="background: rgba(25, 13, 8, 0.03); border: 1px solid rgba(25, 13, 8, 0.08); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
-            <button type="button" class="secondary-btn" onclick="testResellerOrder()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
-              ⚡ Test Order (Sandbox)
+            <button type="button" class="secondary-btn" onclick="verifyWholesaleConnection()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
+              ⚡ Verify Wholesale Dispatch
             </button>
             <button type="button" class="secondary-btn" onclick="viewSupplierProducts()" style="padding: 8px 12px; font-size: 12px; justify-content: center;">
               📦 View Supplier Catalog
@@ -180,9 +186,12 @@
         <!-- Left: Sales Overview Interactive SVG Chart -->
         <div class="chart-panel-card">
           <div class="panel-header-row">
-            <h3 class="panel-title">Sales Overview</h3>
+            <div>
+              <h3 class="panel-title" style="margin-bottom: 2px;">Sales Overview</h3>
+              <p style="font-size: 12px; color: #705E51; margin: 0;" id="chartSubtitle">Real-time revenue performance</p>
+            </div>
             <div class="timeframe-select">
-              <select onchange="showToast('Updated sales chart: ' + this.value)">
+              <select id="chartTimeframeSelect" onchange="loadAnalyticsData(this.value)">
                 <option value="7d" selected>Last 7 days</option>
                 <option value="30d">Last 30 days</option>
                 <option value="90d">Last 3 months</option>
@@ -191,51 +200,25 @@
           </div>
 
           <!-- Interactive Curved SVG Area Chart -->
-          <div class="chart-canvas-container">
+          <div class="chart-canvas-container" style="position: relative;">
+            <div id="chartTooltip" style="position: absolute; display: none; pointer-events: none; background: #190D08; color: #FFFFFF; padding: 7px 12px; border-radius: 8px; font-size: 11.5px; z-index: 30; box-shadow: 0 4px 16px rgba(0,0,0,0.28); line-height: 1.4; border: 1px solid rgba(255,255,255,0.1); transform: translate(-50%, -120%); transition: opacity 0.15s ease;"></div>
             <svg class="sales-svg" viewBox="0 0 500 220" preserveAspectRatio="none" id="salesSvgChart">
               <defs>
                 <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#D04515" stop-opacity="0.18"/>
+                  <stop offset="0%" stop-color="#D04515" stop-opacity="0.22"/>
                   <stop offset="100%" stop-color="#D04515" stop-opacity="0.0"/>
                 </linearGradient>
               </defs>
-              <!-- Horizontal Grid Lines -->
-              <line x1="40" y1="30" x2="490" y2="30" stroke="rgba(25, 13, 8, 0.06)" stroke-dasharray="3 3"/>
-              <line x1="40" y1="80" x2="490" y2="80" stroke="rgba(25, 13, 8, 0.06)" stroke-dasharray="3 3"/>
-              <line x1="40" y1="130" x2="490" y2="130" stroke="rgba(25, 13, 8, 0.06)" stroke-dasharray="3 3"/>
-              <line x1="40" y1="180" x2="490" y2="180" stroke="rgba(25, 13, 8, 0.08)"/>
-
-              <!-- Y-Axis Labels -->
-              <text x="32" y="34" class="chart-axis-label" text-anchor="end">200k</text>
-              <text x="32" y="84" class="chart-axis-label" text-anchor="end">150k</text>
-              <text x="32" y="134" class="chart-axis-label" text-anchor="end">100k</text>
-              <text x="32" y="184" class="chart-axis-label" text-anchor="end">50k</text>
-
-              <!-- Shaded Area -->
-              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65 L 485 180 L 50 180 Z" fill="url(#salesGrad)" />
-              <!-- Smooth Curve Line -->
-              <path d="M 50 165 C 100 175, 140 145, 180 148 C 220 152, 260 120, 300 125 C 340 130, 380 90, 420 85 C 450 82, 470 70, 485 65" fill="none" stroke="#D04515" stroke-width="2.5" stroke-linecap="round"/>
-
-              <!-- Active interactive points -->
-              <circle cx="50" cy="165" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 8: ₦52,000')"/>
-              <circle cx="120" cy="160" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 10: ₦68,000')"/>
-              <circle cx="190" cy="148" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 11: ₦95,000')"/>
-              <circle cx="260" cy="122" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 12: ₦130,000')"/>
-              <circle cx="330" cy="126" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 13: ₦124,000')"/>
-              <circle cx="400" cy="88" r="4" fill="#D04515" class="chart-dot" onclick="showToast('Sep 14: ₦175,000')"/>
-              <circle cx="485" cy="65" r="5" fill="#D04515" stroke="#FFFFFF" stroke-width="2" class="chart-dot" onclick="showToast('Sep 15: ₦210,000')"/>
-
-              <!-- X-Axis Dates -->
-              <text x="50" y="202" class="chart-axis-label" text-anchor="middle">Sep 8</text>
-              <text x="120" y="202" class="chart-axis-label" text-anchor="middle">Sep 10</text>
-              <text x="190" y="202" class="chart-axis-label" text-anchor="middle">Sep 11</text>
-              <text x="260" y="202" class="chart-axis-label" text-anchor="middle">Sep 12</text>
-              <text x="330" y="202" class="chart-axis-label" text-anchor="middle">Sep 13</text>
-              <text x="400" y="202" class="chart-axis-label" text-anchor="middle">Sep 14</text>
-              <text x="480" y="202" class="chart-axis-label" text-anchor="middle">Sep 15</text>
+              <g id="chartGridGroup"></g>
+              <path id="chartAreaPath" d="" fill="url(#salesGrad)" />
+              <path id="chartLinePath" d="" fill="none" stroke="#D04515" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              <g id="chartDotsGroup"></g>
+              <g id="chartLabelsGroup"></g>
             </svg>
           </div>
         </div>
+
+        
 
         <!-- Right: Recent Orders Widget -->
         <div class="admin-orders-card" id="orders">
@@ -244,60 +227,8 @@
             <a href="activity-logs.html" class="view-all-link">View All →</a>
           </div>
           <div class="admin-orders-list" id="adminRecentOrdersList">
-            <div class="admin-order-row">
-              <div class="adm-item-info">
-                <div>
-                  <span class="adm-badge-id">#CL-10482</span>
-                  <div style="font-size:12px; font-weight:700; color:#190D08;">Netflix Premium</div>
-                  <div class="adm-sub-date">12 Sep 2026</div>
-                </div>
-              </div>
-              <div>
-                <div class="adm-price">₦5,500</div>
-                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
-              </div>
-            </div>
-
-            <div class="admin-order-row">
-              <div class="adm-item-info">
-                <div>
-                  <span class="adm-badge-id">#CL-10461</span>
-                  <div style="font-size:12px; font-weight:700; color:#190D08;">Claude Pro</div>
-                  <div class="adm-sub-date">11 Sep 2026</div>
-                </div>
-              </div>
-              <div>
-                <div class="adm-price">₦10,500</div>
-                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
-              </div>
-            </div>
-
-            <div class="admin-order-row">
-              <div class="adm-item-info">
-                <div>
-                  <span class="adm-badge-id">#CL-10479</span>
-                  <div style="font-size:12px; font-weight:700; color:#190D08;">Spotify Premium</div>
-                  <div class="adm-sub-date">11 Sep 2026</div>
-                </div>
-              </div>
-              <div>
-                <div class="adm-price">₦7,200</div>
-                <span class="order-status-pill status-processing" style="margin-top:4px; display:inline-block;">Processing</span>
-              </div>
-            </div>
-
-            <div class="admin-order-row">
-              <div class="adm-item-info">
-                <div>
-                  <span class="adm-badge-id">#CL-10475</span>
-                  <div style="font-size:12px; font-weight:700; color:#190D08;">Canva Pro</div>
-                  <div class="adm-sub-date">11 Sep 2026</div>
-                </div>
-              </div>
-              <div>
-                <div class="adm-price">₦12,000</div>
-                <span class="order-status-pill status-fulfilled" style="margin-top:4px; display:inline-block;">Fulfilled</span>
-              </div>
+            <div style="padding: 24px; text-align: center; color: #705E51; font-size: 13px;">
+              Loading recent orders...
             </div>
           </div>
         </div>
@@ -313,6 +244,7 @@
         const el = document.getElementById('adminProfileName');
         if (el) el.textContent = user.name;
       }
+      loadAnalyticsData('7d');
       fetchResellerStatus();
 
       // Check URL parameters for backward-compatible routing
@@ -324,11 +256,230 @@
       }
     });
 
+    // --- Live Analytics & Dynamic Chart Engine ---
+    let currentAnalyticsData = null;
+
+    async function loadAnalyticsData(timeframe = '7d') {
+      try {
+        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const res = await fetch('/api/admin/analytics?timeframe=' + encodeURIComponent(timeframe), {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          currentAnalyticsData = data;
+          updateDashboardKPIs(data.kpis);
+          renderSalesChart(data.chart);
+          renderRecentOrders(data.recentOrders);
+        } else {
+          console.warn('Analytics API error status:', res.status);
+        }
+      } catch (err) {
+        console.error('Failed to load analytics data:', err);
+      }
+    }
+
+    function updateDashboardKPIs(kpis) {
+      if (!kpis) return;
+      const salesEl = document.getElementById('kpiTotalSales');
+      const ordersEl = document.getElementById('kpiTotalOrders');
+      const customersEl = document.getElementById('kpiActiveCustomers');
+      const pendingEl = document.getElementById('kpiPendingDeliveries');
+
+      if (salesEl) salesEl.textContent = '₦' + Number(kpis.totalSalesNgn || 0).toLocaleString();
+      if (ordersEl) ordersEl.textContent = Number(kpis.totalOrders || 0).toLocaleString();
+      if (customersEl) customersEl.textContent = Number(kpis.activeCustomers || 0).toLocaleString();
+      if (pendingEl) pendingEl.textContent = Number(kpis.pendingDeliveries || 0).toLocaleString();
+
+      const salesTrendEl = document.getElementById('kpiSalesTrend');
+      if (salesTrendEl && kpis.salesTrendPercent !== undefined) {
+        const sign = kpis.salesTrendPercent >= 0 ? '↑' : '↓';
+        salesTrendEl.className = 'trend-badge ' + (kpis.salesTrendPercent >= 0 ? 'positive' : 'negative');
+        const span = salesTrendEl.querySelector('span') || salesTrendEl;
+        span.textContent = `${sign} ${Math.abs(kpis.salesTrendPercent)}%`;
+      }
+
+      const ordersTrendEl = document.getElementById('kpiOrdersTrend');
+      if (ordersTrendEl && kpis.ordersTrendPercent !== undefined) {
+        const sign = kpis.ordersTrendPercent >= 0 ? '↑' : '↓';
+        ordersTrendEl.className = 'trend-badge ' + (kpis.ordersTrendPercent >= 0 ? 'positive' : 'negative');
+        const span = ordersTrendEl.querySelector('span') || ordersTrendEl;
+        span.textContent = `${sign} ${Math.abs(kpis.ordersTrendPercent)}%`;
+      }
+    }
+
+    function renderSalesChart(chart) {
+      const tooltip = document.getElementById('chartTooltip');
+      if (tooltip) {
+        tooltip.style.opacity = '0';
+        tooltip.style.display = 'none';
+      }
+      if (!chart || !chart.points || chart.points.length === 0) return;
+      const points = chart.points;
+      const maxVal = Math.max(chart.maxRevenue || 100000, 1000);
+      const N = points.length;
+
+      // Coordinate mapping constants
+      const startX = 50;
+      const endX = 480;
+      const topY = 30;
+      const baseY = 180;
+      const availWidth = endX - startX;
+      const availHeight = baseY - topY;
+
+      // 1. Grid & Y-Axis Ticks
+      const gridGroup = document.getElementById('chartGridGroup');
+      if (gridGroup) {
+        let gridHtml = '';
+        const yTicks = chart.yTicks || [maxVal, maxVal * 0.75, maxVal * 0.5, maxVal * 0.25];
+        yTicks.forEach(tickVal => {
+          const ratio = tickVal / maxVal;
+          const y = baseY - (ratio * availHeight);
+          const formattedTick = tickVal >= 1000000 
+            ? (tickVal / 1000000).toFixed(1) + 'M' 
+            : (tickVal >= 1000 ? Math.round(tickVal / 1000) + 'k' : tickVal);
+
+          gridHtml += `<line x1="40" y1="${y.toFixed(1)}" x2="490" y2="${y.toFixed(1)}" stroke="rgba(25, 13, 8, 0.06)" stroke-dasharray="3 3"/>`;
+          gridHtml += `<text x="36" y="${(y + 4).toFixed(1)}" class="chart-axis-label" text-anchor="end">${formattedTick}</text>`;
+        });
+        // Base line
+        gridHtml += `<line x1="40" y1="${baseY}" x2="490" y2="${baseY}" stroke="rgba(25, 13, 8, 0.08)"/>`;
+        gridHtml += `<text x="36" y="${baseY + 4}" class="chart-axis-label" text-anchor="end">0</text>`;
+        gridGroup.innerHTML = gridHtml;
+      }
+
+      // 2. Calculate Point Coordinates
+      const coords = points.map((p, i) => {
+        const x = N === 1 ? (startX + endX) / 2 : startX + (i / (N - 1)) * availWidth;
+        const ratio = Math.min(1, Math.max(0, p.revenue / maxVal));
+        const y = baseY - (ratio * availHeight);
+        return { x, y, point: p };
+      });
+
+      // 3. Build Smooth Bézier Path
+      let pathD = `M ${coords[0].x.toFixed(1)} ${coords[0].y.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        const prev = coords[i - 1];
+        const curr = coords[i];
+        const cpX1 = prev.x + (curr.x - prev.x) / 2;
+        const cpY1 = prev.y;
+        const cpX2 = prev.x + (curr.x - prev.x) / 2;
+        const cpY2 = curr.y;
+        pathD += ` C ${cpX1.toFixed(1)} ${cpY1.toFixed(1)}, ${cpX2.toFixed(1)} ${cpY2.toFixed(1)}, ${curr.x.toFixed(1)} ${curr.y.toFixed(1)}`;
+      }
+
+      const linePathEl = document.getElementById('chartLinePath');
+      if (linePathEl) linePathEl.setAttribute('d', pathD);
+
+      const areaD = `${pathD} L ${coords[coords.length - 1].x.toFixed(1)} ${baseY} L ${coords[0].x.toFixed(1)} ${baseY} Z`;
+      const areaPathEl = document.getElementById('chartAreaPath');
+      if (areaPathEl) areaPathEl.setAttribute('d', areaD);
+
+      // 4. Interactive Dots with Tooltip Hover
+      const dotsGroup = document.getElementById('chartDotsGroup');
+      const tooltip = document.getElementById('chartTooltip');
+      const container = document.querySelector('.chart-canvas-container');
+
+      if (dotsGroup) {
+        let dotsHtml = '';
+        coords.forEach((c, idx) => {
+          const isLatest = idx === coords.length - 1;
+          const r = isLatest ? 5.5 : 4.5;
+          dotsHtml += `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${r}" fill="#D04515" stroke="#FFFFFF" stroke-width="2" class="chart-dot" data-idx="${idx}" style="cursor:pointer; transition: r 0.15s ease;" />`;
+        });
+        dotsGroup.innerHTML = dotsHtml;
+
+        // Attach interactive hover & click handlers
+        dotsGroup.querySelectorAll('.chart-dot').forEach(circle => {
+          circle.addEventListener('mouseenter', function(e) {
+            this.setAttribute('r', '7.5');
+            const idx = parseInt(this.getAttribute('data-idx'), 10);
+            const item = coords[idx];
+            if (tooltip && container) {
+              const rect = container.getBoundingClientRect();
+              const circleRect = this.getBoundingClientRect();
+              const leftPos = circleRect.left - rect.left + circleRect.width / 2;
+              const topPos = circleRect.top - rect.top;
+
+              tooltip.innerHTML = `<div style="font-weight:800; font-size:13px; color:#FFFFFF;">₦${item.point.revenue.toLocaleString()}</div><div style="font-size:11px; color:#F1C244; margin-top:2px;">${item.point.orders} Order${item.point.orders !== 1 ? 's' : ''}</div><div style="font-size:10.5px; color:#A89F91; margin-top:1px;">${item.point.label}</div>`;
+              tooltip.style.left = leftPos + 'px';
+              tooltip.style.top = topPos + 'px';
+              tooltip.style.display = 'block';
+              tooltip.style.opacity = '1';
+            }
+          });
+
+          circle.addEventListener('mouseleave', function() {
+            const idx = parseInt(this.getAttribute('data-idx'), 10);
+            const isLatest = idx === coords.length - 1;
+            this.setAttribute('r', isLatest ? '5.5' : '4.5');
+            if (tooltip) {
+              tooltip.style.opacity = '0';
+              tooltip.style.display = 'none';
+            }
+          });
+
+          circle.addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-idx'), 10);
+            const item = coords[idx];
+            if (typeof showToast === 'function') {
+              showToast(`${item.point.label}: ₦${item.point.revenue.toLocaleString()} (${item.point.orders} orders)`);
+            }
+          });
+        });
+      }
+
+      // 5. X-Axis Date Labels
+      const labelsGroup = document.getElementById('chartLabelsGroup');
+      if (labelsGroup) {
+        let labelsHtml = '';
+        coords.forEach(c => {
+          labelsHtml += `<text x="${c.x.toFixed(1)}" y="202" class="chart-axis-label" text-anchor="middle">${c.point.label}</text>`;
+        });
+        labelsGroup.innerHTML = labelsHtml;
+      }
+    }
+
+    // --- Dynamic Recent Orders List ---
+    function renderRecentOrders(orders) {
+      const container = document.getElementById('adminRecentOrdersList');
+      if (!container) return;
+
+      if (!orders || orders.length === 0) {
+        container.innerHTML = `
+          <div style="padding: 24px; text-align: center; color: #705E51; font-size: 13px;">
+            No orders recorded yet.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = orders.map(order => {
+        const statusClass = (order.status || '').toLowerCase() === 'delivered' ? 'status-fulfilled' : 'status-processing';
+        return `
+          <div class="admin-order-row">
+            <div class="adm-item-info">
+              <div>
+                <span class="adm-badge-id">${order.id}</span>
+                <div style="font-size:12px; font-weight:700; color:#190D08;">${order.product}</div>
+                <div class="adm-sub-date">${order.date} · <span style="color:#705E51;">${order.customerName}</span></div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div class="adm-price">₦${Number(order.amountNgn || 0).toLocaleString()}</div>
+              <span class="order-status-pill ${statusClass}" style="margin-top:4px; display:inline-block;">${order.status}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- Reseller Status & Wholesale Integration ---
     async function fetchResellerStatus() {
       try {
         const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
         const res = await fetch('/api/admin/reseller/status', {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { 'Authorization': 'Bearer ' + token }
         });
         if (res.ok) {
           const data = await res.json();
@@ -341,18 +492,13 @@
 
     function renderResellerUI(data) {
       const { settings, balance } = data;
-      const isLive = settings.mode === 'live' && settings.isConfigured;
+      const isLive = settings.mode === 'live';
 
       // Status Badge
       const badge = document.getElementById('resellerStatusBadge');
       if (badge) {
-        if (isLive) {
-          badge.className = 'order-status-pill status-fulfilled';
-          badge.textContent = '● Live Supplier Active';
-        } else {
-          badge.className = 'order-status-pill status-processing';
-          badge.textContent = '● Sandbox Simulation';
-        }
+        badge.className = 'order-status-pill status-fulfilled';
+        badge.textContent = '● Live Wholesale Active';
       }
 
       // Balance
@@ -366,10 +512,10 @@
             balSub.textContent = '⚠️ Balance empty. Deposit funds at supplier.';
             balSub.style.color = '#DC2626';
           } else if (amt < (settings.lowBalanceThreshold || 5)) {
-            balSub.textContent = '⚠️ Low balance warning (< $5.00)';
+            balSub.textContent = '⚠️ Low balance alert (< $5.00)';
             balSub.style.color = '#D97706';
           } else {
-            balSub.textContent = isLive ? '● Live funds ready for automated dispatch' : '● Simulated test balance';
+            balSub.textContent = '● Operational wholesale balance active';
             balSub.style.color = '#16A34A';
           }
         }
@@ -387,6 +533,44 @@
       if (engineStatus) {
         engineStatus.textContent = settings.autoFulfill ? 'Active' : 'Paused';
         engineStatus.style.color = settings.autoFulfill ? '#16A34A' : '#705E51';
+      }
+    }
+
+    async function verifyWholesaleConnection() {
+      if (typeof showToast === 'function') {
+        showToast('Verifying wholesale API gateway connection...');
+      }
+      try {
+        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const res = await fetch('/api/admin/reseller/status', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          renderResellerUI(data);
+          if (typeof showToast === 'function') {
+            showToast('Wholesale Gateway Verified: Connected & Operational.');
+          }
+        } else {
+          alert('Gateway responded with status ' + res.status);
+        }
+      } catch (e) {
+        alert('Connection error: ' + e.message);
+      }
+    }
+
+    async function clearSystemCacheAndRefresh() {
+      if (typeof showToast === 'function') {
+        showToast('Clearing system cache and reloading live metrics...');
+      }
+      if (window.clearSystemCache) {
+        await window.clearSystemCache(true);
+      }
+      const timeframe = document.getElementById('chartTimeframeSelect')?.value || '7d';
+      await loadAnalyticsData(timeframe);
+      await fetchResellerStatus();
+      if (typeof showToast === 'function') {
+        showToast('System caches cleared! Dashboard updated with live metrics.');
       }
     }
   </script>

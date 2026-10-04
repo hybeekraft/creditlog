@@ -17,7 +17,7 @@ The color system strictly avoids generic AI purple, neon glows, and pure black `
 - **Muted Earth / Secondary Ink** (`#705E51`) — Supporting text, metadata, table headers, and form hints.
 - **Terracotta Accent** (`#D04515`) — Single primary accent for CTAs, active navigation states, primary buttons, and highlight metrics.
 - **Forest Green** (`#16A34A` / `#15803D`) — Live stock indicators, verified badges, positive financial margins.
-- **Amber Gold** (`#D97706` / `#F1C244`) — Star rating accents, pending status pills, sandbox simulation badges.
+- **Amber Gold** (`#D97706` / `#F1C244`) — Star rating accents, pending status pills, active gateway status badges.
 - **Crimson Red** (`#DC2626` / `#EF4444`) — Destructive actions, out of stock alerts, low balance warnings.
 - **Whisper Border** (`rgba(25, 13, 8, 0.08)` to `rgba(25, 13, 8, 0.14)`) — Structural dividers and subtle card outlines.
 

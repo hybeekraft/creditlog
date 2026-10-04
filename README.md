@@ -10,12 +10,12 @@ CreditLog is an enterprise digital subscriptions marketplace and inventory manag
 - **Analytics & Operations Dashboard (`admin.html`):** Store performance KPIs, interactive SVG revenue curve, recent orders list, and real-time wholesale supplier balance ribbon.
 - **Inventory & CMS Dashboard (`inventory.html`):** Real-time stock units, live availability counters, product variant options, dynamic brand logos, price overrides, and instant inventory toggles. Streamlined with a 3-card KPI overview and clean 7-column CMS registry.
 - **Customer Directory & Intelligence (`customers.html`):** Customer lifetime value (LTV), repeat buyer retention, order history, and direct WhatsApp/Email dispatch.
-- **Settings & Wholesale Multi-Vendor Engine (`settings.html`):** Multi-supplier API configuration, sandbox simulation, real-time FX conversion rate, price tiers, and product/category overrides.
+- **Settings & Wholesale Multi-Vendor Engine (`settings.html`):** Multi-supplier API configuration, staging/live gateway controls, real-time FX conversion rate, price tiers, and product/category overrides.
 - **System Audit Trail (`activity-logs.html`):** Comprehensive security logs, module filters, and CSV export.
 
 ### 2. Multi-Vendor Wholesale API Engine
 - **Multiple Supplier Credentials:** Register multiple supplier accounts with unique base URLs and API keys (`X-API-Key`).
-- **Live vs. Sandbox Mode:** Toggle individual suppliers between Live production API and sandbox simulation.
+- **Live vs. Staging Mode:** Toggle individual suppliers between Live production API and staging/secondary gateways.
 - **Automatic Default Routing:** Designate a primary supplier while maintaining secondary vendors for failover.
 
 ### 3. Dynamic Multiplier & Pricing Hierarchy

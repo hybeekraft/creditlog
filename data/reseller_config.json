@@ -4,7 +4,7 @@
   "markupPercent": 30,
   "usdToNgnRate": 1550,
   "autoFulfill": true,
-  "mode": "simulation",
+  "mode": "live",
   "lowBalanceThreshold": 5,
   "vendors": [
     {
@@ -13,7 +13,7 @@
       "baseUrl": "https://api-geminipro.ignorelist.com/api/reseller/v1",
       "apiKey": "",
       "isDefault": true,
-      "mode": "simulation",
+      "mode": "live",
       "balance": "50.00",
       "currency": "USD",
       "lastChecked": "2026-10-03T21:59:31.033Z",

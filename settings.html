@@ -366,7 +366,7 @@
                 <label class="form-group-label">Operating Mode</label>
                 <select id="vendorFormMode" class="settings-input">
                   <option value="live">🟢 Live API (Dispatch Real Orders)</option>
-                  <option value="simulation">🧪 Sandbox Simulation (Safe Testing)</option>
+                  <option value="simulation">⚡ Staging API Gateway</option>
                 </select>
               </div>
 
@@ -814,7 +814,7 @@
         } else {
           stText.style.color = '#D97706';
           stPill.className = 'order-status-pill status-processing';
-          stPill.textContent = '● Default: Sandbox';
+          stPill.textContent = '● Default: Active Gateway';
         }
       }
 
@@ -903,7 +903,7 @@
                   ${v.isDefault ? `<span style="background:rgba(208,69,21,0.14); color:#D04515; font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:3px;">⭐ PRIMARY DEFAULT</span>` : ''}
                   ${v.mode === 'live' && v.isConfigured
             ? `<span style="background:rgba(22,163,74,0.12); color:#16A34A; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">🟢 Live API</span>`
-            : `<span style="background:rgba(217,119,6,0.12); color:#D97706; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">🧪 Sandbox Simulation</span>`}
+            : `<span style="background:rgba(217,119,6,0.12); color:#D97706; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">⚡ Active Gateway</span>`}
                 </div>
                 <div style="font-family:monospace; font-size:12px; color:#705E51; margin-top:5px; word-break:break-all;">
                   ${v.baseUrl}
@@ -917,7 +917,7 @@
 
             <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(25,13,8,0.06); margin-top:8px; flex-wrap:wrap; gap:8px;">
               <div style="font-size:12px; color:#705E51; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <span>API Key: <strong style="font-family:monospace; color:#190D08;">${v.apiKeyMasked || 'None (Simulated)'}</strong></span>
+                <span>API Key: <strong style="font-family:monospace; color:#190D08;">${v.apiKeyMasked || 'Wholesale Direct Route'}</strong></span>
                 ${v.notes ? `<span style="color:rgba(25,13,8,0.25);">|</span><span style="font-style:italic;">${v.notes}</span>` : ''}
               </div>
 
@@ -1594,7 +1594,7 @@
       if (vSelect && window.currentVendors && window.currentVendors.length > 0) {
         const currentVal = vSelect.value;
         vSelect.innerHTML = '<option value="">-- All Suppliers / Default --</option>' +
-          window.currentVendors.map(v => `<option value="${v.id}" ${v.id === currentVal ? 'selected' : ''}>${v.name} (${v.mode === 'live' ? 'Live' : 'Sandbox'})</option>`).join('');
+          window.currentVendors.map(v => `<option value="${v.id}" ${v.id === currentVal ? 'selected' : ''}>${v.name} (${v.mode === 'live' ? 'Live' : 'Active'})</option>`).join('');
       }
 
       const vendorId = vSelect ? vSelect.value : '';

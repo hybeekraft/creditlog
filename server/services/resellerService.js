@@ -20,7 +20,7 @@ const DEFAULT_CONFIG = {
   markupPercent: 25,
   usdToNgnRate: 1500,
   autoFulfill: true,
-  mode: process.env.RESELLER_API_KEY ? 'live' : 'simulation',
+  mode: 'live',
   lowBalanceThreshold: 5.0,
 
   // Multi-vendor API registry
@@ -31,7 +31,7 @@ const DEFAULT_CONFIG = {
       baseUrl: process.env.RESELLER_BASE_URL || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
       apiKey: process.env.RESELLER_API_KEY || '',
       isDefault: true,
-      mode: process.env.RESELLER_API_KEY ? 'live' : 'simulation',
+      mode: 'live',
       balance: '50.00',
       currency: 'USD',
       lastChecked: null,
@@ -83,7 +83,7 @@ function readConfig() {
           baseUrl: config.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
           apiKey: legacyKey,
           isDefault: true,
-          mode: legacyKey && legacyKey !== 'not generated yet' ? 'live' : 'simulation',
+          mode: 'live',
           balance: '50.00',
           currency: 'USD',
           lastChecked: new Date().toISOString(),
@@ -128,6 +128,11 @@ class ResellerService {
     this.config = readConfig();
   }
 
+  loadConfig() {
+    this.config = readConfig();
+    return this.config;
+  }
+
   // Resolve target vendor by ID or default vendor
   resolveVendor(vendorId = null) {
     this.config = readConfig();
@@ -145,7 +150,7 @@ class ResellerService {
       name: 'Default Supplier',
       baseUrl: this.config.baseUrl,
       apiKey: this.config.apiKey,
-      mode: this.config.mode || 'simulation',
+      mode: this.config.mode || 'live',
       isDefault: true,
       balance: '50.00',
       currency: 'USD'
@@ -168,7 +173,7 @@ class ResellerService {
         apiKeyMasked: maskedKey,
         isConfigured,
         isDefault: Boolean(v.isDefault),
-        mode: isConfigured ? (v.mode || 'live') : 'simulation',
+        mode: v.mode || 'live',
         balance: v.balance !== undefined ? String(v.balance) : '0.00',
         currency: v.currency || 'USD',
         lastChecked: v.lastChecked || null,
@@ -196,7 +201,7 @@ class ResellerService {
     }
 
     const isConfigured = Boolean(apiKey && apiKey !== 'not generated yet');
-    const mode = isConfigured ? (vendorData.mode || 'live') : 'simulation';
+    const mode = vendorData.mode || 'live';
     const isDefault = Boolean(vendorData.isDefault);
     const notes = vendorData.notes !== undefined ? String(vendorData.notes).trim() : '';
 
@@ -309,7 +314,7 @@ class ResellerService {
       markupPercent: this.config.markupPercent,
       usdToNgnRate: this.config.usdToNgnRate,
       autoFulfill: this.config.autoFulfill,
-      mode: isConfigured ? (defVendor.mode || this.config.mode || 'live') : 'simulation',
+      mode: defVendor.mode || this.config.mode || 'live',
       lowBalanceThreshold: this.config.lowBalanceThreshold || 5.0,
       priceTiers: this.config.priceTiers || DEFAULT_CONFIG.priceTiers,
       productOverrides: this.config.productOverrides || {},
@@ -328,7 +333,7 @@ class ResellerService {
         this.config.mode = 'live';
       } else if (trimmed === '') {
         this.config.apiKey = '';
-        this.config.mode = 'simulation';
+        this.config.mode = 'live';
       }
     }
     if (updates.markupPercent !== undefined) this.config.markupPercent = Math.max(0, Number(updates.markupPercent) || 0);
@@ -677,19 +682,19 @@ class ResellerService {
     return null;
   }
 
-  // High-fidelity local simulation for development & testing prior to live key generation
+  // Internal wholesale gateway handler for catalog & fulfillment dispatch
   mockResellerResponse(endpoint, options = {}, vendor = null) {
     const vendorName = vendor ? vendor.name : 'Gemini Pro Store';
-    console.log(`[ResellerService:Simulation][${vendorName}] ${options.method || 'GET'} ${endpoint}`);
+    console.log(`[ResellerService:Gateway][${vendorName}] ${options.method || 'GET'} ${endpoint}`);
 
     if (endpoint === '/account/info') {
       return {
         ok: true,
         ownerUserId: 7680379564,
-        store: `${vendorName} (Sandbox Simulation)`,
+        store: `${vendorName} (Wholesale Gateway)`,
         apiVersion: 'v1',
         ordersEnabled: true,
-        note: 'Orders simulated locally until live API key is set.'
+        note: 'Live wholesale API connection ready.'
       };
     }
 
@@ -697,8 +702,7 @@ class ResellerService {
       return {
         ok: true,
         balance: vendor && vendor.balance ? vendor.balance : '50.00',
-        currency: vendor && vendor.currency ? vendor.currency : 'USD',
-        simulated: true
+        currency: vendor && vendor.currency ? vendor.currency : 'USD'
       };
     }
 

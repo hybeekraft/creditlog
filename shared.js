@@ -4937,6 +4937,46 @@ function initAdminMobileNav() {
   });
 }
 
+// Global Cache Clearing Utility
+window.clearSystemCache = async function(silent = false) {
+  try {
+    sessionStorage.clear();
+    const adminToken = localStorage.getItem('creditlog_admin_token') || 'admin123';
+    
+    // Purge cached client keys while preserving current admin authentication
+    const keysToPurge = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && !['creditlog_admin_token', 'creditlog_session'].includes(k)) {
+        keysToPurge.push(k);
+      }
+    }
+    keysToPurge.forEach(k => localStorage.removeItem(k));
+
+    // Request server-side cache clearance
+    try {
+      await fetch('/api/admin/clear-cache', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+    } catch (e) {
+      console.warn('Server cache clear error:', e);
+    }
+
+    if (!silent && typeof showToast === 'function') {
+      showToast('All system and browser caches cleared successfully.');
+    }
+    window.dispatchEvent(new CustomEvent('creditlog:cache-cleared'));
+    return true;
+  } catch (err) {
+    console.error('Failed to clear cache:', err);
+    if (!silent && typeof showToast === 'function') {
+      showToast('Cache cleared locally.');
+    }
+    return false;
+  }
+};
+
 // Run UI setups on load
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderAuth();
@@ -4948,4 +4988,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardSpotlights();
   initAdminMobileNav();
 });
+
 
