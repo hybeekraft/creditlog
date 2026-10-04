@@ -2767,6 +2767,16 @@ option {
   width: 100%;
 }
 
+.dash-sidebar-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-nav-profile {
+  display: none !important;
+}
+
 .dash-mobile-toggle {
   display: none !important;
 }
@@ -3937,10 +3947,16 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 10px 14px;
     width: 100%;
     box-sizing: border-box;
     background: #190D08;
+  }
+
+  .dash-sidebar-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .dash-brand {
@@ -3952,8 +3968,8 @@ html, body {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 10px;
@@ -3961,6 +3977,7 @@ html, body {
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 0;
+    flex-shrink: 0;
   }
 
   .dash-mobile-toggle:hover,
@@ -3968,6 +3985,60 @@ html, body {
     background: rgba(208, 69, 21, 0.2);
     border-color: #D04515;
     color: #D04515;
+  }
+
+  .mobile-nav-profile {
+    display: inline-block !important;
+  }
+
+  .mobile-profile-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9999px;
+    padding: 3px 8px 3px 3px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-profile-badge:hover,
+  .mobile-profile-badge:active,
+  .mobile-nav-profile.active .mobile-profile-badge {
+    background: rgba(208, 69, 21, 0.2);
+    border-color: #D04515;
+  }
+
+  .mobile-profile-badge .avatar-img-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mobile-profile-badge .profile-chevron-icon {
+    width: 14px;
+    height: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-nav-profile.active .profile-chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav-profile .admin-profile-menu {
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    z-index: 1002;
+  }
+
+  .dash-top-bar .desktop-profile-wrapper,
+  .dash-top-bar .admin-profile-wrapper {
+    display: none !important;
   }
 
   /* Collapsible Navigation Menu */
