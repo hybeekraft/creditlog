@@ -6878,12 +6878,12 @@ body {
 }
 
 .editorial-hero-slab {
-  background: linear-gradient(135deg, #BD490A 0%, #D04515 45%, #9E330B 75%, #7A2403 100%);
+  background: linear-gradient(140deg, #CC4612 0%, #D84D16 36%, #A8340A 74%, #7E2403 100%);
   border-radius: var(--radius-slab, 32px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-top: 1px solid rgba(255, 255, 255, 0.32);
-  padding: 110px 48px 44px;
-  min-height: 660px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 80px 48px 44px;
+  min-height: 680px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6903,21 +6903,21 @@ body {
 }
 
 .glow-top-right {
-  top: -140px;
+  top: -160px;
   right: -80px;
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle, rgba(254, 215, 170, 0.24) 0%, rgba(208, 69, 21, 0) 70%);
-  filter: blur(60px);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 175, 75, 0.32) 0%, rgba(208, 69, 21, 0) 70%);
+  filter: blur(70px);
 }
 
 .glow-bottom-left {
-  bottom: -100px;
+  bottom: -120px;
   left: -80px;
-  width: 480px;
-  height: 480px;
-  background: radial-gradient(circle, rgba(135, 40, 3, 0.48) 0%, rgba(135, 40, 3, 0) 70%);
-  filter: blur(55px);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(120, 32, 4, 0.5) 0%, rgba(120, 32, 4, 0) 70%);
+  filter: blur(65px);
 }
 
 .hero-grid-mesh {
@@ -6925,9 +6925,38 @@ body {
   inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 26px 26px;
-  opacity: 0.55;
+  opacity: 0.45;
   pointer-events: none;
   z-index: 1;
+}
+
+/* Corner Accents from Tangerine Capital */
+.hero-corner-stamp {
+  position: absolute;
+  bottom: 60px;
+  left: 40px;
+  background: #140B07;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-corner-spark {
+  position: absolute;
+  bottom: 54px;
+  right: 44px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 24px rgba(240, 189, 61, 0.4));
+  transform: rotate(14deg);
 }
 
 /* Centralized Hero Content Container */
@@ -6939,54 +6968,108 @@ body {
   max-width: 980px;
   width: 100%;
   margin: auto auto;
-  padding: 30px 0 64px;
+  padding: 24px 0 60px;
   position: relative;
   z-index: 2;
 }
 
+/* Top Overline */
+.hero-editorial-overline {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.76);
+  margin-bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .hero-slab-headline {
-  font-size: clamp(34px, 5.2vw, 62px);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: #FFFFFF;
   text-align: center;
-  max-width: 880px;
-  margin: 0 auto 22px;
+  max-width: 920px;
+  margin: 0 auto 20px;
 }
 
-.highlight-badge-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  color: #190D08;
-  padding: 3px 14px 4px;
-  border-radius: 8px;
+.hero-headline-lead {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5.2vw, 64px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+/* The iconic giant yellow rounded sticker */
+.hero-giant-sticker {
   display: inline-block;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  transform: rotate(-0.5deg);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.highlight-badge-gold em,
-.highlight-badge-gold .editorial-serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  background: #F0BD3D;
+  color: #170C07;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5.2vw, 64px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  padding: 8px 32px 14px;
+  border-radius: 20px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+  transform: translateY(-2px);
+  position: relative;
+  z-index: 3;
 }
 
 .hero-slab-sub {
   font-family: var(--font-display);
-  font-size: clamp(17px, 1.9vw, 21px);
+  font-size: clamp(16px, 1.8vw, 19.5px);
   color: rgba(255, 255, 255, 0.94);
   line-height: 1.55;
   letter-spacing: -0.015em;
   text-align: center;
-  max-width: 680px;
-  margin: 0 auto 36px;
+  max-width: 620px;
+  margin: 0 auto 24px;
   font-weight: 500;
   text-wrap: balance;
+}
+
+/* Middle Capsule Edition Pill */
+.hero-edition-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 18px;
+  background: rgba(18, 10, 6, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.edition-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #F0BD3D;
+  box-shadow: 0 0 8px #F0BD3D;
+}
+
+.edition-sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.edition-sub {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .hero-slab-actions {
@@ -7520,6 +7603,11 @@ body {
     border-radius: 24px;
   }
 
+  .hero-corner-stamp,
+  .hero-corner-spark {
+    display: none;
+  }
+
   .hero-centered-content {
     padding: 16px 0 50px;
   }
@@ -7549,21 +7637,38 @@ body {
     border-radius: 20px;
   }
 
+  .hero-editorial-overline {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+  }
+
+  .hero-headline-lead {
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  .hero-giant-sticker {
+    font-size: 26px;
+    padding: 6px 18px 10px;
+    border-radius: 14px;
+  }
+
   .hero-centered-content {
     padding: 10px 0 40px;
   }
 
-  .hero-slab-headline {
-    font-size: 30px;
-    line-height: 1.15;
-    margin-bottom: 16px;
+  .hero-edition-pill {
+    font-size: 9.5px;
+    padding: 6px 14px;
+    margin-bottom: 22px;
   }
 
   .hero-slab-sub {
-    font-size: 15.5px;
+    font-size: 15px;
     line-height: 1.5;
     letter-spacing: -0.01em;
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
 
   .hero-slab-actions {
