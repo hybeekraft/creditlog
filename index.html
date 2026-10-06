@@ -55,39 +55,40 @@
         <div class="hero-ambient-glow glow-bottom-left" aria-hidden="true"></div>
         <div class="hero-grid-mesh" aria-hidden="true"></div>
 
-        <!-- Corner Accents (dynamically toggled) -->
-        <div class="hero-corner-stamp" id="heroCornerStamp" style="display: none;" aria-hidden="true">
+        <!-- Corner Accents -->
+        <div class="hero-corner-stamp" aria-hidden="true">
           <span>CL—FOLIO/01</span>
         </div>
-        <div class="hero-corner-spark" id="heroCornerSpark" style="display: none;" aria-hidden="true">
+        <div class="hero-corner-spark" aria-hidden="true">
           <svg width="46" height="46" viewBox="0 0 24 24" fill="#F0BD3D">
             <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
           </svg>
         </div>
 
-        <div class="hero-centered-content" id="heroCenteredContent">
-          <!-- Top Overline (dynamically toggled) -->
-          <div class="hero-editorial-overline" id="heroOverline" style="display: none;">
+        <div class="hero-centered-content">
+          <!-- Top Overline -->
+          <div class="hero-editorial-overline">
             — THE DIGITAL SYSTEM • NO. CL-01
           </div>
 
-          <!-- Dynamic Headline -->
-          <h1 class="hero-slab-headline" id="heroHeadline">
-            The Verified Exchange for <span class="highlight-badge-gold"><em class="editorial-serif">Premium</em></span> Digital Subscriptions.
+          <!-- Tangerine 2-Word Headline -->
+          <h1 class="hero-slab-headline">
+            <span class="hero-tc-top">CreditLog</span>
+            <span class="hero-giant-sticker">Exchange.</span>
           </h1>
 
-          <!-- Optional Sublead for Option 2 -->
-          <div class="hero-slab-sublead" id="heroSublead" style="display: none;">
+          <!-- Editorial Sublead -->
+          <div class="hero-slab-sublead">
             The Verified Exchange for Premium Digital Subscriptions.
           </div>
 
           <!-- Subtitle -->
-          <p class="hero-slab-sub" id="heroSub">
+          <p class="hero-slab-sub">
             Instant, private access to premium developer, AI, media, and design suites.
           </p>
 
-          <!-- Middle Capsule Edition Pill (dynamically toggled) -->
-          <div class="hero-edition-pill" id="heroEditionPill" style="display: none;">
+          <!-- Middle Capsule Edition Pill -->
+          <div class="hero-edition-pill">
             <span class="edition-dot"></span>
             <span class="edition-text">VERIFIED ACCESS</span>
             <span class="edition-sep">|</span>
@@ -302,126 +303,10 @@
       </div>
     </footer>
 
-    <!-- Interactive Floating Preview Bar for Visualizing the 4 Designs -->
-    <aside class="hero-variant-bar" id="heroVariantBar" role="region" aria-label="Hero Design Switcher">
-      <span class="variant-bar-label"><span class="spark-dot">✦</span> PREVIEW:</span>
-      <button type="button" class="variant-tab active" data-variant="1">1. Subtle Highlight</button>
-      <button type="button" class="variant-tab" data-variant="2">2. Tangerine 2-Word</button>
-      <button type="button" class="variant-tab" data-variant="3">3. Pure White Minimal</button>
-      <button type="button" class="variant-tab" data-variant="4">4. "Smart Operator"</button>
-    </aside>
   </main>
 
   <script src="/shared.js"></script>
   <script>
-    // Hero Variant Preview Switcher
-    const HERO_VARIANTS = {
-      1: {
-        id: 1,
-        name: 'Subtle Highlight',
-        overline: false,
-        stamp: false,
-        spark: false,
-        headline: `The Verified Exchange for <span class="highlight-badge-gold"><em class="editorial-serif">Premium</em></span> Digital Subscriptions.`,
-        sublead: false,
-        sub: `Instant, private access to premium developer, AI, media, and design suites.`,
-        editionPill: false
-      },
-      2: {
-        id: 2,
-        name: 'Tangerine 2-Word Layout',
-        overline: true,
-        stamp: true,
-        spark: true,
-        headline: `<span class="hero-tc-top">CreditLog</span><span class="hero-giant-sticker">Exchange.</span>`,
-        sublead: `The Verified Exchange for Premium Digital Subscriptions.`,
-        sub: `Instant, private access to premium developer, AI, media, and design suites.`,
-        editionPill: true
-      },
-      3: {
-        id: 3,
-        name: 'Pure White Minimal',
-        overline: false,
-        stamp: false,
-        spark: false,
-        headline: `<span class="hero-headline-pure">The Verified Exchange for Premium Digital Subscriptions.</span>`,
-        sublead: false,
-        sub: `Instant, private access to premium developer, AI, media, and design suites.`,
-        editionPill: false
-      },
-      4: {
-        id: 4,
-        name: '"Smart Operator" Classic',
-        overline: false,
-        stamp: false,
-        spark: false,
-        headline: `Private access built for the <span class="highlight-badge-gold"><em class="editorial-serif">smart</em></span> digital operator.`,
-        sublead: false,
-        sub: `Instant, private access to premium developer, AI, media, and design suites.`,
-        editionPill: false
-      }
-    };
-
-    function applyHeroVariant(variantKey) {
-      const v = HERO_VARIANTS[variantKey];
-      if (!v) return;
-
-      const overline = document.getElementById('heroOverline');
-      const stamp = document.getElementById('heroCornerStamp');
-      const spark = document.getElementById('heroCornerSpark');
-      const headline = document.getElementById('heroHeadline');
-      const sublead = document.getElementById('heroSublead');
-      const sub = document.getElementById('heroSub');
-      const editionPill = document.getElementById('heroEditionPill');
-
-      if (overline) overline.style.display = v.overline ? 'inline-flex' : 'none';
-      if (stamp) stamp.style.display = v.stamp ? 'block' : 'none';
-      if (spark) spark.style.display = v.spark ? 'block' : 'none';
-      if (editionPill) editionPill.style.display = v.editionPill ? 'inline-flex' : 'none';
-
-      if (headline) headline.innerHTML = v.headline;
-
-      if (sublead) {
-        if (v.sublead) {
-          sublead.style.display = 'block';
-          sublead.textContent = v.sublead;
-        } else {
-          sublead.style.display = 'none';
-        }
-      }
-
-      if (sub) sub.textContent = v.sub;
-
-      // Update button active state
-      document.querySelectorAll('.variant-tab').forEach(tab => {
-        if (tab.dataset.variant === String(variantKey)) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
-      });
-
-      // Save preference to localStorage so refresh keeps selection
-      try {
-        localStorage.setItem('cl_hero_variant_preview', String(variantKey));
-      } catch (e) {}
-    }
-
-    function initHeroVariantSwitcher() {
-      const tabs = document.querySelectorAll('.variant-tab');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          applyHeroVariant(tab.dataset.variant);
-        });
-      });
-
-      let saved = '1';
-      try {
-        saved = localStorage.getItem('cl_hero_variant_preview') || '1';
-      } catch (e) {}
-      applyHeroVariant(saved);
-    }
-
     // Curated Home Directory Logic (Top 3 items matching sketch)
     async function renderCuratedCards() {
       const container = document.getElementById('curatedGrid');
@@ -489,7 +374,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderCuratedCards();
-      initHeroVariantSwitcher();
     });
   </script>
 
