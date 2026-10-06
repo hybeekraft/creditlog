@@ -6883,8 +6883,8 @@ body {
   border-radius: var(--radius-slab, 32px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-top: 1px solid rgba(255, 255, 255, 0.35);
-  padding: 80px 48px 44px;
-  min-height: 680px;
+  padding: 68px 48px 38px;
+  min-height: 540px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6931,35 +6931,6 @@ body {
   z-index: 1;
 }
 
-/* Corner Accents from Tangerine Capital */
-.hero-corner-stamp {
-  position: absolute;
-  bottom: 60px;
-  left: 40px;
-  background: #140B07;
-  color: #FFFFFF;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.hero-corner-spark {
-  position: absolute;
-  bottom: 54px;
-  right: 44px;
-  z-index: 3;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 24px rgba(240, 189, 61, 0.4));
-  transform: rotate(14deg);
-}
-
 /* Centralized Hero Content Container */
 .hero-centered-content {
   display: flex;
@@ -6969,46 +6940,21 @@ body {
   max-width: 980px;
   width: 100%;
   margin: auto auto;
-  padding: 24px 0 60px;
+  padding: 24px 0 36px;
   position: relative;
   z-index: 2;
-}
-
-/* Top Overline */
-.hero-editorial-overline {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.76);
-  margin-bottom: 22px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .hero-slab-headline {
   text-align: center;
   max-width: 920px;
-  margin: 0 auto 20px;
+  margin: 0 auto;
   font-family: var(--font-display, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
   font-size: clamp(34px, 5.2vw, 64px);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.035em;
   color: #FFFFFF;
-}
-
-.hero-headline-lead {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(34px, 5.2vw, 64px);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  color: #FFFFFF;
-  margin-bottom: 6px;
 }
 
 /* Two-Word Tangerine Capital Title Format */
@@ -7025,13 +6971,16 @@ body {
 
 .hero-slab-sublead {
   font-family: var(--font-mono, monospace);
-  font-size: clamp(12px, 1.4vw, 14.5px);
+  font-size: clamp(12.5px, 1.35vw, 15px);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.95);
-  margin-top: 18px;
-  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.94);
+  margin-top: 24px;
+  margin-bottom: 34px;
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.5;
 }
 
 /* The iconic giant yellow rounded sticker */
@@ -7053,87 +7002,6 @@ body {
   z-index: 3;
   max-width: 100%;
   text-align: center;
-}
-
-/* Subtle Gold Highlighter Badge */
-.highlight-badge-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  color: #190D08;
-  padding: 3px 14px 4px;
-  border-radius: 8px;
-  display: inline-block;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  transform: rotate(-0.5deg);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.highlight-badge-gold em,
-.highlight-badge-gold .editorial-serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-/* Pure White Display Typography */
-.hero-headline-pure {
-  font-family: var(--font-display);
-  font-size: clamp(34px, 5.2vw, 62px);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: #FFFFFF;
-}
-
-.hero-slab-sub {
-  font-family: var(--font-display);
-  font-size: clamp(16px, 1.8vw, 19.5px);
-  color: rgba(255, 255, 255, 0.94);
-  line-height: 1.55;
-  letter-spacing: -0.015em;
-  text-align: center;
-  max-width: 620px;
-  margin: 0 auto 24px;
-  font-weight: 500;
-  text-wrap: balance;
-}
-
-/* Middle Capsule Edition Pill */
-.hero-edition-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 18px;
-  background: rgba(18, 10, 6, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 9999px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 28px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.edition-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #F0BD3D;
-  box-shadow: 0 0 8px #F0BD3D;
-}
-
-.edition-sep {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.edition-sub {
-  color: rgba(255, 255, 255, 0.65);
 }
 
 .hero-slab-actions {
@@ -7676,15 +7544,6 @@ body {
     border-radius: 28px;
   }
 
-  .hero-corner-stamp {
-    bottom: 48px;
-    left: 24px;
-  }
-
-  .hero-corner-spark {
-    bottom: 44px;
-    right: 24px;
-  }
 
   .hero-centered-content {
     padding: 14px 0 44px;
@@ -7728,19 +7587,8 @@ body {
     border-radius: 24px;
   }
 
-  .hero-corner-stamp,
-  .hero-corner-spark {
-    display: none;
-  }
-
   .hero-centered-content {
     padding: 10px 0 32px;
-  }
-
-  .hero-editorial-overline {
-    font-size: 10.5px;
-    letter-spacing: 0.14em;
-    margin-bottom: 18px;
   }
 
   .hero-tc-top {
@@ -7757,21 +7605,8 @@ body {
   .hero-slab-sublead {
     font-size: 12px;
     letter-spacing: 0.07em;
-    margin-top: 15px;
-    margin-bottom: 6px;
-  }
-
-  .hero-slab-sub {
-    font-size: 15.5px;
-    line-height: 1.5;
-    margin-bottom: 22px;
-    max-width: 520px;
-  }
-
-  .hero-edition-pill {
-    font-size: 10px;
-    padding: 6px 15px;
-    margin-bottom: 24px;
+    margin-top: 18px;
+    margin-bottom: 28px;
   }
 
   .hero-slab-actions {
@@ -7844,12 +7679,6 @@ body {
     padding: 6px 0 24px;
   }
 
-  .hero-editorial-overline {
-    font-size: 9.5px;
-    letter-spacing: 0.12em;
-    margin-bottom: 14px;
-  }
-
   .hero-tc-top {
     font-size: clamp(36px, 10vw, 46px);
     line-height: 0.98;
@@ -7869,25 +7698,9 @@ body {
     font-size: 11px;
     letter-spacing: 0.05em;
     line-height: 1.45;
-    margin-top: 14px;
-    margin-bottom: 6px;
+    margin-top: 16px;
+    margin-bottom: 24px;
     padding: 0 4px;
-  }
-
-  .hero-slab-sub {
-    font-size: 14px;
-    line-height: 1.48;
-    letter-spacing: -0.01em;
-    margin: 0 auto 18px;
-    padding: 0 4px;
-  }
-
-  .hero-edition-pill {
-    font-size: 9px;
-    padding: 5px 12px;
-    gap: 7px;
-    margin-bottom: 20px;
-    max-width: 100%;
   }
 
   .hero-slab-actions {
@@ -7973,12 +7786,6 @@ body {
     border-radius: 16px;
   }
 
-  .hero-editorial-overline {
-    font-size: 8.5px;
-    letter-spacing: 0.08em;
-    margin-bottom: 10px;
-  }
-
   .hero-tc-top {
     font-size: clamp(30px, 9vw, 36px);
   }
@@ -7992,23 +7799,8 @@ body {
   .hero-slab-sublead {
     font-size: 9.5px;
     letter-spacing: 0.03em;
-    margin-top: 10px;
-    margin-bottom: 4px;
-  }
-
-  .hero-slab-sub {
-    font-size: 13px;
-    line-height: 1.4;
-    margin-bottom: 16px;
-  }
-
-  .hero-edition-pill {
-    font-size: 8px;
-    padding: 4px 8px;
-    gap: 5px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 20px;
   }
 
   .hero-slab-actions {
