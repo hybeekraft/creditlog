@@ -191,9 +191,10 @@
 
     .quantity-label-box strong {
       display: block;
-      font-size: 14.5px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: #190D08;
+      letter-spacing: -0.01em;
     }
 
     .quantity-label-box span {
@@ -250,8 +251,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 18px;
+      flex-wrap: nowrap;
     }
 
     .total-price-box {
@@ -371,11 +372,40 @@
         font-size: 22px;
       }
       .summary-and-action-row {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: nowrap;
+      }
+      .total-price-box {
+        min-width: 0;
+      }
+      .total-price-val {
+        font-size: 24px;
       }
       .buy-now-primary-btn {
-        width: 100%;
+        width: auto;
+        flex-shrink: 0;
+        padding: 13px 24px;
+        font-size: 14.5px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .purchase-section-card {
+        padding: 18px 14px;
+      }
+      .quantity-label-box strong {
+        font-size: 16.5px;
+      }
+      .total-price-val {
+        font-size: 21px;
+      }
+      .buy-now-primary-btn {
+        padding: 11px 18px;
+        font-size: 13px;
+        gap: 6px;
       }
     }
 
