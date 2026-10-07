@@ -4605,16 +4605,16 @@ body {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  min-width: 175px;
+  min-width: 135px;
   background: #FFFFFF;
   border: 1px solid rgba(25, 13, 8, 0.12);
   border-radius: 14px;
   box-shadow: 0 14px 36px rgba(25, 13, 8, 0.14), 0 2px 8px rgba(25, 13, 8, 0.04);
-  padding: 6px;
+  padding: 5px;
   z-index: 1200;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   opacity: 0;
   transform: translateY(-6px) scale(0.97);
   pointer-events: none;
@@ -4632,12 +4632,12 @@ body {
 .currency-option-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   width: 100%;
   padding: 8px 10px;
   background: transparent;
   border: none;
-  border-radius: 10px;
+  border-radius: 9px;
   font-family: inherit;
   cursor: pointer;
   text-align: left;
@@ -4658,24 +4658,12 @@ body {
   line-height: 1;
 }
 
-.currency-option-item .curr-opt-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
 .currency-option-item .curr-opt-code {
   font-family: var(--font-mono, monospace);
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 12.5px;
+  font-weight: 700;
   color: #190D08;
   letter-spacing: 0.03em;
-}
-
-.currency-option-item .curr-opt-name {
-  font-size: 11px;
-  color: #705E51;
-  font-weight: 500;
 }
 
 .currency-option-item .curr-opt-check {
@@ -7831,7 +7819,7 @@ body {
   }
 
   .currency-dropdown-menu {
-    min-width: 155px;
+    min-width: 125px;
   }
 
   .currency-toggle-capsule {
