@@ -7262,6 +7262,26 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
+.header-explore-btn {
+  white-space: nowrap;
+}
+
+.header-explore-btn .btn-text-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .header-explore-btn .btn-text-full {
+    display: none !important;
+  }
+  .header-explore-btn .btn-text-mobile {
+    display: inline !important;
+  }
+  .header-explore-btn .btn-arrow {
+    display: none !important;
+  }
+}
+
 .slab-btn-outline {
   background: transparent;
   color: #FFFFFF;
