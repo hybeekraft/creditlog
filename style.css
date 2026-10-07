@@ -4541,8 +4541,157 @@ body {
 }
 
 /* ==========================================================================
-   Editorial Multi-Currency Capsule Toggle (NGN / USD)
+   Editorial Multi-Currency Flag Dropdown (Nigeria 🇳🇬 / USA 🇺🇸)
    ========================================================================== */
+.currency-dropdown-wrap {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  vertical-align: middle;
+}
+
+.currency-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(25, 13, 8, 0.04);
+  border: 1px solid rgba(25, 13, 8, 0.12);
+  border-radius: var(--radius-full, 9999px);
+  padding: 6px 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #190D08;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.currency-dropdown-trigger:hover {
+  background: rgba(25, 13, 8, 0.08);
+  border-color: rgba(25, 13, 8, 0.22);
+  transform: translateY(-1px);
+}
+
+.currency-dropdown-trigger.open {
+  background: #190D08;
+  color: #FFFFFF;
+  border-color: #190D08;
+  box-shadow: 0 4px 14px rgba(25, 13, 8, 0.18);
+}
+
+.currency-dropdown-trigger.open .curr-trigger-chevron {
+  transform: rotate(180deg);
+}
+
+.curr-trigger-chevron {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.7;
+}
+
+.currency-dropdown-trigger.open .curr-trigger-chevron {
+  opacity: 1;
+}
+
+.curr-trigger-flag {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.currency-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 175px;
+  background: #FFFFFF;
+  border: 1px solid rgba(25, 13, 8, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(25, 13, 8, 0.14), 0 2px 8px rgba(25, 13, 8, 0.04);
+  padding: 6px;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.18s;
+}
+
+.currency-dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.currency-option-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.currency-option-item:hover {
+  background: rgba(25, 13, 8, 0.05);
+}
+
+.currency-option-item.active {
+  background: rgba(208, 69, 21, 0.08);
+}
+
+.currency-option-item .curr-opt-flag {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.currency-option-item .curr-opt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.currency-option-item .curr-opt-code {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 800;
+  color: #190D08;
+  letter-spacing: 0.03em;
+}
+
+.currency-option-item .curr-opt-name {
+  font-size: 11px;
+  color: #705E51;
+  font-weight: 500;
+}
+
+.currency-option-item .curr-opt-check {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 800;
+  color: #D04515;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.currency-option-item.active .curr-opt-check {
+  opacity: 1;
+}
+
+/* Fallback Capsule */
 .currency-toggle-capsule {
   display: inline-flex;
   align-items: center;
@@ -7673,6 +7822,16 @@ body {
     padding: 6px 12px !important;
     font-size: 12px !important;
     gap: 4px !important;
+  }
+
+  .currency-dropdown-trigger {
+    padding: 5px 9px;
+    font-size: 11px;
+    gap: 5px;
+  }
+
+  .currency-dropdown-menu {
+    min-width: 155px;
   }
 
   .currency-toggle-capsule {
