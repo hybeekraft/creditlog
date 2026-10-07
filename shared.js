@@ -95,7 +95,7 @@ function toggleCurrency() {
 
 function getCurrencyDropdownHTML() {
   const curr = getCurrency();
-  const currLabel = curr === 'USD' ? '$ USD' : '₦ NGN';
+  const currLabel = curr === 'USD' ? 'USD $' : 'NGN ₦';
   return `
     <div class="currency-dropdown-wrap" data-currency-dropdown>
       <button type="button" class="currency-dropdown-trigger" onclick="toggleCurrencyDropdown(event)" aria-haspopup="listbox" aria-expanded="false" aria-label="Select Currency">
@@ -108,12 +108,12 @@ function getCurrencyDropdownHTML() {
       <div class="currency-dropdown-menu" role="listbox">
         <button type="button" class="currency-option-item ${curr === 'NGN' ? 'active' : ''}" data-curr="NGN" onclick="selectCurrency('NGN', event)" role="option" aria-selected="${curr === 'NGN'}">
           <span class="curr-opt-flag">${FLAG_ICONS.NGN}</span>
-          <span class="curr-opt-code">₦ NGN</span>
+          <span class="curr-opt-code">NGN ₦</span>
           <span class="curr-opt-check">✓</span>
         </button>
         <button type="button" class="currency-option-item ${curr === 'USD' ? 'active' : ''}" data-curr="USD" onclick="selectCurrency('USD', event)" role="option" aria-selected="${curr === 'USD'}">
           <span class="curr-opt-flag">${FLAG_ICONS.USD}</span>
-          <span class="curr-opt-code">$ USD</span>
+          <span class="curr-opt-code">USD $</span>
           <span class="curr-opt-check">✓</span>
         </button>
       </div>
@@ -210,7 +210,7 @@ function updateCurrencyUI() {
       flagEl.innerHTML = FLAG_ICONS[curr];
     }
     if (codeEl) {
-      codeEl.textContent = curr === 'USD' ? '$ USD' : '₦ NGN';
+      codeEl.textContent = curr === 'USD' ? 'USD $' : 'NGN ₦';
     }
 
     wrap.querySelectorAll('.currency-option-item').forEach(opt => {
