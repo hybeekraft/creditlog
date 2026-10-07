@@ -70,26 +70,40 @@ function renderHeaderAuth() {
 // --- Active Exchange Rate (1 USD = ₦1,500) ---
 const USD_TO_NGN_RATE = 1500;
 
-// --- Authoritative Currency & Pricing Formatter (NGN Naira) ---
+// --- Authoritative Multi-Currency System (NGN / USD) ---
 function getCurrency() {
-  return 'NGN';
+  return localStorage.getItem('creditlog_currency') || 'NGN';
 }
 
-function setCurrency() {
-  // Currency changing removed completely
+function setCurrency(curr) {
+  const c = curr === 'USD' ? 'USD' : 'NGN';
+  localStorage.setItem('creditlog_currency', c);
+  updateCurrencyUI();
+  window.dispatchEvent(new CustomEvent('currencychange', { detail: { currency: c } }));
 }
 
 function toggleCurrency() {
-  // Currency changing removed completely
+  const current = getCurrency();
+  const next = current === 'NGN' ? 'USD' : 'NGN';
+  setCurrency(next);
 }
 
 function formatPrice(usdVal) {
   const num = Number(usdVal) || 0;
+  const curr = getCurrency();
+  if (curr === 'USD') {
+    return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
   return '₦' + Math.round(num * USD_TO_NGN_RATE).toLocaleString('en-US');
 }
 
 function formatDualPrice(usdVal) {
-  return formatPrice(usdVal);
+  const num = Number(usdVal) || 0;
+  const curr = getCurrency();
+  if (curr === 'USD') {
+    return '₦' + Math.round(num * USD_TO_NGN_RATE).toLocaleString('en-US');
+  }
+  return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 // Backward compatible formatter
@@ -98,7 +112,57 @@ function formatNaira(val) {
 }
 
 function updateCurrencyUI() {
-  // Obsolete - currency switchers removed
+  const curr = getCurrency();
+
+  // 1. Update all currency toggle capsule buttons across DOM
+  document.querySelectorAll('.currency-toggle-capsule').forEach(capsule => {
+    capsule.querySelectorAll('.curr-pill-btn').forEach(btn => {
+      const btnCurr = btn.getAttribute('data-curr') || (btn.textContent.includes('USD') ? 'USD' : 'NGN');
+      if (btnCurr === curr) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+      }
+    });
+  });
+
+  // 2. Update any standalone currency buttons
+  document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+    const codeEl = btn.querySelector('.curr-code');
+    const flagEl = btn.querySelector('.curr-flag');
+    if (codeEl) codeEl.textContent = curr;
+    if (flagEl) flagEl.textContent = curr === 'USD' ? '🇺🇸' : '🇳🇬';
+  });
+
+  // 3. Update hero ticker stock nodes dynamically if present
+  document.querySelectorAll('.ticker-node[data-usd]').forEach(node => {
+    const usd = parseFloat(node.getAttribute('data-usd'));
+    if (!isNaN(usd)) {
+      const strongEl = node.querySelector('strong');
+      if (strongEl) {
+        strongEl.textContent = formatPrice(usd);
+      }
+    }
+  });
+}
+
+function mountGlobalCurrencyToggle() {
+  // Auto-mount if a page has .header-actions or .top-bar-right without a toggle
+  const target = document.querySelector('.site-header .header-actions') || document.querySelector('.product-top-bar .top-bar-right') || document.querySelector('.checkout-top-bar');
+  if (target && !target.querySelector('.currency-toggle-capsule')) {
+    const capsule = document.createElement('div');
+    capsule.className = 'currency-toggle-capsule';
+    capsule.setAttribute('role', 'group');
+    capsule.setAttribute('aria-label', 'Currency Selector');
+    capsule.innerHTML = `
+      <button type="button" class="curr-pill-btn" data-curr="NGN" onclick="setCurrency('NGN')">₦ NGN</button>
+      <button type="button" class="curr-pill-btn" data-curr="USD" onclick="setCurrency('USD')">$ USD</button>
+    `;
+    target.prepend(capsule);
+    updateCurrencyUI();
+  }
 }
 
 // --- Stock Status Badges Helper ---
@@ -5042,6 +5106,7 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderAuth();
   updateCartBadge();
+  mountGlobalCurrencyToggle();
   updateCurrencyUI();
   if (typeof removeMobileNavDrawer === 'function') removeMobileNavDrawer();
   if (typeof removeMobileBottomNav === 'function') removeMobileBottomNav();

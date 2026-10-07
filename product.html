@@ -457,6 +457,10 @@
         </a>
 
         <div class="top-bar-right">
+          <div class="currency-toggle-capsule" role="group" aria-label="Currency Selector">
+            <button type="button" class="curr-pill-btn active" data-curr="NGN" onclick="setCurrency('NGN')">₦ NGN</button>
+            <button type="button" class="curr-pill-btn" data-curr="USD" onclick="setCurrency('USD')">$ USD</button>
+          </div>
         </div>
       </div>
 
@@ -751,6 +755,10 @@
     } else {
       initProductPage();
     }
+
+    window.addEventListener('currencychange', () => {
+      updatePrice(true);
+    });
   </script>
 
 </body>

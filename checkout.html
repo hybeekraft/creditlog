@@ -340,6 +340,11 @@
           </svg>
           <span>Cancel & Return</span>
         </a>
+
+        <div class="currency-toggle-capsule" role="group" aria-label="Currency Selector">
+          <button type="button" class="curr-pill-btn active" data-curr="NGN" onclick="setCurrency('NGN')">₦ NGN</button>
+          <button type="button" class="curr-pill-btn" data-curr="USD" onclick="setCurrency('USD')">$ USD</button>
+        </div>
       </div>
 
       <div class="checkout-layout-grid">
@@ -1105,6 +1110,10 @@
     });
 
     document.addEventListener('DOMContentLoaded', initCheckout);
+
+    window.addEventListener('currencychange', async () => {
+      await fetchServerQuote();
+    });
   </script>
 
 </body>

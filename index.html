@@ -35,6 +35,10 @@
       </nav>
 
       <div class="header-actions">
+        <div class="currency-toggle-capsule" role="group" aria-label="Currency Selector">
+          <button type="button" class="curr-pill-btn active" data-curr="NGN" onclick="setCurrency('NGN')">₦ NGN</button>
+          <button type="button" class="curr-pill-btn" data-curr="USD" onclick="setCurrency('USD')">$ USD</button>
+        </div>
         <a href="shop.html" class="slab-btn-dark" style="padding: 9px 18px; font-size: 13px;">
           <span>Explore Shop</span>
           <span>↗</span>
@@ -88,21 +92,21 @@
         <div class="hero-slab-ticker">
           <div class="ticker-marquee-viewport">
             <div class="ticker-track">
-              <div class="ticker-node">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
-              <div class="ticker-node">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
-              <div class="ticker-node">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
-              <div class="ticker-node">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
-              <div class="ticker-node">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
-              <div class="ticker-node">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
-              <div class="ticker-node">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node" data-usd="4.53">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node" data-usd="6.30">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node" data-usd="3.99">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node" data-usd="1.50">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
+              <div class="ticker-node" data-usd="4.60">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node" data-usd="5.98">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node" data-usd="2.13">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
               <!-- Seamless Loop Duplication -->
-              <div class="ticker-node">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
-              <div class="ticker-node">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
-              <div class="ticker-node">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
-              <div class="ticker-node">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
-              <div class="ticker-node">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
-              <div class="ticker-node">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
-              <div class="ticker-node">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node" data-usd="4.53">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
+              <div class="ticker-node" data-usd="6.30">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node" data-usd="3.99">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node" data-usd="1.50">✦ CANVA PRO <strong>₦2,250</strong> <span class="ticker-pill pill-instant">+DISPATCHED</span></div>
+              <div class="ticker-node" data-usd="4.60">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
+              <div class="ticker-node" data-usd="5.98">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
+              <div class="ticker-node" data-usd="2.13">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
             </div>
           </div>
         </div>
@@ -341,6 +345,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      renderCuratedCards();
+    });
+
+    window.addEventListener('currencychange', () => {
       renderCuratedCards();
     });
   </script>

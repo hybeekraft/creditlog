@@ -1586,7 +1586,7 @@ const server = http.createServer(async (req, res) => {
   // 3. POST /api/orders/quote — Authoritative Server-side Price Calculation
   if (pathname === '/api/orders/quote' && req.method === 'POST') {
     const body = await parseBody(req);
-    const { productId, duration, quantity, qty } = body;
+    const { productId, duration, quantity, qty, currency } = body;
 
     const products = getAllProducts();
     const product = products.find(p => p.id === productId) || products[0];
@@ -1609,7 +1609,10 @@ const server = http.createServer(async (req, res) => {
     const safeQty = Math.max(1, Math.min(100, parseInt(quantity || qty || 1, 10)));
     const totalUsd = Number((unitPriceUsd * safeQty).toFixed(2));
     const totalNgn = Math.round(totalUsd * USD_TO_NGN_RATE);
-    const formattedPrice = `₦${totalNgn.toLocaleString('en-US')}`;
+    const activeCurrency = (currency || 'NGN').toUpperCase();
+    const formattedPrice = activeCurrency === 'USD' 
+      ? `$${totalUsd.toFixed(2)}` 
+      : `₦${totalNgn.toLocaleString('en-US')}`;
 
     const available = selectedPlan ? selectedPlan.availableStock : product.availableStock;
 
@@ -1625,7 +1628,7 @@ const server = http.createServer(async (req, res) => {
       unitPriceUsd,
       totalUsd,
       totalNgn,
-      currency: 'NGN',
+      currency: activeCurrency,
       formattedPrice,
       exchangeRate: USD_TO_NGN_RATE
     });
