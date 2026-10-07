@@ -4553,11 +4553,11 @@ body {
 .currency-dropdown-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   background: rgba(25, 13, 8, 0.04);
   border: 1px solid rgba(25, 13, 8, 0.12);
   border-radius: var(--radius-full, 9999px);
-  padding: 6px 12px;
+  padding: 6px 11px;
   font-family: var(--font-sans, "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   font-size: 12.5px;
   font-weight: 700;
@@ -4587,17 +4587,8 @@ body {
   box-shadow: 0 4px 14px rgba(25, 13, 8, 0.18);
 }
 
-.currency-dropdown-trigger.open .curr-trigger-chevron {
-  transform: rotate(180deg);
-}
-
 .curr-trigger-chevron {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0.7;
-}
-
-.currency-dropdown-trigger.open .curr-trigger-chevron {
-  opacity: 1;
+  display: none !important;
 }
 
 .curr-trigger-flag {

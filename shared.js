@@ -101,9 +101,6 @@ function getCurrencyDropdownHTML() {
       <button type="button" class="currency-dropdown-trigger" onclick="toggleCurrencyDropdown(event)" aria-haspopup="listbox" aria-expanded="false" aria-label="Select Currency">
         <span class="curr-trigger-flag">${FLAG_ICONS[curr] || FLAG_ICONS.NGN}</span>
         <span class="curr-trigger-code">${currLabel}</span>
-        <svg class="curr-trigger-chevron" width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
-          <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-        </svg>
       </button>
       <div class="currency-dropdown-menu" role="listbox">
         <button type="button" class="currency-option-item ${curr === 'NGN' ? 'active' : ''}" data-curr="NGN" onclick="selectCurrency('NGN', event)" role="option" aria-selected="${curr === 'NGN'}">
