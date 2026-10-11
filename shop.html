@@ -136,6 +136,25 @@
           <span class="catalog-search-shortcut">/</span>
         </div>
         <div class="catalog-controls-right">
+                    <!-- Apple Glassmorphic Brand Filter Dropdown -->
+          <div class="apple-dropdown-wrap" id="brandDropdownWrap">
+            <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Brand">
+              <span class="sort-icon-prefix">🏷️</span>
+              <span id="brandDropdownLabel">All Brands</span>
+              <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <div class="apple-dropdown-menu hidden" id="brandDropdownMenu" role="menu" style="max-height: 380px; overflow-y: auto; min-width: 260px;">
+              <div class="dropdown-search-box" style="padding: 4px 6px 8px; border-bottom: 1px solid rgba(25, 13, 8, 0.08); margin-bottom: 4px; position: sticky; top: -6px; background: #FFFFFF; z-index: 2;">
+                <input type="text" id="brandSearchInput" placeholder="Filter brand..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
+              </div>
+              <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
+                <!-- Populated dynamically by populateBrandDropdown() -->
+              </div>
+            </div>
+          </div>
+
           <!-- Apple Glassmorphic Sort Dropdown -->
           <div class="apple-dropdown-wrap" id="sortDropdownWrap">
             <button type="button" class="apple-sort-trigger" id="sortDropdownTrigger" onclick="toggleSortMenu(event)" aria-haspopup="true" aria-expanded="false">
@@ -249,6 +268,7 @@
   <script>
     // State Management
     let currentCategory = 'all';
+    let currentBrand = 'all';
     let currentSearch = '';
     let currentSortMode = 'name-asc';
     let currentViewMode = 'grid';
@@ -290,6 +310,12 @@
           matchesCat = prod.category === currentCategory;
         }
 
+        let matchesBrand = true;
+        if (currentBrand && currentBrand !== 'all') {
+          const prodBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim().toLowerCase();
+          matchesBrand = prodBrand === currentBrand.toLowerCase();
+        }
+
         const q = currentSearch.toLowerCase().trim();
         const matchesSearch = !q ||
           prod.name.toLowerCase().includes(q) ||
@@ -297,7 +323,7 @@
           (prod.description && prod.description.toLowerCase().includes(q)) ||
           (prod.duration && prod.duration.toLowerCase().includes(q));
 
-        return matchesCat && matchesSearch;
+        return matchesCat && matchesBrand && matchesSearch;
       });
     }
 
@@ -573,9 +599,127 @@
       renderCatalog();
     }
 
+        // Brand Dropdown Population & Filter
+    function populateBrandDropdown() {
+      const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+      const brandCounts = {};
+      source.forEach(prod => {
+        const b = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
+        if (b) {
+          brandCounts[b] = (brandCounts[b] || 0) + 1;
+        }
+      });
+
+      const sortedBrands = Object.keys(brandCounts).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+      const container = document.getElementById('brandOptionsList');
+      if (!container) return;
+
+      const totalCount = source.length;
+      let html = `
+        <button type="button" class="apple-dropdown-item ${currentBrand === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Brands')">
+          <span>All Brands <span style="opacity: 0.55; font-size: 11px; font-weight: normal; margin-left: 4px;">(${totalCount})</span></span>
+          <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        </button>
+      `;
+
+      sortedBrands.forEach(brand => {
+        const isActive = currentBrand.toLowerCase() === brand.toLowerCase();
+        const count = brandCounts[brand];
+        const safeEscaped = brand.replace(/'/g, "\\'");
+        html += `
+          <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${brand.toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
+            <span>${brand} <span style="opacity: 0.55; font-size: 11px; font-weight: normal; margin-left: 4px;">(${count})</span></span>
+            <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function toggleBrandMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('brandDropdownMenu');
+      const trigger = document.getElementById('brandDropdownTrigger');
+      // Close sort menu if open
+      const sortMenu = document.getElementById('sortDropdownMenu');
+      const sortTrigger = document.getElementById('sortDropdownTrigger');
+      if (sortMenu && !sortMenu.classList.contains('hidden')) {
+        sortMenu.classList.add('hidden');
+        if (sortTrigger) {
+          sortTrigger.classList.remove('active');
+          sortTrigger.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      if (!menu || !trigger) return;
+      const isHidden = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !isHidden);
+      trigger.classList.toggle('active', isHidden);
+      trigger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+
+      if (isHidden) {
+        const searchInput = document.getElementById('brandSearchInput');
+        if (searchInput) {
+          searchInput.value = '';
+          filterBrandList('');
+          setTimeout(() => searchInput.focus(), 60);
+        }
+      }
+    }
+
+    function selectBrandOption(brandVal, label) {
+      currentBrand = brandVal;
+      currentPage = 1;
+      const labelEl = document.getElementById('brandDropdownLabel');
+      const trigger = document.getElementById('brandDropdownTrigger');
+      if (labelEl) {
+        labelEl.textContent = brandVal === 'all' ? 'All Brands' : brandVal;
+      }
+      if (trigger) {
+        trigger.classList.toggle('filter-active', brandVal !== 'all');
+      }
+
+      document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
+        const b = item.getAttribute('data-brand');
+        item.classList.toggle('active', b === (brandVal === 'all' ? 'all' : brandVal.toLowerCase()));
+      });
+
+      const menu = document.getElementById('brandDropdownMenu');
+      if (menu) menu.classList.add('hidden');
+      if (trigger) {
+        trigger.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+      renderCatalog();
+    }
+
+    function filterBrandList(searchVal) {
+      const q = (searchVal || '').toLowerCase().trim();
+      const items = document.querySelectorAll('#brandOptionsList .apple-dropdown-item');
+      items.forEach(item => {
+        const brandKey = item.getAttribute('data-brand') || '';
+        const text = item.textContent.toLowerCase();
+        if (!q || brandKey === 'all' || text.includes(q)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
     // Custom Apple Dropdown Control
     function toggleSortMenu(event) {
       if (event) event.stopPropagation();
+      const brandMenu = document.getElementById('brandDropdownMenu');
+      const brandTrigger = document.getElementById('brandDropdownTrigger');
+      if (brandMenu && !brandMenu.classList.contains('hidden')) {
+        brandMenu.classList.add('hidden');
+        if (brandTrigger) {
+          brandTrigger.classList.remove('active');
+          brandTrigger.setAttribute('aria-expanded', 'false');
+        }
+      }
       const menu = document.getElementById('sortDropdownMenu');
       const trigger = document.getElementById('sortDropdownTrigger');
       if (!menu || !trigger) return;
@@ -605,8 +749,8 @@
 
     // Close on outside click or Escape
     document.addEventListener('click', (e) => {
-      const wrap = document.getElementById('sortDropdownWrap');
-      if (wrap && !wrap.contains(e.target)) {
+      const sortWrap = document.getElementById('sortDropdownWrap');
+      if (sortWrap && !sortWrap.contains(e.target)) {
         const menu = document.getElementById('sortDropdownMenu');
         const trigger = document.getElementById('sortDropdownTrigger');
         if (menu && !menu.classList.contains('hidden')) {
@@ -614,6 +758,19 @@
           if (trigger) {
             trigger.classList.remove('active');
             trigger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+
+      const brandWrap = document.getElementById('brandDropdownWrap');
+      if (brandWrap && !brandWrap.contains(e.target)) {
+        const bMenu = document.getElementById('brandDropdownMenu');
+        const bTrigger = document.getElementById('brandDropdownTrigger');
+        if (bMenu && !bMenu.classList.contains('hidden')) {
+          bMenu.classList.add('hidden');
+          if (bTrigger) {
+            bTrigger.classList.remove('active');
+            bTrigger.setAttribute('aria-expanded', 'false');
           }
         }
       }
@@ -630,6 +787,16 @@
             trigger.setAttribute('aria-expanded', 'false');
           }
         }
+
+        const bMenu = document.getElementById('brandDropdownMenu');
+        const bTrigger = document.getElementById('brandDropdownTrigger');
+        if (bMenu && !bMenu.classList.contains('hidden')) {
+          bMenu.classList.add('hidden');
+          if (bTrigger) {
+            bTrigger.classList.remove('active');
+            bTrigger.setAttribute('aria-expanded', 'false');
+          }
+        }
       }
     });
 
@@ -637,9 +804,17 @@
     function clearSearchAndReset() {
       currentSearch = '';
       currentCategory = 'all';
+      currentBrand = 'all';
       currentPage = 1;
       const input = document.getElementById('catalogSearchInput');
       if (input) input.value = '';
+      const brandLabel = document.getElementById('brandDropdownLabel');
+      if (brandLabel) brandLabel.textContent = 'All Brands';
+      const brandTrigger = document.getElementById('brandDropdownTrigger');
+      if (brandTrigger) brandTrigger.classList.remove('filter-active');
+      document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
+      });
       document.querySelectorAll('.category-pill-btn').forEach(b => {
         b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
       });
@@ -678,6 +853,7 @@
 
     // Robust Boot Function (handles both pre- and post-DOMContentLoaded states)
     async function bootCatalog() {
+      populateBrandDropdown();
       updateCategoryBadges();
       renderCatalog();
       const bar = document.getElementById('categorySegmentedBar');
@@ -695,6 +871,7 @@
           const apiData = await res.json();
           if (apiData.success && Array.isArray(apiData.data)) {
             window.CATALOG_PRODUCTS = apiData.data;
+            populateBrandDropdown();
             updateCategoryBadges();
             renderCatalog();
           }
