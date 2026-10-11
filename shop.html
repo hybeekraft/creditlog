@@ -169,10 +169,6 @@
                 <span>Alphabetical: A to Z</span>
                 <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
               </button>
-              <button type="button" class="apple-dropdown-item" data-sort="brand-asc" onclick="selectSortOption('brand-asc', 'Brand: A to Z')">
-                <span>Brand: A to Z</span>
-                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-              </button>
               <button type="button" class="apple-dropdown-item" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
                 <span>Featured First</span>
                 <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -337,14 +333,6 @@
         copy.sort((a, b) => (b.usdPrice || 0) - (a.usdPrice || 0));
       } else if (currentSortMode === 'name-asc') {
         copy.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (currentSortMode === 'brand-asc') {
-        copy.sort((a, b) => {
-          const brandA = (a.brand || (typeof getBrandData === 'function' ? getBrandData(a).name : '') || a.name || '').trim();
-          const brandB = (b.brand || (typeof getBrandData === 'function' ? getBrandData(b).name : '') || b.name || '').trim();
-          const cmp = brandA.localeCompare(brandB, undefined, { sensitivity: 'base' });
-          if (cmp !== 0) return cmp;
-          return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
-        });
       }
       return copy;
     }
