@@ -139,7 +139,7 @@
                     <!-- Apple Glassmorphic Brand Filter Dropdown -->
           <div class="apple-dropdown-wrap" id="brandDropdownWrap">
             <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Brand">
-              <span class="sort-icon-prefix">🏷️</span>
+              <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
               <span id="brandDropdownLabel">All Brands</span>
               <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -269,6 +269,7 @@
     // State Management
     let currentCategory = 'all';
     let currentBrand = 'all';
+    let catalogBrandSamples = {};
     let currentSearch = '';
     let currentSortMode = 'name-asc';
     let currentViewMode = 'grid';
@@ -602,33 +603,51 @@
         // Brand Dropdown Population & Filter
     function populateBrandDropdown() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
-      const brandCounts = {};
+      catalogBrandSamples = {};
       source.forEach(prod => {
         const b = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
-        if (b) {
-          brandCounts[b] = (brandCounts[b] || 0) + 1;
+        if (b && !catalogBrandSamples[b]) {
+          catalogBrandSamples[b] = prod;
         }
       });
 
-      const sortedBrands = Object.keys(brandCounts).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+      const sortedBrands = Object.keys(catalogBrandSamples).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
       const container = document.getElementById('brandOptionsList');
       if (!container) return;
 
-      const totalCount = source.length;
+      const allBrandsIcon = `
+        <div class="directory-icon-box" style="background: rgba(208, 69, 21, 0.08); border: 1px solid rgba(208, 69, 21, 0.18); color: #D04515; width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+        </div>
+      `;
+
       let html = `
         <button type="button" class="apple-dropdown-item ${currentBrand === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Brands')">
-          <span>All Brands <span style="opacity: 0.55; font-size: 11px; font-weight: normal; margin-left: 4px;">(${totalCount})</span></span>
+          <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
+            ${allBrandsIcon}
+            <span style="font-weight: 500; font-size: 13px; color: inherit;">All Brands</span>
+          </div>
           <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
         </button>
       `;
 
       sortedBrands.forEach(brand => {
         const isActive = currentBrand.toLowerCase() === brand.toLowerCase();
-        const count = brandCounts[brand];
         const safeEscaped = brand.replace(/'/g, "\\'");
+        const sampleProd = catalogBrandSamples[brand];
+        const iconHtml = (typeof renderBrandIcon === 'function' && sampleProd)
+          ? renderBrandIcon(sampleProd, { size: 22, radius: 6, iconSize: 13 })
+          : allBrandsIcon;
+
         html += `
           <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${brand.toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
-            <span>${brand} <span style="opacity: 0.55; font-size: 11px; font-weight: normal; margin-left: 4px;">(${count})</span></span>
+            <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
+              ${iconHtml}
+              <span style="font-weight: 500; font-size: 13px; color: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${brand}</span>
+            </div>
             <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
           </button>
         `;
@@ -673,8 +692,21 @@
       currentPage = 1;
       const labelEl = document.getElementById('brandDropdownLabel');
       const trigger = document.getElementById('brandDropdownTrigger');
+      const prefixEl = document.getElementById('brandDropdownPrefix');
       if (labelEl) {
         labelEl.textContent = brandVal === 'all' ? 'All Brands' : brandVal;
+      }
+      if (prefixEl) {
+        if (brandVal === 'all') {
+          prefixEl.innerHTML = '🏷️';
+        } else {
+          const sampleProd = catalogBrandSamples[brandVal];
+          if (sampleProd && typeof renderBrandIcon === 'function') {
+            prefixEl.innerHTML = renderBrandIcon(sampleProd, { size: 18, radius: 5, iconSize: 11 });
+          } else {
+            prefixEl.innerHTML = '🏷️';
+          }
+        }
       }
       if (trigger) {
         trigger.classList.toggle('filter-active', brandVal !== 'all');
@@ -810,6 +842,8 @@
       if (input) input.value = '';
       const brandLabel = document.getElementById('brandDropdownLabel');
       if (brandLabel) brandLabel.textContent = 'All Brands';
+      const brandPrefix = document.getElementById('brandDropdownPrefix');
+      if (brandPrefix) brandPrefix.innerHTML = '🏷️';
       const brandTrigger = document.getElementById('brandDropdownTrigger');
       if (brandTrigger) brandTrigger.classList.remove('filter-active');
       document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
