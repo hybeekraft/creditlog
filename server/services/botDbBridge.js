@@ -212,6 +212,15 @@ class BotDbBridge {
       return null;
     }
   }
+
+  close() {
+    if (this.db) {
+      try {
+        this.db.close();
+      } catch (e) {}
+      this.db = null;
+    }
+  }
 }
 
 module.exports = new BotDbBridge();

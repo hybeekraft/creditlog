@@ -22,12 +22,19 @@ test.before(async () => {
 
 test.after(async () => {
   syncEngine.stopPeriodicSync();
+  botDbBridge.close();
+  if (typeof server.closeAllConnections === 'function') {
+    server.closeAllConnections();
+  }
   await new Promise((resolve) => {
     server.close(() => {
       console.log('[Test Server] Closed');
       resolve();
     });
   });
+  const handles = process._getActiveHandles ? process._getActiveHandles() : [];
+  console.log('Remaining active handles:', handles.map(h => (h.constructor ? h.constructor.name : typeof h)));
+  setTimeout(() => process.exit(0), 100).unref();
 });
 
 test('1. Supplier Wholesale API Integration & Account Check', async () => {
@@ -228,4 +235,30 @@ test('8. Product-Specific Requirements & Delivery Modes from Seller API', async 
   assert.ok(detailData.data.deliveryFormat, 'Detail product must have deliveryFormat');
   assert.ok(detailData.data.importantRequirements, 'Detail product must have importantRequirements');
   assert.ok(detailData.data.description, 'Detail product must have description');
+});
+
+test('9. Amazon Brand Consolidation: All Amazon/Prime products belong strictly to "Amazon"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const amazonItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('prime') || 
+    p.name.toLowerCase().includes('amazon') ||
+    (p.brand && p.brand.toLowerCase().includes('prime')) ||
+    (p.brand && p.brand.toLowerCase().includes('amazon'))
+  );
+
+  assert.ok(amazonItems.length > 0, 'Must have at least one Amazon/Prime item in catalog');
+
+  for (const item of amazonItems) {
+    assert.equal(item.brand, 'Amazon', `Product ${item.id} (${item.name}) must have brand strictly set to "Amazon", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-amazon', `Product ${item.id} must have brandClass tile-amazon`);
+    assert.equal(item.iconType, 'amazon', `Product ${item.id} must have iconType amazon`);
+  }
+
+  // Ensure no product in the catalog is branded "Amazon Prime"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Amazon Prime' || p.brand === 'Prime Video' || p.brand === 'Amazon Prime Video');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split Amazon Prime/Prime Video brand');
 });

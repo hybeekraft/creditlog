@@ -284,6 +284,18 @@
       }
     });
 
+    // Brand normalization helper (ensures Amazon Prime / Prime Video consolidate into Amazon)
+    function normalizeBrand(rawBrand) {
+      if (!rawBrand) return '';
+      let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand);
+      b = b.trim();
+      const lower = b.toLowerCase();
+      if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
+        return 'Amazon';
+      }
+      return b;
+    }
+
     // Helper: Category and Search Filter
     function getFilteredProducts() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
@@ -309,14 +321,18 @@
 
         let matchesBrand = true;
         if (currentBrand && currentBrand !== 'all') {
-          const prodBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim().toLowerCase();
-          matchesBrand = prodBrand === currentBrand.toLowerCase();
+          const rawProdBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
+          const prodBrand = normalizeBrand(rawProdBrand).toLowerCase();
+          const targetBrand = normalizeBrand(currentBrand).toLowerCase();
+          matchesBrand = prodBrand === targetBrand;
         }
 
         const q = currentSearch.toLowerCase().trim();
+        const normBrand = prod.brand ? normalizeBrand(prod.brand).toLowerCase() : '';
         const matchesSearch = !q ||
           prod.name.toLowerCase().includes(q) ||
           (prod.brand && prod.brand.toLowerCase().includes(q)) ||
+          normBrand.includes(q) ||
           (prod.description && prod.description.toLowerCase().includes(q)) ||
           (prod.duration && prod.duration.toLowerCase().includes(q));
 
@@ -591,14 +607,19 @@
       renderCatalog();
     }
 
-        // Brand Dropdown Population & Filter
+    // Brand Dropdown Population & Filter
     function populateBrandDropdown() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       catalogBrandSamples = {};
       source.forEach(prod => {
-        const b = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
-        if (b && !catalogBrandSamples[b]) {
-          catalogBrandSamples[b] = prod;
+        const rawBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
+        const b = typeof normalizeBrand === 'function' ? normalizeBrand(rawBrand) : rawBrand;
+        if (b) {
+          if (!catalogBrandSamples[b]) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'amazon' && (prod.iconType === 'amazon' || prod.brandClass === 'tile-amazon')) {
+            catalogBrandSamples[b] = prod;
+          }
         }
       });
 
@@ -616,7 +637,7 @@
       `;
 
       let html = `
-        <button type="button" class="apple-dropdown-item ${currentBrand === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Brands')">
+        <button type="button" class="apple-dropdown-item ${normalizeBrand(currentBrand) === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Brands')">
           <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
             ${allBrandsIcon}
             <span style="font-weight: 500; font-size: 13px; color: inherit;">All Brands</span>
@@ -626,7 +647,7 @@
       `;
 
       sortedBrands.forEach(brand => {
-        const isActive = currentBrand.toLowerCase() === brand.toLowerCase();
+        const isActive = normalizeBrand(currentBrand).toLowerCase() === normalizeBrand(brand).toLowerCase();
         const safeEscaped = brand.replace(/'/g, "\\'");
         const sampleProd = catalogBrandSamples[brand];
         const iconHtml = (typeof renderBrandIcon === 'function' && sampleProd)
@@ -634,7 +655,7 @@
           : allBrandsIcon;
 
         html += `
-          <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${brand.toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
+          <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${normalizeBrand(brand).toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
             <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
               ${iconHtml}
               <span style="font-weight: 500; font-size: 13px; color: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${brand}</span>
@@ -679,19 +700,19 @@
     }
 
     function selectBrandOption(brandVal, label) {
-      currentBrand = brandVal;
+      currentBrand = normalizeBrand(brandVal);
       currentPage = 1;
       const labelEl = document.getElementById('brandDropdownLabel');
       const trigger = document.getElementById('brandDropdownTrigger');
       const prefixEl = document.getElementById('brandDropdownPrefix');
       if (labelEl) {
-        labelEl.textContent = brandVal === 'all' ? 'All Brands' : brandVal;
+        labelEl.textContent = currentBrand === 'all' ? 'All Brands' : (label ? normalizeBrand(label) : currentBrand);
       }
       if (prefixEl) {
-        if (brandVal === 'all') {
+        if (currentBrand === 'all') {
           prefixEl.innerHTML = '🏷️';
         } else {
-          const sampleProd = catalogBrandSamples[brandVal];
+          const sampleProd = catalogBrandSamples[currentBrand] || catalogBrandSamples[brandVal];
           if (sampleProd && typeof renderBrandIcon === 'function') {
             prefixEl.innerHTML = renderBrandIcon(sampleProd, { size: 18, radius: 5, iconSize: 11 });
           } else {
@@ -700,12 +721,12 @@
         }
       }
       if (trigger) {
-        trigger.classList.toggle('filter-active', brandVal !== 'all');
+        trigger.classList.toggle('filter-active', currentBrand !== 'all');
       }
 
       document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
         const b = item.getAttribute('data-brand');
-        item.classList.toggle('active', b === (brandVal === 'all' ? 'all' : brandVal.toLowerCase()));
+        item.classList.toggle('active', b === (currentBrand === 'all' ? 'all' : currentBrand.toLowerCase()));
       });
 
       const menu = document.getElementById('brandDropdownMenu');

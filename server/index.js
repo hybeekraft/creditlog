@@ -678,11 +678,26 @@ const server = http.createServer(async (req, res) => {
             }
           ];
 
-      const effectiveIcon = (iconType || category || 'other').toLowerCase().trim();
+      const rawBrand = brand ? brand.trim() : name.split(' ')[0];
+      const normalizedBrand = (function(b) {
+        if (!b) return '';
+        const s = String(b).trim();
+        const lower = s.toLowerCase();
+        if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
+          return 'Amazon';
+        }
+        return s;
+      })(rawBrand);
+
+      let effectiveIcon = (iconType || category || 'other').toLowerCase().trim();
+      if (normalizedBrand === 'Amazon' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'amazon';
+      }
+
       const newProduct = {
         id: uniqueId,
         name: name.trim(),
-        brand: brand ? brand.trim() : name.split(' ')[0],
+        brand: normalizedBrand,
         category: (category || 'streaming').toLowerCase(),
         duration: duration || '1 Month',
         usdPrice: parsedPrice,
@@ -737,7 +752,19 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (body.name !== undefined) prod.name = body.name.trim();
-      if (body.brand !== undefined) prod.brand = body.brand.trim();
+      if (body.brand !== undefined) {
+        const s = String(body.brand).trim();
+        const lower = s.toLowerCase();
+        if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
+          prod.brand = 'Amazon';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'amazon';
+            prod.brandClass = 'tile-amazon';
+          }
+        } else {
+          prod.brand = s;
+        }
+      }
       if (body.category !== undefined) prod.category = body.category.toLowerCase().trim();
       if (body.duration !== undefined) prod.duration = body.duration.trim();
       if (body.description !== undefined) prod.description = body.description.trim();

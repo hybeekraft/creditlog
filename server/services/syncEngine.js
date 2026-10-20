@@ -82,8 +82,19 @@ class SyncEngine {
     return name.split(' ')[0] || 'Digital Service';
   }
 
+  normalizeBrand(brand = '') {
+    if (!brand) return '';
+    const b = String(brand).trim();
+    const lower = b.toLowerCase();
+    if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
+      return 'Amazon';
+    }
+    return b;
+  }
+
   inferBrandClass(brand = '') {
     const b = brand.toLowerCase();
+    if (b.includes('amazon') || b.includes('prime')) return 'tile-amazon';
     if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
     if (b.includes('claude')) return 'tile-claude';
     if (b.includes('gemini')) return 'tile-gemini';
@@ -97,6 +108,7 @@ class SyncEngine {
 
   inferIconType(brand = '') {
     const b = brand.toLowerCase();
+    if (b.includes('amazon') || b.includes('prime')) return 'amazon';
     if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
     if (b.includes('claude')) return 'claude';
     if (b.includes('gemini')) return 'gemini';
@@ -214,6 +226,15 @@ class SyncEngine {
           existing.resellerProductId = Number(supplierId);
           existing.lastSynchronizedAt = new Date().toISOString();
 
+          // Brand normalization
+          if (existing.brand) {
+            existing.brand = this.normalizeBrand(existing.brand);
+            if (existing.brand === 'Amazon') {
+              existing.brandClass = 'tile-amazon';
+              existing.iconType = 'amazon';
+            }
+          }
+
           // Sync variant 0 if present
           if (existing.variants && existing.variants.length > 0) {
             existing.variants[0].wholesaleUsd = costUsd;
@@ -225,7 +246,7 @@ class SyncEngine {
           }
         } else {
           // New product from supplier! Create and add to storefront
-          const brand = this.inferBrand(sp.name);
+          const brand = this.normalizeBrand(this.inferBrand(sp.name));
           const category = this.inferCategory(sp.name, sp.category);
           const duration = this.inferDuration(sp.name);
           const slugId = `sp_${supplierId}_${sp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
@@ -325,9 +346,16 @@ class SyncEngine {
                 match.description = bp.description;
               }
               if (bp.category) match.botCategory = bp.category;
+              if (match.brand) {
+                match.brand = this.normalizeBrand(match.brand);
+                if (match.brand === 'Amazon') {
+                  match.brandClass = 'tile-amazon';
+                  match.iconType = 'amazon';
+                }
+              }
             } else {
               // Add missing active bot product to storefront catalog
-              const brand = this.inferBrand(bp.name);
+              const brand = this.normalizeBrand(this.inferBrand(bp.name));
               const category = this.inferCategory(bp.name, bp.category);
               const duration = this.inferDuration(bp.name);
               const slugId = `bot_${bp.id}_${bp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
@@ -449,9 +477,12 @@ class SyncEngine {
     console.log(`[SyncEngine] Scheduled continuous supplier sync every ${intervalMinutes} minutes.`);
 
     // Run first sync shortly after boot (e.g. 2 seconds)
-    setTimeout(() => {
+    this.initialSyncTimer = setTimeout(() => {
       this.runCatalogSync().catch(e => console.error('[SyncEngine] Initial sync error:', e));
     }, 2000);
+    if (this.initialSyncTimer && typeof this.initialSyncTimer.unref === 'function') {
+      this.initialSyncTimer.unref();
+    }
 
     this.syncTimer = setInterval(() => {
       this.runCatalogSync().catch(e => console.error('[SyncEngine] Interval sync error:', e));
@@ -465,6 +496,10 @@ class SyncEngine {
     if (this.syncTimer) {
       clearInterval(this.syncTimer);
       this.syncTimer = null;
+    }
+    if (this.initialSyncTimer) {
+      clearTimeout(this.initialSyncTimer);
+      this.initialSyncTimer = null;
     }
   }
 }

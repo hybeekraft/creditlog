@@ -618,7 +618,7 @@ var BRAND_ICON_REGISTRY = [
       "prime video",
       "primevideo"
     ],
-    "name": "Amazon Prime Video",
+    "name": "Amazon",
     "color": "#00A8E1",
     "bg": "#0078FF",
     "border": "1px solid rgba(0, 120, 255, 0.3)",
@@ -968,6 +968,17 @@ function resolveBrandAssetUrl(url) {
   return clean.startsWith('/') ? clean : '/' + clean;
 }
 
+function normalizeBrand(rawBrand) {
+  if (!rawBrand) return '';
+  let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand);
+  b = b.trim();
+  const lower = b.toLowerCase();
+  if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
+    return 'Amazon';
+  }
+  return b;
+}
+
 function getBrandData(prod) {
   if (!prod) return BRAND_ICON_REGISTRY[0];
 
@@ -977,7 +988,7 @@ function getBrandData(prod) {
     const baseMatch = prod.iconType ? BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === String(prod.iconType).toLowerCase()) : null;
     return {
       id: prod.iconType || 'custom',
-      name: prod.brand || prod.name || 'Custom Brand',
+      name: normalizeBrand(prod.brand) || prod.name || 'Custom Brand',
       bg: baseMatch ? baseMatch.bg : '#FFFFFF',
       border: baseMatch ? (baseMatch.border || '1px solid rgba(25, 13, 8, 0.12)') : '1px solid rgba(25, 13, 8, 0.12)',
       shadow: baseMatch ? baseMatch.shadow : 'rgba(25, 13, 8, 0.12)',
@@ -1006,7 +1017,7 @@ function getBrandData(prod) {
 
   // 3. Match against explicit brand field
   if (prod.brand) {
-    const brandLower = String(prod.brand).toLowerCase().trim();
+    const brandLower = normalizeBrand(prod.brand).toLowerCase().trim();
     const directBrand = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandLower || b.name.toLowerCase() === brandLower);
     if (directBrand) return directBrand;
     for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
@@ -3858,7 +3869,7 @@ var CATALOG_PRODUCTS = [
     "name": "Prime Video 6 Months",
     "rawName": "Prime Video 6 Months · $3.00",
     "category": "streaming",
-    "brand": "Amazon Prime",
+    "brand": "Amazon",
     "duration": "6 Months",
     "usdPrice": 3,
     "usdOldPrice": 53.94,
