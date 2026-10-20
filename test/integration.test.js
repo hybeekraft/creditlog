@@ -608,5 +608,37 @@ test('23. Codex Brand Consolidation: All Codex and Codex API products belong str
   assert.equal(duplicateBrands.length, 0, 'No product should have "OpenAI Codex" or "Codex API" brand');
 });
 
+test('24. Storefront 5-Box Pagination Algorithm: Maintains 5 number boxes without ellipsis', async () => {
+  const fs = require('fs');
+  const shopHtml = fs.readFileSync('shop.html', 'utf8');
+  assert.ok(shopHtml.includes('function getPaginationItems'), 'shop.html must define getPaginationItems');
+  
+  // Extract getPaginationItems function from shop.html
+  const match = shopHtml.match(/function getPaginationItems\s*\([^)]*\)\s*\{[\s\S]*?\n    \}/);
+  assert.ok(match, 'Must find getPaginationItems function implementation in shop.html');
+  
+  const fn = new Function('return ' + match[0])();
+  
+  // Case 1: Page 14 with total 14 (as depicted in user screenshot)
+  const page14Items = fn(14, 14);
+  assert.deepEqual(page14Items, [1, 11, 12, 13, 14], 'Page 14 of 14 must show [1, 11, 12, 13, 14] without ellipsis');
+
+  // Case 2: Pages 1, 2, 3, 4 with total 14 (user example e.g. 1, 2, 3, 4, 14)
+  assert.deepEqual(fn(1, 14), [1, 2, 3, 4, 14]);
+  assert.deepEqual(fn(2, 14), [1, 2, 3, 4, 14]);
+  assert.deepEqual(fn(3, 14), [1, 2, 3, 4, 14]);
+  assert.deepEqual(fn(4, 14), [1, 2, 3, 4, 14]);
+
+  // Case 3: Verify all pages for total = 14 maintain 5 boxes and never contain '...'
+  for (let c = 1; c <= 14; c++) {
+    const items = fn(c, 14);
+    assert.equal(items.length, 5, `Must have exactly 5 boxes for page ${c}`);
+    assert.ok(items.includes(c), `Must include active page ${c}`);
+    assert.ok(!items.includes('...'), `Must not contain ellipsis on page ${c}`);
+    assert.ok(items[0] === 1 || items[4] === 14, `Must anchor 1 or 14 on page ${c}`);
+  }
+});
+
+
 
 
