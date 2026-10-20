@@ -1,3 +1,6 @@
+process.env.NODE_ENV = 'test';
+process.env.DISABLE_LIVE_SUPPLIER = '1';
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
