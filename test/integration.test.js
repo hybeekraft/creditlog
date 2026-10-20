@@ -536,4 +536,28 @@ test('20. Kimi Brand Consolidation: All Kimi API products belong strictly to "Ki
   assert.equal(apiBranded.length, 0, 'No product should have generic "API" brand');
 });
 
+test('21. Qwen Brand Consolidation: All Qwen and Alibaba Qwen products belong strictly to "Qwen" (not "Alibaba Qwen")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const qwenItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('qwen') || 
+    (p.brand && p.brand.toLowerCase().includes('qwen'))
+  );
+
+  assert.ok(qwenItems.length > 0, 'Must have Qwen items in catalog');
+
+  for (const item of qwenItems) {
+    assert.equal(item.brand, 'Qwen', `Product ${item.id} (${item.name}) must have brand strictly set to "Qwen", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-qwen', `Product ${item.id} must have brandClass tile-qwen`);
+    assert.equal(item.iconType, 'qwen', `Product ${item.id} must have iconType qwen`);
+  }
+
+  // Ensure no product in the catalog is branded as "Alibaba Qwen"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Alibaba Qwen');
+  assert.equal(duplicateBrands.length, 0, 'No product should have "Alibaba Qwen" brand');
+});
+
 

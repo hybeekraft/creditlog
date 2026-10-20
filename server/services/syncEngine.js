@@ -62,7 +62,7 @@ class SyncEngine {
     if (n.includes('chatgpt') || n.includes('openai')) return 'OpenAI ChatGPT';
     if (n.includes('claude') || n.includes('anthropic')) return 'Claude';
     if (n.includes('gemini') || n.includes('google') || n.includes('gmail')) return 'Gemini';
-    if (n.includes('qwen')) return 'Alibaba Qwen';
+    if (n.includes('qwen')) return 'Qwen';
     if (n.includes('deepseek')) return 'DeepSeek';
     if (n.includes('grok') || n.includes('xai')) return 'xAI Grok';
     if (n.includes('canva')) return 'Canva';
@@ -131,6 +131,9 @@ class SyncEngine {
     if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
       return 'Kimi';
     }
+    if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+      return 'Qwen';
+    }
     return b;
   }
 
@@ -154,6 +157,7 @@ class SyncEngine {
     if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
     if (b.includes('lovable') || b.includes('loveable')) return 'tile-lovable';
     if (b.includes('kimi')) return 'tile-kimi';
+    if (b.includes('qwen')) return 'tile-qwen';
     return 'tile-brand-default';
   }
 
@@ -177,6 +181,7 @@ class SyncEngine {
     if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
     if (b.includes('lovable') || b.includes('loveable')) return 'lovable';
     if (b.includes('kimi')) return 'kimi';
+    if (b.includes('qwen')) return 'qwen';
     return 'cube';
   }
 
@@ -325,6 +330,9 @@ class SyncEngine {
             } else if (existing.brand === 'Kimi') {
               existing.brandClass = 'tile-kimi';
               existing.iconType = 'kimi';
+            } else if (existing.brand === 'Qwen') {
+              existing.brandClass = 'tile-qwen';
+              existing.iconType = 'qwen';
             }
           }
 
@@ -477,6 +485,9 @@ class SyncEngine {
                 } else if (match.brand === 'Kimi') {
                   match.brandClass = 'tile-kimi';
                   match.iconType = 'kimi';
+                } else if (match.brand === 'Qwen') {
+                  match.brandClass = 'tile-qwen';
+                  match.iconType = 'qwen';
                 }
               }
             } else {

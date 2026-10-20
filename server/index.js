@@ -719,6 +719,9 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
           return 'Kimi';
         }
+        if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+          return 'Qwen';
+        }
         return s;
       })(rawBrand);
 
@@ -747,6 +750,8 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'lovable';
       } else if (normalizedBrand === 'Kimi' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'kimi';
+      } else if (normalizedBrand === 'Qwen' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'qwen';
       }
 
       const newProduct = {
@@ -881,6 +886,12 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'kimi';
             prod.brandClass = 'tile-kimi';
+          }
+        } else if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+          prod.brand = 'Qwen';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'qwen';
+            prod.brandClass = 'tile-qwen';
           }
         } else {
           prod.brand = s;

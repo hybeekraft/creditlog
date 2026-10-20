@@ -768,6 +768,20 @@ var BRAND_ICON_REGISTRY = [
     "path": "M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"
   },
   {
+    "id": "qwen",
+    "match": [
+      "qwen",
+      "alibaba qwen",
+      "tongyi qwen",
+      "qwen ai"
+    ],
+    "name": "Qwen",
+    "color": "#615CED",
+    "bg": "linear-gradient(135deg, #615CED, #3B38A8)",
+    "shadow": "rgba(97, 92, 237, 0.35)",
+    "path": "M12 2.5L20.2 7.2v9.6L12 21.5l-8.2-4.7V7.2L12 2.5zm0 2.3L5.8 8.3v7.4L12 19.2l6.2-3.5V8.3L12 4.8z"
+  },
+  {
     "id": "gamma",
     "match": [
       "gamma",
@@ -1034,6 +1048,9 @@ function normalizeBrand(rawBrand) {
   }
   if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
     return 'Kimi';
+  }
+  if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+    return 'Qwen';
   }
   return b;
 }

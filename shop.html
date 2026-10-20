@@ -326,6 +326,9 @@
       if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
         return 'Kimi';
       }
+      if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+        return 'Qwen';
+      }
       return b;
     }
 
@@ -673,6 +676,8 @@
           } else if (b.toLowerCase() === 'lovable' && (prod.iconType === 'lovable' || prod.brandClass === 'tile-lovable')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'kimi' && (prod.iconType === 'kimi' || prod.brandClass === 'tile-kimi')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'qwen' && (prod.iconType === 'qwen' || prod.brandClass === 'tile-qwen')) {
             catalogBrandSamples[b] = prod;
           }
         }
