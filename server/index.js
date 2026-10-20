@@ -695,6 +695,9 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
           return 'HMA VPN';
         }
+        if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
+          return 'Claude';
+        }
         return s;
       })(rawBrand);
 
@@ -707,6 +710,8 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'gemini';
       } else if (normalizedBrand === 'HMA VPN' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'hma';
+      } else if (normalizedBrand === 'Claude' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'claude';
       }
 
       const newProduct = {
@@ -793,6 +798,12 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'hma';
             prod.brandClass = 'tile-hma';
+          }
+        } else if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
+          prod.brand = 'Claude';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'claude';
+            prod.brandClass = 'tile-claude';
           }
         } else {
           prod.brand = s;

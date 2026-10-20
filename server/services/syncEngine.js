@@ -60,7 +60,7 @@ class SyncEngine {
   inferBrand(name = '') {
     const n = name.toLowerCase();
     if (n.includes('chatgpt') || n.includes('openai')) return 'OpenAI ChatGPT';
-    if (n.includes('claude') || n.includes('anthropic')) return 'Anthropic Claude';
+    if (n.includes('claude') || n.includes('anthropic')) return 'Claude';
     if (n.includes('gemini') || n.includes('google') || n.includes('gmail')) return 'Gemini';
     if (n.includes('qwen')) return 'Alibaba Qwen';
     if (n.includes('deepseek')) return 'DeepSeek';
@@ -100,6 +100,9 @@ class SyncEngine {
     if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
       return 'HMA VPN';
     }
+    if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
+      return 'Claude';
+    }
     return b;
   }
 
@@ -108,7 +111,7 @@ class SyncEngine {
     if (b.includes('amazon') || b.includes('prime')) return 'tile-amazon';
     if (b.includes('apple')) return 'tile-appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
-    if (b.includes('claude')) return 'tile-claude';
+    if (b.includes('claude') || b.includes('anthropic')) return 'tile-claude';
     if (b.includes('gemini') || b.includes('gmail')) return 'tile-gemini';
     if (b.includes('canva')) return 'tile-canva';
     if (b.includes('netflix')) return 'tile-netflix';
@@ -124,7 +127,7 @@ class SyncEngine {
     if (b.includes('amazon') || b.includes('prime')) return 'amazon';
     if (b.includes('apple')) return 'appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
-    if (b.includes('claude')) return 'claude';
+    if (b.includes('claude') || b.includes('anthropic')) return 'claude';
     if (b.includes('gemini') || b.includes('gmail')) return 'gemini';
     if (b.includes('canva')) return 'canva';
     if (b.includes('netflix')) return 'netflix';
@@ -256,6 +259,9 @@ class SyncEngine {
             } else if (existing.brand === 'HMA VPN') {
               existing.brandClass = 'tile-hma';
               existing.iconType = 'hma';
+            } else if (existing.brand === 'Claude') {
+              existing.brandClass = 'tile-claude';
+              existing.iconType = 'claude';
             }
           }
 
@@ -384,6 +390,9 @@ class SyncEngine {
                 } else if (match.brand === 'HMA VPN') {
                   match.brandClass = 'tile-hma';
                   match.iconType = 'hma';
+                } else if (match.brand === 'Claude') {
+                  match.brandClass = 'tile-claude';
+                  match.iconType = 'claude';
                 }
               }
             } else {

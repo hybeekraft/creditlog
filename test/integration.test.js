@@ -339,3 +339,30 @@ test('12. HMA VPN Brand Consolidation: All HMA and HideMyAss products belong str
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "HMA" or "HideMyAss" brand');
 });
 
+test('13. Claude Brand Consolidation: All Claude and Anthropic products belong strictly to "Claude"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const claudeItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('claude') || 
+    p.name.toLowerCase().includes('anthropic') ||
+    (p.brand && p.brand.toLowerCase().includes('claude')) ||
+    (p.brand && p.brand.toLowerCase().includes('anthropic'))
+  );
+
+  assert.ok(claudeItems.length > 0, 'Must have Claude items in catalog');
+
+  for (const item of claudeItems) {
+    assert.equal(item.brand, 'Claude', `Product ${item.id} (${item.name}) must have brand strictly set to "Claude", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-claude', `Product ${item.id} must have brandClass tile-claude`);
+    assert.equal(item.iconType, 'claude', `Product ${item.id} must have iconType claude`);
+  }
+
+  // Ensure no product in the catalog is branded with "Anthropic" or "Anthropic Claude"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Anthropic' || p.brand === 'Anthropic Claude');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Anthropic" or "Anthropic Claude" brand');
+});
+
+

@@ -987,6 +987,9 @@ function normalizeBrand(rawBrand) {
   if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
     return 'HMA VPN';
   }
+  if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
+    return 'Claude';
+  }
   return b;
 }
 
@@ -4118,6 +4121,8 @@ const CORE_PRODUCTS = [
   {
     "id": "claude-pro",
     "name": "Claude Pro & APIs",
+    "brand": "Claude",
+    "iconType": "claude",
     "category": "ai",
     "discount": "76% OFF",
     "discountPercent": 76,
