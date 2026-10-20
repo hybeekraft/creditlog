@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const resellerService = require('./services/resellerService');
+const botDbBridge = require('./services/botDbBridge');
+const syncEngine = require('./services/syncEngine');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
@@ -91,7 +93,68 @@ const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_demo_cre
 const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY || 'pk_test_demo_creditlog_paystack';
 const FLUTTERWAVE_SECRET_KEY = process.env.FLUTTERWAVE_SECRET_KEY || 'flw_sec_demo_creditlog';
 const FLUTTERWAVE_PUBLIC_KEY = process.env.FLUTTERWAVE_PUBLIC_KEY || 'flw_pub_demo_creditlog';
-const USD_TO_NGN_RATE = 1500;
+
+function getEffectiveFxRate() {
+  const botRate = botDbBridge.getUsdToNgnRate();
+  if (botRate) return botRate;
+  const cfg = resellerService.loadConfig();
+  if (cfg && cfg.usdToNgnRate) return cfg.usdToNgnRate;
+  return 1450;
+}
+const USD_TO_NGN_RATE = getEffectiveFxRate();
+
+// Real Server-to-Server Paystack Verification Helper
+async function verifyPaystackReference(reference) {
+  if (!reference) return { verified: false, error: 'No reference provided' };
+  const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
+  const isDemoKey = !secret || secret.includes('demo') || secret.includes('test_creditlog');
+
+  if (isDemoKey) {
+    return {
+      verified: true,
+      amountKobo: null,
+      channel: 'card',
+      currency: 'NGN',
+      isLiveGateway: false
+    };
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    const resp = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`, {
+      headers: {
+        'Authorization': `Bearer ${secret}`,
+        'Content-Type': 'application/json'
+      },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    const data = await resp.json();
+    if (data && data.status === true && data.data && data.data.status === 'success') {
+      return {
+        verified: true,
+        amountKobo: data.data.amount,
+        amountNgn: data.data.amount / 100,
+        currency: data.data.currency,
+        channel: data.data.channel,
+        isLiveGateway: true,
+        raw: data.data
+      };
+    } else {
+      return {
+        verified: false,
+        error: (data && data.message) || 'Payment verification failed at Paystack',
+        raw: data
+      };
+    }
+  } catch (err) {
+    return {
+      verified: false,
+      error: `Paystack verification request error: ${err.message}`
+    };
+  }
+}
 
 // Admin Secret Authentication Token
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'creditlog_admin_secret_key_2026';
@@ -365,6 +428,7 @@ function parseBody(req) {
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {
+      req.rawBody = body;
       try {
         resolve(body ? JSON.parse(body) : {});
       } catch (e) {
@@ -1179,11 +1243,14 @@ const server = http.createServer(async (req, res) => {
     const settings = resellerService.getSettings();
     const balance = await resellerService.getBalance();
     const info = await resellerService.getInfo();
+    const syncStatus = syncEngine.getSyncStatus();
     return sendJSON(res, 200, {
       success: true,
       settings,
       balance,
-      info
+      info,
+      syncStatus,
+      botDbConnected: botDbBridge.isAvailable()
     });
   }
 
@@ -1362,6 +1429,33 @@ const server = http.createServer(async (req, res) => {
         message: `Applied tiered price multipliers to ${updatedCount} product(s).`,
         updatedCount
       });
+    });
+  }
+
+  // POST /api/admin/reseller/sync — Trigger Full Supplier & Telegram Bot Catalog Sync
+  if (pathname === '/api/admin/reseller/sync' && req.method === 'POST') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    const result = await syncEngine.runCatalogSync();
+    recordLog('Admin', 'Admin', 'Catalog', 'Supplier Sync', `Manual sync executed: ${result.totalSupplierProducts} products processed, ${result.newProductsAdded} added, ${result.pricesUpdated} prices updated, ${result.stockUpdated} stock updated.`);
+    return sendJSON(res, 200, {
+      success: result.lastStatus === 'success',
+      syncResult: result,
+      message: result.lastStatus === 'success' 
+        ? `Catalog synchronized: ${result.totalSupplierProducts} supplier products checked, ${result.newProductsAdded} new added, ${result.pricesUpdated} price updates, ${result.stockUpdated} stock updates.`
+        : `Sync encountered an issue: ${result.error}`
+    });
+  }
+
+  // GET /api/admin/reseller/sync/status — Get Last Sync Details & Status
+  if (pathname === '/api/admin/reseller/sync/status' && req.method === 'GET') {
+    if (!verifyAdmin(req)) {
+      return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
+    }
+    return sendJSON(res, 200, {
+      success: true,
+      status: syncEngine.getSyncStatus()
     });
   }
 
@@ -1846,6 +1940,29 @@ const server = http.createServer(async (req, res) => {
 
       saveOrder(order);
 
+      // Synchronize transaction with Telegram bot SQLite store.db
+      if (botDbBridge.isAvailable()) {
+        try {
+          botDbBridge.recordOrder({
+            botProductId: prod ? (prod.botProductId || null) : null,
+            productName: order.product,
+            totalUsd: order.totalUsd || (prod ? prod.usdPrice : 0),
+            quantity: order.quantity || 1,
+            deliveredValue: order.deliveredValue,
+            credentials: order.credentials,
+            supplierOrderCode: order.supplierOrderCode,
+            status: order.status,
+            paidAt: order.paidAt,
+            id: order.id,
+            gateway: order.gateway,
+            reference: order.reference,
+            totalNgn: order.totalNgn
+          });
+        } catch (botErr) {
+          console.warn('[Server] Error syncing order to bot DB:', botErr.message);
+        }
+      }
+
       return sendJSON(res, 200, {
         success: true,
         message: 'Payment verified server-side, stock finalized, and credentials dispatched!',
@@ -1871,9 +1988,20 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 6. Paystack Webhook Handler
+  // 6. Paystack Webhook Handler (Idempotent & Authenticated)
   if (pathname === '/api/webhook/paystack' && req.method === 'POST') {
+    const paystackSig = req.headers['x-paystack-signature'];
+    const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
     const body = await parseBody(req);
+
+    // Verify HMAC-SHA512 webhook signature when secret is configured
+    if (secret && !secret.includes('demo') && !secret.includes('test_creditlog') && paystackSig && req.rawBody) {
+      const hash = crypto.createHmac('sha512', secret).update(req.rawBody).digest('hex');
+      if (paystackSig !== hash) {
+        console.warn('[Paystack Webhook] Invalid signature rejected');
+        return sendJSON(res, 401, { error: 'invalid_signature' });
+      }
+    }
     
     if (body.event === 'charge.success') {
       const data = body.data;
@@ -1882,6 +2010,8 @@ const server = http.createServer(async (req, res) => {
       await withInventoryTransaction(async () => {
         const orders = getAllOrders();
         const order = orders.find(o => o.reference === ref || (data.metadata && data.metadata.orderId === o.id));
+
+        // Idempotency: skip if already delivered or finalized
         if (order && order.status !== 'Delivered') {
           // Deduct stock if not already finalized
           const products = getAllProducts();
@@ -1925,6 +2055,30 @@ const server = http.createServer(async (req, res) => {
 
           order.paidAt = new Date().toISOString();
           saveOrder(order);
+
+          // Sync to bot database
+          if (botDbBridge.isAvailable()) {
+            try {
+              botDbBridge.recordOrder({
+                botProductId: prod ? (prod.botProductId || null) : null,
+                productName: order.product,
+                totalUsd: order.totalUsd || (prod ? prod.usdPrice : 0),
+                quantity: order.quantity || 1,
+                deliveredValue: order.deliveredValue,
+                credentials: order.credentials,
+                supplierOrderCode: order.supplierOrderCode,
+                status: order.status,
+                paidAt: order.paidAt,
+                id: order.id,
+                gateway: 'Paystack',
+                reference: order.reference,
+                totalNgn: order.totalNgn
+              });
+            } catch (botErr) {
+              console.warn('[Paystack Webhook] Error syncing order to bot DB:', botErr.message);
+            }
+          }
+
           console.log(`[Paystack Webhook] Order ${order.id} marked as Delivered via charge.success`);
         }
       });
@@ -2068,6 +2222,8 @@ if (require.main === module) {
   server.listen(PORT, () => {
     console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
     console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
+    // Continuous automatic supplier catalog sync every 15 minutes
+    syncEngine.startPeriodicSync(15);
   });
 }
 

@@ -1,0 +1,355 @@
+const fs = require('fs');
+const path = require('path');
+const resellerService = require('./resellerService');
+const botDbBridge = require('./botDbBridge');
+
+// Determine persistent data directory
+const isVercel = Boolean(process.env.VERCEL);
+const candidateRoots = [process.cwd(), path.resolve(__dirname, '../..'), path.resolve(__dirname, '..')];
+const ROOT_DIR = candidateRoots.find(dir => fs.existsSync(path.join(dir, 'index.html'))) || process.cwd();
+const DATA_DIR = isVercel ? path.join('/tmp', 'creditlog-data') : path.join(ROOT_DIR, 'data');
+const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
+
+class SyncEngine {
+  constructor() {
+    this.isSyncing = false;
+    this.syncTimer = null;
+    this.syncStatus = {
+      lastSyncTime: null,
+      lastStatus: 'idle',
+      totalSupplierProducts: 0,
+      newProductsAdded: 0,
+      pricesUpdated: 0,
+      stockUpdated: 0,
+      outOfStockCount: 0,
+      deactivatedMissing: 0,
+      botDbSynchronized: false,
+      error: null
+    };
+  }
+
+  getSyncStatus() {
+    return {
+      ...this.syncStatus,
+      isSyncing: this.isSyncing,
+      botDbAvailable: botDbBridge.isAvailable()
+    };
+  }
+
+  inferCategory(name = '', supplierCat = '') {
+    const text = (name + ' ' + supplierCat).toLowerCase();
+    if (text.includes('gpt') || text.includes('claude') || text.includes('gemini') || text.includes('ai') || text.includes('qwen') || text.includes('deepseek') || text.includes('grok') || text.includes('kimi') || text.includes('codex') || text.includes('cursor')) {
+      return 'ai';
+    }
+    if (text.includes('canva') || text.includes('adobe') || text.includes('photoshop') || text.includes('figma') || text.includes('midjourney') || text.includes('design') || text.includes('autodesk') || text.includes('autocad')) {
+      return 'design';
+    }
+    if (text.includes('netflix') || text.includes('spotify') || text.includes('youtube') || text.includes('prime') || text.includes('disney') || text.includes('hulu') || text.includes('apple music') || text.includes('music') || text.includes('game') || text.includes('xbox') || text.includes('playstation') || text.includes('steam') || text.includes('discord')) {
+      return 'streaming';
+    }
+    if (text.includes('vpn') || text.includes('nord') || text.includes('express') || text.includes('surfshark') || text.includes('security')) {
+      return 'security';
+    }
+    if (text.includes('office') || text.includes('word') || text.includes('excel') || text.includes('windows') || text.includes('duolingo') || text.includes('grammarly') || text.includes('notion') || text.includes('cursor') || text.includes('learning')) {
+      return 'productivity';
+    }
+    return 'ai';
+  }
+
+  inferBrand(name = '') {
+    const n = name.toLowerCase();
+    if (n.includes('chatgpt') || n.includes('openai')) return 'OpenAI ChatGPT';
+    if (n.includes('claude') || n.includes('anthropic')) return 'Anthropic Claude';
+    if (n.includes('gemini') || n.includes('google')) return 'Google Gemini';
+    if (n.includes('qwen')) return 'Alibaba Qwen';
+    if (n.includes('deepseek')) return 'DeepSeek';
+    if (n.includes('grok') || n.includes('xai')) return 'xAI Grok';
+    if (n.includes('canva')) return 'Canva';
+    if (n.includes('adobe')) return 'Adobe';
+    if (n.includes('netflix')) return 'Netflix';
+    if (n.includes('spotify')) return 'Spotify';
+    if (n.includes('youtube')) return 'YouTube';
+    if (n.includes('duolingo')) return 'Duolingo';
+    if (n.includes('cursor')) return 'Cursor';
+    if (n.includes('codex')) return 'Codex API';
+    if (n.includes('elevenlabs')) return 'ElevenLabs';
+    if (n.includes('autodesk') || n.includes('autocad')) return 'Autodesk';
+    if (n.includes('office') || n.includes('microsoft') || n.includes('xbox')) return 'Microsoft';
+    if (n.includes('prime') || n.includes('amazon')) return 'Amazon';
+    if (n.includes('nordvpn')) return 'NordVPN';
+    if (n.includes('expressvpn')) return 'ExpressVPN';
+    return name.split(' ')[0] || 'Digital Service';
+  }
+
+  inferBrandClass(brand = '') {
+    const b = brand.toLowerCase();
+    if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
+    if (b.includes('claude')) return 'tile-claude';
+    if (b.includes('gemini')) return 'tile-gemini';
+    if (b.includes('canva')) return 'tile-canva';
+    if (b.includes('netflix')) return 'tile-netflix';
+    if (b.includes('spotify')) return 'tile-spotify';
+    if (b.includes('youtube')) return 'tile-youtube';
+    if (b.includes('duolingo')) return 'tile-duolingo';
+    return 'tile-brand-default';
+  }
+
+  inferIconType(brand = '') {
+    const b = brand.toLowerCase();
+    if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
+    if (b.includes('claude')) return 'claude';
+    if (b.includes('gemini')) return 'gemini';
+    if (b.includes('canva')) return 'canva';
+    if (b.includes('netflix')) return 'netflix';
+    if (b.includes('spotify')) return 'spotify';
+    if (b.includes('youtube')) return 'youtube';
+    if (b.includes('duolingo')) return 'duolingo';
+    return 'cube';
+  }
+
+  inferDuration(name = '') {
+    const match = name.match(/(\d+\s*(?:Month|Months|Year|Years|Day|Days|D|M|Y))/i);
+    if (match) return match[1].replace(/(\d+)M/i, '$1 Months').replace(/(\d+)D/i, '$1 Days').replace(/(\d+)Y/i, '$1 Year');
+    if (name.toLowerCase().includes('1m') || name.toLowerCase().includes('1 month')) return '1 Month';
+    if (name.toLowerCase().includes('3m') || name.toLowerCase().includes('3 months')) return '3 Months';
+    if (name.toLowerCase().includes('12m') || name.toLowerCase().includes('1 year')) return '1 Year';
+    return 'Standard License';
+  }
+
+  /**
+   * Main Synchronization Routine
+   */
+  async runCatalogSync() {
+    if (this.isSyncing) {
+      console.log('[SyncEngine] Sync already in progress, skipping duplicate invocation.');
+      return this.syncStatus;
+    }
+
+    this.isSyncing = true;
+    console.log('[SyncEngine] Starting full supplier & bot catalog synchronization...');
+
+    try {
+      // 1. Fetch live products from Wholesale Supplier API
+      const supplierRes = await resellerService.getProducts();
+      if (!supplierRes || !supplierRes.ok || !Array.isArray(supplierRes.products)) {
+        throw new Error(supplierRes ? (supplierRes.message || supplierRes.error || 'Invalid supplier response') : 'No supplier response');
+      }
+
+      const supplierProducts = supplierRes.products;
+      const activeSupplierIdSet = new Set(supplierProducts.map(p => String(p.id || p.productId).trim()));
+
+      // 2. Load local products.json
+      let localProducts = [];
+      try {
+        if (fs.existsSync(PRODUCTS_FILE)) {
+          localProducts = JSON.parse(fs.readFileSync(PRODUCTS_FILE, 'utf8'));
+        }
+      } catch (err) {
+        console.error('[SyncEngine] Error reading products.json:', err.message);
+        localProducts = [];
+      }
+
+      let newCount = 0;
+      let pricesCount = 0;
+      let stockCount = 0;
+      let outOfStockCount = 0;
+
+      // 3. Process every supplier product
+      for (const sp of supplierProducts) {
+        const supplierId = String(sp.id || sp.productId).trim();
+        const costUsd = parseFloat(sp.price || 0);
+        const supplierStock = sp.stock !== undefined ? parseInt(sp.stock, 10) : 0;
+        const isSupplierInStock = sp.inStock !== false && supplierStock > 0;
+
+        // Pricing calculation (applying CreditLog's configured tiered markup)
+        const pricing = sp.pricing || resellerService.calculatePricing(costUsd, supplierId, sp.category);
+        const retailUsd = pricing.retailUsd;
+
+        if (!isSupplierInStock) {
+          outOfStockCount++;
+        }
+
+        // Match in products.json
+        let existing = localProducts.find(p => 
+          (p.resellerProductId !== undefined && String(p.resellerProductId).trim() === supplierId) ||
+          p.id === `sp_${supplierId}` ||
+          (p.name && p.name.trim().toLowerCase() === sp.name.trim().toLowerCase())
+        );
+
+        if (existing) {
+          // Check for price changes
+          if (existing.wholesaleUsd !== costUsd || existing.usdPrice !== retailUsd) {
+            existing.wholesaleUsd = costUsd;
+            existing.usdPrice = retailUsd;
+            existing.appliedMultiplier = pricing.multiplier;
+            existing.pricingRule = pricing.ruleMatched;
+            pricesCount++;
+          }
+
+          // Check for stock changes
+          const prevAvailable = existing.availableStock;
+          existing.totalStock = supplierStock;
+          const reserved = existing.reservedStock || 0;
+          existing.availableStock = Math.max(0, supplierStock - reserved);
+          existing.inStock = isSupplierInStock && existing.availableStock > 0;
+          if (prevAvailable !== existing.availableStock) {
+            stockCount++;
+          }
+
+          existing.resellerProductId = Number(supplierId);
+          existing.lastSynchronizedAt = new Date().toISOString();
+
+          // Sync variant 0 if present
+          if (existing.variants && existing.variants.length > 0) {
+            existing.variants[0].wholesaleUsd = costUsd;
+            existing.variants[0].usdPrice = retailUsd;
+            existing.variants[0].totalStock = supplierStock;
+            existing.variants[0].availableStock = existing.availableStock;
+            existing.variants[0].inStock = existing.inStock;
+            existing.variants[0].resellerProductId = Number(supplierId);
+          }
+        } else {
+          // New product from supplier! Create and add to storefront
+          const brand = this.inferBrand(sp.name);
+          const category = this.inferCategory(sp.name, sp.category);
+          const duration = this.inferDuration(sp.name);
+          const slugId = `sp_${supplierId}_${sp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
+
+          const newProduct = {
+            id: slugId,
+            name: sp.name,
+            rawName: `${sp.name} · $${retailUsd.toFixed(2)}`,
+            category,
+            brand,
+            duration,
+            wholesaleUsd: costUsd,
+            usdPrice: retailUsd,
+            usdOldPrice: Number((retailUsd * 1.35).toFixed(2)),
+            discount: '30% OFF',
+            inStock: isSupplierInStock,
+            rating: 4.9,
+            reviews: '850+',
+            brandClass: this.inferBrandClass(brand),
+            iconType: this.inferIconType(brand),
+            description: (sp.description || `${sp.name} with instant automated dispatch and 100% replacement warranty.`).trim(),
+            totalStock: supplierStock,
+            reservedStock: 0,
+            availableStock: supplierStock,
+            enabled: true,
+            resellerProductId: Number(supplierId),
+            appliedMultiplier: pricing.multiplier,
+            pricingRule: pricing.ruleMatched,
+            lastSynchronizedAt: new Date().toISOString(),
+            variants: [
+              {
+                id: '1m',
+                duration,
+                wholesaleUsd: costUsd,
+                usdPrice: retailUsd,
+                totalStock: supplierStock,
+                reservedStock: 0,
+                availableStock: supplierStock,
+                inStock: isSupplierInStock,
+                resellerProductId: Number(supplierId)
+              }
+            ]
+          };
+
+          localProducts.push(newProduct);
+          newCount++;
+        }
+
+        // 4. Synchronize into Telegram Bot SQLite database (store.db)
+        if (botDbBridge.isAvailable()) {
+          botDbBridge.upsertSupplierProduct({
+            supplierProductId: supplierId,
+            name: sp.name,
+            description: sp.description,
+            supplierPrice: costUsd,
+            retailPriceUsd: retailUsd,
+            stock: supplierStock,
+            inStock: isSupplierInStock,
+            category: sp.category || this.inferBrand(sp.name)
+          });
+        }
+      }
+
+      // 5. Detect and deactivate missing/retired supplier products
+      let deactivatedCount = 0;
+      for (const p of localProducts) {
+        if (p.resellerProductId !== undefined && p.resellerProductId !== null) {
+          const sId = String(p.resellerProductId).trim();
+          if (!activeSupplierIdSet.has(sId)) {
+            p.inStock = false;
+            p.totalStock = 0;
+            p.availableStock = 0;
+            p.enabled = false;
+            p.retiredBySupplier = true;
+            deactivatedCount++;
+          }
+        }
+      }
+
+      if (botDbBridge.isAvailable()) {
+        botDbBridge.deactivateMissingSupplierProducts(activeSupplierIdSet);
+      }
+
+      // 6. Save updated catalog to products.json
+      fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(localProducts, null, 2), 'utf8');
+
+      this.syncStatus = {
+        lastSyncTime: new Date().toISOString(),
+        lastStatus: 'success',
+        totalSupplierProducts: supplierProducts.length,
+        totalLocalProducts: localProducts.length,
+        newProductsAdded: newCount,
+        pricesUpdated: pricesCount,
+        stockUpdated: stockCount,
+        outOfStockCount,
+        deactivatedMissing: deactivatedCount,
+        botDbSynchronized: botDbBridge.isAvailable(),
+        error: null
+      };
+
+      console.log(`[SyncEngine] Sync complete: ${supplierProducts.length} supplier items, ${newCount} added, ${pricesCount} price changes, ${stockCount} stock updates, ${outOfStockCount} out-of-stock. Bot DB synced: ${botDbBridge.isAvailable()}`);
+      return this.syncStatus;
+    } catch (err) {
+      console.error('[SyncEngine] Sync failed:', err.message);
+      this.syncStatus.lastStatus = 'failed';
+      this.syncStatus.error = err.message;
+      return this.syncStatus;
+    } finally {
+      this.isSyncing = false;
+    }
+  }
+
+  /**
+   * Start scheduled periodic polling every X minutes
+   */
+  startPeriodicSync(intervalMinutes = 15) {
+    if (this.syncTimer) clearInterval(this.syncTimer);
+    const ms = Math.max(1, intervalMinutes) * 60 * 1000;
+    console.log(`[SyncEngine] Scheduled continuous supplier sync every ${intervalMinutes} minutes.`);
+
+    // Run first sync shortly after boot (e.g. 2 seconds)
+    setTimeout(() => {
+      this.runCatalogSync().catch(e => console.error('[SyncEngine] Initial sync error:', e));
+    }, 2000);
+
+    this.syncTimer = setInterval(() => {
+      this.runCatalogSync().catch(e => console.error('[SyncEngine] Interval sync error:', e));
+    }, ms);
+    if (this.syncTimer && typeof this.syncTimer.unref === 'function') {
+      this.syncTimer.unref();
+    }
+  }
+
+  stopPeriodicSync() {
+    if (this.syncTimer) {
+      clearInterval(this.syncTimer);
+      this.syncTimer = null;
+    }
+  }
+}
+
+module.exports = new SyncEngine();

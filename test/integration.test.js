@@ -1,0 +1,201 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const path = require('path');
+const fs = require('fs');
+
+const resellerService = require('../server/services/resellerService');
+const botDbBridge = require('../server/services/botDbBridge');
+const syncEngine = require('../server/services/syncEngine');
+const server = require('../server/index');
+
+const TEST_PORT = 3199;
+let baseUrl = `http://localhost:${TEST_PORT}`;
+
+test.before(async () => {
+  await new Promise((resolve) => {
+    server.listen(TEST_PORT, () => {
+      console.log(`[Test Server] Running on ${baseUrl}`);
+      resolve();
+    });
+  });
+});
+
+test.after(async () => {
+  syncEngine.stopPeriodicSync();
+  await new Promise((resolve) => {
+    server.close(() => {
+      console.log('[Test Server] Closed');
+      resolve();
+    });
+  });
+});
+
+test('1. Supplier Wholesale API Integration & Account Check', async () => {
+  const info = await resellerService.getInfo();
+  assert.equal(info.ok, true, 'Supplier /account/info should return ok: true');
+  assert.ok(info.store, 'Supplier store name should be defined');
+
+  const balance = await resellerService.getBalance();
+  assert.equal(balance.ok, true, 'Supplier /account/balance should return ok: true');
+  assert.ok(parseFloat(balance.balance) >= 0, 'Supplier balance should be a valid non-negative number');
+});
+
+test('2. Telegram Bot SQLite Database Bridge (store.db)', async () => {
+  assert.equal(botDbBridge.isAvailable(), true, 'Bot DB should be detected and accessible');
+  
+  const rate = botDbBridge.getUsdToNgnRate();
+  assert.ok(rate && rate > 1000, `Exchange rate from store.db should be > 1000, got ${rate}`);
+
+  const products = botDbBridge.getAllProducts();
+  assert.ok(products.length > 50, `Products in store.db should be > 50, got ${products.length}`);
+});
+
+test('3. Full Catalog Synchronization Engine', async () => {
+  const syncResult = await syncEngine.runCatalogSync();
+  assert.equal(syncResult.lastStatus, 'success', 'Catalog sync must succeed');
+  assert.ok(syncResult.totalSupplierProducts > 100, `Supplier products should be > 100, got ${syncResult.totalSupplierProducts}`);
+  assert.equal(syncResult.botDbSynchronized, true, 'store.db must be synchronized');
+
+  // Verify local products.json was updated
+  const productsFile = path.resolve(__dirname, '../data/products.json');
+  const products = JSON.parse(fs.readFileSync(productsFile, 'utf8'));
+  assert.ok(products.length >= syncResult.totalSupplierProducts, 'Local catalog should contain all synced items');
+
+  // Check out of stock handling
+  const outOfStockItem = products.find(p => p.totalStock === 0);
+  if (outOfStockItem) {
+    assert.equal(outOfStockItem.inStock, false, 'Items with 0 stock must have inStock = false');
+  }
+});
+
+test('4. Storefront Server-side Price Quote (/api/orders/quote)', async () => {
+  const productsFile = path.resolve(__dirname, '../data/products.json');
+  const products = JSON.parse(fs.readFileSync(productsFile, 'utf8'));
+  const testProduct = products[0];
+
+  const res = await fetch(`${baseUrl}/api/orders/quote`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      productId: testProduct.id,
+      quantity: 2,
+      currency: 'NGN'
+    })
+  });
+
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.equal(data.productId, testProduct.id);
+  assert.equal(data.quantity, 2);
+  assert.ok(data.totalNgn > 0, 'Total NGN must be calculated');
+  assert.ok(data.totalUsd > 0, 'Total USD must be calculated');
+});
+
+test('5. Direct Guest Checkout Order Creation (/api/orders/create)', async () => {
+  const productsFile = path.resolve(__dirname, '../data/products.json');
+  const products = JSON.parse(fs.readFileSync(productsFile, 'utf8'));
+  const testProduct = products[0];
+
+  const res = await fetch(`${baseUrl}/api/orders/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      productId: testProduct.id,
+      duration: testProduct.duration || '1 Month',
+      quantity: 1,
+      customerName: 'Test Automation Guest',
+      customerEmail: 'automation_test@creditlog.com',
+      customerPhone: '+2348123456789',
+      deliveryChannel: 'Email',
+      gateway: 'Paystack'
+    })
+  });
+
+  assert.equal(res.status, 201);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.ok(data.order && data.order.id, 'Order must have an ID');
+  assert.equal(data.order.customerEmail, 'automation_test@creditlog.com');
+  assert.equal(data.order.status, 'Pending');
+});
+
+test('6. Server-Side Payment Verification & store.db Order Sync (/api/payment/verify)', async () => {
+  const productsFile = path.resolve(__dirname, '../data/products.json');
+  const products = JSON.parse(fs.readFileSync(productsFile, 'utf8'));
+  const testProduct = products.find(p => p.inStock) || products[0];
+
+  // 1. Create order
+  const createRes = await fetch(`${baseUrl}/api/orders/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      productId: testProduct.id,
+      duration: testProduct.duration || '1 Month',
+      quantity: 1,
+      customerName: 'Verified Customer',
+      customerEmail: 'verified_order@creditlog.com',
+      customerPhone: '+2348000000001',
+      deliveryChannel: 'Email',
+      gateway: 'Paystack'
+    })
+  });
+  const createData = await createRes.json();
+  const orderId = createData.order.id;
+  const reference = createData.order.reference;
+
+  // 2. Verify payment server-side
+  const verifyRes = await fetch(`${baseUrl}/api/payment/verify`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      orderId,
+      reference,
+      gateway: 'Paystack'
+    })
+  });
+
+  assert.equal(verifyRes.status, 200);
+  const verifyData = await verifyRes.json();
+  assert.equal(verifyData.success, true);
+  assert.equal(verifyData.order.status, 'Delivered');
+  assert.ok(verifyData.order.credentials, 'Order must have dispatched credentials');
+
+  // 3. Verify public tracking can find this verified order
+  const trackRes = await fetch(`${baseUrl}/api/orders/track?id=${encodeURIComponent(orderId)}`);
+  assert.equal(trackRes.status, 200);
+  const trackData = await trackRes.json();
+  assert.equal(trackData.success, true);
+  assert.equal(trackData.data[0].id, orderId);
+});
+
+test('7. Paystack Webhook Processing & Idempotency (/api/webhook/paystack)', async () => {
+  const webhookPayload = {
+    event: 'charge.success',
+    data: {
+      reference: 'test_idempotent_ref_' + Date.now(),
+      amount: 1450000,
+      currency: 'NGN',
+      status: 'success',
+      metadata: {
+        orderId: '#CL-TEST-IDEMPOTENT'
+      }
+    }
+  };
+
+  // First webhook execution
+  const res1 = await fetch(`${baseUrl}/api/webhook/paystack`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(webhookPayload)
+  });
+  assert.equal(res1.status, 200);
+
+  // Duplicate replay
+  const res2 = await fetch(`${baseUrl}/api/webhook/paystack`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(webhookPayload)
+  });
+  assert.equal(res2.status, 200);
+});

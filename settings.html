@@ -1017,6 +1017,11 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
               <span>Refresh Catalog</span>
             </button>
+            <button type="button" onclick="syncCatalogAndBot()" class="secondary-btn"
+              style="padding: 7px 13px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; background: rgba(208,69,21,0.08); color: #D04515; font-weight: 700; border: 1px solid rgba(208,69,21,0.2);">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span>Sync All to Bot & Web</span>
+            </button>
             <button type="button" onclick="testResellerOrder()" class="primary-btn"
               style="padding: 7px 15px; font-size: 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -1950,6 +1955,27 @@
         }
       } catch (err) {
         alert('Error placing test order: ' + err.message);
+      }
+    }
+
+    async function syncCatalogAndBot() {
+      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      showToast('Synchronizing with wholesale supplier API & Telegram bot database...');
+      try {
+        const res = await fetch('/api/admin/reseller/sync', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert(`Synchronization Successful!\n\n• Supplier Products: ${data.sync.totalSupplierProducts}\n• Prices Updated: ${data.sync.pricesUpdated}\n• Stock Updated: ${data.sync.stockUpdated}\n• Out-of-Stock: ${data.sync.outOfStockMarked}\n• Telegram Bot DB Synced: ${data.sync.botDbSynced ? 'Yes (store.db)' : 'No'}`);
+          loadSupplierCatalog();
+          if (typeof fetchResellerStatus === 'function') fetchResellerStatus();
+        } else {
+          alert('Sync failed: ' + (data.message || data.error));
+        }
+      } catch (err) {
+        alert('Error during sync: ' + err.message);
       }
     }
   </script>

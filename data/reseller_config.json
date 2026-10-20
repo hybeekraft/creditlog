@@ -1,8 +1,8 @@
 {
   "baseUrl": "https://api-geminipro.ignorelist.com/api/reseller/v1",
-  "apiKey": "",
-  "markupPercent": 30,
-  "usdToNgnRate": 1550,
+  "apiKey": "rsp_live_Xue5cVRW6hlklcFnDqJXc0TFm1GUIi9rrNN0A7jYx8eJWJmh",
+  "markupPercent": 45,
+  "usdToNgnRate": 1450,
   "autoFulfill": true,
   "mode": "live",
   "lowBalanceThreshold": 5,
@@ -11,13 +11,13 @@
       "id": "vendor_primary",
       "name": "GeminiPro Wholesale API (Primary)",
       "baseUrl": "https://api-geminipro.ignorelist.com/api/reseller/v1",
-      "apiKey": "",
+      "apiKey": "rsp_live_Xue5cVRW6hlklcFnDqJXc0TFm1GUIi9rrNN0A7jYx8eJWJmh",
       "isDefault": true,
       "mode": "live",
-      "balance": "50.00",
+      "balance": "5.91",
       "currency": "USD",
-      "lastChecked": "2026-10-03T21:59:31.033Z",
-      "notes": "Default wholesale supplier account"
+      "lastChecked": "2026-10-20T03:04:45.000Z",
+      "notes": "Primary wholesale supplier account"
     }
   ],
   "priceTiers": [
