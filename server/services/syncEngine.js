@@ -77,6 +77,7 @@ class SyncEngine {
     if (n.includes('autodesk') || n.includes('autocad')) return 'Autodesk';
     if (n.includes('office') || n.includes('microsoft') || n.includes('xbox')) return 'Microsoft';
     if (n.includes('prime') || n.includes('amazon')) return 'Amazon';
+    if (n.includes('apple') || n.includes('appletv')) return 'Apple TV+';
     if (n.includes('nordvpn')) return 'NordVPN';
     if (n.includes('expressvpn')) return 'ExpressVPN';
     return name.split(' ')[0] || 'Digital Service';
@@ -89,12 +90,16 @@ class SyncEngine {
     if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
       return 'Amazon';
     }
+    if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
+      return 'Apple TV+';
+    }
     return b;
   }
 
   inferBrandClass(brand = '') {
     const b = brand.toLowerCase();
     if (b.includes('amazon') || b.includes('prime')) return 'tile-amazon';
+    if (b.includes('apple')) return 'tile-appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
     if (b.includes('claude')) return 'tile-claude';
     if (b.includes('gemini')) return 'tile-gemini';
@@ -109,6 +114,7 @@ class SyncEngine {
   inferIconType(brand = '') {
     const b = brand.toLowerCase();
     if (b.includes('amazon') || b.includes('prime')) return 'amazon';
+    if (b.includes('apple')) return 'appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
     if (b.includes('claude')) return 'claude';
     if (b.includes('gemini')) return 'gemini';
@@ -232,6 +238,9 @@ class SyncEngine {
             if (existing.brand === 'Amazon') {
               existing.brandClass = 'tile-amazon';
               existing.iconType = 'amazon';
+            } else if (existing.brand === 'Apple TV+') {
+              existing.brandClass = 'tile-appletv';
+              existing.iconType = 'appletv';
             }
           }
 
@@ -351,6 +360,9 @@ class SyncEngine {
                 if (match.brand === 'Amazon') {
                   match.brandClass = 'tile-amazon';
                   match.iconType = 'amazon';
+                } else if (match.brand === 'Apple TV+') {
+                  match.brandClass = 'tile-appletv';
+                  match.iconType = 'appletv';
                 }
               }
             } else {

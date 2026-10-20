@@ -262,3 +262,27 @@ test('9. Amazon Brand Consolidation: All Amazon/Prime products belong strictly t
   const duplicateBrands = json.data.filter(p => p.brand === 'Amazon Prime' || p.brand === 'Prime Video' || p.brand === 'Amazon Prime Video');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split Amazon Prime/Prime Video brand');
 });
+
+test('10. Apple TV+ Brand Consolidation: All Apple/Apple TV products belong strictly to "Apple TV+"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const appleItems = json.data.filter(p => 
+    (p.name.toLowerCase().includes('apple') && !p.name.toLowerCase().includes('apple pay')) || 
+    (p.brand && p.brand.toLowerCase().includes('apple') && !p.brand.toLowerCase().includes('apple pay'))
+  );
+
+  assert.ok(appleItems.length > 0, 'Must have Apple items in catalog');
+
+  for (const item of appleItems) {
+    assert.equal(item.brand, 'Apple TV+', `Product ${item.id} (${item.name}) must have brand strictly set to "Apple TV+", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-appletv', `Product ${item.id} must have brandClass tile-appletv`);
+    assert.equal(item.iconType, 'appletv', `Product ${item.id} must have iconType appletv`);
+  }
+
+  // Ensure no product in the catalog is branded with raw "Apple" or "Apple TV"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Apple' || p.brand === 'Apple TV');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Apple" or "Apple TV" brand');
+});

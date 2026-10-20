@@ -976,6 +976,9 @@ function normalizeBrand(rawBrand) {
   if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
     return 'Amazon';
   }
+  if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
+    return 'Apple TV+';
+  }
   return b;
 }
 

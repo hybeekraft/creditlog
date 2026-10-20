@@ -284,7 +284,7 @@
       }
     });
 
-    // Brand normalization helper (ensures Amazon Prime / Prime Video consolidate into Amazon)
+    // Brand normalization helper (ensures Amazon Prime / Prime Video consolidate into Amazon, and Apple / Apple TV consolidate into Apple TV+)
     function normalizeBrand(rawBrand) {
       if (!rawBrand) return '';
       let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand);
@@ -292,6 +292,9 @@
       const lower = b.toLowerCase();
       if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
         return 'Amazon';
+      }
+      if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
+        return 'Apple TV+';
       }
       return b;
     }
@@ -618,6 +621,8 @@
           if (!catalogBrandSamples[b]) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'amazon' && (prod.iconType === 'amazon' || prod.brandClass === 'tile-amazon')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase().includes('apple') && (prod.iconType === 'appletv' || prod.brandClass === 'tile-appletv')) {
             catalogBrandSamples[b] = prod;
           }
         }

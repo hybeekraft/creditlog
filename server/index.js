@@ -686,12 +686,17 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
           return 'Amazon';
         }
+        if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
+          return 'Apple TV+';
+        }
         return s;
       })(rawBrand);
 
       let effectiveIcon = (iconType || category || 'other').toLowerCase().trim();
       if (normalizedBrand === 'Amazon' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'amazon';
+      } else if (normalizedBrand === 'Apple TV+' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'appletv';
       }
 
       const newProduct = {
@@ -760,6 +765,12 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'amazon';
             prod.brandClass = 'tile-amazon';
+          }
+        } else if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
+          prod.brand = 'Apple TV+';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'appletv';
+            prod.brandClass = 'tile-appletv';
           }
         } else {
           prod.brand = s;
