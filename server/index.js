@@ -692,6 +692,9 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
           return 'Gemini';
         }
+        if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
+          return 'HMA VPN';
+        }
         return s;
       })(rawBrand);
 
@@ -702,6 +705,8 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'appletv';
       } else if (normalizedBrand === 'Gemini' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'gemini';
+      } else if (normalizedBrand === 'HMA VPN' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'hma';
       }
 
       const newProduct = {
@@ -782,6 +787,12 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'gemini';
             prod.brandClass = 'tile-gemini';
+          }
+        } else if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
+          prod.brand = 'HMA VPN';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'hma';
+            prod.brandClass = 'tile-hma';
           }
         } else {
           prod.brand = s;

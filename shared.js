@@ -984,6 +984,9 @@ function normalizeBrand(rawBrand) {
   if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
     return 'Gemini';
   }
+  if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
+    return 'HMA VPN';
+  }
   return b;
 }
 
@@ -1157,8 +1160,8 @@ var CATALOG_PRODUCTS = [
     "inStock": true,
     "rating": 4.6,
     "reviews": "420",
-    "brandClass": "tile-vpn",
-    "iconType": "vpn",
+    "brandClass": "tile-hma",
+    "iconType": "hma",
     "description": "HideMyAss VPN premium license with global high-speed servers and lightning fast encryption.",
     "currPrice": 3750,
     "oldPrice": 14985,

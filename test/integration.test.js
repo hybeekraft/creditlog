@@ -312,3 +312,30 @@ test('11. Gemini Brand Consolidation: All Google Gemini and Gmail products belon
   const duplicateBrands = json.data.filter(p => p.brand === 'Gmail' || p.brand === 'Google Gemini');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Gmail" or "Google Gemini" brand');
 });
+
+test('12. HMA VPN Brand Consolidation: All HMA and HideMyAss products belong strictly to "HMA VPN"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const hmaItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('hma') || 
+    p.name.toLowerCase().includes('hidemyass') ||
+    (p.brand && p.brand.toLowerCase().includes('hma')) ||
+    (p.brand && p.brand.toLowerCase().includes('hidemyass'))
+  );
+
+  assert.ok(hmaItems.length > 0, 'Must have HMA items in catalog');
+
+  for (const item of hmaItems) {
+    assert.equal(item.brand, 'HMA VPN', `Product ${item.id} (${item.name}) must have brand strictly set to "HMA VPN", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-hma', `Product ${item.id} must have brandClass tile-hma`);
+    assert.equal(item.iconType, 'hma', `Product ${item.id} must have iconType hma`);
+  }
+
+  // Ensure no product in the catalog is branded with raw "HMA" or "HideMyAss"
+  const duplicateBrands = json.data.filter(p => p.brand === 'HMA' || p.brand === 'HideMyAss' || p.brand === 'HideMyAss VPN');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "HMA" or "HideMyAss" brand');
+});
+

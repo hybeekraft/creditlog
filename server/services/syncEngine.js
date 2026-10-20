@@ -80,6 +80,7 @@ class SyncEngine {
     if (n.includes('apple') || n.includes('appletv')) return 'Apple TV+';
     if (n.includes('nordvpn')) return 'NordVPN';
     if (n.includes('expressvpn')) return 'ExpressVPN';
+    if (n.includes('hma') || n.includes('hidemyass')) return 'HMA VPN';
     return name.split(' ')[0] || 'Digital Service';
   }
 
@@ -96,6 +97,9 @@ class SyncEngine {
     if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
       return 'Gemini';
     }
+    if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
+      return 'HMA VPN';
+    }
     return b;
   }
 
@@ -111,6 +115,7 @@ class SyncEngine {
     if (b.includes('spotify')) return 'tile-spotify';
     if (b.includes('youtube')) return 'tile-youtube';
     if (b.includes('duolingo')) return 'tile-duolingo';
+    if (b.includes('hma') || b.includes('hidemyass')) return 'tile-hma';
     return 'tile-brand-default';
   }
 
@@ -126,6 +131,7 @@ class SyncEngine {
     if (b.includes('spotify')) return 'spotify';
     if (b.includes('youtube')) return 'youtube';
     if (b.includes('duolingo')) return 'duolingo';
+    if (b.includes('hma') || b.includes('hidemyass')) return 'hma';
     return 'cube';
   }
 
@@ -247,6 +253,9 @@ class SyncEngine {
             } else if (existing.brand === 'Gemini') {
               existing.brandClass = 'tile-gemini';
               existing.iconType = 'gemini';
+            } else if (existing.brand === 'HMA VPN') {
+              existing.brandClass = 'tile-hma';
+              existing.iconType = 'hma';
             }
           }
 
@@ -372,6 +381,9 @@ class SyncEngine {
                 } else if (match.brand === 'Gemini') {
                   match.brandClass = 'tile-gemini';
                   match.iconType = 'gemini';
+                } else if (match.brand === 'HMA VPN') {
+                  match.brandClass = 'tile-hma';
+                  match.iconType = 'hma';
                 }
               }
             } else {
