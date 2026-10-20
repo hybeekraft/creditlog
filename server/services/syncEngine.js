@@ -61,7 +61,7 @@ class SyncEngine {
     const n = name.toLowerCase();
     if (n.includes('chatgpt') || n.includes('openai')) return 'OpenAI ChatGPT';
     if (n.includes('claude') || n.includes('anthropic')) return 'Anthropic Claude';
-    if (n.includes('gemini') || n.includes('google')) return 'Google Gemini';
+    if (n.includes('gemini') || n.includes('google') || n.includes('gmail')) return 'Gemini';
     if (n.includes('qwen')) return 'Alibaba Qwen';
     if (n.includes('deepseek')) return 'DeepSeek';
     if (n.includes('grok') || n.includes('xai')) return 'xAI Grok';
@@ -93,6 +93,9 @@ class SyncEngine {
     if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
       return 'Apple TV+';
     }
+    if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
+      return 'Gemini';
+    }
     return b;
   }
 
@@ -102,7 +105,7 @@ class SyncEngine {
     if (b.includes('apple')) return 'tile-appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
     if (b.includes('claude')) return 'tile-claude';
-    if (b.includes('gemini')) return 'tile-gemini';
+    if (b.includes('gemini') || b.includes('gmail')) return 'tile-gemini';
     if (b.includes('canva')) return 'tile-canva';
     if (b.includes('netflix')) return 'tile-netflix';
     if (b.includes('spotify')) return 'tile-spotify';
@@ -117,7 +120,7 @@ class SyncEngine {
     if (b.includes('apple')) return 'appletv';
     if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
     if (b.includes('claude')) return 'claude';
-    if (b.includes('gemini')) return 'gemini';
+    if (b.includes('gemini') || b.includes('gmail')) return 'gemini';
     if (b.includes('canva')) return 'canva';
     if (b.includes('netflix')) return 'netflix';
     if (b.includes('spotify')) return 'spotify';
@@ -241,6 +244,9 @@ class SyncEngine {
             } else if (existing.brand === 'Apple TV+') {
               existing.brandClass = 'tile-appletv';
               existing.iconType = 'appletv';
+            } else if (existing.brand === 'Gemini') {
+              existing.brandClass = 'tile-gemini';
+              existing.iconType = 'gemini';
             }
           }
 
@@ -363,6 +369,9 @@ class SyncEngine {
                 } else if (match.brand === 'Apple TV+') {
                   match.brandClass = 'tile-appletv';
                   match.iconType = 'appletv';
+                } else if (match.brand === 'Gemini') {
+                  match.brandClass = 'tile-gemini';
+                  match.iconType = 'gemini';
                 }
               }
             } else {

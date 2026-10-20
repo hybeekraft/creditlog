@@ -339,9 +339,11 @@ var BRAND_ICON_REGISTRY = [
     "match": [
       "gemini",
       "google gemini",
-      "google ai"
+      "google ai",
+      "gmail",
+      "google"
     ],
-    "name": "Google Gemini",
+    "name": "Gemini",
     "color": "#1A73E8",
     "bg": "#FFFFFF",
     "border": "1px solid rgba(142, 36, 170, 0.18)",
@@ -979,6 +981,9 @@ function normalizeBrand(rawBrand) {
   if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
     return 'Apple TV+';
   }
+  if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
+    return 'Gemini';
+  }
   return b;
 }
 
@@ -1113,7 +1118,7 @@ var CATALOG_PRODUCTS = [
     "name": "Google AI Pro Gemini 3M",
     "rawName": "Google AI Pro Gemini 3M · $6.97",
     "category": "ai",
-    "brand": "Google Gemini",
+    "brand": "Gemini",
     "duration": "3 Months",
     "usdPrice": 6.97,
     "usdOldPrice": 19.99,
@@ -2322,7 +2327,7 @@ var CATALOG_PRODUCTS = [
     "name": "Gemini Pro 18 Months",
     "rawName": "Gemini Pro 18 Months · $1.00",
     "category": "ai",
-    "brand": "Google Gemini",
+    "brand": "Gemini",
     "duration": "18 Months",
     "usdPrice": 1,
     "usdOldPrice": 360,

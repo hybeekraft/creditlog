@@ -296,6 +296,9 @@
       if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
         return 'Apple TV+';
       }
+      if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
+        return 'Gemini';
+      }
       return b;
     }
 
@@ -623,6 +626,8 @@
           } else if (b.toLowerCase() === 'amazon' && (prod.iconType === 'amazon' || prod.brandClass === 'tile-amazon')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase().includes('apple') && (prod.iconType === 'appletv' || prod.brandClass === 'tile-appletv')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'gemini' && (prod.iconType === 'gemini' || prod.brandClass === 'tile-gemini')) {
             catalogBrandSamples[b] = prod;
           }
         }

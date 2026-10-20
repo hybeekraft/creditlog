@@ -689,6 +689,9 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
           return 'Apple TV+';
         }
+        if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
+          return 'Gemini';
+        }
         return s;
       })(rawBrand);
 
@@ -697,6 +700,8 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'amazon';
       } else if (normalizedBrand === 'Apple TV+' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'appletv';
+      } else if (normalizedBrand === 'Gemini' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'gemini';
       }
 
       const newProduct = {
@@ -771,6 +776,12 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'appletv';
             prod.brandClass = 'tile-appletv';
+          }
+        } else if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
+          prod.brand = 'Gemini';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'gemini';
+            prod.brandClass = 'tile-gemini';
           }
         } else {
           prod.brand = s;

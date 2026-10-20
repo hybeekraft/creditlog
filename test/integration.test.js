@@ -286,3 +286,29 @@ test('10. Apple TV+ Brand Consolidation: All Apple/Apple TV products belong stri
   const duplicateBrands = json.data.filter(p => p.brand === 'Apple' || p.brand === 'Apple TV');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Apple" or "Apple TV" brand');
 });
+
+test('11. Gemini Brand Consolidation: All Google Gemini and Gmail products belong strictly to "Gemini"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const geminiItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('gemini') || 
+    p.name.toLowerCase().includes('gmail') ||
+    (p.brand && p.brand.toLowerCase().includes('gemini')) ||
+    (p.brand && p.brand.toLowerCase().includes('gmail'))
+  );
+
+  assert.ok(geminiItems.length > 0, 'Must have Gemini/Gmail items in catalog');
+
+  for (const item of geminiItems) {
+    assert.equal(item.brand, 'Gemini', `Product ${item.id} (${item.name}) must have brand strictly set to "Gemini", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-gemini', `Product ${item.id} must have brandClass tile-gemini`);
+    assert.equal(item.iconType, 'gemini', `Product ${item.id} must have iconType gemini`);
+  }
+
+  // Ensure no product in the catalog is branded with "Gmail" or "Google Gemini"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Gmail' || p.brand === 'Google Gemini');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Gmail" or "Google Gemini" brand');
+});
