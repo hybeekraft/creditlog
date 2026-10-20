@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const resellerService = require('./resellerService');
 const botDbBridge = require('./botDbBridge');
+const { parseProductDetails } = require('./productParser');
 
 // Determine persistent data directory
 const isVercel = Boolean(process.env.VERCEL);
@@ -164,6 +165,7 @@ class SyncEngine {
         // Pricing calculation (applying CreditLog's configured tiered markup)
         const pricing = sp.pricing || resellerService.calculatePricing(costUsd, supplierId, sp.category);
         const retailUsd = pricing.retailUsd;
+        const parsed = parseProductDetails(sp.name, sp.description);
 
         if (!isSupplierInStock) {
           outOfStockCount++;
@@ -195,6 +197,19 @@ class SyncEngine {
           if (prevAvailable !== existing.availableStock) {
             stockCount++;
           }
+
+          // Synchronize rich seller details
+          if (sp.description && sp.description.trim()) {
+            existing.description = sp.description.trim();
+          }
+          existing.overview = parsed.overview || existing.overview;
+          existing.deliveryFormat = parsed.deliveryFormat || existing.deliveryFormat;
+          existing.deliveryType = sp.delivery_type || (parsed.deliveryFormat.includes('API') || parsed.deliveryFormat.includes('2FA') ? 'auto' : (existing.deliveryType || 'auto'));
+          existing.importantRequirements = parsed.requirements || existing.importantRequirements;
+          existing.requirements = parsed.requirements || existing.requirements;
+          existing.instructions = parsed.instructions || existing.instructions;
+          existing.warrantyPolicy = parsed.warranty || existing.warrantyPolicy;
+          existing.hasSpecialRequirements = parsed.hasSpecialRequirements;
 
           existing.resellerProductId = Number(supplierId);
           existing.lastSynchronizedAt = new Date().toISOString();
@@ -232,6 +247,14 @@ class SyncEngine {
             brandClass: this.inferBrandClass(brand),
             iconType: this.inferIconType(brand),
             description: (sp.description || `${sp.name} with instant automated dispatch and 100% replacement warranty.`).trim(),
+            overview: parsed.overview,
+            deliveryFormat: parsed.deliveryFormat,
+            deliveryType: sp.delivery_type || (parsed.deliveryFormat.includes('API') || parsed.deliveryFormat.includes('2FA') ? 'auto' : 'auto'),
+            importantRequirements: parsed.requirements,
+            requirements: parsed.requirements,
+            instructions: parsed.instructions,
+            warrantyPolicy: parsed.warranty,
+            hasSpecialRequirements: parsed.hasSpecialRequirements,
             totalStock: supplierStock,
             reservedStock: 0,
             availableStock: supplierStock,
@@ -271,6 +294,100 @@ class SyncEngine {
             inStock: isSupplierInStock,
             category: sp.category || this.inferBrand(sp.name)
           });
+        }
+      }
+
+      // 4.5 Synchronize all active products from Telegram Bot database (store.db)
+      if (botDbBridge.isAvailable()) {
+        try {
+          const botProducts = botDbBridge.getAllProducts().filter(bp => bp.active === 1);
+          for (const bp of botProducts) {
+            const botPriceUsd = bp.price ? (bp.price / 100) : 5.00;
+            const botCostUsd = bp.supplier_price ? (bp.supplier_price / 100) : (botPriceUsd * 0.7);
+            const parsed = parseProductDetails(bp.name, bp.description);
+
+            // Find match in localProducts
+            let match = localProducts.find(p => 
+              (p.botProductId && p.botProductId === bp.id) ||
+              (bp.supplier_product_id && String(p.resellerProductId).trim() === String(bp.supplier_product_id).trim()) ||
+              (p.name && p.name.trim().toLowerCase() === bp.name.trim().toLowerCase())
+            );
+
+            if (match) {
+              match.botProductId = bp.id;
+              if (!match.deliveryFormat || match.deliveryFormat === 'Direct Account Access') match.deliveryFormat = parsed.deliveryFormat;
+              if (!match.importantRequirements) match.importantRequirements = parsed.requirements;
+              if (!match.requirements) match.requirements = parsed.requirements;
+              if (!match.instructions) match.instructions = parsed.instructions;
+              if (!match.warrantyPolicy) match.warrantyPolicy = parsed.warranty;
+              if (!match.overview) match.overview = parsed.overview;
+              if (bp.description && (!match.description || match.description.length < bp.description.length)) {
+                match.description = bp.description;
+              }
+              if (bp.category) match.botCategory = bp.category;
+            } else {
+              // Add missing active bot product to storefront catalog
+              const brand = this.inferBrand(bp.name);
+              const category = this.inferCategory(bp.name, bp.category);
+              const duration = this.inferDuration(bp.name);
+              const slugId = `bot_${bp.id}_${bp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
+
+              const botStock = bp.supplier_stock !== null && bp.supplier_stock !== undefined ? bp.supplier_stock : 10;
+              const newProd = {
+                id: slugId,
+                botProductId: bp.id,
+                name: bp.name,
+                rawName: `${bp.name} · $${botPriceUsd.toFixed(2)}`,
+                category,
+                botCategory: bp.category,
+                brand,
+                duration,
+                wholesaleUsd: botCostUsd,
+                usdPrice: botPriceUsd,
+                usdOldPrice: Number((botPriceUsd * 1.35).toFixed(2)),
+                discount: '25% OFF',
+                inStock: bp.active === 1 && botStock > 0,
+                rating: 4.9,
+                reviews: '920+',
+                brandClass: this.inferBrandClass(brand),
+                iconType: this.inferIconType(brand),
+                description: bp.description || `Premium digital access for ${bp.name}.`,
+                overview: parsed.overview,
+                deliveryFormat: parsed.deliveryFormat,
+                deliveryType: bp.delivery_type || 'auto',
+                importantRequirements: parsed.requirements,
+                requirements: parsed.requirements,
+                instructions: parsed.instructions,
+                warrantyPolicy: parsed.warranty,
+                hasSpecialRequirements: parsed.hasSpecialRequirements,
+                totalStock: botStock,
+                reservedStock: 0,
+                availableStock: botStock,
+                enabled: true,
+                resellerProductId: bp.supplier_product_id ? Number(bp.supplier_product_id) : null,
+                appliedMultiplier: 1.45,
+                pricingRule: 'Bot Store DB',
+                lastSynchronizedAt: new Date().toISOString(),
+                variants: [
+                  {
+                    id: '1m',
+                    duration,
+                    wholesaleUsd: botCostUsd,
+                    usdPrice: botPriceUsd,
+                    totalStock: botStock,
+                    reservedStock: 0,
+                    availableStock: botStock,
+                    inStock: bp.active === 1 && botStock > 0,
+                    resellerProductId: bp.supplier_product_id ? Number(bp.supplier_product_id) : null
+                  }
+                ]
+              };
+              localProducts.push(newProd);
+              newCount++;
+            }
+          }
+        } catch (botSyncErr) {
+          console.warn('[SyncEngine] Error merging bot products:', botSyncErr.message);
         }
       }
 

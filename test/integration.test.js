@@ -199,3 +199,33 @@ test('7. Paystack Webhook Processing & Idempotency (/api/webhook/paystack)', asy
   });
   assert.equal(res2.status, 200);
 });
+
+test('8. Product-Specific Requirements & Delivery Modes from Seller API', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.ok(data.data.length >= 124, `Storefront should offer at least 124 products, got ${data.data.length}`);
+
+  // 1. Verify deliveryFormat and importantRequirements exist across products
+  const productsWithRequirements = data.data.filter(p => p.importantRequirements && p.importantRequirements.trim().length > 0);
+  assert.ok(productsWithRequirements.length > 20, `At least 20 products should have specific requirements, found ${productsWithRequirements.length}`);
+
+  const productsWithDeliveryFmt = data.data.filter(p => p.deliveryFormat && p.deliveryFormat.trim().length > 0);
+  assert.ok(productsWithDeliveryFmt.length > 50, `At least 50 products should have parsed delivery format, found ${productsWithDeliveryFmt.length}`);
+
+  // 2. Verify requirements are distinct and product-specific (NOT generic fixed text)
+  const reqSet = new Set(productsWithRequirements.map(p => p.importantRequirements));
+  assert.ok(reqSet.size > 5, `Requirements must be diverse and product-specific, got ${reqSet.size} unique requirement sets`);
+
+  // 3. Test single product detail endpoint returns seller-provided fields
+  const sample = productsWithRequirements[0];
+  const detailRes = await fetch(`${baseUrl}/api/products/${encodeURIComponent(sample.id)}`);
+  assert.equal(detailRes.status, 200);
+  const detailData = await detailRes.json();
+  assert.equal(detailData.success, true);
+  assert.equal(detailData.data.id, sample.id);
+  assert.ok(detailData.data.deliveryFormat, 'Detail product must have deliveryFormat');
+  assert.ok(detailData.data.importantRequirements, 'Detail product must have importantRequirements');
+  assert.ok(detailData.data.description, 'Detail product must have description');
+});

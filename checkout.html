@@ -499,7 +499,14 @@
             <div>
               <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
               <div class="summary-prod-option" id="summaryProdOption">Duration: 1 Month</div>
+              <div id="summaryDeliveryFormat" style="font-size: 11px; background: rgba(208,69,21,0.08); color: #D04515; font-weight: 700; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-top: 4px;">Delivery: Instant Dispatch</div>
             </div>
+          </div>
+
+          <!-- Product-Specific Requirements Banner (Seller API) -->
+          <div id="summaryRequirementsBanner" style="display: none; background: rgba(208, 69, 21, 0.05); border: 1px solid rgba(208, 69, 21, 0.18); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; color: #43332A; line-height: 1.45;">
+            <strong style="color: #D04515; display: block; margin-bottom: 3px;">Product Requirement:</strong>
+            <span id="summaryRequirementsText"></span>
           </div>
 
           <!-- Quantity Stepper on Checkout -->
@@ -783,9 +790,25 @@
       currentDuration = urlParams.get('duration') || urlParams.get('plan') || '';
       currentQty = parseInt(urlParams.get('qty') || '1', 10) || 1;
 
-      // Look up product metadata for display
-      const source = (typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS;
-      currentProduct = source.find(p => p.id === currentProductId) || source[0];
+      // 1. Fetch live product from API
+      try {
+        const res = await fetch(`/api/products/${encodeURIComponent(currentProductId)}`);
+        if (res.ok) {
+          const apiData = await res.json();
+          if (apiData.success && apiData.data) {
+            currentProduct = apiData.data;
+          }
+        }
+      } catch (e) {
+        console.warn('API product fetch fallback in checkout:', e);
+      }
+
+      // 2. Local fallback if offline
+      if (!currentProduct) {
+        const source = (typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS;
+        currentProduct = source.find(p => p.id === currentProductId) || source[0];
+      }
+
       if (!currentDuration && currentProduct.variants && currentProduct.variants.length > 0) {
         currentDuration = currentProduct.variants[0].duration;
       } else if (!currentDuration && currentProduct.plans && currentProduct.plans.length > 0) {
@@ -796,6 +819,40 @@
       document.getElementById('summaryProdTitle').textContent = currentProduct.name;
       document.getElementById('summaryProdOption').textContent = `Option: ${currentDuration || currentProduct.duration || 'Standard'}`;
       document.getElementById('summaryQtyDisplay').textContent = currentQty;
+
+      // Populate Delivery Format
+      const delFmtEl = document.getElementById('summaryDeliveryFormat');
+      if (delFmtEl) {
+        delFmtEl.textContent = `Delivery: ${currentProduct.deliveryFormat || 'Instant Dispatch'}`;
+      }
+
+      // Populate Product-Specific Requirements Banner (NO LONGER GENERIC!)
+      const reqBanner = document.getElementById('summaryRequirementsBanner');
+      const reqText = document.getElementById('summaryRequirementsText');
+      if (reqBanner && reqText) {
+        const rawReq = (currentProduct.importantRequirements || currentProduct.requirements || '').trim();
+        if (rawReq) {
+          reqText.textContent = rawReq;
+          reqBanner.style.display = 'block';
+        } else {
+          reqBanner.style.display = 'none';
+        }
+      }
+
+      // Adapt product-specific input label based on seller delivery format
+      const specLabel = document.querySelector('label[for="productSpecificInput"]');
+      const specInput = document.getElementById('productSpecificInput');
+      if (specLabel && specInput && currentProduct) {
+        const pName = (currentProduct.name || '').toLowerCase();
+        const delFmt = (currentProduct.deliveryFormat || '').toLowerCase();
+        if (pName.includes('canva') || pName.includes('spotify') || pName.includes('notion') || pName.includes('duolingo') || delFmt.includes('invite')) {
+          specLabel.textContent = 'Existing Account Email for Direct Upgrade (Optional)';
+          specInput.placeholder = 'Enter your email to receive direct workspace team upgrade';
+        } else if (delFmt.includes('api key') || pName.includes('api') || pName.includes('token')) {
+          specLabel.textContent = 'Integration Notes / Target Environment (Optional)';
+          specInput.placeholder = 'e.g. Cursor IDE, LangChain, or production endpoint';
+        }
+      }
 
       const iconTile = document.getElementById('summaryIconTile');
       if (iconTile && typeof renderBrandIcon === 'function') {

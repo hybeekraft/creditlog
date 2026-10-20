@@ -518,31 +518,45 @@
         </p>
       </section>
 
-      <!-- 2. Important Requirements -->
-      <section class="info-card-block requirements-accent">
+      <!-- 2. Product-Specific Requirements & Handling Rules (Seller API Powered) -->
+      <section class="info-card-block requirements-accent" id="productRequirementsCard">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          <span>Important Requirements</span>
+          <span id="productRequirementsHeading">Product Requirements & Precautions</span>
         </h3>
         <div class="info-card-desc" id="productRequirements">
-          <ul>
-            <li><strong>Cross-Platform Compatibility:</strong> Direct access works on Web browsers, Mobile (iOS & Android), Desktop (macOS & Windows), and Smart TV apps.</li>
-            <li><strong>Private Profile & PIN:</strong> Your assigned slot has dedicated PIN protection. Master account login email and credentials must remain unaltered to retain your full warranty.</li>
-            <li><strong>Personal Account Upgrades:</strong> If you are upgrading your own existing email account (e.g. Canva Pro, Spotify Family, Notion, Duolingo), enter your email in the checkout field.</li>
-            <li><strong>100% Replacement Warranty:</strong> Active for the entirety of your selected duration. 24/7 priority help is available.</li>
-          </ul>
+          <p style="margin: 0; color: #705E51; font-size: 13.5px;">Loading seller requirements...</p>
         </div>
       </section>
 
-      <!-- 3. How It Is Delivered -->
-      <section class="info-card-block delivery-accent">
+      <!-- 3. Delivery Mode & How It Is Delivered -->
+      <section class="info-card-block delivery-accent" id="productDeliveryCard">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
-          <span>How It Is Delivered</span>
+          <span>Delivery Format & Dispatch</span>
         </h3>
-        <p class="info-card-desc" id="productDelivery">
-          Automated digital dispatch occurs immediately upon payment confirmation. Your verified login credentials, private assigned profile, PIN, and quick setup instructions are displayed directly on your order confirmation screen and sent directly to your email address. No waiting for manual operator approvals.
-        </p>
+        <div id="productDeliveryFormatBadge" style="margin-bottom: 8px;"></div>
+        <div class="info-card-desc" id="productDelivery">
+          <p style="margin: 0; color: #705E51; font-size: 13.5px;">Loading delivery mode...</p>
+        </div>
+      </section>
+
+      <!-- 4. Setup & Activation Instructions (Dynamic from Seller API) -->
+      <section class="info-card-block instructions-accent" id="productInstructionsCard" style="display: none; background: #FFFFFF; border: 1.5px solid rgba(25, 13, 8, 0.09); border-radius: 16px; padding: 20px; margin-top: 18px;">
+        <h3 class="info-card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Setup & Activation Instructions</span>
+        </h3>
+        <div class="info-card-desc" id="productInstructions" style="white-space: pre-line; font-size: 13.5px; color: #43332A; line-height: 1.6;"></div>
+      </section>
+
+      <!-- 5. Warranty & Support Policy -->
+      <section class="info-card-block warranty-accent" id="productWarrantyCard" style="background: rgba(22, 163, 74, 0.04); border: 1.5px solid rgba(22, 163, 74, 0.2); border-radius: 16px; padding: 16px 20px; margin-top: 18px;">
+        <h3 class="info-card-title" style="color: #15803D; margin-bottom: 6px;">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #16A34A;"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <span>Warranty & Policy</span>
+        </h3>
+        <div class="info-card-desc" id="productWarranty" style="color: #166534; font-size: 13.5px; font-weight: 600;"></div>
       </section>
 
       <!-- 4. Quantity, Price & Buy Now -->
@@ -643,9 +657,20 @@
       };
 
       // Populate hero
+      // Populate Hero & Description from seller API
       document.getElementById('productTitle').textContent = currentProduct.name;
-      document.getElementById('productCategoryTag').textContent = (currentProduct.category || 'Subscription').toUpperCase();
-      document.getElementById('productDescription').textContent = currentProduct.description || 'Verified private digital account access with instant automated dispatch and 100% replacement warranty.';
+      document.getElementById('productCategoryTag').textContent = (currentProduct.botCategory || currentProduct.category || 'Subscription').toUpperCase();
+      
+      const descEl = document.getElementById('productDescription');
+      if (descEl) {
+        const fullDesc = (currentProduct.overview || currentProduct.description || '').trim();
+        if (fullDesc) {
+          descEl.innerHTML = fullDesc.split('\n\n').map(para => `<p style="margin-bottom: 8px; line-height: 1.6;">${escapeHtml(para.trim())}</p>`).join('');
+        } else {
+          descEl.textContent = 'Verified digital account access with automated instant dispatch.';
+        }
+      }
+
       document.getElementById('productRatingVal').textContent = currentProduct.rating || 4.9;
       document.getElementById('productReviewCount').textContent = currentProduct.reviews || '1.1k';
 
@@ -654,21 +679,53 @@
         iconTile.outerHTML = renderBrandIcon(currentProduct, { isHero: true, id: 'productIconTile', className: 'product-icon-tile' });
       }
 
-      // Populate custom requirements and delivery info if defined
+      // Populate Product-Specific Requirements (NO LONGER GENERIC!)
       const reqEl = document.getElementById('productRequirements');
-      if (reqEl && (currentProduct.importantRequirements || currentProduct.requirements)) {
-        const rawReq = (currentProduct.importantRequirements || currentProduct.requirements).trim();
-        const lines = rawReq.split('\n').map(l => l.trim()).filter(Boolean);
-        if (lines.length > 1) {
-          reqEl.innerHTML = `<ul>${lines.map(line => `<li>${escapeHtml(line.replace(/^[•\-\*]\s*/, ''))}</li>`).join('')}</ul>`;
+      const reqCard = document.getElementById('productRequirementsCard');
+      const rawReq = (currentProduct.importantRequirements || currentProduct.requirements || '').trim();
+      
+      if (reqEl) {
+        if (rawReq) {
+          const lines = rawReq.split('\n').map(l => l.trim()).filter(Boolean);
+          if (lines.length > 1) {
+            reqEl.innerHTML = `<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px;">${lines.map(line => `<li style="font-size: 13.5px; color: #43332A; line-height: 1.5;">${escapeHtml(line.replace(/^[•\-\*]\s*/, ''))}</li>`).join('')}</ul>`;
+          } else {
+            reqEl.innerHTML = `<p style="margin: 0; font-size: 13.5px; color: #43332A; line-height: 1.5;">${escapeHtml(rawReq)}</p>`;
+          }
+          if (reqCard) reqCard.style.display = 'block';
         } else {
-          reqEl.innerHTML = `<p>${escapeHtml(rawReq)}</p>`;
+          reqEl.innerHTML = '<p style="margin: 0; font-size: 13.5px; color: #705E51; line-height: 1.5;">Standard digital fulfillment. No special handling constraints or account restrictions are required for this product.</p>';
         }
       }
 
+      // Populate Delivery Format & Mode from seller API
       const delEl = document.getElementById('productDelivery');
-      if (delEl && (currentProduct.howItIsDelivered || currentProduct.deliveryInfo)) {
-        delEl.textContent = (currentProduct.howItIsDelivered || currentProduct.deliveryInfo).trim();
+      const delBadge = document.getElementById('productDeliveryFormatBadge');
+      const deliveryFmt = currentProduct.deliveryFormat || 'Instant Account Access';
+      
+      if (delBadge) {
+        delBadge.innerHTML = `<span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(208, 69, 21, 0.08); color: #D04515; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(208, 69, 21, 0.2);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Delivery Format: ${escapeHtml(deliveryFmt)}</span>`;
+      }
+      if (delEl) {
+        delEl.innerHTML = `<p style="margin: 0; font-size: 13.5px; color: #43332A; line-height: 1.5;">Automated instant dispatch occurs immediately upon payment confirmation. Your verified access credentials, assigned parameters, and confirmation receipt are displayed directly on your order screen and dispatched to your email address.</p>`;
+      }
+
+      // Populate Instructions (if seller provided them)
+      const instCard = document.getElementById('productInstructionsCard');
+      const instEl = document.getElementById('productInstructions');
+      const rawInst = (currentProduct.instructions || '').trim();
+      if (rawInst && instEl && instCard) {
+        instEl.textContent = rawInst;
+        instCard.style.display = 'block';
+      } else if (instCard) {
+        instCard.style.display = 'none';
+      }
+
+      // Populate Warranty & Support Policy
+      const warEl = document.getElementById('productWarranty');
+      const warText = currentProduct.warrantyPolicy || currentProduct.warranty || 'Guaranteed active upon initial receipt with dedicated support.';
+      if (warEl) {
+        warEl.textContent = warText;
       }
 
       updateStockBadge();
