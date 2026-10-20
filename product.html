@@ -518,14 +518,14 @@
         </p>
       </section>
 
-      <!-- 2. Product-Specific Requirements & Handling Rules (Seller API Powered) -->
+      <!-- 2. Product Description (Seller API Powered) -->
       <section class="info-card-block requirements-accent" id="productRequirementsCard">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          <span id="productRequirementsHeading">Product Requirements & Precautions</span>
+          <span id="productRequirementsHeading">Description</span>
         </h3>
         <div class="info-card-desc" id="productRequirements">
-          <p style="margin: 0; color: #705E51; font-size: 13.5px;">Loading seller requirements...</p>
+          <p style="margin: 0; color: #705E51; font-size: 13.5px;">Loading description...</p>
         </div>
       </section>
 
@@ -663,9 +663,10 @@
       
       const descEl = document.getElementById('productDescription');
       if (descEl) {
-        const fullDesc = (currentProduct.overview || currentProduct.description || '').trim();
-        if (fullDesc) {
-          descEl.innerHTML = fullDesc.split('\n\n').map(para => `<p style="margin-bottom: 8px; line-height: 1.6;">${escapeHtml(para.trim())}</p>`).join('');
+        const shortOverview = (currentProduct.overview || currentProduct.cleanDescription || currentProduct.description || '').trim();
+        if (shortOverview) {
+          const teaser = shortOverview.split('\n\n')[0];
+          descEl.innerHTML = `<p style="margin-bottom: 0; line-height: 1.5;">${escapeHtml(teaser)}</p>`;
         } else {
           descEl.textContent = 'Verified digital account access with automated instant dispatch.';
         }
@@ -679,22 +680,31 @@
         iconTile.outerHTML = renderBrandIcon(currentProduct, { isHero: true, id: 'productIconTile', className: 'product-icon-tile' });
       }
 
-      // Populate Product-Specific Requirements (NO LONGER GENERIC!)
+      // Populate Description card (Seller API Powered)
       const reqEl = document.getElementById('productRequirements');
       const reqCard = document.getElementById('productRequirementsCard');
-      const rawReq = (currentProduct.importantRequirements || currentProduct.requirements || '').trim();
+      const fullDesc = (currentProduct.description || currentProduct.importantRequirements || currentProduct.requirements || currentProduct.overview || '').trim();
+      const distinctReqs = (currentProduct.importantRequirements || currentProduct.requirements || '').trim();
       
       if (reqEl) {
-        if (rawReq) {
-          const lines = rawReq.split('\n').map(l => l.trim()).filter(Boolean);
-          if (lines.length > 1) {
-            reqEl.innerHTML = `<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px;">${lines.map(line => `<li style="font-size: 13.5px; color: #43332A; line-height: 1.5;">${escapeHtml(line.replace(/^[•\-\*]\s*/, ''))}</li>`).join('')}</ul>`;
-          } else {
-            reqEl.innerHTML = `<p style="margin: 0; font-size: 13.5px; color: #43332A; line-height: 1.5;">${escapeHtml(rawReq)}</p>`;
+        if (fullDesc) {
+          const paragraphs = fullDesc.split('\n\n').map(p => p.trim()).filter(Boolean);
+          let descHtml = paragraphs.map(para => {
+            const lines = para.split('\n').map(l => l.trim()).filter(Boolean);
+            if (lines.length > 1 && lines.every(l => /^[•\-\*🛡📦📱🌍🔒⚠️✅1-9]/.test(l))) {
+              return `<ul style="margin: 0 0 10px 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px;">${lines.map(line => `<li style="font-size: 13.5px; color: #43332A; line-height: 1.5;">${escapeHtml(line.replace(/^[•\-\*]\s*/, ''))}</li>`).join('')}</ul>`;
+            }
+            return `<p style="margin: 0 0 10px 0; font-size: 13.5px; color: #43332A; line-height: 1.6; white-space: pre-line;">${escapeHtml(para)}</p>`;
+          }).join('');
+
+          if (distinctReqs && !fullDesc.includes(distinctReqs)) {
+            descHtml += `<div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(25, 13, 8, 0.1);"><strong style="font-size: 13px; color: #D04515;">Important Notice:</strong><p style="margin: 4px 0 0 0; font-size: 13px; color: #43332A; line-height: 1.5; white-space: pre-line;">${escapeHtml(distinctReqs)}</p></div>`;
           }
+
+          reqEl.innerHTML = descHtml;
           if (reqCard) reqCard.style.display = 'block';
         } else {
-          reqEl.innerHTML = '<p style="margin: 0; font-size: 13.5px; color: #705E51; line-height: 1.5;">Standard digital fulfillment. No special handling constraints or account restrictions are required for this product.</p>';
+          reqEl.innerHTML = '<p style="margin: 0; font-size: 13.5px; color: #705E51; line-height: 1.5;">Verified digital account access with automated instant dispatch.</p>';
         }
       }
 
