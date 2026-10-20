@@ -80,7 +80,8 @@ class SyncEngine {
     if (n.includes('gamma')) return 'Gamma';
     if (n.includes('proton')) return 'Proton VPN';
     if (n.includes('office') || n.includes('microsoft') || n.includes('o365')) return 'Microsoft';
-    if (n.includes('xbox')) return 'Xbox';
+    if (n.includes('xbox') || n.includes('bethesda') || n.includes('fallout')) return 'Xbox';
+    if (n.includes('krea')) return 'KREA';
     if (n.includes('lovable') || n.includes('loveable')) return 'Lovable';
     if (n.includes('kimi')) return 'Kimi';
     if (n.includes('prime') || n.includes('amazon')) return 'Amazon';
@@ -124,6 +125,12 @@ class SyncEngine {
     }
     if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
       return 'Microsoft';
+    }
+    if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower.includes('bethesda') || lower.includes('xbox')) {
+      return 'Xbox';
+    }
+    if (lower === 'krea' || lower === 'krea ai' || lower === 'kreaai') {
+      return 'KREA';
     }
     if (lower === 'lovable' || lower === 'loveable') {
       return 'Lovable';

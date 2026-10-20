@@ -642,6 +642,51 @@ test('24. Storefront 5-Box Pagination Algorithm: Maintains 5 number boxes withou
   }
 });
 
+test('25. Xbox Brand Consolidation: All Xbox, Fallout, and Bethesda items belong strictly to "Xbox" (not "Bethesda / Xbox")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
 
+  const xboxItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('xbox') || 
+    p.name.toLowerCase().includes('fallout') ||
+    p.name.toLowerCase().includes('bethesda') ||
+    (p.brand && (p.brand.toLowerCase().includes('xbox') || p.brand.toLowerCase().includes('bethesda')))
+  );
 
+  assert.ok(xboxItems.length > 0, 'Must have Xbox items in catalog');
+
+  for (const item of xboxItems) {
+    assert.equal(item.brand, 'Xbox', `Product ${item.id} (${item.name}) must have brand strictly set to "Xbox", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-xbox', `Product ${item.id} must have brandClass tile-xbox`);
+    assert.equal(item.iconType, 'xbox', `Product ${item.id} must have iconType xbox`);
+  }
+
+  // Ensure no product in the catalog is branded with split "Bethesda / Xbox" or "Bethesda"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Bethesda / Xbox' || p.brand === 'Bethesda');
+  assert.equal(duplicateBrands.length, 0, 'No product should have "Bethesda / Xbox" or "Bethesda" brand');
+});
+
+test('26. KREA Brand Consolidation: All Krea and KREA products belong strictly to "KREA" (not split "Krea")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const kreaItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('krea') || 
+    (p.brand && p.brand.toLowerCase().includes('krea'))
+  );
+
+  assert.ok(kreaItems.length > 0, 'Must have KREA items in catalog');
+
+  for (const item of kreaItems) {
+    assert.equal(item.brand, 'KREA', `Product ${item.id} (${item.name}) must have brand strictly set to "KREA", got "${item.brand}"`);
+  }
+
+  // Ensure no product in the catalog is branded with split "Krea"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Krea');
+  assert.equal(duplicateBrands.length, 0, 'No product should have split "Krea" brand');
+});
 

@@ -1057,6 +1057,12 @@ function normalizeBrand(rawBrand) {
   if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
     return 'Microsoft';
   }
+  if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower.includes('bethesda') || lower.includes('xbox')) {
+    return 'Xbox';
+  }
+  if (lower === 'krea' || lower === 'krea ai' || lower === 'kreaai') {
+    return 'KREA';
+  }
   if (lower === 'lovable' || lower === 'loveable') {
     return 'Lovable';
   }
@@ -1985,7 +1991,7 @@ var CATALOG_PRODUCTS = [
     "name": "Fallout 76 MS Store",
     "rawName": "Fallout 76 MS Store · $2.52",
     "category": "gaming",
-    "brand": "Bethesda / Xbox",
+    "brand": "Xbox",
     "duration": "Full Game License",
     "usdPrice": 2.52,
     "usdOldPrice": 39.99,

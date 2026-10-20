@@ -140,7 +140,7 @@
           <div class="apple-dropdown-wrap" id="brandDropdownWrap">
             <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Brand">
               <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
-              <span id="brandDropdownLabel">All Brands</span>
+              <span id="brandDropdownLabel">All Category</span>
               <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
               </svg>
@@ -319,6 +319,12 @@
       }
       if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
         return 'Microsoft';
+      }
+      if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower.includes('bethesda') || lower.includes('xbox')) {
+        return 'Xbox';
+      }
+      if (lower === 'krea' || lower === 'krea ai' || lower === 'kreaai') {
+        return 'KREA';
       }
       if (lower === 'lovable' || lower === 'loveable') {
         return 'Lovable';
@@ -690,6 +696,10 @@
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'microsoft' && (prod.iconType === 'microsoft' || prod.brandClass === 'tile-microsoft')) {
             catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'xbox' && (prod.iconType === 'xbox' || prod.brandClass === 'tile-xbox')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'krea') {
+            catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'lovable' && (prod.iconType === 'lovable' || prod.brandClass === 'tile-lovable')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'kimi' && (prod.iconType === 'kimi' || prod.brandClass === 'tile-kimi')) {
@@ -718,10 +728,10 @@
       `;
 
       let html = `
-        <button type="button" class="apple-dropdown-item ${normalizeBrand(currentBrand) === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Brands')">
+        <button type="button" class="apple-dropdown-item ${normalizeBrand(currentBrand) === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Category')">
           <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
             ${allBrandsIcon}
-            <span style="font-weight: 500; font-size: 13px; color: inherit;">All Brands</span>
+            <span style="font-weight: 500; font-size: 13px; color: inherit;">All Category</span>
           </div>
           <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
         </button>
@@ -787,7 +797,7 @@
       const trigger = document.getElementById('brandDropdownTrigger');
       const prefixEl = document.getElementById('brandDropdownPrefix');
       if (labelEl) {
-        labelEl.textContent = currentBrand === 'all' ? 'All Brands' : (label ? normalizeBrand(label) : currentBrand);
+        labelEl.textContent = currentBrand === 'all' ? 'All Category' : (label ? normalizeBrand(label) : currentBrand);
       }
       if (prefixEl) {
         if (currentBrand === 'all') {
@@ -934,7 +944,7 @@
       const input = document.getElementById('catalogSearchInput');
       if (input) input.value = '';
       const brandLabel = document.getElementById('brandDropdownLabel');
-      if (brandLabel) brandLabel.textContent = 'All Brands';
+      if (brandLabel) brandLabel.textContent = 'All Category';
       const brandPrefix = document.getElementById('brandDropdownPrefix');
       if (brandPrefix) brandPrefix.innerHTML = '🏷️';
       const brandTrigger = document.getElementById('brandDropdownTrigger');
