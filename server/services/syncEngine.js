@@ -59,7 +59,8 @@ class SyncEngine {
 
   inferBrand(name = '') {
     const n = name.toLowerCase();
-    if (n.includes('chatgpt') || n.includes('openai')) return 'OpenAI ChatGPT';
+    if (n.includes('codex')) return 'Codex';
+    if (n.includes('chatgpt') || n.includes('openai')) return 'ChatGPT';
     if (n.includes('claude') || n.includes('anthropic')) return 'Claude';
     if (n.includes('gemini') || n.includes('google') || n.includes('gmail')) return 'Gemini';
     if (n.includes('qwen')) return 'Qwen';
@@ -72,7 +73,6 @@ class SyncEngine {
     if (n.includes('youtube')) return 'YouTube';
     if (n.includes('duolingo')) return 'Duolingo';
     if (n.includes('cursor')) return 'Cursor';
-    if (n.includes('codex')) return 'Codex API';
     if (n.includes('elevenlabs')) return 'ElevenLabs';
     if (n.includes('autodesk') || n.includes('autocad')) return 'Autodesk';
     if (n.includes('capcut')) return 'CapCut';
@@ -134,6 +134,12 @@ class SyncEngine {
     if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
       return 'Qwen';
     }
+    if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
+      return 'Codex';
+    }
+    if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
+      return 'ChatGPT';
+    }
     return b;
   }
 
@@ -141,6 +147,7 @@ class SyncEngine {
     const b = brand.toLowerCase();
     if (b.includes('amazon') || b.includes('prime')) return 'tile-amazon';
     if (b.includes('apple')) return 'tile-appletv';
+    if (b.includes('codex')) return 'tile-codex';
     if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
     if (b.includes('claude') || b.includes('anthropic')) return 'tile-claude';
     if (b.includes('gemini') || b.includes('gmail')) return 'tile-gemini';
@@ -165,6 +172,7 @@ class SyncEngine {
     const b = brand.toLowerCase();
     if (b.includes('amazon') || b.includes('prime')) return 'amazon';
     if (b.includes('apple')) return 'appletv';
+    if (b.includes('codex')) return 'codex';
     if (b.includes('chatgpt') || b.includes('openai')) return 'chatgpt';
     if (b.includes('claude') || b.includes('anthropic')) return 'claude';
     if (b.includes('gemini') || b.includes('gmail')) return 'gemini';
@@ -333,6 +341,12 @@ class SyncEngine {
             } else if (existing.brand === 'Qwen') {
               existing.brandClass = 'tile-qwen';
               existing.iconType = 'qwen';
+            } else if (existing.brand === 'Codex') {
+              existing.brandClass = 'tile-codex';
+              existing.iconType = 'codex';
+            } else if (existing.brand === 'ChatGPT') {
+              existing.brandClass = 'tile-chatgpt';
+              existing.iconType = 'chatgpt';
             }
           }
 
@@ -488,6 +502,12 @@ class SyncEngine {
                 } else if (match.brand === 'Qwen') {
                   match.brandClass = 'tile-qwen';
                   match.iconType = 'qwen';
+                } else if (match.brand === 'Codex') {
+                  match.brandClass = 'tile-codex';
+                  match.iconType = 'codex';
+                } else if (match.brand === 'ChatGPT') {
+                  match.brandClass = 'tile-chatgpt';
+                  match.iconType = 'chatgpt';
                 }
               }
             } else {

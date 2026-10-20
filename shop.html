@@ -329,6 +329,12 @@
       if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
         return 'Qwen';
       }
+      if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
+        return 'Codex';
+      }
+      if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
+        return 'ChatGPT';
+      }
       return b;
     }
 
@@ -678,6 +684,10 @@
           } else if (b.toLowerCase() === 'kimi' && (prod.iconType === 'kimi' || prod.brandClass === 'tile-kimi')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'qwen' && (prod.iconType === 'qwen' || prod.brandClass === 'tile-qwen')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'codex' && (prod.iconType === 'codex' || prod.brandClass === 'tile-codex')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'chatgpt' && (prod.iconType === 'chatgpt' || prod.brandClass === 'tile-chatgpt')) {
             catalogBrandSamples[b] = prod;
           }
         }

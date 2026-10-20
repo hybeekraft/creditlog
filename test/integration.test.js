@@ -560,4 +560,53 @@ test('21. Qwen Brand Consolidation: All Qwen and Alibaba Qwen products belong st
   assert.equal(duplicateBrands.length, 0, 'No product should have "Alibaba Qwen" brand');
 });
 
+test('22. ChatGPT Brand Consolidation: All ChatGPT and OpenAI products belong strictly to "ChatGPT" (not "OpenAI ChatGPT")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const chatgptItems = json.data.filter(p => 
+    (p.name && p.name.toLowerCase().includes('chatgpt')) || 
+    (p.brand && p.brand.toLowerCase().includes('chatgpt'))
+  );
+
+  assert.ok(chatgptItems.length > 0, 'Must have ChatGPT items in catalog');
+
+  for (const item of chatgptItems) {
+    assert.equal(item.brand, 'ChatGPT', `Product ${item.id} (${item.name}) must have brand strictly set to "ChatGPT", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-chatgpt', `Product ${item.id} must have brandClass tile-chatgpt`);
+    assert.equal(item.iconType, 'chatgpt', `Product ${item.id} must have iconType chatgpt`);
+  }
+
+  // Ensure no product in the catalog is branded as "OpenAI ChatGPT" or "OpenAI"
+  const duplicateBrands = json.data.filter(p => p.brand === 'OpenAI ChatGPT' || p.brand === 'OpenAI');
+  assert.equal(duplicateBrands.length, 0, 'No product should have "OpenAI ChatGPT" or "OpenAI" brand');
+});
+
+test('23. Codex Brand Consolidation: All Codex and Codex API products belong strictly to "Codex" (not "OpenAI Codex" or "Codex API")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const codexItems = json.data.filter(p => 
+    (p.name && p.name.toLowerCase().includes('codex')) || 
+    (p.brand && p.brand.toLowerCase().includes('codex'))
+  );
+
+  assert.ok(codexItems.length > 0, 'Must have Codex items in catalog');
+
+  for (const item of codexItems) {
+    assert.equal(item.brand, 'Codex', `Product ${item.id} (${item.name}) must have brand strictly set to "Codex", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-codex', `Product ${item.id} must have brandClass tile-codex`);
+    assert.equal(item.iconType, 'codex', `Product ${item.id} must have iconType codex`);
+  }
+
+  // Ensure no product in the catalog is branded as "OpenAI Codex" or "Codex API"
+  const duplicateBrands = json.data.filter(p => p.brand === 'OpenAI Codex' || p.brand === 'Codex API');
+  assert.equal(duplicateBrands.length, 0, 'No product should have "OpenAI Codex" or "Codex API" brand');
+});
+
+
 
