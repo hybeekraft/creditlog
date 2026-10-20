@@ -320,6 +320,12 @@
       if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
         return 'Microsoft';
       }
+      if (lower === 'lovable' || lower === 'loveable') {
+        return 'Lovable';
+      }
+      if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+        return 'Kimi';
+      }
       return b;
     }
 
@@ -663,6 +669,10 @@
           } else if (b.toLowerCase().includes('proton') && (prod.iconType === 'proton' || prod.iconType === 'protonvpn' || prod.brandClass === 'tile-proton')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'microsoft' && (prod.iconType === 'microsoft' || prod.brandClass === 'tile-microsoft')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'lovable' && (prod.iconType === 'lovable' || prod.brandClass === 'tile-lovable')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'kimi' && (prod.iconType === 'kimi' || prod.brandClass === 'tile-kimi')) {
             catalogBrandSamples[b] = prod;
           }
         }

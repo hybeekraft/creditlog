@@ -81,6 +81,8 @@ class SyncEngine {
     if (n.includes('proton')) return 'Proton VPN';
     if (n.includes('office') || n.includes('microsoft') || n.includes('o365')) return 'Microsoft';
     if (n.includes('xbox')) return 'Xbox';
+    if (n.includes('lovable') || n.includes('loveable')) return 'Lovable';
+    if (n.includes('kimi')) return 'Kimi';
     if (n.includes('prime') || n.includes('amazon')) return 'Amazon';
     if (n.includes('apple') || n.includes('appletv')) return 'Apple TV+';
     if (n.includes('nordvpn')) return 'NordVPN';
@@ -123,6 +125,12 @@ class SyncEngine {
     if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
       return 'Microsoft';
     }
+    if (lower === 'lovable' || lower === 'loveable') {
+      return 'Lovable';
+    }
+    if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+      return 'Kimi';
+    }
     return b;
   }
 
@@ -144,6 +152,8 @@ class SyncEngine {
     if (b.includes('gamma')) return 'tile-gamma';
     if (b.includes('proton')) return 'tile-proton';
     if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
+    if (b.includes('lovable') || b.includes('loveable')) return 'tile-lovable';
+    if (b.includes('kimi')) return 'tile-kimi';
     return 'tile-brand-default';
   }
 
@@ -165,6 +175,8 @@ class SyncEngine {
     if (b.includes('gamma')) return 'gamma';
     if (b.includes('proton')) return 'proton';
     if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
+    if (b.includes('lovable') || b.includes('loveable')) return 'lovable';
+    if (b.includes('kimi')) return 'kimi';
     return 'cube';
   }
 
@@ -307,6 +319,12 @@ class SyncEngine {
             } else if (existing.brand === 'Microsoft') {
               existing.brandClass = 'tile-microsoft';
               existing.iconType = 'microsoft';
+            } else if (existing.brand === 'Lovable') {
+              existing.brandClass = 'tile-lovable';
+              existing.iconType = 'lovable';
+            } else if (existing.brand === 'Kimi') {
+              existing.brandClass = 'tile-kimi';
+              existing.iconType = 'kimi';
             }
           }
 
@@ -453,6 +471,12 @@ class SyncEngine {
                 } else if (match.brand === 'Microsoft') {
                   match.brandClass = 'tile-microsoft';
                   match.iconType = 'microsoft';
+                } else if (match.brand === 'Lovable') {
+                  match.brandClass = 'tile-lovable';
+                  match.iconType = 'lovable';
+                } else if (match.brand === 'Kimi') {
+                  match.brandClass = 'tile-kimi';
+                  match.iconType = 'kimi';
                 }
               }
             } else {

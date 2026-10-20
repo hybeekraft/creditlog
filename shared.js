@@ -740,7 +740,8 @@ var BRAND_ICON_REGISTRY = [
   {
     "id": "lovable",
     "match": [
-      "lovable"
+      "lovable",
+      "loveable"
     ],
     "name": "Lovable",
     "color": "#FE4230",
@@ -751,6 +752,20 @@ var BRAND_ICON_REGISTRY = [
     "iconSize": 28,
     "heroIconSize": 42,
     "viewBox": "0 0 1010 1024"
+  },
+  {
+    "id": "kimi",
+    "match": [
+      "kimi",
+      "moonshot",
+      "kimi ai",
+      "api kimi"
+    ],
+    "name": "Kimi",
+    "color": "#4F46E5",
+    "bg": "linear-gradient(135deg, #4F46E5, #312E81)",
+    "shadow": "rgba(79, 70, 229, 0.35)",
+    "path": "M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"
   },
   {
     "id": "gamma",
@@ -1013,6 +1028,12 @@ function normalizeBrand(rawBrand) {
   }
   if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
     return 'Microsoft';
+  }
+  if (lower === 'lovable' || lower === 'loveable') {
+    return 'Lovable';
+  }
+  if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+    return 'Kimi';
   }
   return b;
 }

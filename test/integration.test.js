@@ -485,4 +485,55 @@ test('18. Microsoft Brand Consolidation: All Microsoft, Office 365, and O365 pro
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Microsoft 365", "Office 365", or "O365" brand');
 });
 
+test('19. Lovable Brand Consolidation: All Lovable/Loveable products belong strictly to "Lovable"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const lovableItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('lovable') || 
+    p.name.toLowerCase().includes('loveable') ||
+    (p.brand && (p.brand.toLowerCase().includes('lovable') || p.brand.toLowerCase().includes('loveable')))
+  );
+
+  assert.ok(lovableItems.length > 0, 'Must have Lovable items in catalog');
+
+  for (const item of lovableItems) {
+    assert.equal(item.brand, 'Lovable', `Product ${item.id} (${item.name}) must have brand strictly set to "Lovable", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-lovable', `Product ${item.id} must have brandClass tile-lovable`);
+    assert.equal(item.iconType, 'lovable', `Product ${item.id} must have iconType lovable`);
+  }
+
+  // Ensure no product in the catalog is branded with split "Loveable"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Loveable');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Loveable" brand');
+});
+
+test('20. Kimi Brand Consolidation: All Kimi API products belong strictly to "Kimi" (not "API")', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const kimiItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('api kimi') || 
+    p.name.toLowerCase().includes('kimi api') ||
+    (p.botCategory && p.botCategory.toLowerCase() === 'kimi') ||
+    p.brand === 'Kimi'
+  );
+
+  assert.ok(kimiItems.length > 0, 'Must have Kimi items in catalog');
+
+  for (const item of kimiItems) {
+    assert.equal(item.brand, 'Kimi', `Product ${item.id} (${item.name}) must have brand strictly set to "Kimi", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-kimi', `Product ${item.id} must have brandClass tile-kimi`);
+    assert.equal(item.iconType, 'kimi', `Product ${item.id} must have iconType kimi`);
+  }
+
+  // Ensure no product in the catalog is branded as generic "API"
+  const apiBranded = json.data.filter(p => p.brand === 'API');
+  assert.equal(apiBranded.length, 0, 'No product should have generic "API" brand');
+});
+
 

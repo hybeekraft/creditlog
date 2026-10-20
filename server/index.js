@@ -713,6 +713,12 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
           return 'Microsoft';
         }
+        if (lower === 'lovable' || lower === 'loveable') {
+          return 'Lovable';
+        }
+        if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+          return 'Kimi';
+        }
         return s;
       })(rawBrand);
 
@@ -737,6 +743,10 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'proton';
       } else if (normalizedBrand === 'Microsoft' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'microsoft';
+      } else if (normalizedBrand === 'Lovable' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'lovable';
+      } else if (normalizedBrand === 'Kimi' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'kimi';
       }
 
       const newProduct = {
@@ -859,6 +869,18 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'microsoft';
             prod.brandClass = 'tile-microsoft';
+          }
+        } else if (lower === 'lovable' || lower === 'loveable') {
+          prod.brand = 'Lovable';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'lovable';
+            prod.brandClass = 'tile-lovable';
+          }
+        } else if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+          prod.brand = 'Kimi';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'kimi';
+            prod.brandClass = 'tile-kimi';
           }
         } else {
           prod.brand = s;
