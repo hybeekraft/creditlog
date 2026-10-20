@@ -47,9 +47,9 @@
     "brandClass": "tile-gemini",
     "iconType": "gemini",
     "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
-    "totalStock": 25,
+    "totalStock": 24,
     "reservedStock": 0,
-    "availableStock": 25,
+    "availableStock": 24,
     "enabled": true,
     "variants": [
       {
@@ -65,9 +65,9 @@
         "id": "3m",
         "duration": "3 Months",
         "usdPrice": 18.82,
-        "totalStock": 6,
+        "totalStock": 5,
         "reservedStock": 0,
-        "availableStock": 6,
+        "availableStock": 5,
         "inStock": true
       },
       {
@@ -144,7 +144,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 118,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.627Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.549Z",
     "overview": "🛡 HMA VPN 20-30 Days\n\n📦 You receive: activation key / account data\n\n📱 Works on Android and PC",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -161,7 +161,7 @@
     "name": "O365 Ready Account Random 6-12M",
     "rawName": "O365 Ready Account Random 6-12M · $4.00",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "6-12 Months",
     "usdPrice": 7.2,
     "usdOldPrice": 15,
@@ -211,7 +211,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 69,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.633Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.573Z",
     "overview": "O365 ready account.\n\nReady account provided by the shop.\n\nRandom duration: 6-12 months.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -228,7 +228,7 @@
     "name": "Microsoft 365 Family 5U 12M",
     "rawName": "Microsoft 365 Family 5U 12M · $12.00",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "12 Months (5 Users)",
     "usdPrice": 19.2,
     "usdOldPrice": 99.99,
@@ -278,7 +278,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 167,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.634Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.574Z",
     "overview": "Shop-provided account.\n\nDo not change the password during the 12-month period, so automatic renewal can remain active.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -345,7 +345,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 62,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.558Z",
     "overview": "CapCut Pro 7 Days.\n\nRecommended login: 1-2 devices only. Frequent access/login problems are not covered. Avoid logging in on too many devices so CapCut does not flag the account.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -475,7 +475,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 57,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.629Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.558Z",
     "overview": "Capcut Pro 1 Month Team Plan - Full Date - NO Renew - No warranty\n\n- Log in 2 Devices\n\n- Format: Mail | Password Capcut",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -503,18 +503,18 @@
     "brandClass": "tile-duolingo",
     "iconType": "duolingo",
     "description": "Duolingo Super 12 Months\n\nFormat: redeem link for activation.\n\nActivate the subscription using the received link.\nNo warranty.\n\nDuolingo Update\nIf the code is not working in your country, please try using one of these VPN extensions:\nhttps://chromewebstore.google.com/detail/urban-vpn-proxy/eppiocemhmnlbhjplcgkofciiegomcon\nhttps://chromewebstore.google.com/detail/nodus-vpn/hgjgkgnmflipmgmknglemhgkpfdfepbh\n\nSet the VPN location to India and then try redeeming the code again.",
-    "totalStock": 133,
+    "totalStock": 132,
     "reservedStock": 0,
-    "availableStock": 133,
+    "availableStock": 132,
     "enabled": true,
     "variants": [
       {
         "id": "1m",
         "duration": "1 Month",
         "usdPrice": 2.63,
-        "totalStock": 133,
+        "totalStock": 132,
         "reservedStock": 0,
-        "availableStock": 133,
+        "availableStock": 132,
         "inStock": true,
         "wholesaleUsd": 0.75,
         "resellerProductId": 160
@@ -542,7 +542,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 160,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.564Z",
     "overview": "Duolingo Super 12 Months\n\nFormat: redeem link for activation.\n\nActivate the subscription using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -609,7 +609,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 164,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.566Z",
     "overview": "Duolingo Super 2 Months\n\nFormat: redeem link for activation.\n\nActivate the subscription using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -731,7 +731,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 49,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.634Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.573Z",
     "overview": "• Payment method required for activation\n\n• 300 Notion Credits per Month\n\n• Must be redeemed within 48 hours of purchase",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -914,7 +914,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 76,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.567Z",
     "overview": "Scribd Premium for 1 month.\n\nLog in directly.\n\nBecause this is based on a trial version, downloads may be limited. Please read carefully before purchase.",
     "deliveryFormat": "account and password.",
     "deliveryType": "auto",
@@ -1039,7 +1039,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 108,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.550Z",
     "overview": "🔻 Full access to all iLovePDF tools\n\n🔻 Unlimited document processing\n\n🔻 Access across Web, Mobile, and Desktop",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1222,7 +1222,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 124,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.550Z",
     "overview": "Wordwall is a versatile tool that helps transform dry assignments into engaging interactive games like lucky spins or crossword puzzles.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1339,7 +1339,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 123,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.551Z",
     "overview": "Figma Pro Education Plan 2 year\n\nVery stable accounts\n\nFormat, email | password",
     "deliveryFormat": "Email | Password | 2FA",
     "deliveryType": "auto",
@@ -1406,7 +1406,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 162,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.579Z",
     "overview": "Pocket FM Premium 3 Months\n\nFormat: redeem link for activation.\n\nActivate Pocket FM Premium using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -1481,7 +1481,7 @@
     "name": "Microsoft Office 365 Plus 1 Year",
     "rawName": "Microsoft Office 365 Plus 1 Year · $1.60",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "1 Year",
     "usdPrice": 3.2,
     "usdOldPrice": 69.99,
@@ -1531,7 +1531,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 83,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.629Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.556Z",
     "overview": "🛍️ Microsoft Office 365 Plus 1 year\n\nIncluded Apps:\n\nWord · Excel · PowerPoint · OneNote · Forms",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1598,7 +1598,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 87,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.559Z",
     "overview": "Capcut pro 1 month",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -2321,7 +2321,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 91,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.612Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.505Z",
     "overview": "🔑 API CLAUDE - 10M Token - 1 day\n\n⚡ Seamlessly compatible with all tools & IDEs: 9router, Claude Dev, Cursor, VS Code, etc.\n\n⏳ Validity: 1 Day",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -2388,7 +2388,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 55,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.611Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.504Z",
     "overview": "Redeem code for Claude API credits.\n\nAccess via API Gateway:\n\n• Sign up at https://api.mwapi.dev/",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -2416,18 +2416,18 @@
     "brandClass": "tile-gemini",
     "iconType": "gemini",
     "description": "🔥 Gemini Pro 18 Months\n\nDelivery: activation link.\n\nImportant:\nPlease check and activate the link immediately after purchase.\n\n✨ What the subscription gives:\n✨ Google AI Pro with higher Gemini 3 limits\n☁️ 5 TB Google Drive / Photos / Gmail\n🎬 Veo 3 Fast, Flow, Nano Banana and Whisk for video/image generation\n📚 NotebookLM + Deep Research with higher limits\n☁️ Gemini in Gmail, Docs, Sheets, Vids and other Google services\n⚡️ Up to 1,000 AI credits every month for supported Google tools\n\n\nAfter the initial check/activation, no replacement or refund is provided later.\n\nDepending on your region, you may need to use a VPN.\nHold Warranty: 3 hours.",
-    "totalStock": 72,
+    "totalStock": 10,
     "reservedStock": 0,
-    "availableStock": 72,
+    "availableStock": 10,
     "enabled": true,
     "variants": [
       {
         "id": "1m",
         "duration": "1 Month",
         "usdPrice": 2.14,
-        "totalStock": 72,
+        "totalStock": 10,
         "reservedStock": 0,
-        "availableStock": 72,
+        "availableStock": 10,
         "inStock": true,
         "wholesaleUsd": 0.67,
         "resellerProductId": 1
@@ -2455,7 +2455,7 @@
     "appliedMultiplier": 3.2,
     "pricingRule": "Product Custom (1)",
     "resellerProductId": 1,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.608Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.501Z",
     "overview": "🔥 Gemini Pro 18 Months\n\nDelivery: activation link.\n\nPlease check and activate the link immediately after purchase.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -2530,7 +2530,7 @@
     "name": "Kling 66 Credits",
     "rawName": "Kling 66 Credits · $0.55",
     "category": "ai",
-    "brand": "Kling AI",
+    "brand": "KlingAI",
     "duration": "66 Credits Pack",
     "usdPrice": 1.93,
     "usdOldPrice": 5,
@@ -2580,7 +2580,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 73,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.611Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.504Z",
     "overview": "Kling 66 Credits.\n\nIf you do not change/fake IP, the account may show busy/error and this is not covered.\n\nLogin using an incognito/private browser window.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -3045,18 +3045,18 @@
     "brandClass": "tile-elevenlabs",
     "iconType": "elevenlabs",
     "description": "ElevenLabs Free account with 10k credits.\n\nFor text-to-speech, AI voiceovers, content creation, YouTube, podcasts, and audio projects.\n\nDelivery is automatic after payment confirmation.\n\nNo warranty.",
-    "totalStock": 72,
+    "totalStock": 71,
     "reservedStock": 0,
-    "availableStock": 72,
+    "availableStock": 71,
     "enabled": true,
     "variants": [
       {
         "id": "1m",
         "duration": "1 Month",
         "usdPrice": 3,
-        "totalStock": 72,
+        "totalStock": 71,
         "reservedStock": 0,
-        "availableStock": 72,
+        "availableStock": 71,
         "inStock": true,
         "wholesaleUsd": 1.5,
         "resellerProductId": 149
@@ -3084,7 +3084,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 149,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.551Z",
     "overview": "ElevenLabs Free account with 10k credits.\n\nFor text-to-speech, AI voiceovers, content creation, YouTube, podcasts, and audio projects.\n\nDelivery is automatic after payment confirmation.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -3101,7 +3101,7 @@
     "name": "Gamma AI Plus 1 Month",
     "rawName": "Gamma AI Plus 1 Month · $11.00",
     "category": "ai",
-    "brand": "Gamma AI",
+    "brand": "Gamma",
     "duration": "1 Month",
     "usdPrice": 11,
     "usdOldPrice": 20,
@@ -3251,7 +3251,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 156,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.560Z",
     "overview": "1 Click the link provided to automatically apply your promo code\n\n2 Create a new Mobbin account\n\n3   Ensure that a $144 discount is applied at checkout, then enter your payment information and click Subscribe",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -3368,7 +3368,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 169,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.624Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.537Z",
     "overview": "customer.io essentials 1year",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -3543,7 +3543,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 172,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.634Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.575Z",
     "overview": "⚡ Duration: 12 Month\n\n⚡ Official Coupon Code\n\n⚡ On Your Account",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -3708,7 +3708,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 176,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.561Z",
     "overview": "- Coupon with activation process.\n\n- Go to Plan & Billing under Workspace Settings (click Workspace in the upper left corner). Under \"Configure your plan\", you can use the + button to set seats to 10. You can also add teammates later; note that the deal term begins upon checkout, not when teammates are added. Toggle the billing switch to Billed Yearly. Click Proceed to checkout\n\n- Apply the promo code at checkout with the \"add promotion code\" button (note: a form of payment is required to complete redemption)",
     "deliveryFormat": "License Key / Redemption Code",
     "deliveryType": "auto",
@@ -3775,7 +3775,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 177,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.632Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.568Z",
     "overview": "🚀 Autodesk Admin Panel | 3,000 User Invites\n\n📌 Package Details\n\n🔹 Autodesk Admin Dashboard Access",
     "deliveryFormat": "\"Email | Gmail Password | Gmail Recovery\"",
     "deliveryType": "auto",
@@ -4108,7 +4108,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 34,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.629Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.557Z",
     "overview": "CapCut Pro for 6-7 days.\n\nFormat: mail | password.\n\nAutomatic delivery after payment confirmation.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -4410,7 +4410,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 119,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.549Z",
     "overview": "🛡️ Proton VPN Plus – 1 Month (Private Account)\n\n✅ Private account with full access\n\n✅ Premium subscription for 1 month",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -4527,7 +4527,7 @@
     "name": "KlingAI 750-1100 Credits 1M",
     "rawName": "KlingAI 750-1100 Credits 1M · $11.38",
     "category": "ai",
-    "brand": "Kling AI",
+    "brand": "KlingAI",
     "duration": "1 Month (750-1100 Credits)",
     "usdPrice": 18.21,
     "usdOldPrice": 35,
@@ -4577,7 +4577,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 166,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.624Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.537Z",
     "overview": "KlingAI account for 1 month with a random balance of 750-1100 credits.\n\nA tool for generating AI videos from your ideas.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -4994,7 +4994,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 163,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.580Z",
     "overview": "Spotify Premium 3M\n\nBuy only if you are sure you can activate. You need to know the right way and have the right payment method to activate. Don't spam that you are unable to activate after buying.\n\nActivate 3 Months of Spotify Premium directly on your own eligible Spotify account using the provided redeem/activation link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -5208,7 +5208,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 82,
-    "lastSynchronizedAt": "2026-10-20T11:13:01.635Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.578Z",
     "overview": "Amazon Prime Video – 6 Months\n\nEnjoy 6 months of Amazon Prime Video and stream thousands of popular movies, TV shows, Amazon Originals, and exclusive content.\n\nFeatures:",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -5389,7 +5389,7 @@
     "resellerProductId": 257,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.589Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.464Z",
     "variants": [
       {
         "id": "1m",
@@ -5438,7 +5438,7 @@
     "resellerProductId": 116,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.592Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.471Z",
     "variants": [
       {
         "id": "1m",
@@ -5485,7 +5485,7 @@
     "resellerProductId": 106,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.592Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.472Z",
     "variants": [
       {
         "id": "1m",
@@ -5534,7 +5534,7 @@
     "resellerProductId": 19,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.592Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.473Z",
     "variants": [
       {
         "id": "1m",
@@ -5583,7 +5583,7 @@
     "resellerProductId": 63,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.593Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.473Z",
     "variants": [
       {
         "id": "1m",
@@ -5632,7 +5632,7 @@
     "resellerProductId": 115,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.604Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.474Z",
     "variants": [
       {
         "id": "1m",
@@ -5679,7 +5679,7 @@
     "resellerProductId": 111,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.604Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.475Z",
     "variants": [
       {
         "id": "1m",
@@ -5726,7 +5726,7 @@
     "resellerProductId": 296,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.604Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.476Z",
     "variants": [
       {
         "id": "1m",
@@ -5768,23 +5768,23 @@
     "brandClass": "tile-chatgpt",
     "iconType": "chatgpt",
     "description": "ChatGPT K12 EDU 24M\n\nNo warranty.\n\nReady-made ChatGPT K12 EDU account.\nFormat: Email | Password | 2FA\nPackage duration: 2 years.\n\nLOGIN INSTRUCTION\n1. Open the ChatGPT website or app.\n2. Enter the email and password.\n3. When ChatGPT asks for the two-factor authentication code, use the 2FA key in Google Authenticator, any 2FA code generator, or a 2FA website. Example: https://2fa.online/\n4. Copy the current 6-digit code and enter it in ChatGPT. The code refreshes every 30 seconds.\n5. Do not try to activate the package yourself before reading the instruction sent after purchase.\n\nIMPORTANT\nDo not change the email on this account.\nDo not change the password or 2FA.\nNot recommended for users who want to use photo generators: limit of 3 photos per day.\n\nK12 activation guide: https://docs.google.com/document/d/1XcODdzlQJyeJbzXt61mEMYbkDv_xctY9d52-KihtH5I/edit?tab=t.0",
-    "totalStock": 8,
+    "totalStock": 7,
     "reservedStock": 0,
-    "availableStock": 8,
+    "availableStock": 7,
     "enabled": true,
     "resellerProductId": 159,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.605Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.476Z",
     "variants": [
       {
         "id": "1m",
         "duration": "24 Months",
         "wholesaleUsd": 3.99,
         "usdPrice": 7.18,
-        "totalStock": 8,
+        "totalStock": 7,
         "reservedStock": 0,
-        "availableStock": 8,
+        "availableStock": 7,
         "inStock": true,
         "resellerProductId": 159
       }
@@ -5824,7 +5824,7 @@
     "resellerProductId": 281,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.606Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.493Z",
     "variants": [
       {
         "id": "1m",
@@ -5873,7 +5873,7 @@
     "resellerProductId": 285,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.606Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.494Z",
     "variants": [
       {
         "id": "1m",
@@ -5922,7 +5922,7 @@
     "resellerProductId": 354,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.606Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.495Z",
     "variants": [
       {
         "id": "1m",
@@ -5971,7 +5971,7 @@
     "resellerProductId": 282,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.607Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.496Z",
     "variants": [
       {
         "id": "1m",
@@ -6020,7 +6020,7 @@
     "resellerProductId": 286,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.607Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.497Z",
     "variants": [
       {
         "id": "1m",
@@ -6069,7 +6069,7 @@
     "resellerProductId": 283,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.607Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.498Z",
     "variants": [
       {
         "id": "1m",
@@ -6118,7 +6118,7 @@
     "resellerProductId": 287,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.608Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.499Z",
     "variants": [
       {
         "id": "1m",
@@ -6167,7 +6167,7 @@
     "resellerProductId": 140,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.608Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.499Z",
     "variants": [
       {
         "id": "1m",
@@ -6214,7 +6214,7 @@
     "resellerProductId": 112,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.612Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.506Z",
     "variants": [
       {
         "id": "1m",
@@ -6260,7 +6260,7 @@
     "resellerProductId": 256,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.613Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.507Z",
     "variants": [
       {
         "id": "1m",
@@ -6309,7 +6309,7 @@
     "resellerProductId": 284,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.613Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.508Z",
     "variants": [
       {
         "id": "1m",
@@ -6358,7 +6358,7 @@
     "resellerProductId": 288,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.614Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.508Z",
     "variants": [
       {
         "id": "1m",
@@ -6407,7 +6407,7 @@
     "resellerProductId": 292,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.614Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.509Z",
     "variants": [
       {
         "id": "1m",
@@ -6456,7 +6456,7 @@
     "resellerProductId": 297,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.614Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.510Z",
     "variants": [
       {
         "id": "1m",
@@ -6505,7 +6505,7 @@
     "resellerProductId": 298,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.615Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.510Z",
     "variants": [
       {
         "id": "1m",
@@ -6549,7 +6549,7 @@
     "resellerProductId": 299,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.615Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.511Z",
     "variants": [
       {
         "id": "1m",
@@ -6596,7 +6596,7 @@
     "resellerProductId": 306,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.615Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.512Z",
     "variants": [
       {
         "id": "1m",
@@ -6640,7 +6640,7 @@
     "resellerProductId": 312,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.616Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.513Z",
     "variants": [
       {
         "id": "1m",
@@ -6689,7 +6689,7 @@
     "resellerProductId": 313,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.616Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.514Z",
     "variants": [
       {
         "id": "1m",
@@ -6735,7 +6735,7 @@
     "resellerProductId": 344,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.617Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.515Z",
     "variants": [
       {
         "id": "1m",
@@ -6784,7 +6784,7 @@
     "resellerProductId": 345,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.618Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.516Z",
     "variants": [
       {
         "id": "1m",
@@ -6833,7 +6833,7 @@
     "resellerProductId": 346,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.618Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.517Z",
     "variants": [
       {
         "id": "1m",
@@ -6877,7 +6877,7 @@
     "resellerProductId": 347,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.618Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.517Z",
     "variants": [
       {
         "id": "1m",
@@ -6911,8 +6911,8 @@
     "inStock": false,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-kling",
+    "iconType": "kling",
     "description": "Kling AI 725–850 Credit\n📅 Duration: 1 month\n🔐 Login with Email\n🛡️ No Warranty\n💰 If the account dies during the No Warranty period, the shop will refund based on the remaining unused Credit.\n📊 Credit is randomly allocated within the range of 725–850 Credit depending on the account.\n🎥 What Can Kling AI Do?\n🤖 Text to Video: Enter text description → AI generates video.\n🖼️ Image to Video: Turn static images into moving videos.\n🎨 Create images and videos in various styles.\n🎬 Supports creating short videos for TikTok, YouTube Shorts, Reels, ads...\n✨ Create motion, effects, and cinematic scenes using AI.\n🧑‍🎨 Suitable for content creators, designers, marketers, and AI content producers.\n📌 User Guide\nLog in to Kling AI using the Email + Password provided by the shop.\nAfter logging in, check the Credit and account duration.\nSelect the feature you want to use such as Text to Video / Image to Video.\nEnter a prompt or upload an image → proceed to generate.\nCredits will be deducted depending on the feature and settings you use.\nUse Credits wisely and double-check settings before generating.\n⚠️ No Warranty Notice\n⏰ No Warranty from the time the account is received.\nPlease check the account immediately upon receipt.\nIf the account dies during the No Warranty period, contact the shop for inspection.\nRefund is based on the remaining unused Credits; the total account value will not be refunded if Credits have been used.\nAfter 24H, the No Warranty policy is no longer valid.",
     "totalStock": 0,
     "reservedStock": 0,
@@ -6921,7 +6921,7 @@
     "resellerProductId": 349,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.619Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.518Z",
     "variants": [
       {
         "id": "1m",
@@ -6958,23 +6958,23 @@
     "brandClass": "tile-brand-default",
     "iconType": "cube",
     "description": "📊 Product Description\n──────────────\n✨ Get a ready-made Muse AI account with 1 Billion Tokens and complete login details.\n\n✨ No warranty\n✨ 1 Billion AI Tokens\n✨ Email and password provided\n✨ Mailbox access link included\n✨ No payment card required\n✨ Ready-made account\n✨ Instant access\n✨ Easy login\n\n✨ Important\n\nAfter purchase, you will receive the Muse AI email, password, and mailbox access link.\n\nNo payment card is required.\n\nEnjoy Muse AI with 1 Billion Tokens and start creating right away.\n\nMailbox access: https://www.tmail.pk/\nUse the same email and password.",
-    "totalStock": 163,
+    "totalStock": 243,
     "reservedStock": 0,
-    "availableStock": 163,
+    "availableStock": 243,
     "enabled": true,
     "resellerProductId": 356,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.619Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.519Z",
     "variants": [
       {
         "id": "1m",
         "duration": "Standard License",
         "wholesaleUsd": 0.69,
         "usdPrice": 2.42,
-        "totalStock": 163,
+        "totalStock": 243,
         "reservedStock": 0,
-        "availableStock": 163,
+        "availableStock": 243,
         "inStock": true,
         "resellerProductId": 356
       }
@@ -7014,7 +7014,7 @@
     "resellerProductId": 374,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.619Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.522Z",
     "variants": [
       {
         "id": "1m",
@@ -7063,7 +7063,7 @@
     "resellerProductId": 249,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.620Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.522Z",
     "variants": [
       {
         "id": "1m",
@@ -7105,23 +7105,23 @@
     "brandClass": "tile-brand-default",
     "iconType": "cube",
     "description": "📊 Product Description\n──────────────\n✨ Ready-made Muse AI account with 31 Billion Tokens.\n\n✨ No warranty\n✨ 31 Billion AI Tokens\n✨ No payment card required\n✨ Instant access\n\n✨ Account format\nAfter purchase, you will receive one of the following account formats:\n• Email + account password + mailbox access details; or\n• Email + mailbox access details.\n\nThe mailbox service and exact login format depend on the available source. Use the credentials delivered with your order.\n\n✨ Important\nNo payment card is required.\n\n✨ Another possible delivery format: email only.\nTo access the mailbox, add the email received after https://generator.email/\nExample: https://generator.email/abcd@mail.com",
-    "totalStock": 8,
+    "totalStock": 13,
     "reservedStock": 0,
-    "availableStock": 8,
+    "availableStock": 13,
     "enabled": true,
     "resellerProductId": 367,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.620Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.523Z",
     "variants": [
       {
         "id": "1m",
         "duration": "Standard License",
         "wholesaleUsd": 4.7,
         "usdPrice": 8.46,
-        "totalStock": 8,
+        "totalStock": 13,
         "reservedStock": 0,
-        "availableStock": 8,
+        "availableStock": 13,
         "inStock": true,
         "resellerProductId": 367
       }
@@ -7161,7 +7161,7 @@
     "resellerProductId": 279,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.620Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.526Z",
     "variants": [
       {
         "id": "1m",
@@ -7210,7 +7210,7 @@
     "resellerProductId": 289,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.621Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.527Z",
     "variants": [
       {
         "id": "1m",
@@ -7259,7 +7259,7 @@
     "resellerProductId": 362,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.621Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.527Z",
     "variants": [
       {
         "id": "1m",
@@ -7308,7 +7308,7 @@
     "resellerProductId": 258,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.621Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.528Z",
     "variants": [
       {
         "id": "1m",
@@ -7357,7 +7357,7 @@
     "resellerProductId": 290,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.621Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.529Z",
     "variants": [
       {
         "id": "1m",
@@ -7406,7 +7406,7 @@
     "resellerProductId": 259,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.622Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.530Z",
     "variants": [
       {
         "id": "1m",
@@ -7455,7 +7455,7 @@
     "resellerProductId": 291,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.622Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.530Z",
     "variants": [
       {
         "id": "1m",
@@ -7504,7 +7504,7 @@
     "resellerProductId": 361,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.622Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.531Z",
     "variants": [
       {
         "id": "1m",
@@ -7553,7 +7553,7 @@
     "resellerProductId": 240,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.623Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.536Z",
     "variants": [
       {
         "id": "1m",
@@ -7602,7 +7602,7 @@
     "resellerProductId": 359,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.624Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.536Z",
     "variants": [
       {
         "id": "1m",
@@ -7641,8 +7641,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Gamma Plus 1 month.\n\nAccount format: Email | Password\nWebmail: driftz.net\n\nImportant: change the password immediately after receiving the account and log out all other devices.\n\nSupplier package note: Gamma Plus $10 plan. The supplier mentions 25 days, but our shop sells this product with no warranty.\n\nNo warranty.",
     "totalStock": 3,
     "reservedStock": 0,
@@ -7651,7 +7651,7 @@
     "resellerProductId": 187,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.624Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.538Z",
     "variants": [
       {
         "id": "1m",
@@ -7690,8 +7690,8 @@
     "inStock": false,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Each account includes 10 workspaces. Each workspace has 2,000 credits for creating presentation slides. Change the password immediately after receiving the account. Do not leave any workspaces yourself. No warranty.",
     "totalStock": 0,
     "reservedStock": 0,
@@ -7700,7 +7700,7 @@
     "resellerProductId": 189,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.624Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.538Z",
     "variants": [
       {
         "id": "1m",
@@ -7725,7 +7725,7 @@
     "name": "Kling Random 700-1000 Credits 1M",
     "rawName": "Kling Random 700-1000 Credits 1M · $13.60",
     "category": "ai",
-    "brand": "Kling",
+    "brand": "KlingAI",
     "duration": "1 Months",
     "wholesaleUsd": 8.5,
     "usdPrice": 13.6,
@@ -7734,8 +7734,8 @@
     "inStock": false,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-kling",
+    "iconType": "kling",
     "description": "Are you looking for a breakthrough AI video generation tool that can turn even the most complex ideas into vivid, cinematic-quality videos?\n\nNo warranty.",
     "totalStock": 0,
     "reservedStock": 0,
@@ -7744,7 +7744,7 @@
     "resellerProductId": 202,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.539Z",
     "variants": [
       {
         "id": "1m",
@@ -7788,7 +7788,7 @@
     "resellerProductId": 203,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.540Z",
     "variants": [
       {
         "id": "1m",
@@ -7837,7 +7837,7 @@
     "resellerProductId": 206,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.540Z",
     "variants": [
       {
         "id": "1m",
@@ -7886,7 +7886,7 @@
     "resellerProductId": 216,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.541Z",
     "variants": [
       {
         "id": "1m",
@@ -7935,7 +7935,7 @@
     "resellerProductId": 217,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.541Z",
     "variants": [
       {
         "id": "1m",
@@ -7984,7 +7984,7 @@
     "resellerProductId": 230,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.625Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.542Z",
     "variants": [
       {
         "id": "1m",
@@ -8028,7 +8028,7 @@
     "resellerProductId": 231,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.626Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.542Z",
     "variants": [
       {
         "id": "1m",
@@ -8072,7 +8072,7 @@
     "resellerProductId": 246,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.626Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.543Z",
     "variants": [
       {
         "id": "1m",
@@ -8121,7 +8121,7 @@
     "resellerProductId": 332,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.626Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.544Z",
     "variants": [
       {
         "id": "1m",
@@ -8170,7 +8170,7 @@
     "resellerProductId": 360,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.626Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.544Z",
     "variants": [
       {
         "id": "1m",
@@ -8214,7 +8214,7 @@
     "resellerProductId": 366,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.626Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.545Z",
     "variants": [
       {
         "id": "1m",
@@ -8263,7 +8263,7 @@
     "resellerProductId": 371,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.627Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.546Z",
     "variants": [
       {
         "id": "1m",
@@ -8309,7 +8309,7 @@
     "resellerProductId": 372,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.627Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.547Z",
     "variants": [
       {
         "id": "1m",
@@ -8355,7 +8355,7 @@
     "resellerProductId": 255,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.627Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.548Z",
     "variants": [
       {
         "id": "1m",
@@ -8399,7 +8399,7 @@
     "resellerProductId": 251,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.628Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.554Z",
     "variants": [
       {
         "id": "1m",
@@ -8445,7 +8445,7 @@
     "resellerProductId": 363,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.629Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.555Z",
     "variants": [
       {
         "id": "1m",
@@ -8484,8 +8484,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
     "description": "CapCut Pro Professional - 28 Days\n\nNo warranty.\n\nInstant delivery after payment.\n\nPersonal CapCut Pro access for 28 days.",
     "totalStock": 6,
     "reservedStock": 0,
@@ -8494,7 +8494,7 @@
     "resellerProductId": 357,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.629Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.556Z",
     "variants": [
       {
         "id": "1m",
@@ -8543,7 +8543,7 @@
     "resellerProductId": 233,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.559Z",
     "variants": [
       {
         "id": "1m",
@@ -8592,7 +8592,7 @@
     "resellerProductId": 198,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.630Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.561Z",
     "variants": [
       {
         "id": "1m",
@@ -8641,7 +8641,7 @@
     "resellerProductId": 273,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.562Z",
     "variants": [
       {
         "id": "1m",
@@ -8685,7 +8685,7 @@
     "resellerProductId": 365,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.562Z",
     "variants": [
       {
         "id": "1m",
@@ -8712,7 +8712,7 @@
     "name": "Capcut 6M Personal",
     "rawName": "Capcut 6M Personal · $24.30",
     "category": "ai",
-    "brand": "Capcut",
+    "brand": "CapCut",
     "duration": "6 Months",
     "wholesaleUsd": 18,
     "usdPrice": 24.3,
@@ -8721,8 +8721,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
     "description": "CapCut (6-month subscription) 🪴\nNo warranty\nFormat: email/password\nOTP ACCESS : generator.email/ or https://sixmonth.cc/\nImportant Note: Change the password and  after purchase.\nNo credits",
     "totalStock": 1,
     "reservedStock": 0,
@@ -8731,7 +8731,7 @@
     "resellerProductId": 339,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.631Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.563Z",
     "variants": [
       {
         "id": "1m",
@@ -8780,7 +8780,7 @@
     "resellerProductId": 5,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.632Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.567Z",
     "variants": [
       {
         "id": "1m",
@@ -8829,7 +8829,7 @@
     "resellerProductId": 215,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.632Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.569Z",
     "variants": [
       {
         "id": "1m",
@@ -8878,7 +8878,7 @@
     "resellerProductId": 221,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.632Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.570Z",
     "variants": [
       {
         "id": "1m",
@@ -8927,7 +8927,7 @@
     "resellerProductId": 222,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.633Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.571Z",
     "variants": [
       {
         "id": "1m",
@@ -8976,7 +8976,7 @@
     "resellerProductId": 46,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.633Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.571Z",
     "variants": [
       {
         "id": "1m",
@@ -9020,7 +9020,7 @@
     "resellerProductId": 328,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.633Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.572Z",
     "variants": [
       {
         "id": "1m",
@@ -9064,7 +9064,7 @@
     "resellerProductId": 329,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.633Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.572Z",
     "variants": [
       {
         "id": "1m",
@@ -9113,7 +9113,7 @@
     "resellerProductId": 334,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.634Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.575Z",
     "variants": [
       {
         "id": "1m",
@@ -9159,7 +9159,7 @@
     "resellerProductId": 278,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.635Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.576Z",
     "variants": [
       {
         "id": "1m",
@@ -9205,7 +9205,7 @@
     "resellerProductId": 56,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.635Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.577Z",
     "variants": [
       {
         "id": "1m",
@@ -9249,7 +9249,7 @@
     "resellerProductId": 48,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.635Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.577Z",
     "variants": [
       {
         "id": "1m",
@@ -9293,7 +9293,7 @@
     "resellerProductId": 245,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.579Z",
     "variants": [
       {
         "id": "1m",
@@ -9342,7 +9342,7 @@
     "resellerProductId": 358,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.581Z",
     "variants": [
       {
         "id": "1m",
@@ -9391,7 +9391,7 @@
     "resellerProductId": 350,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.581Z",
     "variants": [
       {
         "id": "1m",
@@ -9440,7 +9440,7 @@
     "resellerProductId": 210,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.636Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.582Z",
     "variants": [
       {
         "id": "1m",
@@ -9489,7 +9489,7 @@
     "resellerProductId": 212,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.637Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.582Z",
     "variants": [
       {
         "id": "1m",
@@ -9538,7 +9538,7 @@
     "resellerProductId": 268,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.637Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.583Z",
     "variants": [
       {
         "id": "1m",
@@ -9587,7 +9587,7 @@
     "resellerProductId": 269,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.637Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.583Z",
     "variants": [
       {
         "id": "1m",
@@ -9636,7 +9636,7 @@
     "resellerProductId": 270,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.637Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.584Z",
     "variants": [
       {
         "id": "1m",
@@ -9685,7 +9685,7 @@
     "resellerProductId": 271,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.637Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.584Z",
     "variants": [
       {
         "id": "1m",
@@ -9734,7 +9734,7 @@
     "resellerProductId": 38,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.638Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.585Z",
     "variants": [
       {
         "id": "1m",
@@ -9783,7 +9783,7 @@
     "resellerProductId": 377,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-10-20T11:13:01.627Z",
+    "lastSynchronizedAt": "2026-10-20T11:31:31.547Z",
     "variants": [
       {
         "id": "1m",
@@ -11135,7 +11135,7 @@
     "rawName": "Proton Unlimited 1M · $7.98",
     "category": "security",
     "botCategory": "VPN",
-    "brand": "Proton",
+    "brand": "Proton VPN",
     "duration": "1 Months",
     "wholesaleUsd": 5.5,
     "usdPrice": 7.98,
@@ -11144,8 +11144,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-proton",
+    "iconType": "proton",
     "description": "Proton Unlimited 1 Month premium account.",
     "overview": "Proton Unlimited 1 Month premium account.",
     "deliveryFormat": "Direct Account Access",
@@ -11438,8 +11438,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-capcut",
+    "iconType": "capcut",
     "description": "CapCut Pro Team 3 Months premium access.",
     "overview": "CapCut Pro Team 3 Months premium access.",
     "deliveryFormat": "Direct Account Access",
@@ -11683,8 +11683,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Gamma Pro AI presentation maker 1 Month subscription.",
     "overview": "Gamma Pro AI presentation maker 1 Month subscription.",
     "deliveryFormat": "Direct Account Access",
@@ -11732,8 +11732,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Gamma Pro AI presentation maker 12 Months subscription.",
     "overview": "Gamma Pro AI presentation maker 12 Months subscription.",
     "deliveryFormat": "Direct Account Access",
@@ -11781,8 +11781,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Gamma Pro 12 Months coupon redeem code.",
     "overview": "Gamma Pro 12 Months coupon redeem code.",
     "deliveryFormat": "Activation / Invitation Link",
@@ -12017,7 +12017,7 @@
     "rawName": "Kling Pro 3K3 Credits 1M · $37.70",
     "category": "ai",
     "botCategory": "Video AI",
-    "brand": "Kling",
+    "brand": "KlingAI",
     "duration": "1 Months",
     "wholesaleUsd": 26,
     "usdPrice": 37.7,
@@ -12026,8 +12026,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-kling",
+    "iconType": "kling",
     "description": "Kling Pro 3,300 Credits 1 Month video plan.",
     "overview": "Kling Pro 3,300 Credits 1 Month video plan.",
     "deliveryFormat": "API Key / Token Secret",
@@ -13643,8 +13643,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-gamma",
+    "iconType": "gamma",
     "description": "Gamma Pro AI presentation maker 1 Year.",
     "overview": "Gamma Pro AI presentation maker 1 Year.",
     "deliveryFormat": "Direct Account Access",

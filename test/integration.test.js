@@ -365,4 +365,124 @@ test('13. Claude Brand Consolidation: All Claude and Anthropic products belong s
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Anthropic" or "Anthropic Claude" brand');
 });
 
+test('14. CapCut Brand Consolidation: All Capcut/CapCut products belong strictly to "CapCut"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const capcutItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('capcut') || 
+    (p.brand && p.brand.toLowerCase().includes('capcut'))
+  );
+
+  assert.ok(capcutItems.length > 0, 'Must have CapCut items in catalog');
+
+  for (const item of capcutItems) {
+    assert.equal(item.brand, 'CapCut', `Product ${item.id} (${item.name}) must have brand strictly set to "CapCut", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-capcut', `Product ${item.id} must have brandClass tile-capcut`);
+    assert.equal(item.iconType, 'capcut', `Product ${item.id} must have iconType capcut`);
+  }
+
+  // Ensure no product in the catalog is branded with lowercase/mixed "Capcut"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Capcut');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Capcut" brand');
+});
+
+test('15. KlingAI Brand Consolidation: All Kling/Kling AI products belong strictly to "KlingAI"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const klingItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('kling') || 
+    (p.brand && p.brand.toLowerCase().includes('kling'))
+  );
+
+  assert.ok(klingItems.length > 0, 'Must have KlingAI items in catalog');
+
+  for (const item of klingItems) {
+    assert.equal(item.brand, 'KlingAI', `Product ${item.id} (${item.name}) must have brand strictly set to "KlingAI", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-kling', `Product ${item.id} must have brandClass tile-kling`);
+    assert.equal(item.iconType, 'kling', `Product ${item.id} must have iconType kling`);
+  }
+
+  // Ensure no product in the catalog is branded with split "Kling" or "Kling AI"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Kling' || p.brand === 'Kling AI');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Kling" or "Kling AI" brand');
+});
+
+test('16. Gamma Brand Consolidation: All Gamma/Gamma AI products belong strictly to "Gamma"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const gammaItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('gamma') || 
+    (p.brand && p.brand.toLowerCase().includes('gamma'))
+  );
+
+  assert.ok(gammaItems.length > 0, 'Must have Gamma items in catalog');
+
+  for (const item of gammaItems) {
+    assert.equal(item.brand, 'Gamma', `Product ${item.id} (${item.name}) must have brand strictly set to "Gamma", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-gamma', `Product ${item.id} must have brandClass tile-gamma`);
+    assert.equal(item.iconType, 'gamma', `Product ${item.id} must have iconType gamma`);
+  }
+
+  // Ensure no product in the catalog is branded with "Gamma AI"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Gamma AI');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Gamma AI" brand');
+});
+
+test('17. Proton VPN Brand Consolidation: All Proton/Proton VPN products belong strictly to "Proton VPN"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const protonItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('proton') || 
+    (p.brand && p.brand.toLowerCase().includes('proton'))
+  );
+
+  assert.ok(protonItems.length > 0, 'Must have Proton VPN items in catalog');
+
+  for (const item of protonItems) {
+    assert.equal(item.brand, 'Proton VPN', `Product ${item.id} (${item.name}) must have brand strictly set to "Proton VPN", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-proton', `Product ${item.id} must have brandClass tile-proton`);
+    assert.equal(item.iconType, 'proton', `Product ${item.id} must have iconType proton`);
+  }
+
+  // Ensure no product in the catalog is branded with raw "Proton" or "ProtonVPN"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Proton' || p.brand === 'ProtonVPN');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Proton" brand');
+});
+
+test('18. Microsoft Brand Consolidation: All Microsoft, Office 365, and O365 products belong strictly to "Microsoft"', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const msItems = json.data.filter(p => 
+    ((p.name.toLowerCase().includes('microsoft') || p.name.toLowerCase().includes('o365') || p.name.toLowerCase().includes('office 365')) && !p.name.toLowerCase().includes('xbox')) ||
+    ((p.brand && (p.brand.toLowerCase().includes('microsoft') || p.brand.toLowerCase().includes('o365') || p.brand.toLowerCase().includes('office 365'))) && !p.name.toLowerCase().includes('xbox'))
+  );
+
+  assert.ok(msItems.length > 0, 'Must have Microsoft items in catalog');
+
+  for (const item of msItems) {
+    assert.equal(item.brand, 'Microsoft', `Product ${item.id} (${item.name}) must have brand strictly set to "Microsoft", got "${item.brand}"`);
+    assert.equal(item.brandClass, 'tile-microsoft', `Product ${item.id} must have brandClass tile-microsoft`);
+    assert.equal(item.iconType, 'microsoft', `Product ${item.id} must have iconType microsoft`);
+  }
+
+  // Ensure no product in the catalog is branded with split "Microsoft 365", "Office 365", or "O365"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Microsoft 365' || p.brand === 'Office 365' || p.brand === 'O365');
+  assert.equal(duplicateBrands.length, 0, 'No product should have a split "Microsoft 365", "Office 365", or "O365" brand');
+});
+
 

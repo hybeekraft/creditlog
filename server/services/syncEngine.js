@@ -75,7 +75,12 @@ class SyncEngine {
     if (n.includes('codex')) return 'Codex API';
     if (n.includes('elevenlabs')) return 'ElevenLabs';
     if (n.includes('autodesk') || n.includes('autocad')) return 'Autodesk';
-    if (n.includes('office') || n.includes('microsoft') || n.includes('xbox')) return 'Microsoft';
+    if (n.includes('capcut')) return 'CapCut';
+    if (n.includes('kling')) return 'KlingAI';
+    if (n.includes('gamma')) return 'Gamma';
+    if (n.includes('proton')) return 'Proton VPN';
+    if (n.includes('office') || n.includes('microsoft') || n.includes('o365')) return 'Microsoft';
+    if (n.includes('xbox')) return 'Xbox';
     if (n.includes('prime') || n.includes('amazon')) return 'Amazon';
     if (n.includes('apple') || n.includes('appletv')) return 'Apple TV+';
     if (n.includes('nordvpn')) return 'NordVPN';
@@ -103,6 +108,21 @@ class SyncEngine {
     if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
       return 'Claude';
     }
+    if (lower === 'capcut') {
+      return 'CapCut';
+    }
+    if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
+      return 'KlingAI';
+    }
+    if (lower === 'gamma' || lower === 'gamma ai') {
+      return 'Gamma';
+    }
+    if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
+      return 'Proton VPN';
+    }
+    if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
+      return 'Microsoft';
+    }
     return b;
   }
 
@@ -119,6 +139,11 @@ class SyncEngine {
     if (b.includes('youtube')) return 'tile-youtube';
     if (b.includes('duolingo')) return 'tile-duolingo';
     if (b.includes('hma') || b.includes('hidemyass')) return 'tile-hma';
+    if (b.includes('capcut')) return 'tile-capcut';
+    if (b.includes('kling')) return 'tile-kling';
+    if (b.includes('gamma')) return 'tile-gamma';
+    if (b.includes('proton')) return 'tile-proton';
+    if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
     return 'tile-brand-default';
   }
 
@@ -135,6 +160,11 @@ class SyncEngine {
     if (b.includes('youtube')) return 'youtube';
     if (b.includes('duolingo')) return 'duolingo';
     if (b.includes('hma') || b.includes('hidemyass')) return 'hma';
+    if (b.includes('capcut')) return 'capcut';
+    if (b.includes('kling')) return 'kling';
+    if (b.includes('gamma')) return 'gamma';
+    if (b.includes('proton')) return 'proton';
+    if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
     return 'cube';
   }
 
@@ -262,6 +292,21 @@ class SyncEngine {
             } else if (existing.brand === 'Claude') {
               existing.brandClass = 'tile-claude';
               existing.iconType = 'claude';
+            } else if (existing.brand === 'CapCut') {
+              existing.brandClass = 'tile-capcut';
+              existing.iconType = 'capcut';
+            } else if (existing.brand === 'KlingAI') {
+              existing.brandClass = 'tile-kling';
+              existing.iconType = 'kling';
+            } else if (existing.brand === 'Gamma') {
+              existing.brandClass = 'tile-gamma';
+              existing.iconType = 'gamma';
+            } else if (existing.brand === 'Proton VPN') {
+              existing.brandClass = 'tile-proton';
+              existing.iconType = 'proton';
+            } else if (existing.brand === 'Microsoft') {
+              existing.brandClass = 'tile-microsoft';
+              existing.iconType = 'microsoft';
             }
           }
 
@@ -393,6 +438,21 @@ class SyncEngine {
                 } else if (match.brand === 'Claude') {
                   match.brandClass = 'tile-claude';
                   match.iconType = 'claude';
+                } else if (match.brand === 'CapCut') {
+                  match.brandClass = 'tile-capcut';
+                  match.iconType = 'capcut';
+                } else if (match.brand === 'KlingAI') {
+                  match.brandClass = 'tile-kling';
+                  match.iconType = 'kling';
+                } else if (match.brand === 'Gamma') {
+                  match.brandClass = 'tile-gamma';
+                  match.iconType = 'gamma';
+                } else if (match.brand === 'Proton VPN') {
+                  match.brandClass = 'tile-proton';
+                  match.iconType = 'proton';
+                } else if (match.brand === 'Microsoft') {
+                  match.brandClass = 'tile-microsoft';
+                  match.iconType = 'microsoft';
                 }
               }
             } else {

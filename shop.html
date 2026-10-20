@@ -305,6 +305,21 @@
       if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
         return 'Claude';
       }
+      if (lower === 'capcut') {
+        return 'CapCut';
+      }
+      if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
+        return 'KlingAI';
+      }
+      if (lower === 'gamma' || lower === 'gamma ai') {
+        return 'Gamma';
+      }
+      if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
+        return 'Proton VPN';
+      }
+      if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
+        return 'Microsoft';
+      }
       return b;
     }
 
@@ -638,6 +653,16 @@
           } else if (b.toLowerCase().includes('hma') && (prod.iconType === 'hma' || prod.brandClass === 'tile-hma')) {
             catalogBrandSamples[b] = prod;
           } else if (b.toLowerCase() === 'claude' && (prod.iconType === 'claude' || prod.brandClass === 'tile-claude')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'capcut' && (prod.iconType === 'capcut' || prod.brandClass === 'tile-capcut')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'klingai' && (prod.iconType === 'kling' || prod.brandClass === 'tile-kling')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'gamma' && (prod.iconType === 'gamma' || prod.brandClass === 'tile-gamma')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase().includes('proton') && (prod.iconType === 'proton' || prod.iconType === 'protonvpn' || prod.brandClass === 'tile-proton')) {
+            catalogBrandSamples[b] = prod;
+          } else if (b.toLowerCase() === 'microsoft' && (prod.iconType === 'microsoft' || prod.brandClass === 'tile-microsoft')) {
             catalogBrandSamples[b] = prod;
           }
         }

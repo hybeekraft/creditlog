@@ -698,6 +698,21 @@ const server = http.createServer(async (req, res) => {
         if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
           return 'Claude';
         }
+        if (lower === 'capcut') {
+          return 'CapCut';
+        }
+        if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
+          return 'KlingAI';
+        }
+        if (lower === 'gamma' || lower === 'gamma ai') {
+          return 'Gamma';
+        }
+        if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
+          return 'Proton VPN';
+        }
+        if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
+          return 'Microsoft';
+        }
         return s;
       })(rawBrand);
 
@@ -712,6 +727,16 @@ const server = http.createServer(async (req, res) => {
         effectiveIcon = 'hma';
       } else if (normalizedBrand === 'Claude' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
         effectiveIcon = 'claude';
+      } else if (normalizedBrand === 'CapCut' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'capcut';
+      } else if (normalizedBrand === 'KlingAI' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'kling';
+      } else if (normalizedBrand === 'Gamma' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'gamma';
+      } else if (normalizedBrand === 'Proton VPN' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'proton';
+      } else if (normalizedBrand === 'Microsoft' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
+        effectiveIcon = 'microsoft';
       }
 
       const newProduct = {
@@ -804,6 +829,36 @@ const server = http.createServer(async (req, res) => {
           if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
             prod.iconType = 'claude';
             prod.brandClass = 'tile-claude';
+          }
+        } else if (lower === 'capcut') {
+          prod.brand = 'CapCut';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'capcut';
+            prod.brandClass = 'tile-capcut';
+          }
+        } else if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
+          prod.brand = 'KlingAI';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'kling';
+            prod.brandClass = 'tile-kling';
+          }
+        } else if (lower === 'gamma' || lower === 'gamma ai') {
+          prod.brand = 'Gamma';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'gamma';
+            prod.brandClass = 'tile-gamma';
+          }
+        } else if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
+          prod.brand = 'Proton VPN';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'proton';
+            prod.brandClass = 'tile-proton';
+          }
+        } else if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
+          prod.brand = 'Microsoft';
+          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
+            prod.iconType = 'microsoft';
+            prod.brandClass = 'tile-microsoft';
           }
         } else {
           prod.brand = s;

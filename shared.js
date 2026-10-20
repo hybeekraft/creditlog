@@ -428,7 +428,11 @@ var BRAND_ICON_REGISTRY = [
     "id": "microsoft",
     "match": [
       "microsoft",
-      "windows"
+      "microsoft 365",
+      "windows",
+      "o365",
+      "office 365",
+      "office"
     ],
     "name": "Microsoft",
     "color": "#0078D4",
@@ -549,7 +553,9 @@ var BRAND_ICON_REGISTRY = [
   {
     "id": "protonvpn",
     "match": [
-      "proton"
+      "proton",
+      "proton vpn",
+      "protonvpn"
     ],
     "name": "Proton VPN",
     "color": "#6D4AFF",
@@ -749,9 +755,10 @@ var BRAND_ICON_REGISTRY = [
   {
     "id": "gamma",
     "match": [
-      "gamma"
+      "gamma",
+      "gamma ai"
     ],
-    "name": "Gamma AI",
+    "name": "Gamma",
     "color": "#8B5CF6",
     "bg": "linear-gradient(135deg, #8B5CF6, #6D28D9)",
     "shadow": "rgba(139, 92, 246, 0.35)",
@@ -849,9 +856,11 @@ var BRAND_ICON_REGISTRY = [
   {
     "id": "kling",
     "match": [
-      "kling"
+      "kling",
+      "kling ai",
+      "klingai"
     ],
-    "name": "Kling AI",
+    "name": "KlingAI",
     "color": "#FF0055",
     "bg": "linear-gradient(135deg, #FF0055, #990033)",
     "shadow": "rgba(255, 0, 85, 0.35)",
@@ -990,6 +999,21 @@ function normalizeBrand(rawBrand) {
   if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
     return 'Claude';
   }
+  if (lower === 'capcut') {
+    return 'CapCut';
+  }
+  if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
+    return 'KlingAI';
+  }
+  if (lower === 'gamma' || lower === 'gamma ai') {
+    return 'Gamma';
+  }
+  if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
+    return 'Proton VPN';
+  }
+  if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
+    return 'Microsoft';
+  }
   return b;
 }
 
@@ -1018,7 +1042,7 @@ function getBrandData(prod) {
   // 1. Direct match by explicit iconType (highest priority)
   if (prod.iconType) {
     const iconKey = String(prod.iconType).toLowerCase().trim();
-    const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey);
+    const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey || (b.match && b.match.includes(iconKey)));
     if (iconMatch) return iconMatch;
   }
 
@@ -1186,7 +1210,7 @@ var CATALOG_PRODUCTS = [
     "name": "O365 Ready Account Random 6-12M",
     "rawName": "O365 Ready Account Random 6-12M · $4.00",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "6-12 Months",
     "usdPrice": 4,
     "usdOldPrice": 15,
@@ -1217,7 +1241,7 @@ var CATALOG_PRODUCTS = [
     "name": "Microsoft 365 Family 5U 12M",
     "rawName": "Microsoft 365 Family 5U 12M · $12.00",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "12 Months (5 Users)",
     "usdPrice": 12,
     "usdOldPrice": 99.99,
@@ -1837,7 +1861,7 @@ var CATALOG_PRODUCTS = [
     "name": "Microsoft Office 365 Plus 1 Year",
     "rawName": "Microsoft Office 365 Plus 1 Year · $1.60",
     "category": "productivity",
-    "brand": "Microsoft 365",
+    "brand": "Microsoft",
     "duration": "1 Year",
     "usdPrice": 1.6,
     "usdOldPrice": 69.99,
@@ -2395,7 +2419,7 @@ var CATALOG_PRODUCTS = [
     "name": "Kling 66 Credits",
     "rawName": "Kling 66 Credits · $0.55",
     "category": "ai",
-    "brand": "Kling AI",
+    "brand": "KlingAI",
     "duration": "66 Credits Pack",
     "usdPrice": 0.55,
     "usdOldPrice": 5,
@@ -2705,7 +2729,7 @@ var CATALOG_PRODUCTS = [
     "name": "Gamma AI Plus 1 Month",
     "rawName": "Gamma AI Plus 1 Month · $11.00",
     "category": "ai",
-    "brand": "Gamma AI",
+    "brand": "Gamma",
     "duration": "1 Month",
     "usdPrice": 11,
     "usdOldPrice": 20,
@@ -3511,7 +3535,7 @@ var CATALOG_PRODUCTS = [
     "name": "KlingAI 750-1100 Credits 1M",
     "rawName": "KlingAI 750-1100 Credits 1M · $11.38",
     "category": "ai",
-    "brand": "Kling AI",
+    "brand": "KlingAI",
     "duration": "1 Month (750-1100 Credits)",
     "usdPrice": 11.38,
     "usdOldPrice": 35,
