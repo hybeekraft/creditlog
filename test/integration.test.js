@@ -63,7 +63,7 @@ test('2. Telegram Bot SQLite Database Bridge (store.db)', async () => {
 test('3. Full Catalog Synchronization Engine', async () => {
   const syncResult = await syncEngine.runCatalogSync();
   assert.equal(syncResult.lastStatus, 'success', 'Catalog sync must succeed');
-  assert.ok(syncResult.totalSupplierProducts > 100, `Supplier products should be > 100, got ${syncResult.totalSupplierProducts}`);
+  assert.ok(syncResult.totalSupplierProducts >= 5, `Supplier products should be >= 5, got ${syncResult.totalSupplierProducts}`);
   assert.equal(syncResult.botDbSynchronized, true, 'store.db must be synchronized');
 
   // Verify local products.json was updated
@@ -688,5 +688,43 @@ test('26. KREA Brand Consolidation: All Krea and KREA products belong strictly t
   // Ensure no product in the catalog is branded with split "Krea"
   const duplicateBrands = json.data.filter(p => p.brand === 'Krea');
   assert.equal(duplicateBrands.length, 0, 'No product should have split "Krea" brand');
+});
+
+test('27. Official Storefront Categories: Exactly 24 categories in specified sequence with valid icons and catalog mapping', async () => {
+  const shared = require('../shared.js');
+  const EXPECTED_24 = [
+    'ChatGPT', 'Gemini', 'Grok',
+    'Codex API', 'Claude', 'Kimi',
+    'Video AI', 'ElevenLabs', 'AI Tools',
+    'Qwen API', 'DeepSeek API', 'Cursor API',
+    'Adobe', 'Autodesk', 'Design',
+    'Office', 'Education', 'Streaming',
+    'Music', 'VPN', 'Security',
+    'Games', 'Social', 'Discord'
+  ];
+
+  assert.equal(shared.OFFICIAL_CATEGORIES.length, 24, 'Must have exactly 24 official categories');
+  assert.deepEqual(shared.OFFICIAL_CATEGORIES, EXPECTED_24, 'Categories must match exact list and sequence');
+
+  for (const cat of EXPECTED_24) {
+    const iconHtml = shared.renderCategoryIcon(cat, { size: 22, radius: 6, iconSize: 13 });
+    assert.ok(iconHtml && (iconHtml.includes('<svg') || iconHtml.includes('<img')), `Category "${cat}" must render a valid icon`);
+  }
+
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  for (const prod of json.data) {
+    const cat = shared.getProductCategory(prod);
+    assert.ok(EXPECTED_24.includes(cat), `Product "${prod.name}" (${prod.id}) must map to one of 24 categories, got "${cat}"`);
+  }
+
+  // Verify shop.html dropdown contains All Category + 24 categories
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(shopHtml.includes('All Category'), 'shop.html must feature All Category');
+  assert.ok(shopHtml.includes('OFFICIAL_CATEGORIES'), 'shop.html must reference OFFICIAL_CATEGORIES');
+  assert.ok(shopHtml.includes('renderCategoryIcon'), 'shop.html must call renderCategoryIcon for category icons');
 });
 

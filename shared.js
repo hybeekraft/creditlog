@@ -4,6 +4,7 @@
 
 // --- User Authentication & Session State ---
 function getCurrentUser() {
+  if (typeof localStorage === 'undefined') return null;
   const sessionStr = localStorage.getItem('creditlog_session');
   if (!sessionStr) return null;
   try {
@@ -14,18 +15,23 @@ function getCurrentUser() {
 }
 
 function guardAdminPage() {
+  if (typeof window === 'undefined' || !window.location) return true;
   const path = window.location.pathname.toLowerCase();
   if (path.endsWith('admin.html') || path.endsWith('admin-dashboard.html') || path.endsWith('activity-logs.html') || path.endsWith('inventory.html')) {
     const user = getCurrentUser();
     if (!user || !user.role || user.role.toLowerCase() !== 'admin') {
-      sessionStorage.setItem('auth_redirect_msg', 'Access restricted: Admin panel is only accessible to store administrators.');
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('auth_redirect_msg', 'Access restricted: Admin panel is only accessible to store administrators.');
+      }
       window.location.href = 'index.html';
       return false;
     }
   }
   return true;
 }
-guardAdminPage();
+if (typeof window !== 'undefined') {
+  guardAdminPage();
+}
 
 function setCurrentUser(user) {
   if (!user) {
@@ -271,31 +277,33 @@ function mountGlobalCurrencyToggle() {
 }
 
 // Global dismiss listeners for currency dropdown
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.currency-dropdown-wrap')) {
-    document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
-      m.classList.remove('show');
-      const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
-      if (tr) {
-        tr.classList.remove('open');
-        tr.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.currency-dropdown-wrap')) {
+      document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
+        if (tr) {
+          tr.classList.remove('open');
+          tr.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
-      m.classList.remove('show');
-      const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
-      if (tr) {
-        tr.classList.remove('open');
-        tr.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-});
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
+        if (tr) {
+          tr.classList.remove('open');
+          tr.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
+}
 
 // --- Stock Status Badges Helper ---
 function renderStockBadge(inStock) {
@@ -1002,6 +1010,127 @@ var BRAND_ICON_REGISTRY = [
     "bg": "linear-gradient(135deg, #10B981, #047857)",
     "shadow": "rgba(16, 185, 129, 0.35)",
     "path": "M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"
+  },
+  {
+    "id": "deepseek",
+    "match": [
+      "deepseek"
+    ],
+    "name": "DeepSeek API",
+    "color": "#0066FF",
+    "bg": "#FFFFFF",
+    "border": "1px solid rgba(0, 102, 255, 0.22)",
+    "shadow": "rgba(0, 102, 255, 0.25)",
+    "iconSize": 22,
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<path d='M3 13c0-3.5 3-6 7.5-6 5.5 0 8.5 3.5 8.5 6 0 2.5-2 4-5 4-2.5 0-3.5-1-5.5-1-1.5 0-2.5.5-3.5 1.5C3.8 16.5 3 14.8 3 13z' fill='#0066FF'/><circle cx='8' cy='11' r='1.2' fill='#FFFFFF'/><path d='M19 13c1.5-1 2.5-.5 3-2-1 0-2 .5-3 1.5z' fill='#0066FF'/>"
+  },
+  {
+    "id": "cursor",
+    "match": [
+      "cursor"
+    ],
+    "name": "Cursor API",
+    "color": "#000000",
+    "bg": "#0F0F11",
+    "border": "1px solid rgba(255, 255, 255, 0.18)",
+    "shadow": "rgba(0, 0, 0, 0.4)",
+    "iconSize": 20,
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<polygon points='12,2 21,7 21,17 12,22 3,17 3,7' fill='none' stroke='#FFFFFF' stroke-width='1.8'/><line x1='12' y1='2' x2='12' y2='12' stroke='#FFFFFF' stroke-width='1.8'/><line x1='12' y1='12' x2='21' y2='7' stroke='#FFFFFF' stroke-width='1.8'/><line x1='12' y1='12' x2='3' y2='7' stroke='#FFFFFF' stroke-width='1.8'/>"
+  },
+  {
+    "id": "discord",
+    "match": [
+      "discord"
+    ],
+    "name": "Discord",
+    "color": "#5865F2",
+    "bg": "#5865F2",
+    "shadow": "rgba(88, 101, 242, 0.35)",
+    "textColor": "#FFFFFF",
+    "path": "M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+  },
+  {
+    "id": "video_ai",
+    "match": [
+      "video ai"
+    ],
+    "name": "Video AI",
+    "color": "#E50914",
+    "bg": "#000000",
+    "border": "1px solid rgba(229, 9, 20, 0.3)",
+    "shadow": "rgba(213, 0, 0, 0.35)",
+    "textColor": "#FF1744",
+    "iconSize": 22,
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<polygon points='8,5 19,12 8,19' fill='none' stroke='#FF1744' stroke-width='2' stroke-linejoin='round'/><circle cx='12' cy='12' r='10' fill='none' stroke='#FF1744' stroke-width='1.5' stroke-dasharray='4 2'/>"
+  },
+  {
+    "id": "ai_tools",
+    "match": [
+      "ai tools"
+    ],
+    "name": "AI Tools",
+    "color": "#0284C7",
+    "bg": "linear-gradient(135deg, #38BDF8, #0284C7)",
+    "shadow": "rgba(2, 132, 199, 0.35)",
+    "textColor": "#FFFFFF",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<path d='M12 2l2.4 5.6L20 10l-4.4 4.2 1.2 6-4.8-3.2-4.8 3.2 1.2-6L4 10l5.6-2.4z' fill='#FFFFFF'/><circle cx='19' cy='4' r='1.5' fill='#FFFFFF'/><circle cx='4' cy='18' r='1.5' fill='#FFFFFF'/>"
+  },
+  {
+    "id": "vpn_badge",
+    "match": [
+      "vpn"
+    ],
+    "name": "VPN",
+    "color": "#111827",
+    "bg": "#111827",
+    "border": "1px solid rgba(255, 255, 255, 0.18)",
+    "shadow": "rgba(17, 24, 39, 0.35)",
+    "textColor": "#FFFFFF",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<rect x='2' y='5' width='20' height='14' rx='4' fill='none' stroke='#FFFFFF' stroke-width='1.8'/><text x='12' y='14.5' font-family='system-ui, sans-serif' font-size='7' font-weight='800' fill='#FFFFFF' text-anchor='middle' letter-spacing='0.5'>VPN</text>"
+  },
+  {
+    "id": "security_cat",
+    "match": [
+      "security"
+    ],
+    "name": "Security",
+    "color": "#0284C7",
+    "bg": "linear-gradient(135deg, #38BDF8, #0284C7)",
+    "shadow": "rgba(2, 132, 199, 0.35)",
+    "textColor": "#FFFFFF",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<path d='M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z' fill='#0284C7'/><path d='M12 3.2L5.5 5.6v5.5c0 4.2 2.8 8.1 6.5 9.1 3.7-1 6.5-4.9 6.5-9.1V5.6L12 3.2z' fill='#38BDF8'/><polyline points='9 11.5 11 13.5 15.5 9' fill='none' stroke='#FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>"
+  },
+  {
+    "id": "social_cat",
+    "match": [
+      "social"
+    ],
+    "name": "Social",
+    "color": "#0A66C2",
+    "bg": "#0A66C2",
+    "shadow": "rgba(10, 102, 194, 0.35)",
+    "textColor": "#FFFFFF",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<rect width='24' height='24' rx='4' fill='#0A66C2'/><text x='12' y='16.5' font-family='system-ui, sans-serif' font-size='13' font-weight='800' fill='#FFFFFF' text-anchor='middle'>in</text>"
+  },
+  {
+    "id": "games_cat",
+    "match": [
+      "games"
+    ],
+    "name": "Games",
+    "color": "#107C10",
+    "bg": "#107C10",
+    "shadow": "rgba(16, 124, 16, 0.35)",
+    "textColor": "#FFFFFF",
+    "viewBox": "0 0 24 24",
+    "svgHtml": "<path d='M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z' fill='#FFFFFF'/>"
   }
 ];
 
@@ -1206,6 +1335,133 @@ function getAvailableBrandLogos() {
     border: b.border || null,
     imgSrc: b.imgSrc || null
   }));
+}
+
+// Exact 24 Official Categories
+var OFFICIAL_CATEGORIES = [
+  'ChatGPT',
+  'Gemini',
+  'Grok',
+  'Codex API',
+  'Claude',
+  'Kimi',
+  'Video AI',
+  'ElevenLabs',
+  'AI Tools',
+  'Qwen API',
+  'DeepSeek API',
+  'Cursor API',
+  'Adobe',
+  'Autodesk',
+  'Design',
+  'Office',
+  'Education',
+  'Streaming',
+  'Music',
+  'VPN',
+  'Security',
+  'Games',
+  'Social',
+  'Discord'
+];
+
+var CATEGORY_ICON_MAP = {
+  'ChatGPT': 'chatgpt',
+  'Gemini': 'gemini',
+  'Grok': 'xai',
+  'Codex API': 'codex',
+  'Claude': 'claude',
+  'Kimi': 'kimi',
+  'Video AI': 'video_ai',
+  'ElevenLabs': 'elevenlabs',
+  'AI Tools': 'ai_tools',
+  'Qwen API': 'qwen',
+  'DeepSeek API': 'deepseek',
+  'Cursor API': 'cursor',
+  'Adobe': 'adobe',
+  'Autodesk': 'autodesk',
+  'Design': 'capcut',
+  'Office': 'microsoft',
+  'Education': 'duolingo',
+  'Streaming': 'netflix',
+  'Music': 'spotify',
+  'VPN': 'vpn_badge',
+  'Security': 'security_cat',
+  'Games': 'games_cat',
+  'Social': 'social_cat',
+  'Discord': 'discord'
+};
+
+function getProductCategory(prod) {
+  if (!prod) return 'AI Tools';
+  if (prod.botCategory && OFFICIAL_CATEGORIES.includes(prod.botCategory)) {
+    return prod.botCategory;
+  }
+  if (prod.botCategory === 'xAI Grok') return 'Grok';
+  if (prod.botCategory === 'DeepSeek AI') return 'DeepSeek API';
+  if (prod.botCategory === 'Airtable') return 'Office';
+
+  const brand = (prod.brand || '').toLowerCase().trim();
+  const name = (prod.name || '').toLowerCase().trim();
+  const desc = (prod.description || '').toLowerCase().trim();
+  const icon = (prod.iconType || '').toLowerCase().trim();
+  const raw = brand + ' ' + name + ' ' + desc + ' ' + icon;
+
+  // Direct brand / name checks
+  if (brand === 'chatgpt' || name.startsWith('chatgpt') || icon === 'chatgpt' || raw.includes('openai chatgpt') || (raw.includes('gpt') && !raw.includes('cursor'))) return 'ChatGPT';
+  if (brand === 'gemini' || name.includes('gemini') || icon === 'gemini' || raw.includes('google gemini') || raw.includes('gmail')) return 'Gemini';
+  if (brand === 'grok' || name.includes('grok') || icon === 'xai' || raw.includes('xai grok')) return 'Grok';
+  if (brand === 'codex' || name.includes('codex') || icon === 'codex' || raw.includes('openai codex') || raw.includes('astra')) return 'Codex API';
+  if (brand === 'claude' || name.includes('claude') || icon === 'claude' || raw.includes('anthropic')) return 'Claude';
+  if (brand === 'kimi' || name.includes('kimi') || icon === 'kimi' || raw.includes('moonshot')) return 'Kimi';
+  if (brand === 'elevenlabs' || name.includes('elevenlabs') || icon === 'elevenlabs' || raw.includes('eleven labs')) return 'ElevenLabs';
+  if (brand === 'qwen' || name.includes('qwen') || icon === 'qwen' || raw.includes('tongyi qwen') || raw.includes('alibaba qwen')) return 'Qwen API';
+  if (brand === 'deepseek' || name.includes('deepseek') || icon === 'deepseek') return 'DeepSeek API';
+  if (brand === 'cursor' || name.includes('cursor') || icon === 'cursor') return 'Cursor API';
+  if (brand === 'adobe' || name.includes('adobe') || icon === 'adobe' || raw.includes('photoshop') || raw.includes('illustrator')) return 'Adobe';
+  if (brand === 'autodesk' || name.includes('autodesk') || icon === 'autodesk' || raw.includes('autocad') || raw.includes('3ds max') || raw.includes('revit') || raw.includes('maya')) return 'Autodesk';
+  if (brand === 'discord' || name.includes('discord') || icon === 'discord' || raw.includes('nitro')) return 'Discord';
+
+  if (brand === 'duolingo' || name.includes('duolingo') || icon === 'duolingo') return 'Education';
+  if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'Design';
+  if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || raw.includes('bethesda') || raw.includes('fallout')) return 'Games';
+
+  const videoAiKeywords = ['sora', 'runway', 'kling', 'luma', 'pika', 'hailuo', 'viggle', 'video ai', 'vidu', 'haiper', 'hedra'];
+  if (videoAiKeywords.some(k => raw.includes(k))) return 'Video AI';
+
+  const vpnKeywords = ['vpn', 'nordvpn', 'expressvpn', 'surfshark', 'proton vpn', 'protonvpn', 'hma', 'hidemyass', 'mullvad', 'windscribe', 'ipvanish', 'purevpn', 'cyberghost'];
+  if (vpnKeywords.some(k => raw.includes(k))) return 'VPN';
+
+  const secKeywords = ['antivirus', 'malwarebytes', 'kaspersky', 'bitdefender', 'eset', 'avast', 'avg', 'norton', 'mcafee', 'security'];
+  if (secKeywords.some(k => raw.includes(k))) return 'Security';
+
+  const musicKeywords = ['spotify', 'apple music', 'tidal', 'deezer', 'youtube music', 'amazon music', 'soundcloud'];
+  if (musicKeywords.some(k => raw.includes(k))) return 'Music';
+
+  const streamKeywords = ['netflix', 'disney', 'hbo', 'max', 'prime video', 'amazon prime', 'apple tv', 'hulu', 'peacock', 'paramount', 'crunchyroll', 'streaming', 'youtube premium'];
+  if (streamKeywords.some(k => raw.includes(k))) return 'Streaming';
+
+  const gameKeywords = ['playstation', 'psn', 'nintendo', 'steam', 'game pass', 'roblox', 'gaming', 'epic games', 'ubisoft', 'ea play'];
+  if (gameKeywords.some(k => raw.includes(k))) return 'Games';
+
+  const socialKeywords = ['linkedin', 'twitter', 'x.com', 'x premium', 'instagram', 'facebook', 'tiktok', 'snapchat', 'telegram', 'reddit', 'threads'];
+  if (socialKeywords.some(k => raw.includes(k))) return 'Social';
+
+  const designKeywords = ['canva', 'figma', 'freepik', 'envato', 'midjourney', 'krea', 'flux', 'ideogram', 'recraft', 'leonardo', 'photomath', 'design', 'vector'];
+  if (designKeywords.some(k => raw.includes(k))) return 'Design';
+
+  const officeKeywords = ['office', 'microsoft', 'windows', 'o365', 'word', 'excel', 'powerpoint', 'notion', 'airtable', 'zoom', 'slack', 'clickup', 'asana', 'trello', 'monday', 'todoist', 'coda', 'wrike'];
+  if (officeKeywords.some(k => raw.includes(k))) return 'Office';
+
+  const eduKeywords = ['coursera', 'udemy', 'edx', 'chegg', 'quizlet', 'cambly', 'skillshare', 'masterclass', 'jetbrains', 'codecademy', 'datacamp', 'education', 'learning', 'grammarly', 'quillbot'];
+  if (eduKeywords.some(k => raw.includes(k))) return 'Education';
+
+  return 'AI Tools';
+}
+
+function renderCategoryIcon(categoryName, options) {
+  const iconId = CATEGORY_ICON_MAP[categoryName] || 'cube';
+  return renderBrandIcon({ iconType: iconId, brand: iconId }, options || { size: 22, radius: 6, iconSize: 13 });
 }
 
 
@@ -4704,6 +4960,23 @@ if (typeof window !== 'undefined') {
   window.PRODUCTS = PRODUCTS;
   window.getAllCatalogProducts = getAllCatalogProducts;
   window.getAllShopProducts = getAllShopProducts;
+  window.OFFICIAL_CATEGORIES = OFFICIAL_CATEGORIES;
+  window.CATEGORY_ICON_MAP = CATEGORY_ICON_MAP;
+  window.getProductCategory = getProductCategory;
+  window.renderCategoryIcon = renderCategoryIcon;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    BRAND_ICON_REGISTRY,
+    OFFICIAL_CATEGORIES,
+    CATEGORY_ICON_MAP,
+    getProductCategory,
+    renderCategoryIcon,
+    renderBrandIcon,
+    normalizeBrand,
+    getAllCatalogProducts
+  };
 }
 
 // --- Cart Storage (Persistent across pages via localStorage) ---
@@ -4838,13 +5111,15 @@ function toggleUserDropdown() {
 }
 
 // Close dropdown on outside click
-document.addEventListener('click', (e) => {
-  const menu = document.querySelector('.user-profile-menu');
-  if (menu && !menu.contains(e.target)) {
-    const dd = document.getElementById('userDropdown');
-    if (dd) dd.classList.add('hidden');
-  }
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    const menu = document.querySelector('.user-profile-menu');
+    if (menu && !menu.contains(e.target)) {
+      const dd = document.getElementById('userDropdown');
+      if (dd) dd.classList.add('hidden');
+    }
+  });
+}
 
 // ==========================================================================
 // Mobile Navigation Drawer Removed (Using Bottom Navigation Bar)
@@ -5195,9 +5470,11 @@ function closeQuickViewModal() {
 }
 
 // Global escape key listener for modal
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeQuickViewModal();
-});
+if (typeof window !== 'undefined') {
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeQuickViewModal();
+  });
+}
 
 // --- Responsive Admin Mobile Navbar Toggle ---
 function initAdminMobileNav() {
@@ -5253,44 +5530,46 @@ function initAdminMobileNav() {
 }
 
 // Global Cache Clearing Utility
-window.clearSystemCache = async function(silent = false) {
-  try {
-    sessionStorage.clear();
-    const adminToken = localStorage.getItem('creditlog_admin_token') || 'admin123';
-    
-    // Purge cached client keys while preserving current admin authentication
-    const keysToPurge = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && !['creditlog_admin_token', 'creditlog_session'].includes(k)) {
-        keysToPurge.push(k);
-      }
-    }
-    keysToPurge.forEach(k => localStorage.removeItem(k));
-
-    // Request server-side cache clearance
+if (typeof window !== 'undefined') {
+  window.clearSystemCache = async function(silent = false) {
     try {
-      await fetch('/api/admin/clear-cache', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${adminToken}` }
-      });
-    } catch (e) {
-      console.warn('Server cache clear error:', e);
-    }
+      sessionStorage.clear();
+      const adminToken = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      
+      // Purge cached client keys while preserving current admin authentication
+      const keysToPurge = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && !['creditlog_admin_token', 'creditlog_session'].includes(k)) {
+          keysToPurge.push(k);
+        }
+      }
+      keysToPurge.forEach(k => localStorage.removeItem(k));
 
-    if (!silent && typeof showToast === 'function') {
-      showToast('All system and browser caches cleared successfully.');
+      // Request server-side cache clearance
+      try {
+        await fetch('/api/admin/clear-cache', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+      } catch (e) {
+        console.warn('Server cache clear error:', e);
+      }
+
+      if (!silent && typeof showToast === 'function') {
+        showToast('All system and browser caches cleared successfully.');
+      }
+      window.dispatchEvent(new CustomEvent('creditlog:cache-cleared'));
+      return true;
+    } catch (err) {
+      console.error('Failed to clear cache:', err);
+      if (!silent && typeof showToast === 'function') {
+        showToast('Cache cleared locally.');
+      }
+      return false;
     }
-    window.dispatchEvent(new CustomEvent('creditlog:cache-cleared'));
-    return true;
-  } catch (err) {
-    console.error('Failed to clear cache:', err);
-    if (!silent && typeof showToast === 'function') {
-      showToast('Cache cleared locally.');
-    }
-    return false;
-  }
-};
+  };
+}
 
 // Admin Profile Dropdown Controller
 function initAdminProfileDropdown() {
@@ -5331,45 +5610,47 @@ function initAdminProfileDropdown() {
   });
 }
 
-// Global click outside listener for admin profile dropdown
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.admin-profile-wrapper')) {
-    document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
-      w.classList.remove('active');
-      const btn = w.querySelector('.user-profile-badge');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    });
+if (typeof document !== 'undefined') {
+  // Global click outside listener for admin profile dropdown
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.admin-profile-wrapper')) {
+      document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
+        w.classList.remove('active');
+        const btn = w.querySelector('.user-profile-badge');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  // Close admin profile dropdown on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
+        w.classList.remove('active');
+        const btn = w.querySelector('.user-profile-badge');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  // Run UI setups on load
+  document.addEventListener('DOMContentLoaded', () => {
+    renderHeaderAuth();
+    updateCartBadge();
+    mountGlobalCurrencyToggle();
+    updateCurrencyUI();
+    if (typeof removeMobileNavDrawer === 'function') removeMobileNavDrawer();
+    if (typeof removeMobileBottomNav === 'function') removeMobileBottomNav();
+    initSegmentedSlidingPill();
+    initCardSpotlights();
+    initAdminMobileNav();
+    initAdminProfileDropdown();
+  });
+
+  // In case script runs after DOMContentLoaded
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    initAdminProfileDropdown();
   }
-});
-
-// Close admin profile dropdown on Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
-      w.classList.remove('active');
-      const btn = w.querySelector('.user-profile-badge');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    });
-  }
-});
-
-// Run UI setups on load
-document.addEventListener('DOMContentLoaded', () => {
-  renderHeaderAuth();
-  updateCartBadge();
-  mountGlobalCurrencyToggle();
-  updateCurrencyUI();
-  if (typeof removeMobileNavDrawer === 'function') removeMobileNavDrawer();
-  if (typeof removeMobileBottomNav === 'function') removeMobileBottomNav();
-  initSegmentedSlidingPill();
-  initCardSpotlights();
-  initAdminMobileNav();
-  initAdminProfileDropdown();
-});
-
-// In case script runs after DOMContentLoaded
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
-  initAdminProfileDropdown();
 }
 
 

@@ -138,7 +138,7 @@
         <div class="catalog-controls-right">
                     <!-- Apple Glassmorphic Brand Filter Dropdown -->
           <div class="apple-dropdown-wrap" id="brandDropdownWrap">
-            <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Brand">
+            <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Category">
               <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
               <span id="brandDropdownLabel">All Category</span>
               <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
@@ -147,7 +147,7 @@
             </button>
             <div class="apple-dropdown-menu hidden" id="brandDropdownMenu" role="menu" style="max-height: 380px; overflow-y: auto; min-width: 260px;">
               <div class="dropdown-search-box" style="padding: 4px 6px 8px; border-bottom: 1px solid rgba(25, 13, 8, 0.08); margin-bottom: 4px; position: sticky; top: -6px; background: #FFFFFF; z-index: 2;">
-                <input type="text" id="brandSearchInput" placeholder="Filter brand..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
+                <input type="text" id="brandSearchInput" placeholder="Filter category..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
               </div>
               <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
                 <!-- Populated dynamically by populateBrandDropdown() -->
@@ -369,10 +369,11 @@
 
         let matchesBrand = true;
         if (currentBrand && currentBrand !== 'all') {
+          const prodCat = (typeof getProductCategory === 'function' ? getProductCategory(prod) : (prod.botCategory || '')).toLowerCase();
+          const targetCat = currentBrand.toLowerCase().trim();
           const rawProdBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
-          const prodBrand = normalizeBrand(rawProdBrand).toLowerCase();
-          const targetBrand = normalizeBrand(currentBrand).toLowerCase();
-          matchesBrand = prodBrand === targetBrand;
+          const prodBrand = (typeof normalizeBrand === 'function' ? normalizeBrand(rawProdBrand) : rawProdBrand).toLowerCase();
+          matchesBrand = (prodCat === targetCat) || (prodBrand === targetCat);
         }
 
         const q = currentSearch.toLowerCase().trim();
@@ -668,53 +669,6 @@
 
     // Brand Dropdown Population & Filter
     function populateBrandDropdown() {
-      const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
-      catalogBrandSamples = {};
-      source.forEach(prod => {
-        const rawBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
-        const b = typeof normalizeBrand === 'function' ? normalizeBrand(rawBrand) : rawBrand;
-        if (b) {
-          if (!catalogBrandSamples[b]) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'amazon' && (prod.iconType === 'amazon' || prod.brandClass === 'tile-amazon')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase().includes('apple') && (prod.iconType === 'appletv' || prod.brandClass === 'tile-appletv')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'gemini' && (prod.iconType === 'gemini' || prod.brandClass === 'tile-gemini')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase().includes('hma') && (prod.iconType === 'hma' || prod.brandClass === 'tile-hma')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'claude' && (prod.iconType === 'claude' || prod.brandClass === 'tile-claude')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'capcut' && (prod.iconType === 'capcut' || prod.brandClass === 'tile-capcut')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'klingai' && (prod.iconType === 'kling' || prod.brandClass === 'tile-kling')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'gamma' && (prod.iconType === 'gamma' || prod.brandClass === 'tile-gamma')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase().includes('proton') && (prod.iconType === 'proton' || prod.iconType === 'protonvpn' || prod.brandClass === 'tile-proton')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'microsoft' && (prod.iconType === 'microsoft' || prod.brandClass === 'tile-microsoft')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'xbox' && (prod.iconType === 'xbox' || prod.brandClass === 'tile-xbox')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'krea') {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'lovable' && (prod.iconType === 'lovable' || prod.brandClass === 'tile-lovable')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'kimi' && (prod.iconType === 'kimi' || prod.brandClass === 'tile-kimi')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'qwen' && (prod.iconType === 'qwen' || prod.brandClass === 'tile-qwen')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'codex' && (prod.iconType === 'codex' || prod.brandClass === 'tile-codex')) {
-            catalogBrandSamples[b] = prod;
-          } else if (b.toLowerCase() === 'chatgpt' && (prod.iconType === 'chatgpt' || prod.brandClass === 'tile-chatgpt')) {
-            catalogBrandSamples[b] = prod;
-          }
-        }
-      });
-
-      const sortedBrands = Object.keys(catalogBrandSamples).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
       const container = document.getElementById('brandOptionsList');
       if (!container) return;
 
@@ -728,7 +682,7 @@
       `;
 
       let html = `
-        <button type="button" class="apple-dropdown-item ${normalizeBrand(currentBrand) === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Category')">
+        <button type="button" class="apple-dropdown-item ${currentBrand === 'all' ? 'active' : ''}" data-brand="all" onclick="selectBrandOption('all', 'All Category')">
           <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
             ${allBrandsIcon}
             <span style="font-weight: 500; font-size: 13px; color: inherit;">All Category</span>
@@ -737,19 +691,25 @@
         </button>
       `;
 
-      sortedBrands.forEach(brand => {
-        const isActive = normalizeBrand(currentBrand).toLowerCase() === normalizeBrand(brand).toLowerCase();
-        const safeEscaped = brand.replace(/'/g, "\\'");
-        const sampleProd = catalogBrandSamples[brand];
-        const iconHtml = (typeof renderBrandIcon === 'function' && sampleProd)
-          ? renderBrandIcon(sampleProd, { size: 22, radius: 6, iconSize: 13 })
+      const cats = (typeof OFFICIAL_CATEGORIES !== 'undefined') ? OFFICIAL_CATEGORIES : [
+        'ChatGPT', 'Gemini', 'Grok', 'Codex API', 'Claude', 'Kimi',
+        'Video AI', 'ElevenLabs', 'AI Tools', 'Qwen API', 'DeepSeek API', 'Cursor API',
+        'Adobe', 'Autodesk', 'Design', 'Office', 'Education', 'Streaming',
+        'Music', 'VPN', 'Security', 'Games', 'Social', 'Discord'
+      ];
+
+      cats.forEach(cat => {
+        const isActive = currentBrand.toLowerCase() === cat.toLowerCase();
+        const safeEscaped = cat.replace(/'/g, "\\'");
+        const iconHtml = (typeof renderCategoryIcon === 'function')
+          ? renderCategoryIcon(cat, { size: 22, radius: 6, iconSize: 13 })
           : allBrandsIcon;
 
         html += `
-          <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${normalizeBrand(brand).toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
+          <button type="button" class="apple-dropdown-item ${isActive ? 'active' : ''}" data-brand="${cat.toLowerCase()}" onclick="selectBrandOption('${safeEscaped}', '${safeEscaped}')">
             <div style="display: flex; align-items: center; gap: 9px; min-width: 0;">
               ${iconHtml}
-              <span style="font-weight: 500; font-size: 13px; color: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${brand}</span>
+              <span style="font-weight: 500; font-size: 13px; color: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${cat}</span>
             </div>
             <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
           </button>
@@ -791,21 +751,20 @@
     }
 
     function selectBrandOption(brandVal, label) {
-      currentBrand = normalizeBrand(brandVal);
+      currentBrand = (brandVal === 'all') ? 'all' : (label || brandVal);
       currentPage = 1;
       const labelEl = document.getElementById('brandDropdownLabel');
       const trigger = document.getElementById('brandDropdownTrigger');
       const prefixEl = document.getElementById('brandDropdownPrefix');
       if (labelEl) {
-        labelEl.textContent = currentBrand === 'all' ? 'All Category' : (label ? normalizeBrand(label) : currentBrand);
+        labelEl.textContent = currentBrand === 'all' ? 'All Category' : currentBrand;
       }
       if (prefixEl) {
         if (currentBrand === 'all') {
           prefixEl.innerHTML = '🏷️';
         } else {
-          const sampleProd = catalogBrandSamples[currentBrand] || catalogBrandSamples[brandVal];
-          if (sampleProd && typeof renderBrandIcon === 'function') {
-            prefixEl.innerHTML = renderBrandIcon(sampleProd, { size: 18, radius: 5, iconSize: 11 });
+          if (typeof renderCategoryIcon === 'function') {
+            prefixEl.innerHTML = renderCategoryIcon(currentBrand, { size: 18, radius: 5, iconSize: 11 });
           } else {
             prefixEl.innerHTML = '🏷️';
           }

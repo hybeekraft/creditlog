@@ -169,6 +169,13 @@ class SyncEngine {
     if (b.includes('gamma')) return 'tile-gamma';
     if (b.includes('proton')) return 'tile-proton';
     if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
+    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout')) return 'tile-xbox';
+    if (b.includes('krea')) return 'tile-krea';
+    if (b.includes('adobe') || b.includes('photoshop')) return 'tile-adobe';
+    if (b.includes('autodesk') || b.includes('autocad')) return 'tile-autodesk';
+    if (b.includes('deepseek')) return 'tile-deepseek';
+    if (b.includes('cursor')) return 'tile-cursor';
+    if (b.includes('discord')) return 'tile-discord';
     if (b.includes('lovable') || b.includes('loveable')) return 'tile-lovable';
     if (b.includes('kimi')) return 'tile-kimi';
     if (b.includes('qwen')) return 'tile-qwen';
@@ -194,6 +201,13 @@ class SyncEngine {
     if (b.includes('gamma')) return 'gamma';
     if (b.includes('proton')) return 'proton';
     if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
+    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout')) return 'xbox';
+    if (b.includes('krea')) return 'krea';
+    if (b.includes('adobe') || b.includes('photoshop')) return 'adobe';
+    if (b.includes('autodesk') || b.includes('autocad')) return 'autodesk';
+    if (b.includes('deepseek')) return 'deepseek';
+    if (b.includes('cursor')) return 'cursor';
+    if (b.includes('discord')) return 'discord';
     if (b.includes('lovable') || b.includes('loveable')) return 'lovable';
     if (b.includes('kimi')) return 'kimi';
     if (b.includes('qwen')) return 'qwen';
@@ -467,7 +481,13 @@ class SyncEngine {
               if (bp.description && (!match.description || match.description.length < bp.description.length)) {
                 match.description = bp.description;
               }
-              if (bp.category) match.botCategory = bp.category;
+              if (bp.category) {
+                let cat = bp.category;
+                if (cat === 'xAI Grok') cat = 'Grok';
+                if (cat === 'DeepSeek AI') cat = 'DeepSeek API';
+                if (cat === 'Airtable') cat = 'Office';
+                match.botCategory = cat;
+              }
               if (match.brand) {
                 match.brand = this.normalizeBrand(match.brand);
                 if (match.brand === 'Amazon') {
@@ -500,6 +520,27 @@ class SyncEngine {
                 } else if (match.brand === 'Microsoft') {
                   match.brandClass = 'tile-microsoft';
                   match.iconType = 'microsoft';
+                } else if (match.brand === 'Xbox') {
+                  match.brandClass = 'tile-xbox';
+                  match.iconType = 'xbox';
+                } else if (match.brand === 'KREA') {
+                  match.brandClass = 'tile-krea';
+                  match.iconType = 'krea';
+                } else if (match.brand === 'Adobe') {
+                  match.brandClass = 'tile-adobe';
+                  match.iconType = 'adobe';
+                } else if (match.brand === 'Autodesk') {
+                  match.brandClass = 'tile-autodesk';
+                  match.iconType = 'autodesk';
+                } else if (match.brand === 'DeepSeek API' || match.brand === 'DeepSeek') {
+                  match.brandClass = 'tile-deepseek';
+                  match.iconType = 'deepseek';
+                } else if (match.brand === 'Cursor API' || match.brand === 'Cursor') {
+                  match.brandClass = 'tile-cursor';
+                  match.iconType = 'cursor';
+                } else if (match.brand === 'Discord') {
+                  match.brandClass = 'tile-discord';
+                  match.iconType = 'discord';
                 } else if (match.brand === 'Lovable') {
                   match.brandClass = 'tile-lovable';
                   match.iconType = 'lovable';
@@ -521,6 +562,10 @@ class SyncEngine {
               // Add missing active bot product to storefront catalog
               const brand = this.normalizeBrand(this.inferBrand(bp.name));
               const category = this.inferCategory(bp.name, bp.category);
+              let botCat = bp.category;
+              if (botCat === 'xAI Grok') botCat = 'Grok';
+              if (botCat === 'DeepSeek AI') botCat = 'DeepSeek API';
+              if (botCat === 'Airtable') botCat = 'Office';
               const duration = this.inferDuration(bp.name);
               const slugId = `bot_${bp.id}_${bp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
 
@@ -531,7 +576,7 @@ class SyncEngine {
                 name: bp.name,
                 rawName: `${bp.name} · $${botPriceUsd.toFixed(2)}`,
                 category,
-                botCategory: bp.category,
+                botCategory: botCat,
                 brand,
                 duration,
                 wholesaleUsd: botCostUsd,
@@ -583,18 +628,20 @@ class SyncEngine {
         }
       }
 
-      // 5. Detect and deactivate missing/retired supplier products
+      // 5. Detect and deactivate missing/retired supplier products (only if supplier returned a full catalog)
       let deactivatedCount = 0;
-      for (const p of localProducts) {
-        if (p.resellerProductId !== undefined && p.resellerProductId !== null) {
-          const sId = String(p.resellerProductId).trim();
-          if (!activeSupplierIdSet.has(sId)) {
-            p.inStock = false;
-            p.totalStock = 0;
-            p.availableStock = 0;
-            p.enabled = false;
-            p.retiredBySupplier = true;
-            deactivatedCount++;
+      if (supplierProducts.length >= 20) {
+        for (const p of localProducts) {
+          if (p.resellerProductId !== undefined && p.resellerProductId !== null) {
+            const sId = String(p.resellerProductId).trim();
+            if (!activeSupplierIdSet.has(sId)) {
+              p.inStock = false;
+              p.totalStock = 0;
+              p.availableStock = 0;
+              p.enabled = false;
+              p.retiredBySupplier = true;
+              deactivatedCount++;
+            }
           }
         }
       }
