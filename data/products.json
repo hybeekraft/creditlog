@@ -2464,7 +2464,7 @@
     "appliedMultiplier": 3.2,
     "pricingRule": "Product Custom (1)",
     "resellerProductId": 1,
-    "lastSynchronizedAt": "2026-10-26T02:53:26.089Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.795Z",
     "overview": "Premium digital subscription for Google Gemini Pro 18M Invite.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -4734,8 +4734,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "2.4k",
-    "brandClass": "tile-vpn",
-    "iconType": "vpn",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "NordVPN 3 months activation code with Threat Protection and Double VPN. Currently sold out.",
     "totalStock": 15,
     "reservedStock": 0,
@@ -4785,8 +4785,8 @@
     "inStock": true,
     "rating": 4.8,
     "reviews": "1.9k",
-    "brandClass": "tile-vpn",
-    "iconType": "vpn",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "NordVPN 1 month high speed secure private connection. Currently sold out.",
     "totalStock": 15,
     "reservedStock": 0,
@@ -8454,8 +8454,8 @@
     "inStock": false,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "• Stackable — multiple codes can be redeemed on the same account\n• Works on up to 10 devices\n• No payment method required for activation\n• Redeem page: https://my.nordaccount.com/activate\n• Must be redeemed within 7 days of purchase\n\nNo warranty.",
     "totalStock": 0,
     "reservedStock": 0,
@@ -8848,7 +8848,7 @@
     "resellerProductId": 5,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.093Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.799Z",
     "variants": [
       {
         "id": "1m",
@@ -9553,8 +9553,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "850+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "Advanced security with NordLynx technology: enjoy extremely fast and completely secure connections thanks to military-grade encryption, helping protect your personal data on every device.\n\nNo warranty.\n\nLogin: https://my.nordaccount.com/\nUse the access details delivered after purchase.",
     "totalStock": 2,
     "reservedStock": 0,
@@ -11317,8 +11317,8 @@
     "inStock": true,
     "rating": 4.9,
     "reviews": "920+",
-    "brandClass": "tile-brand-default",
-    "iconType": "cube",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "NordVPN 10 Devices support 5 Months.",
     "overview": "NordVPN 10 Devices support 5 Months.",
     "deliveryFormat": "Direct Account Access",
@@ -14126,7 +14126,7 @@
     "resellerProductId": 2,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.092Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.798Z",
     "variants": [
       {
         "id": "1m",
@@ -14175,7 +14175,7 @@
     "resellerProductId": 3,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.093Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.798Z",
     "variants": [
       {
         "id": "1m",
@@ -14224,7 +14224,7 @@
     "resellerProductId": 4,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.093Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.799Z",
     "variants": [
       {
         "id": "1m",
@@ -14273,7 +14273,7 @@
     "resellerProductId": 6,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.094Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.799Z",
     "variants": [
       {
         "id": "1m",
@@ -14322,7 +14322,7 @@
     "resellerProductId": 7,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-26T02:53:26.094Z",
+    "lastSynchronizedAt": "2026-10-26T03:12:45.799Z",
     "variants": [
       {
         "id": "1m",

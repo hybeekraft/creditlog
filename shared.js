@@ -1234,15 +1234,15 @@ function getBrandData(prod) {
     };
   }
 
-  // 1. Direct match by explicit iconType (highest priority)
-  if (prod.iconType) {
+  // 1. Direct match by explicit iconType (highest priority for specific brand icons)
+  if (prod.iconType && prod.iconType !== 'cube' && prod.iconType !== 'vpn' && prod.iconType !== 'default') {
     const iconKey = String(prod.iconType).toLowerCase().trim();
     const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey || (b.match && b.match.includes(iconKey)));
     if (iconMatch) return iconMatch;
   }
 
   // 2. Direct match by brandClass (e.g., 'tile-chatgpt' -> 'chatgpt')
-  if (prod.brandClass) {
+  if (prod.brandClass && prod.brandClass !== 'tile-vpn' && prod.brandClass !== 'tile-brand-default') {
     const cleanClass = String(prod.brandClass).replace(/^tile-/, '').toLowerCase().trim();
     const classMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === cleanClass);
     if (classMatch) return classMatch;
@@ -3975,8 +3975,8 @@ var CATALOG_PRODUCTS = [
     "inStock": true,
     "rating": 4.9,
     "reviews": "2.4k",
-    "brandClass": "tile-vpn",
-    "iconType": "vpn",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "NordVPN 3 months activation code with Threat Protection and Double VPN. Instant digital delivery and verified warranty.",
     "currPrice": 5625,
     "oldPrice": 58500,
@@ -4006,8 +4006,8 @@ var CATALOG_PRODUCTS = [
     "inStock": true,
     "rating": 4.8,
     "reviews": "1.9k",
-    "brandClass": "tile-vpn",
-    "iconType": "vpn",
+    "brandClass": "tile-nordvpn",
+    "iconType": "nordvpn",
     "description": "NordVPN 1 month high speed secure private connection. Instant digital delivery and verified warranty.",
     "currPrice": 4050,
     "oldPrice": 19485,
@@ -4979,6 +4979,7 @@ if (typeof window !== 'undefined') {
   window.CATEGORY_ICON_MAP = CATEGORY_ICON_MAP;
   window.getProductCategory = getProductCategory;
   window.renderCategoryIcon = renderCategoryIcon;
+  window.getBrandData = getBrandData;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
@@ -4989,6 +4990,7 @@ if (typeof module !== 'undefined' && module.exports) {
     getProductCategory,
     renderCategoryIcon,
     renderBrandIcon,
+    getBrandData,
     normalizeBrand,
     getAllCatalogProducts
   };

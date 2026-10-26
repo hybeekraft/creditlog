@@ -770,3 +770,29 @@ test('28. Single Canonical Category: 1 product never appears in multiple categor
   );
 });
 
+test('29. NordVPN Brand & Icon Consolidation: All NordVPN products strictly have tile-nordvpn and nordvpn icon', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const nordItems = json.data.filter(p => 
+    p.name.toLowerCase().includes('nordvpn') ||
+    (p.brand && p.brand.toLowerCase().includes('nordvpn'))
+  );
+
+  assert.ok(nordItems.length > 0, 'Must have NordVPN items in catalog');
+
+  for (const item of nordItems) {
+    assert.equal(item.brand, 'NordVPN', `Product ${item.id} must have brand NordVPN, got ${item.brand}`);
+    assert.equal(item.brandClass, 'tile-nordvpn', `Product ${item.id} must have brandClass tile-nordvpn`);
+    assert.equal(item.iconType, 'nordvpn', `Product ${item.id} must have iconType nordvpn`);
+
+    const brandData = shared.getBrandData ? shared.getBrandData(item) : null;
+    if (brandData) {
+      assert.equal(brandData.id, 'nordvpn', `Product ${item.id} getBrandData must resolve to nordvpn icon`);
+    }
+  }
+});
+
+

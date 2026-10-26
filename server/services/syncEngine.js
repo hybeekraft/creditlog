@@ -172,6 +172,9 @@ class SyncEngine {
     if (b.includes('kling')) return 'tile-kling';
     if (b.includes('gamma')) return 'tile-gamma';
     if (b.includes('proton')) return 'tile-proton';
+    if (b.includes('nordvpn')) return 'tile-nordvpn';
+    if (b.includes('surfshark')) return 'tile-surfshark';
+    if (b.includes('expressvpn')) return 'tile-expressvpn';
     if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
     if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout') || b.includes('game pass') || b.includes('pc game')) return 'tile-xbox';
     if (b.includes('krea')) return 'tile-krea';
@@ -204,6 +207,9 @@ class SyncEngine {
     if (b.includes('kling')) return 'kling';
     if (b.includes('gamma')) return 'gamma';
     if (b.includes('proton')) return 'proton';
+    if (b.includes('nordvpn')) return 'nordvpn';
+    if (b.includes('surfshark')) return 'surfshark';
+    if (b.includes('expressvpn')) return 'expressvpn';
     if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
     if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout') || b.includes('game pass') || b.includes('pc game')) return 'xbox';
     if (b.includes('krea')) return 'krea';
