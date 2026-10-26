@@ -600,7 +600,9 @@ var BRAND_ICON_REGISTRY = [
     "id": "xbox",
     "match": [
       "xbox",
-      "bethesda"
+      "bethesda",
+      "pc game",
+      "game pass"
     ],
     "name": "Xbox",
     "color": "#107C10",
@@ -1186,7 +1188,7 @@ function normalizeBrand(rawBrand) {
   if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
     return 'Microsoft';
   }
-  if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower.includes('bethesda') || lower.includes('xbox')) {
+  if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower === 'pc' || lower === 'pc game' || lower === 'pc game pass' || lower === 'game pass' || lower.includes('bethesda') || lower.includes('xbox') || lower.includes('game pass') || lower.includes('pc game')) {
     return 'Xbox';
   }
   if (lower === 'krea' || lower === 'krea ai' || lower === 'kreaai') {
@@ -1416,7 +1418,7 @@ function getProductCategory(prod) {
 
   if (brand === 'duolingo' || name.includes('duolingo') || icon === 'duolingo') return 'Education';
   if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'Design';
-  if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || name.includes('bethesda') || name.includes('fallout')) return 'Games';
+  if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || name.includes('bethesda') || name.includes('fallout') || name.includes('game pass') || name.includes('pc game')) return 'Games';
   if (brand === 'snapchat' || name.includes('snapchat') || icon === 'snapchat') return 'Social';
   if (brand === 'spotify' || brand === 'apple music' || name.includes('spotify') || name.includes('apple music') || name.includes('deezer') || name.includes('tidal')) return 'Music';
   if (brand === 'netflix' || name.includes('netflix') || name.includes('disney') || name.includes('prime video') || name.includes('apple tv') || name.includes('hulu') || name.includes('crunchyroll') || name.includes('paramount') || name.includes('peacock') || name.includes('youtube premium')) return 'Streaming';

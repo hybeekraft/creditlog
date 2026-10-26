@@ -643,7 +643,7 @@ test('24. Storefront 5-Box Pagination Algorithm: Maintains 5 number boxes withou
   }
 });
 
-test('25. Xbox Brand Consolidation: All Xbox, Fallout, and Bethesda items belong strictly to "Xbox" (not "Bethesda / Xbox")', async () => {
+test('25. Xbox Brand Consolidation: All Xbox, Fallout, Bethesda, PC Game Pass, and PC Game items belong strictly to "Xbox" with Xbox icon', async () => {
   const res = await fetch(`${baseUrl}/api/products`);
   assert.equal(res.status, 200);
   const json = await res.json();
@@ -653,7 +653,9 @@ test('25. Xbox Brand Consolidation: All Xbox, Fallout, and Bethesda items belong
     p.name.toLowerCase().includes('xbox') || 
     p.name.toLowerCase().includes('fallout') ||
     p.name.toLowerCase().includes('bethesda') ||
-    (p.brand && (p.brand.toLowerCase().includes('xbox') || p.brand.toLowerCase().includes('bethesda')))
+    p.name.toLowerCase().includes('game pass') ||
+    p.name.toLowerCase().includes('pc game') ||
+    (p.brand && (p.brand.toLowerCase().includes('xbox') || p.brand.toLowerCase().includes('bethesda') || p.brand.toLowerCase() === 'pc'))
   );
 
   assert.ok(xboxItems.length > 0, 'Must have Xbox items in catalog');
@@ -664,9 +666,9 @@ test('25. Xbox Brand Consolidation: All Xbox, Fallout, and Bethesda items belong
     assert.equal(item.iconType, 'xbox', `Product ${item.id} must have iconType xbox`);
   }
 
-  // Ensure no product in the catalog is branded with split "Bethesda / Xbox" or "Bethesda"
-  const duplicateBrands = json.data.filter(p => p.brand === 'Bethesda / Xbox' || p.brand === 'Bethesda');
-  assert.equal(duplicateBrands.length, 0, 'No product should have "Bethesda / Xbox" or "Bethesda" brand');
+  // Ensure no product in the catalog is branded with split "Bethesda / Xbox", "Bethesda", or "PC"
+  const duplicateBrands = json.data.filter(p => p.brand === 'Bethesda / Xbox' || p.brand === 'Bethesda' || p.brand === 'PC');
+  assert.equal(duplicateBrands.length, 0, 'No product should have "Bethesda / Xbox", "Bethesda", or "PC" brand');
 });
 
 test('26. KREA Brand Consolidation: All Krea and KREA products belong strictly to "KREA" (not split "Krea")', async () => {

@@ -84,7 +84,7 @@ class SyncEngine {
     if (n.includes('gamma')) return 'Gamma';
     if (n.includes('proton')) return 'Proton VPN';
     if (n.includes('office') || n.includes('microsoft') || n.includes('o365')) return 'Microsoft';
-    if (n.includes('xbox') || n.includes('bethesda') || n.includes('fallout')) return 'Xbox';
+    if (n.includes('xbox') || n.includes('bethesda') || n.includes('fallout') || n.includes('game pass') || n.includes('pc game')) return 'Xbox';
     if (n.includes('krea')) return 'KREA';
     if (n.includes('lovable') || n.includes('loveable')) return 'Lovable';
     if (n.includes('kimi')) return 'Kimi';
@@ -130,7 +130,7 @@ class SyncEngine {
     if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
       return 'Microsoft';
     }
-    if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower.includes('bethesda') || lower.includes('xbox')) {
+    if (lower === 'xbox' || lower === 'bethesda' || lower === 'bethesda / xbox' || lower === 'bethesda xbox' || lower === 'pc' || lower === 'pc game' || lower === 'pc game pass' || lower === 'game pass' || lower.includes('bethesda') || lower.includes('xbox') || lower.includes('game pass') || lower.includes('pc game')) {
       return 'Xbox';
     }
     if (lower === 'krea' || lower === 'krea ai' || lower === 'kreaai') {
@@ -173,7 +173,7 @@ class SyncEngine {
     if (b.includes('gamma')) return 'tile-gamma';
     if (b.includes('proton')) return 'tile-proton';
     if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
-    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout')) return 'tile-xbox';
+    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout') || b.includes('game pass') || b.includes('pc game')) return 'tile-xbox';
     if (b.includes('krea')) return 'tile-krea';
     if (b.includes('adobe') || b.includes('photoshop')) return 'tile-adobe';
     if (b.includes('autodesk') || b.includes('autocad')) return 'tile-autodesk';
@@ -205,7 +205,7 @@ class SyncEngine {
     if (b.includes('gamma')) return 'gamma';
     if (b.includes('proton')) return 'proton';
     if (b.includes('microsoft') || b.includes('office')) return 'microsoft';
-    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout')) return 'xbox';
+    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout') || b.includes('game pass') || b.includes('pc game')) return 'xbox';
     if (b.includes('krea')) return 'krea';
     if (b.includes('adobe') || b.includes('photoshop')) return 'adobe';
     if (b.includes('autodesk') || b.includes('autocad')) return 'autodesk';
