@@ -155,34 +155,7 @@
             </div>
           </div>
 
-          <!-- Apple Glassmorphic Sort Dropdown -->
-          <div class="apple-dropdown-wrap" id="sortDropdownWrap">
-            <button type="button" class="apple-sort-trigger" id="sortDropdownTrigger" onclick="toggleSortMenu(event)" aria-haspopup="true" aria-expanded="false">
-              <span class="sort-icon-prefix">⇅</span>
-              <span id="sortDropdownLabel">Alphabetical: A to Z</span>
-              <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-              </svg>
-            </button>
-            <div class="apple-dropdown-menu hidden" id="sortDropdownMenu" role="menu">
-              <button type="button" class="apple-dropdown-item active" data-sort="name-asc" onclick="selectSortOption('name-asc', 'Alphabetical: A to Z')">
-                <span>Alphabetical: A to Z</span>
-                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-              </button>
-              <button type="button" class="apple-dropdown-item" data-sort="featured" onclick="selectSortOption('featured', 'Featured First')">
-                <span>Featured First</span>
-                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-              </button>
-              <button type="button" class="apple-dropdown-item" data-sort="price-asc" onclick="selectSortOption('price-asc', 'Price: Lowest to Highest')">
-                <span>Price: Lowest to Highest</span>
-                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-              </button>
-              <button type="button" class="apple-dropdown-item" data-sort="price-desc" onclick="selectSortOption('price-desc', 'Price: Highest to Lowest')">
-                <span>Price: Highest to Lowest</span>
-                <span class="sort-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-              </button>
-            </div>
-          </div>
+
           <div class="view-mode-toggle" id="viewModeToggle">
             <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
@@ -267,7 +240,6 @@
     let currentBrand = 'all';
     let catalogBrandSamples = {};
     let currentSearch = '';
-    let currentSortMode = 'name-asc';
     let currentViewMode = 'grid';
     let currentPage = 1;
     const PAGE_SIZE = 20;
@@ -371,9 +343,7 @@
         if (currentBrand && currentBrand !== 'all') {
           const prodCat = (typeof getProductCategory === 'function' ? getProductCategory(prod) : (prod.botCategory || '')).toLowerCase();
           const targetCat = currentBrand.toLowerCase().trim();
-          const rawProdBrand = (prod.brand || (typeof getBrandData === 'function' ? getBrandData(prod).name : '') || '').trim();
-          const prodBrand = (typeof normalizeBrand === 'function' ? normalizeBrand(rawProdBrand) : rawProdBrand).toLowerCase();
-          matchesBrand = (prodCat === targetCat) || (prodBrand === targetCat);
+          matchesBrand = (prodCat === targetCat);
         }
 
         const q = currentSearch.toLowerCase().trim();
@@ -389,16 +359,10 @@
       });
     }
 
-    // Sorting Helper
+    // Sorting Helper (Catalog default Alphabetical: A to Z)
     function getSortedProducts(products) {
       const copy = [...products];
-      if (currentSortMode === 'price-asc') {
-        copy.sort((a, b) => (a.usdPrice || 0) - (b.usdPrice || 0));
-      } else if (currentSortMode === 'price-desc') {
-        copy.sort((a, b) => (b.usdPrice || 0) - (a.usdPrice || 0));
-      } else if (currentSortMode === 'name-asc') {
-        copy.sort((a, b) => a.name.localeCompare(b.name));
-      }
+      copy.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       return copy;
     }
 
@@ -723,16 +687,6 @@
       if (event) event.stopPropagation();
       const menu = document.getElementById('brandDropdownMenu');
       const trigger = document.getElementById('brandDropdownTrigger');
-      // Close sort menu if open
-      const sortMenu = document.getElementById('sortDropdownMenu');
-      const sortTrigger = document.getElementById('sortDropdownTrigger');
-      if (sortMenu && !sortMenu.classList.contains('hidden')) {
-        sortMenu.classList.add('hidden');
-        if (sortTrigger) {
-          sortTrigger.classList.remove('active');
-          sortTrigger.setAttribute('aria-expanded', 'false');
-        }
-      }
 
       if (!menu || !trigger) return;
       const isHidden = menu.classList.contains('hidden');
@@ -752,6 +706,18 @@
 
     function selectBrandOption(brandVal, label) {
       currentBrand = (brandVal === 'all') ? 'all' : (label || brandVal);
+      if (currentBrand !== 'all') {
+        currentCategory = 'all';
+        const bar = document.getElementById('categorySegmentedBar');
+        if (bar) {
+          bar.querySelectorAll('.category-pill-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+          });
+          if (typeof initSegmentedSlidingPill === 'function') {
+            initSegmentedSlidingPill(bar);
+          }
+        }
+      }
       currentPage = 1;
       const labelEl = document.getElementById('brandDropdownLabel');
       const trigger = document.getElementById('brandDropdownTrigger');
@@ -802,60 +768,8 @@
       });
     }
 
-    // Custom Apple Dropdown Control
-    function toggleSortMenu(event) {
-      if (event) event.stopPropagation();
-      const brandMenu = document.getElementById('brandDropdownMenu');
-      const brandTrigger = document.getElementById('brandDropdownTrigger');
-      if (brandMenu && !brandMenu.classList.contains('hidden')) {
-        brandMenu.classList.add('hidden');
-        if (brandTrigger) {
-          brandTrigger.classList.remove('active');
-          brandTrigger.setAttribute('aria-expanded', 'false');
-        }
-      }
-      const menu = document.getElementById('sortDropdownMenu');
-      const trigger = document.getElementById('sortDropdownTrigger');
-      if (!menu || !trigger) return;
-      const isHidden = menu.classList.contains('hidden');
-      menu.classList.toggle('hidden', !isHidden);
-      trigger.classList.toggle('active', isHidden);
-      trigger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-    }
-
-    function selectSortOption(sortVal, label) {
-      currentSortMode = sortVal;
-      currentPage = 1;
-      const labelEl = document.getElementById('sortDropdownLabel');
-      if (labelEl) labelEl.textContent = label;
-      document.querySelectorAll('#sortDropdownMenu .apple-dropdown-item').forEach(item => {
-        item.classList.toggle('active', item.getAttribute('data-sort') === sortVal);
-      });
-      const menu = document.getElementById('sortDropdownMenu');
-      const trigger = document.getElementById('sortDropdownTrigger');
-      if (menu) menu.classList.add('hidden');
-      if (trigger) {
-        trigger.classList.remove('active');
-        trigger.setAttribute('aria-expanded', 'false');
-      }
-      renderCatalog();
-    }
-
     // Close on outside click or Escape
     document.addEventListener('click', (e) => {
-      const sortWrap = document.getElementById('sortDropdownWrap');
-      if (sortWrap && !sortWrap.contains(e.target)) {
-        const menu = document.getElementById('sortDropdownMenu');
-        const trigger = document.getElementById('sortDropdownTrigger');
-        if (menu && !menu.classList.contains('hidden')) {
-          menu.classList.add('hidden');
-          if (trigger) {
-            trigger.classList.remove('active');
-            trigger.setAttribute('aria-expanded', 'false');
-          }
-        }
-      }
-
       const brandWrap = document.getElementById('brandDropdownWrap');
       if (brandWrap && !brandWrap.contains(e.target)) {
         const bMenu = document.getElementById('brandDropdownMenu');
@@ -872,16 +786,6 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const menu = document.getElementById('sortDropdownMenu');
-        const trigger = document.getElementById('sortDropdownTrigger');
-        if (menu && !menu.classList.contains('hidden')) {
-          menu.classList.add('hidden');
-          if (trigger) {
-            trigger.classList.remove('active');
-            trigger.setAttribute('aria-expanded', 'false');
-          }
-        }
-
         const bMenu = document.getElementById('brandDropdownMenu');
         const bTrigger = document.getElementById('brandDropdownTrigger');
         if (bMenu && !bMenu.classList.contains('hidden')) {
@@ -920,6 +824,16 @@
     // Filter by Category with Apple Sliding Pill Integration
     function filterCategory(cat, btnElem) {
       currentCategory = cat;
+      currentBrand = 'all';
+      const brandLabel = document.getElementById('brandDropdownLabel');
+      if (brandLabel) brandLabel.textContent = 'All Category';
+      const brandPrefix = document.getElementById('brandDropdownPrefix');
+      if (brandPrefix) brandPrefix.innerHTML = '🏷️';
+      const brandTrigger = document.getElementById('brandDropdownTrigger');
+      if (brandTrigger) brandTrigger.classList.remove('filter-active');
+      document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
+      });
       currentPage = 1;
       const bar = document.getElementById('categorySegmentedBar');
       if (bar) {

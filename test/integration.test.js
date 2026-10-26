@@ -10,6 +10,7 @@ const resellerService = require('../server/services/resellerService');
 const botDbBridge = require('../server/services/botDbBridge');
 const syncEngine = require('../server/services/syncEngine');
 const server = require('../server/index');
+const shared = require('../shared.js');
 
 const TEST_PORT = 3199;
 let baseUrl = `http://localhost:${TEST_PORT}`;
@@ -726,5 +727,44 @@ test('27. Official Storefront Categories: Exactly 24 categories in specified seq
   assert.ok(shopHtml.includes('All Category'), 'shop.html must feature All Category');
   assert.ok(shopHtml.includes('OFFICIAL_CATEGORIES'), 'shop.html must reference OFFICIAL_CATEGORIES');
   assert.ok(shopHtml.includes('renderCategoryIcon'), 'shop.html must call renderCategoryIcon for category icons');
+});
+
+test('28. Single Canonical Category: 1 product never appears in multiple categories when filtering by category', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const productCategoryOccurrences = new Map();
+  for (const prod of json.data) {
+    productCategoryOccurrences.set(prod.id, []);
+  }
+
+  // Iterate over all 24 official categories and test category membership
+  for (const officialCat of shared.OFFICIAL_CATEGORIES) {
+    const targetCat = officialCat.toLowerCase().trim();
+    for (const prod of json.data) {
+      const prodCat = shared.getProductCategory(prod).toLowerCase().trim();
+      if (prodCat === targetCat) {
+        productCategoryOccurrences.get(prod.id).push(officialCat);
+      }
+    }
+  }
+
+  // Verify every single product matched exactly 1 category and never multiple
+  for (const [prodId, matchedCats] of productCategoryOccurrences.entries()) {
+    assert.equal(
+      matchedCats.length,
+      1,
+      `Product "${prodId}" must appear in exactly 1 category, but appeared in ${matchedCats.length}: [${matchedCats.join(', ')}]`
+    );
+  }
+
+  // Check shop.html filter logic matches strictly by single category
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(
+    shopHtml.includes('matchesBrand = (prodCat === targetCat);'),
+    'shop.html must filter products strictly by their single canonical category'
+  );
 });
 

@@ -1394,37 +1394,48 @@ var CATEGORY_ICON_MAP = {
 
 function getProductCategory(prod) {
   if (!prod) return 'AI Tools';
+
+  const brand = (prod.brand || '').toLowerCase().trim();
+  const name = (prod.name || '').toLowerCase().trim();
+  const icon = (prod.iconType || '').toLowerCase().trim();
+
+  // 1. Direct Brand & Name Identification (highest fidelity)
+  if (brand === 'adobe' || name.includes('adobe') || icon === 'adobe' || name.includes('photoshop') || name.includes('illustrator')) return 'Adobe';
+  if (brand === 'autodesk' || name.includes('autodesk') || icon === 'autodesk' || name.includes('autocad') || name.includes('3ds max') || name.includes('revit') || name.includes('maya')) return 'Autodesk';
+  if (brand === 'elevenlabs' || name.includes('elevenlabs') || icon === 'elevenlabs') return 'ElevenLabs';
+  if (brand === 'discord' || name.includes('discord') || icon === 'discord') return 'Discord';
+  if (brand === 'qwen' || name.includes('qwen') || icon === 'qwen') return 'Qwen API';
+  if (brand === 'deepseek' || name.includes('deepseek') || icon === 'deepseek') return 'DeepSeek API';
+  if (brand === 'kimi' || (name.includes('kimi') && !name.includes('deepseek')) || icon === 'kimi') return 'Kimi';
+  if (brand === 'grok' || brand === 'xai grok' || name.startsWith('grok') || icon === 'xai') return 'Grok';
+  if (brand === 'cursor' || name.includes('cursor') || icon === 'cursor') return 'Cursor API';
+  if (brand === 'claude' || name.includes('claude') || icon === 'claude') return 'Claude';
+  if (brand === 'gemini' || name.includes('gemini') || icon === 'gemini' || name.includes('gmail')) return 'Gemini';
+  if (brand === 'chatgpt' || name.includes('chatgpt') || icon === 'chatgpt') return 'ChatGPT';
+  if (brand === 'codex' || name.includes('codex') || icon === 'codex' || (name.includes('astra') && !name.includes('nastran'))) return 'Codex API';
+
+  if (brand === 'duolingo' || name.includes('duolingo') || icon === 'duolingo') return 'Education';
+  if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'Design';
+  if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || name.includes('bethesda') || name.includes('fallout')) return 'Games';
+  if (brand === 'snapchat' || name.includes('snapchat') || icon === 'snapchat') return 'Social';
+  if (brand === 'spotify' || brand === 'apple music' || name.includes('spotify') || name.includes('apple music') || name.includes('deezer') || name.includes('tidal')) return 'Music';
+  if (brand === 'netflix' || name.includes('netflix') || name.includes('disney') || name.includes('prime video') || name.includes('apple tv') || name.includes('hulu') || name.includes('crunchyroll') || name.includes('paramount') || name.includes('peacock') || name.includes('youtube premium')) return 'Streaming';
+
+  // 2. Existing valid botCategory
   if (prod.botCategory && OFFICIAL_CATEGORIES.includes(prod.botCategory)) {
     return prod.botCategory;
   }
   if (prod.botCategory === 'xAI Grok') return 'Grok';
   if (prod.botCategory === 'DeepSeek AI') return 'DeepSeek API';
   if (prod.botCategory === 'Airtable') return 'Office';
+  if (prod.botCategory === 'Duolingo') return 'Education';
+  if (prod.botCategory === 'Xbox') return 'Games';
+  if (prod.botCategory === 'Lovable') return 'AI Tools';
+  if (prod.botCategory === 'Snapchat') return 'Social';
 
-  const brand = (prod.brand || '').toLowerCase().trim();
-  const name = (prod.name || '').toLowerCase().trim();
-  const desc = (prod.description || '').toLowerCase().trim();
-  const icon = (prod.iconType || '').toLowerCase().trim();
-  const raw = brand + ' ' + name + ' ' + desc + ' ' + icon;
-
-  // Direct brand / name checks
-  if (brand === 'chatgpt' || name.startsWith('chatgpt') || icon === 'chatgpt' || raw.includes('openai chatgpt') || (raw.includes('gpt') && !raw.includes('cursor'))) return 'ChatGPT';
-  if (brand === 'gemini' || name.includes('gemini') || icon === 'gemini' || raw.includes('google gemini') || raw.includes('gmail')) return 'Gemini';
-  if (brand === 'grok' || name.includes('grok') || icon === 'xai' || raw.includes('xai grok')) return 'Grok';
-  if (brand === 'codex' || name.includes('codex') || icon === 'codex' || raw.includes('openai codex') || raw.includes('astra')) return 'Codex API';
-  if (brand === 'claude' || name.includes('claude') || icon === 'claude' || raw.includes('anthropic')) return 'Claude';
-  if (brand === 'kimi' || name.includes('kimi') || icon === 'kimi' || raw.includes('moonshot')) return 'Kimi';
-  if (brand === 'elevenlabs' || name.includes('elevenlabs') || icon === 'elevenlabs' || raw.includes('eleven labs')) return 'ElevenLabs';
-  if (brand === 'qwen' || name.includes('qwen') || icon === 'qwen' || raw.includes('tongyi qwen') || raw.includes('alibaba qwen')) return 'Qwen API';
-  if (brand === 'deepseek' || name.includes('deepseek') || icon === 'deepseek') return 'DeepSeek API';
-  if (brand === 'cursor' || name.includes('cursor') || icon === 'cursor') return 'Cursor API';
-  if (brand === 'adobe' || name.includes('adobe') || icon === 'adobe' || raw.includes('photoshop') || raw.includes('illustrator')) return 'Adobe';
-  if (brand === 'autodesk' || name.includes('autodesk') || icon === 'autodesk' || raw.includes('autocad') || raw.includes('3ds max') || raw.includes('revit') || raw.includes('maya')) return 'Autodesk';
-  if (brand === 'discord' || name.includes('discord') || icon === 'discord' || raw.includes('nitro')) return 'Discord';
-
-  if (brand === 'duolingo' || name.includes('duolingo') || icon === 'duolingo') return 'Education';
-  if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'Design';
-  if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || raw.includes('bethesda') || raw.includes('fallout')) return 'Games';
+  // 3. Keyword Checks in description & raw text
+  const desc = (prod.description || '').toLowerCase();
+  const raw = brand + ' ' + name + ' ' + desc;
 
   const videoAiKeywords = ['sora', 'runway', 'kling', 'luma', 'pika', 'hailuo', 'viggle', 'video ai', 'vidu', 'haiper', 'hedra'];
   if (videoAiKeywords.some(k => raw.includes(k))) return 'Video AI';
@@ -1444,7 +1455,7 @@ function getProductCategory(prod) {
   const gameKeywords = ['playstation', 'psn', 'nintendo', 'steam', 'game pass', 'roblox', 'gaming', 'epic games', 'ubisoft', 'ea play'];
   if (gameKeywords.some(k => raw.includes(k))) return 'Games';
 
-  const socialKeywords = ['linkedin', 'twitter', 'x.com', 'x premium', 'instagram', 'facebook', 'tiktok', 'snapchat', 'telegram', 'reddit', 'threads'];
+  const socialKeywords = ['linkedin', 'twitter', 'x.com', 'x premium', 'instagram', 'facebook', 'tiktok', 'telegram', 'reddit', 'threads'];
   if (socialKeywords.some(k => raw.includes(k))) return 'Social';
 
   const designKeywords = ['canva', 'figma', 'freepik', 'envato', 'midjourney', 'krea', 'flux', 'ideogram', 'recraft', 'leonardo', 'photomath', 'design', 'vector'];
@@ -1455,6 +1466,8 @@ function getProductCategory(prod) {
 
   const eduKeywords = ['coursera', 'udemy', 'edx', 'chegg', 'quizlet', 'cambly', 'skillshare', 'masterclass', 'jetbrains', 'codecademy', 'datacamp', 'education', 'learning', 'grammarly', 'quillbot'];
   if (eduKeywords.some(k => raw.includes(k))) return 'Education';
+
+  if (raw.includes('gpt')) return 'ChatGPT';
 
   return 'AI Tools';
 }

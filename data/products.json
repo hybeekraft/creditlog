@@ -487,7 +487,7 @@
     "warrantyPolicy": "No warranty. Delivered as-is by upstream provider; guaranteed active upon initial delivery.",
     "hasSpecialRequirements": false,
     "botProductId": 68,
-    "botCategory": "Video AI"
+    "botCategory": "Design"
   },
   {
     "id": "duolingo-super-12m",
@@ -860,7 +860,7 @@
     "instructions": "",
     "warrantyPolicy": "Guaranteed active upon initial delivery with priority assistance.",
     "overview": "Adobe Express 4 Months subscription.",
-    "botCategory": "Design"
+    "botCategory": "Adobe"
   },
   {
     "id": "scribd-premium-1m",
@@ -985,7 +985,7 @@
     "instructions": "",
     "warrantyPolicy": "30-day replacement warranty; full subscription validity.",
     "overview": "Adobe Express 12 Months workspace plan.",
-    "botCategory": "Design"
+    "botCategory": "Adobe"
   },
   {
     "id": "ilovepdf-premium-1y",
@@ -2464,7 +2464,7 @@
     "appliedMultiplier": 3.2,
     "pricingRule": "Product Custom (1)",
     "resellerProductId": 1,
-    "lastSynchronizedAt": "2026-10-21T00:28:08.660Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.196Z",
     "overview": "Premium digital subscription for Google Gemini Pro 18M Invite.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -5039,7 +5039,7 @@
     "requirements": "A valid payment method, such as a card, may be required to complete the activation. Payment method is the buyer's responsibility.",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botCategory": "VPN"
+    "botCategory": "Music"
   },
   {
     "id": "steam-account",
@@ -5255,7 +5255,7 @@
     "deliveryType": "auto",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botCategory": "Video AI"
+    "botCategory": "Streaming"
   },
   {
     "id": "apple-tv-6m",
@@ -7633,7 +7633,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
     "botProductId": 47,
-    "botCategory": "Design"
+    "botCategory": "Adobe"
   },
   {
     "id": "sp_359_adobe-express-12m-account",
@@ -8583,7 +8583,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
     "botProductId": 67,
-    "botCategory": "Video AI"
+    "botCategory": "Design"
   },
   {
     "id": "sp_233_autocad-edu-12m",
@@ -8726,7 +8726,7 @@
     "deliveryType": "auto",
     "warrantyPolicy": "No warranty. Delivered as-is by upstream provider; guaranteed active upon initial delivery.",
     "hasSpecialRequirements": false,
-    "botCategory": "Codex API"
+    "botCategory": "Autodesk"
   },
   {
     "id": "sp_365_canva-pro-lite-1-year",
@@ -8848,7 +8848,7 @@
     "resellerProductId": 5,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.664Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.200Z",
     "variants": [
       {
         "id": "1m",
@@ -9984,7 +9984,7 @@
     "name": "Kimi GLM DeepSeek API 50M Tokens 2D",
     "rawName": "Kimi GLM DeepSeek API 50M Tokens 2D · $4.35",
     "category": "ai",
-    "botCategory": "Codex API",
+    "botCategory": "DeepSeek API",
     "brand": "DeepSeek",
     "duration": "50 Months",
     "wholesaleUsd": 3,
@@ -10033,7 +10033,7 @@
     "name": "API QWEN Unlimited Tokens 7D",
     "rawName": "API QWEN Unlimited Tokens 7D · $7.25",
     "category": "ai",
-    "botCategory": "AI Tools",
+    "botCategory": "Qwen API",
     "brand": "Qwen",
     "duration": "7 Days",
     "wholesaleUsd": 5,
@@ -10082,7 +10082,7 @@
     "name": "Kimi GLM DeepSeek API 100M Tokens 4D",
     "rawName": "Kimi GLM DeepSeek API 100M Tokens 4D · $9.42",
     "category": "ai",
-    "botCategory": "Codex API",
+    "botCategory": "DeepSeek API",
     "brand": "DeepSeek",
     "duration": "100 Months",
     "wholesaleUsd": 6.5,
@@ -11356,7 +11356,7 @@
     "name": "Cursor Pro + Grok Bot 1M",
     "rawName": "Cursor Pro + Grok Bot 1M · $65.25",
     "category": "ai",
-    "botCategory": "AI Tools",
+    "botCategory": "Grok",
     "brand": "xAI Grok",
     "duration": "1 Months",
     "wholesaleUsd": 45,
@@ -11454,7 +11454,7 @@
     "name": "Kimi GLM DeepSeek API 500M Tokens 7D",
     "rawName": "Kimi GLM DeepSeek API 500M Tokens 7D · $34.80",
     "category": "ai",
-    "botCategory": "Codex API",
+    "botCategory": "DeepSeek API",
     "brand": "DeepSeek",
     "duration": "500 Months",
     "wholesaleUsd": 24,
@@ -13120,7 +13120,7 @@
     "name": "Adobe Express 12M Ready-made Account",
     "rawName": "Adobe Express 12M Ready-made Account · $5.80",
     "category": "design",
-    "botCategory": "Design",
+    "botCategory": "Adobe",
     "brand": "Adobe",
     "duration": "12 Months",
     "wholesaleUsd": 4,
@@ -14126,7 +14126,7 @@
     "resellerProductId": 2,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.663Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.199Z",
     "variants": [
       {
         "id": "1m",
@@ -14175,7 +14175,7 @@
     "resellerProductId": 3,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.664Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.200Z",
     "variants": [
       {
         "id": "1m",
@@ -14190,7 +14190,7 @@
       }
     ],
     "botProductId": 286,
-    "botCategory": "Duolingo"
+    "botCategory": "Education"
   },
   {
     "id": "sp_4_xbox-game-pass-pc-digital-key",
@@ -14224,7 +14224,7 @@
     "resellerProductId": 4,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.664Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.200Z",
     "variants": [
       {
         "id": "1m",
@@ -14239,7 +14239,7 @@
       }
     ],
     "botProductId": 287,
-    "botCategory": "Xbox"
+    "botCategory": "Games"
   },
   {
     "id": "sp_6_lovable-pro-lite-1-year-invite",
@@ -14273,7 +14273,7 @@
     "resellerProductId": 6,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.664Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.201Z",
     "variants": [
       {
         "id": "1m",
@@ -14288,7 +14288,7 @@
       }
     ],
     "botProductId": 288,
-    "botCategory": "Lovable"
+    "botCategory": "AI Tools"
   },
   {
     "id": "sp_7_snapchat-plus-3-months-license",
@@ -14322,7 +14322,7 @@
     "resellerProductId": 7,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-21T00:28:08.665Z",
+    "lastSynchronizedAt": "2026-10-26T01:07:13.201Z",
     "variants": [
       {
         "id": "1m",
@@ -14337,6 +14337,6 @@
       }
     ],
     "botProductId": 289,
-    "botCategory": "Snapchat"
+    "botCategory": "Social"
   }
 ]

@@ -3,6 +3,10 @@ const path = require('path');
 const resellerService = require('./resellerService');
 const botDbBridge = require('./botDbBridge');
 const { parseProductDetails } = require('./productParser');
+let shared = null;
+try {
+  shared = require(path.resolve(__dirname, '../../shared.js'));
+} catch (e) {}
 
 // Determine persistent data directory
 const isVercel = Boolean(process.env.VERCEL);
@@ -419,6 +423,9 @@ class SyncEngine {
             resellerProductId: Number(supplierId),
             appliedMultiplier: pricing.multiplier,
             pricingRule: pricing.ruleMatched,
+            botCategory: (shared && typeof shared.getProductCategory === 'function')
+              ? shared.getProductCategory({ name: sp.name, brand, category, description: sp.description })
+              : 'AI Tools',
             lastSynchronizedAt: new Date().toISOString(),
             variants: [
               {
@@ -486,7 +493,17 @@ class SyncEngine {
                 if (cat === 'xAI Grok') cat = 'Grok';
                 if (cat === 'DeepSeek AI') cat = 'DeepSeek API';
                 if (cat === 'Airtable') cat = 'Office';
-                match.botCategory = cat;
+                if (cat === 'Duolingo') cat = 'Education';
+                if (cat === 'Xbox') cat = 'Games';
+                if (cat === 'Lovable') cat = 'AI Tools';
+                if (cat === 'Snapchat') cat = 'Social';
+                if (cat === 'Canva' || cat === 'Mobbin' || cat === 'Supercut' || cat === 'Muse') cat = 'Design';
+                if (cat === 'Subscriptions') cat = 'AI Tools';
+                if (shared && typeof shared.getProductCategory === 'function') {
+                  match.botCategory = shared.getProductCategory({ ...match, botCategory: cat });
+                } else {
+                  match.botCategory = cat;
+                }
               }
               if (match.brand) {
                 match.brand = this.normalizeBrand(match.brand);
