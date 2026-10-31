@@ -356,9 +356,9 @@ var BRAND_ICON_REGISTRY = [
     "bg": "#FFFFFF",
     "border": "1px solid rgba(142, 36, 170, 0.18)",
     "shadow": "rgba(26, 115, 232, 0.18)",
-    "viewBox": "0 0 24 24",
-    "iconSize": 26,
-    "heroIconSize": 38,
+    "imgSrc": "assets/icons/gemini.svg",
+    "iconSize": 30,
+    "heroIconSize": 44,
     "svgHtml": "<defs><linearGradient id='geminiStarGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#1A73E8'/><stop offset='100%' stop-color='#8E24AA'/></linearGradient></defs><path d='M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81' fill='url(#geminiStarGrad)'/>",
     "path": "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"
   },
@@ -789,6 +789,11 @@ var BRAND_ICON_REGISTRY = [
     "color": "#4F46E5",
     "bg": "linear-gradient(135deg, #4F46E5, #312E81)",
     "shadow": "rgba(79, 70, 229, 0.35)",
+    "imgSrc": "assets/icons/kimi.svg",
+    "imgFull": true,
+    "iconSize": 28,
+    "heroIconSize": 42,
+    "viewBox": "0 0 192 192",
     "path": "M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"
   },
   {
@@ -801,8 +806,13 @@ var BRAND_ICON_REGISTRY = [
     ],
     "name": "Qwen",
     "color": "#615CED",
-    "bg": "linear-gradient(135deg, #615CED, #3B38A8)",
-    "shadow": "rgba(97, 92, 237, 0.35)",
+    "bg": "#FFFFFF",
+    "border": "1px solid rgba(97, 92, 237, 0.22)",
+    "shadow": "rgba(97, 92, 237, 0.25)",
+    "imgSrc": "assets/icons/qwen.svg",
+    "iconSize": 28,
+    "heroIconSize": 42,
+    "viewBox": "0 0 64 64",
     "path": "M12 2.5L20.2 7.2v9.6L12 21.5l-8.2-4.7V7.2L12 2.5zm0 2.3L5.8 8.3v7.4L12 19.2l6.2-3.5V8.3L12 4.8z"
   },
   {
@@ -901,8 +911,13 @@ var BRAND_ICON_REGISTRY = [
     ],
     "name": "Peacock",
     "color": "#00A651",
-    "bg": "linear-gradient(135deg, #00A651, #0072CE)",
+    "bg": "#000000",
+    "border": "1px solid rgba(0, 166, 81, 0.3)",
     "shadow": "rgba(0, 166, 81, 0.35)",
+    "imgSrc": "assets/icons/peacock.svg",
+    "imgFull": true,
+    "iconSize": 28,
+    "heroIconSize": 42,
     "viewBox": "0 0 24 24",
     "path": "M14.8281 4.6055c-1.4058.0067-2.5666 1.2083-2.416 2.7851h1.08s.5026-.0062.6485.338c0 0-1.594.6128-1.4668 1.6093l.9922 7.3281 3.4727-8.4316c.5296-1.279-.0616-3.1668-1.6973-3.5567a2.5497 2.5497 0 0 0-.6133-.0722zm-5.6426.002a2.5551 2.5551 0 0 0-.627.0722c-1.6356.3878-2.2268 2.2757-1.6972 3.5566l3.4727 8.4317 1.2422-9.1582c.2194-1.629-.9564-2.8876-2.3907-2.9024zM4.293 8.3104c-.5719.0213-1.1298.2465-1.5586.6583-.803.7737-1.4275 2.8792.371 4.1562l6.9532 4.9258-3.334-8.0762c-.4878-1.1698-1.4785-1.6994-2.4316-1.664zm15.2715 0c-.9075.0203-1.8246.5528-2.2891 1.6641l-3.332 8.0762 6.953-4.9258c1.7987-1.275 1.172-3.3825.3692-4.1563-.4638-.446-1.0802-.672-1.7011-.6582zm1.9394 5.7872c-.4523.0075-.9351.1573-1.42.502l-6.7694 4.7948h8.0253c1.8734 0 3.0648-1.5828 2.5332-3.4843-.2595-.9264-1.2131-1.8318-2.369-1.8125zm-19.0078.002C1.3405 14.081.3879 14.9851.127 15.9101c-.5316 1.9015.6597 3.4843 2.5332 3.4843h8.0253L3.916 14.5996c-.4848-.344-.9677-.4927-1.42-.5z"
   },
@@ -1023,7 +1038,9 @@ var BRAND_ICON_REGISTRY = [
     "bg": "#FFFFFF",
     "border": "1px solid rgba(0, 102, 255, 0.22)",
     "shadow": "rgba(0, 102, 255, 0.25)",
-    "iconSize": 22,
+    "imgSrc": "assets/icons/deepseek.svg",
+    "iconSize": 28,
+    "heroIconSize": 42,
     "viewBox": "0 0 24 24",
     "svgHtml": "<path d='M3 13c0-3.5 3-6 7.5-6 5.5 0 8.5 3.5 8.5 6 0 2.5-2 4-5 4-2.5 0-3.5-1-5.5-1-1.5 0-2.5.5-3.5 1.5C3.8 16.5 3 14.8 3 13z' fill='#0066FF'/><circle cx='8' cy='11' r='1.2' fill='#FFFFFF'/><path d='M19 13c1.5-1 2.5-.5 3-2-1 0-2 .5-3 1.5z' fill='#0066FF'/>"
   },
@@ -1133,6 +1150,379 @@ var BRAND_ICON_REGISTRY = [
     "textColor": "#FFFFFF",
     "viewBox": "0 0 24 24",
     "svgHtml": "<path d='M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z' fill='#FFFFFF'/>"
+  },
+  {
+      "id": "airtable",
+      "match": [
+          "airtable"
+      ],
+      "name": "Airtable",
+      "color": "#18BFFF",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(24, 191, 255, 0.22)",
+      "shadow": "rgba(24, 191, 255, 0.25)",
+      "imgSrc": "assets/icons/airtable.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "elevenreader",
+      "match": [
+          "elevenreader",
+          "eleven reader"
+      ],
+      "name": "ElevenReader",
+      "color": "#000000",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 0, 0, 0.15)",
+      "shadow": "rgba(0, 0, 0, 0.2)",
+      "imgSrc": "assets/icons/elevenreader.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "flux",
+      "match": [
+          "flux",
+          "flux ai"
+      ],
+      "name": "Flux",
+      "color": "#000000",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 0, 0, 0.15)",
+      "shadow": "rgba(0, 0, 0, 0.2)",
+      "imgSrc": "assets/icons/flux.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "framer",
+      "match": [
+          "framer"
+      ],
+      "name": "Framer",
+      "color": "#0055FF",
+      "bg": "#0055FF",
+      "border": "1px solid rgba(0, 85, 255, 0.3)",
+      "shadow": "rgba(0, 85, 255, 0.35)",
+      "imgSrc": "assets/icons/framer.svg",
+      "imgFull": true,
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 180 180"
+  },
+  {
+      "id": "freepik",
+      "match": [
+          "freepik"
+      ],
+      "name": "Freepik",
+      "color": "#0D47A1",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(13, 71, 161, 0.2)",
+      "shadow": "rgba(13, 71, 161, 0.25)",
+      "imgSrc": "assets/icons/freepik.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 180 180"
+  },
+  {
+      "id": "google",
+      "match": [
+          "google"
+      ],
+      "name": "Google",
+      "color": "#4285F4",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(66, 133, 244, 0.2)",
+      "shadow": "rgba(66, 133, 244, 0.25)",
+      "imgSrc": "assets/icons/google.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 32 32"
+  },
+  {
+      "id": "grammarly",
+      "match": [
+          "grammarly"
+      ],
+      "name": "Grammarly",
+      "color": "#15C39A",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(21, 195, 154, 0.25)",
+      "shadow": "rgba(21, 195, 154, 0.3)",
+      "imgSrc": "assets/icons/grammarly.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "heygen",
+      "match": [
+          "heygen"
+      ],
+      "name": "HeyGen",
+      "color": "#6366F1",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(99, 102, 241, 0.25)",
+      "shadow": "rgba(99, 102, 241, 0.3)",
+      "imgSrc": "assets/icons/heygen.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "higgsfield",
+      "match": [
+          "higgsfield"
+      ],
+      "name": "Higgsfield",
+      "color": "#111827",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 0, 0, 0.15)",
+      "shadow": "rgba(0, 0, 0, 0.2)",
+      "imgSrc": "assets/icons/higgsfield.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "icloud",
+      "match": [
+          "icloud"
+      ],
+      "name": "iCloud",
+      "color": "#3699FF",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(54, 153, 255, 0.2)",
+      "shadow": "rgba(54, 153, 255, 0.25)",
+      "imgSrc": "assets/icons/icloud.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 180 180"
+  },
+  {
+      "id": "ipvanish",
+      "match": [
+          "ipvanish"
+      ],
+      "name": "IPVanish",
+      "color": "#7CB342",
+      "bg": "linear-gradient(135deg, #1C242B, #0E1216)",
+      "border": "1px solid rgba(124, 179, 66, 0.3)",
+      "shadow": "rgba(124, 179, 66, 0.35)",
+      "imgSrc": "assets/icons/ipvanish.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 192 192"
+  },
+  {
+      "id": "kiro",
+      "match": [
+          "kiro"
+      ],
+      "name": "Kiro",
+      "color": "#6366F1",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(99, 102, 241, 0.2)",
+      "shadow": "rgba(99, 102, 241, 0.25)",
+      "imgSrc": "assets/icons/kiro.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "krea",
+      "match": [
+          "krea",
+          "krea ai",
+          "kreaai"
+      ],
+      "name": "KREA",
+      "color": "#000000",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 0, 0, 0.15)",
+      "shadow": "rgba(0, 0, 0, 0.2)",
+      "imgSrc": "assets/icons/krea.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 64 64"
+  },
+  {
+      "id": "manus",
+      "match": [
+          "manus"
+      ],
+      "name": "Manus",
+      "color": "#111827",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 0, 0, 0.15)",
+      "shadow": "rgba(0, 0, 0, 0.2)",
+      "imgSrc": "assets/icons/manus.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "muse",
+      "match": [
+          "muse",
+          "muse ai",
+          "muse_ai"
+      ],
+      "name": "Muse",
+      "color": "#6366F1",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(99, 102, 241, 0.2)",
+      "shadow": "rgba(99, 102, 241, 0.25)",
+      "imgSrc": "assets/icons/muse_ai.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 128 128"
+  },
+  {
+      "id": "n8n",
+      "match": [
+          "n8n"
+      ],
+      "name": "N8N",
+      "color": "#EA4B71",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(234, 75, 113, 0.25)",
+      "shadow": "rgba(234, 75, 113, 0.3)",
+      "imgSrc": "assets/icons/n8n.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "openart",
+      "match": [
+          "openart",
+          "open art"
+      ],
+      "name": "OpenArt",
+      "color": "#7C3AED",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(124, 58, 237, 0.25)",
+      "shadow": "rgba(124, 58, 237, 0.3)",
+      "imgSrc": "assets/icons/openart.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 192 192"
+  },
+  {
+      "id": "perplexity",
+      "match": [
+          "perplexity"
+      ],
+      "name": "Perplexity",
+      "color": "#20B2AA",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(32, 178, 170, 0.25)",
+      "shadow": "rgba(32, 178, 170, 0.3)",
+      "imgSrc": "assets/icons/perplexity.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "pixverse",
+      "match": [
+          "pixverse"
+      ],
+      "name": "Pixverse",
+      "color": "#7C3AED",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(124, 58, 237, 0.25)",
+      "shadow": "rgba(124, 58, 237, 0.3)",
+      "imgSrc": "assets/icons/pixverse.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 256 256"
+  },
+  {
+      "id": "quizlet",
+      "match": [
+          "quizlet"
+      ],
+      "name": "Quizlet",
+      "color": "#3CCF94",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(60, 207, 148, 0.25)",
+      "shadow": "rgba(60, 207, 148, 0.3)",
+      "imgSrc": "assets/icons/quizlet.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 180 181"
+  },
+  {
+      "id": "seedance",
+      "match": [
+          "seedance"
+      ],
+      "name": "Seedance",
+      "color": "#10B981",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(16, 185, 129, 0.25)",
+      "shadow": "rgba(16, 185, 129, 0.3)",
+      "imgSrc": "assets/icons/seedance.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 48 48"
+  },
+  {
+      "id": "shield_vpn",
+      "match": [
+          "hotspot shield",
+          "hotspot",
+          "shield vpn",
+          "shield_vpn"
+      ],
+      "name": "Hotspot Shield",
+      "color": "#0084FF",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 132, 255, 0.25)",
+      "shadow": "rgba(0, 132, 255, 0.3)",
+      "imgSrc": "assets/icons/shield_vpn.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 96 96"
+  },
+  {
+      "id": "veo",
+      "match": [
+          "veo",
+          "veo ultra",
+          "google veo"
+      ],
+      "name": "Veo",
+      "color": "#1A73E8",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(26, 115, 232, 0.25)",
+      "shadow": "rgba(26, 115, 232, 0.3)",
+      "imgSrc": "assets/icons/veo.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 192 192"
+  },
+  {
+      "id": "vidiq",
+      "match": [
+          "vidiq"
+      ],
+      "name": "Vidiq",
+      "color": "#00B4D8",
+      "bg": "#FFFFFF",
+      "border": "1px solid rgba(0, 180, 216, 0.25)",
+      "shadow": "rgba(0, 180, 216, 0.3)",
+      "imgSrc": "assets/icons/vidiq.svg",
+      "iconSize": 28,
+      "heroIconSize": 42,
+      "viewBox": "0 0 180 180"
   }
 ];
 
@@ -1209,6 +1599,30 @@ function normalizeBrand(rawBrand) {
   if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
     return 'ChatGPT';
   }
+  if (lower === 'elevenreader' || lower === 'eleven reader') return 'ElevenReader';
+  if (lower === 'openart' || lower === 'open art') return 'OpenArt';
+  if (lower === 'flux' || lower === 'flux ai') return 'Flux';
+  if (lower === 'framer') return 'Framer';
+  if (lower === 'freepik') return 'Freepik';
+  if (lower === 'grammarly' || lower === 'grammarly ai') return 'Grammarly';
+  if (lower === 'heygen') return 'HeyGen';
+  if (lower === 'higgsfield') return 'Higgsfield';
+  if (lower === 'icloud') return 'iCloud';
+  if (lower === 'ipvanish') return 'IPVanish';
+  if (lower === 'kiro') return 'Kiro';
+  if (lower === 'manus') return 'Manus';
+  if (lower === 'muse' || lower === 'muse ai' || lower === 'muse_ai') return 'Muse';
+  if (lower === 'n8n') return 'N8N';
+  if (lower === 'peacock' || lower === 'peaccock') return 'Peacock';
+  if (lower === 'perplexity') return 'Perplexity';
+  if (lower === 'pixverse') return 'Pixverse';
+  if (lower === 'quizlet') return 'Quizlet';
+  if (lower === 'seedance') return 'Seedance';
+  if (lower === 'hotspot' || lower === 'hotspot shield' || lower === 'shield vpn') return 'Hotspot';
+  if (lower === 'veo' || lower === 'veo ultra') return 'Veo';
+  if (lower === 'vidiq') return 'Vidiq';
+  if (lower === 'airtable') return 'Airtable';
+
   return b;
 }
 
@@ -1500,7 +1914,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
     "currPrice": 10455,
     "oldPrice": 29985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\"><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"#3186FF\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad1)\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad2)\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad3)\"/><defs><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad1\" x1=\"7\" x2=\"11\" y1=\"15.5\" y2=\"12\"><stop stop-color=\"#08B962\"/><stop offset=\"1\" stop-color=\"#08B962\" stop-opacity=\"0\"/></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad2\" x1=\"8\" x2=\"11.5\" y1=\"5.5\" y2=\"11\"><stop stop-color=\"#F94543\"/><stop offset=\"1\" stop-color=\"#F94543\" stop-opacity=\"0\"/></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad3\" x1=\"3.5\" x2=\"17.5\" y1=\"13.5\" y2=\"12\"><stop stop-color=\"#FABC12\"/><stop offset=\".46\" stop-color=\"#FABC12\" stop-opacity=\"0\"/></linearGradient></defs></svg>",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
     "plans": [
       {
         "duration": "3 Months",
@@ -2709,7 +3123,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google Gemini Pro 18-Month activation: Advanced AI model, 2TB Google One cloud storage, and Docs/Gmail AI tools.",
     "currPrice": 1500,
     "oldPrice": 540000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\"><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"#3186FF\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad1)\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad2)\"/><path d=\"M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z\" fill=\"url(#gemGrad3)\"/><defs><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad1\" x1=\"7\" x2=\"11\" y1=\"15.5\" y2=\"12\"><stop stop-color=\"#08B962\"/><stop offset=\"1\" stop-color=\"#08B962\" stop-opacity=\"0\"/></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad2\" x1=\"8\" x2=\"11.5\" y1=\"5.5\" y2=\"11\"><stop stop-color=\"#F94543\"/><stop offset=\"1\" stop-color=\"#F94543\" stop-opacity=\"0\"/></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gemGrad3\" x1=\"3.5\" x2=\"17.5\" y1=\"13.5\" y2=\"12\"><stop stop-color=\"#FABC12\"/><stop offset=\".46\" stop-color=\"#FABC12\" stop-opacity=\"0\"/></linearGradient></defs></svg>",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
     "plans": [
       {
         "duration": "18 Months",
@@ -3019,7 +3433,7 @@ var CATALOG_PRODUCTS = [
     "description": "Peacock streaming: Premier League live, WWE network, live sports, and blockbuster films for 1 year.",
     "currPrice": 9000,
     "oldPrice": 119985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#000\"/><circle cx=\"7\" cy=\"10\" r=\"2.5\" fill=\"#00A3E0\"/><circle cx=\"12\" cy=\"7\" r=\"2.5\" fill=\"#78BE20\"/><circle cx=\"17\" cy=\"10\" r=\"2.5\" fill=\"#FFB81C\"/><circle cx=\"15\" cy=\"15\" r=\"2.5\" fill=\"#E4002B\"/><circle cx=\"9\" cy=\"15\" r=\"2.5\" fill=\"#7F25FB\"/></svg>",
+    "brandSymbol": "<img src=\"assets/icons/peacock.svg\" alt=\"Peacock\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
     "plans": [
       {
         "duration": "1 Year",
@@ -4384,7 +4798,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "4.8k",
     "brandClass": "tile-gemini",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"32\" height=\"32\" fill=\"none\"><path d=\"M12 2C12 7.523 7.523 12 2 12C7.523 12 12 16.477 12 22C12 16.477 16.477 12 22 12C16.477 12 12 7.523 12 2Z\" fill=\"url(#gemGrad)\"/><defs><linearGradient id=\"gemGrad\" x1=\"2\" y1=\"2\" x2=\"22\" y2=\"22\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#1A73E8\"/><stop offset=\"0.5\" stop-color=\"#EA4335\"/><stop offset=\"1\" stop-color=\"#FBBC04\"/></linearGradient></defs></svg>",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
     "description": "Google AI Gemini Advanced model with 2M token context window, 2TB Google One cloud storage, and AI integrated into Docs, Gmail, and Slides.",
     "plans": [
       {

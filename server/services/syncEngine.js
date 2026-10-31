@@ -93,6 +93,30 @@ class SyncEngine {
     if (n.includes('nordvpn')) return 'NordVPN';
     if (n.includes('expressvpn')) return 'ExpressVPN';
     if (n.includes('hma') || n.includes('hidemyass')) return 'HMA VPN';
+    if (n.includes('airtable')) return 'Airtable';
+    if (n.includes('elevenreader')) return 'ElevenReader';
+    if (n.includes('flux')) return 'Flux';
+    if (n.includes('framer')) return 'Framer';
+    if (n.includes('freepik')) return 'Freepik';
+    if (n.includes('grammarly')) return 'Grammarly';
+    if (n.includes('heygen')) return 'HeyGen';
+    if (n.includes('higgsfield')) return 'Higgsfield';
+    if (n.includes('icloud')) return 'iCloud';
+    if (n.includes('ipvanish')) return 'IPVanish';
+    if (n.includes('kiro')) return 'Kiro';
+    if (n.includes('manus')) return 'Manus';
+    if (n.includes('muse')) return 'Muse';
+    if (n.includes('n8n')) return 'N8N';
+    if (n.includes('openart')) return 'OpenArt';
+    if (n.includes('peacock')) return 'Peacock';
+    if (n.includes('perplexity')) return 'Perplexity';
+    if (n.includes('pixverse')) return 'Pixverse';
+    if (n.includes('quizlet')) return 'Quizlet';
+    if (n.includes('seedance')) return 'Seedance';
+    if (n.includes('hotspot') || n.includes('shield')) return 'Hotspot';
+    if (n.includes('veo')) return 'Veo';
+    if (n.includes('vidiq')) return 'Vidiq';
+
     return name.split(' ')[0] || 'Digital Service';
   }
 
@@ -151,6 +175,30 @@ class SyncEngine {
     if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
       return 'ChatGPT';
     }
+  if (lower === 'elevenreader' || lower === 'eleven reader') return 'ElevenReader';
+  if (lower === 'openart' || lower === 'open art') return 'OpenArt';
+  if (lower === 'flux' || lower === 'flux ai') return 'Flux';
+  if (lower === 'framer') return 'Framer';
+  if (lower === 'freepik') return 'Freepik';
+  if (lower === 'grammarly' || lower === 'grammarly ai') return 'Grammarly';
+  if (lower === 'heygen') return 'HeyGen';
+  if (lower === 'higgsfield') return 'Higgsfield';
+  if (lower === 'icloud') return 'iCloud';
+  if (lower === 'ipvanish') return 'IPVanish';
+  if (lower === 'kiro') return 'Kiro';
+  if (lower === 'manus') return 'Manus';
+  if (lower === 'muse' || lower === 'muse ai' || lower === 'muse_ai') return 'Muse';
+  if (lower === 'n8n') return 'N8N';
+  if (lower === 'peacock' || lower === 'peaccock') return 'Peacock';
+  if (lower === 'perplexity') return 'Perplexity';
+  if (lower === 'pixverse') return 'Pixverse';
+  if (lower === 'quizlet') return 'Quizlet';
+  if (lower === 'seedance') return 'Seedance';
+  if (lower === 'hotspot' || lower === 'hotspot shield' || lower === 'shield vpn') return 'Hotspot';
+  if (lower === 'veo' || lower === 'veo ultra') return 'Veo';
+  if (lower === 'vidiq') return 'Vidiq';
+  if (lower === 'airtable') return 'Airtable';
+
     return b;
   }
 
@@ -186,6 +234,31 @@ class SyncEngine {
     if (b.includes('lovable') || b.includes('loveable')) return 'tile-lovable';
     if (b.includes('kimi')) return 'tile-kimi';
     if (b.includes('qwen')) return 'tile-qwen';
+    if (b.includes('airtable')) return 'tile-airtable';
+    if (b.includes('elevenreader')) return 'tile-elevenreader';
+    if (b.includes('flux')) return 'tile-flux';
+    if (b.includes('framer')) return 'tile-framer';
+    if (b.includes('freepik')) return 'tile-freepik';
+    if (b.includes('google')) return 'tile-google';
+    if (b.includes('grammarly')) return 'tile-grammarly';
+    if (b.includes('heygen')) return 'tile-heygen';
+    if (b.includes('higgsfield')) return 'tile-higgsfield';
+    if (b.includes('icloud')) return 'tile-icloud';
+    if (b.includes('ipvanish')) return 'tile-ipvanish';
+    if (b.includes('kiro')) return 'tile-kiro';
+    if (b.includes('manus')) return 'tile-manus';
+    if (b.includes('muse')) return 'tile-muse';
+    if (b.includes('n8n')) return 'tile-n8n';
+    if (b.includes('openart')) return 'tile-openart';
+    if (b.includes('peacock')) return 'tile-peacock';
+    if (b.includes('perplexity')) return 'tile-perplexity';
+    if (b.includes('pixverse')) return 'tile-pixverse';
+    if (b.includes('quizlet')) return 'tile-quizlet';
+    if (b.includes('seedance')) return 'tile-seedance';
+    if (b.includes('hotspot') || b.includes('shield')) return 'tile-shield-vpn';
+    if (b.includes('veo')) return 'tile-veo';
+    if (b.includes('vidiq')) return 'tile-vidiq';
+
     return 'tile-brand-default';
   }
 
@@ -221,6 +294,31 @@ class SyncEngine {
     if (b.includes('lovable') || b.includes('loveable')) return 'lovable';
     if (b.includes('kimi')) return 'kimi';
     if (b.includes('qwen')) return 'qwen';
+    if (b.includes('airtable')) return 'airtable';
+    if (b.includes('elevenreader')) return 'elevenreader';
+    if (b.includes('flux')) return 'flux';
+    if (b.includes('framer')) return 'framer';
+    if (b.includes('freepik')) return 'freepik';
+    if (b.includes('google')) return 'google';
+    if (b.includes('grammarly')) return 'grammarly';
+    if (b.includes('heygen')) return 'heygen';
+    if (b.includes('higgsfield')) return 'higgsfield';
+    if (b.includes('icloud')) return 'icloud';
+    if (b.includes('ipvanish')) return 'ipvanish';
+    if (b.includes('kiro')) return 'kiro';
+    if (b.includes('manus')) return 'manus';
+    if (b.includes('muse')) return 'muse_ai';
+    if (b.includes('n8n')) return 'n8n';
+    if (b.includes('openart')) return 'openart';
+    if (b.includes('peacock')) return 'peacock';
+    if (b.includes('perplexity')) return 'perplexity';
+    if (b.includes('pixverse')) return 'pixverse';
+    if (b.includes('quizlet')) return 'quizlet';
+    if (b.includes('seedance')) return 'seedance';
+    if (b.includes('hotspot') || b.includes('shield')) return 'shield_vpn';
+    if (b.includes('veo')) return 'veo';
+    if (b.includes('vidiq')) return 'vidiq';
+
     return 'cube';
   }
 
@@ -378,6 +476,9 @@ class SyncEngine {
             } else if (existing.brand === 'ChatGPT') {
               existing.brandClass = 'tile-chatgpt';
               existing.iconType = 'chatgpt';
+            } else if (this.inferBrandClass(existing.brand) !== 'tile-brand-default') {
+              existing.brandClass = this.inferBrandClass(existing.brand);
+              existing.iconType = this.inferIconType(existing.brand);
             }
           }
 
@@ -579,6 +680,9 @@ class SyncEngine {
                 } else if (match.brand === 'ChatGPT') {
                   match.brandClass = 'tile-chatgpt';
                   match.iconType = 'chatgpt';
+                } else if (this.inferBrandClass(match.brand) !== 'tile-brand-default') {
+                  match.brandClass = this.inferBrandClass(match.brand);
+                  match.iconType = this.inferIconType(match.brand);
                 }
               }
             } else {
