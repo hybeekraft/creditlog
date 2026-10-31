@@ -4621,19 +4621,6 @@ body {
   white-space: nowrap;
 }
 
-.currency-toggle-btn .curr-switch-icon,
-.currency-dropdown-trigger .curr-switch-icon {
-  opacity: 0.55;
-  transition: transform 0.25s ease, opacity 0.2s ease;
-  flex-shrink: 0;
-}
-
-.currency-toggle-btn:hover .curr-switch-icon,
-.currency-dropdown-trigger:hover .curr-switch-icon {
-  opacity: 0.95;
-  transform: rotate(180deg);
-}
-
 /* Hide legacy dropdown menus in favor of direct click-to-switch */
 .currency-dropdown-menu {
   display: none !important;

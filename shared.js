@@ -116,9 +116,6 @@ function getCurrencyToggleHTML() {
     <button type="button" class="currency-toggle-btn" onclick="toggleCurrency()" aria-label="Current currency: ${curr}. Click to switch to ${targetLabel}." title="Click to switch to ${targetLabel}">
       <span class="curr-flag">${FLAG_ICONS[curr] || FLAG_ICONS.NGN}</span>
       <span class="curr-code">${currLabel}</span>
-      <svg class="curr-switch-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
-      </svg>
     </button>
   `;
 }

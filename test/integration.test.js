@@ -796,14 +796,16 @@ test('29. NordVPN Brand & Icon Consolidation: All NordVPN products strictly have
 });
 
 test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdowns, authoritatively across all storefront pages', () => {
-  // 1. Verify shared.js generator returns click-to-switch button
+  // 1. Verify shared.js generator returns click-to-switch button with clean flag and code only (no arrow icons)
   const toggleHtml = shared.getCurrencyToggleHTML();
   assert.ok(toggleHtml.includes('currency-toggle-btn'), 'getCurrencyToggleHTML must generate .currency-toggle-btn');
   assert.ok(toggleHtml.includes('onclick="toggleCurrency()"'), 'Currency toggle button must invoke toggleCurrency() directly');
-  assert.ok(toggleHtml.includes('curr-switch-icon'), 'Currency toggle must feature switch icon');
+  assert.ok(toggleHtml.includes('curr-flag'), 'Currency toggle must feature flag');
+  assert.ok(toggleHtml.includes('curr-code'), 'Currency toggle must feature currency code');
+  assert.ok(!toggleHtml.includes('curr-switch-icon'), 'Currency toggle must NOT have up/down arrow icons');
   assert.ok(!toggleHtml.includes('currency-dropdown-menu'), 'Toggle must not render dropdown menu');
 
-  // 2. Verify all storefront pages use .currency-toggle-btn with onclick="toggleCurrency()"
+  // 2. Verify all storefront pages use clean .currency-toggle-btn without arrows
   const pages = ['shop.html', 'index.html', 'product.html', 'checkout.html'];
   for (const pageName of pages) {
     const pageHtml = fs.readFileSync(path.resolve(__dirname, `../${pageName}`), 'utf8');
@@ -811,6 +813,10 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
       pageHtml.includes('class="currency-toggle-btn" onclick="toggleCurrency()"') ||
       pageHtml.includes('class="currency-toggle-btn"') && pageHtml.includes('onclick="toggleCurrency()"'),
       `${pageName} must contain click-to-switch button with onclick="toggleCurrency()"`
+    );
+    assert.ok(
+      !pageHtml.includes('curr-switch-icon'),
+      `${pageName} must NOT contain arrow icons in currency toggle`
     );
     assert.ok(
       !pageHtml.includes('currency-dropdown-menu'),
@@ -821,7 +827,6 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
   // 3. Verify style.css includes .currency-toggle-btn styling with cursor pointer
   const css = fs.readFileSync(path.resolve(__dirname, '../style.css'), 'utf8');
   assert.ok(css.includes('.currency-toggle-btn'), 'style.css must style .currency-toggle-btn');
-  assert.ok(css.includes('.curr-switch-icon'), 'style.css must style .curr-switch-icon');
   assert.ok(css.includes('display: none !important;'), 'style.css must hide any residual currency dropdown menus');
 });
 
