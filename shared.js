@@ -1706,7 +1706,7 @@ function renderBrandIcon(prod, options) {
       : "";
 
     return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden; position: relative;">' +
-      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" loading="lazy" decoding="async"' + (onErrHandler ? ' onerror="' + onErrHandler + '"' : '') + ' />' +
+      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" loading="eager" decoding="sync"' + (onErrHandler ? ' onerror="' + onErrHandler + '"' : '') + ' />' +
       fallbackSvg +
       '</div>';
   }
@@ -1888,7 +1888,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
     "currPrice": 10455,
     "oldPrice": 29985,
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "3 Months",
@@ -2043,7 +2043,7 @@ var CATALOG_PRODUCTS = [
     "description": "Build full-stack apps effortlessly with Lovable Pro Lite 1 Year activation invite link.",
     "currPrice": 18000,
     "oldPrice": 72000,
-    "brandSymbol": "<img src=\"assets/icons/lovable.svg\" alt=\"Lovable\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/lovable.svg\" alt=\"Lovable\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "1 Year",
@@ -2105,7 +2105,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 1 Full Year: Unlimited hearts, no advertisements, personalized practice, and offline lessons.",
     "currPrice": 1500,
     "oldPrice": 125985,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "12 Months",
@@ -2136,7 +2136,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 2 Months access with unlimited hearts and ads removed.",
     "currPrice": 750,
     "oldPrice": 21000,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "2 Months",
@@ -2167,7 +2167,7 @@ var CATALOG_PRODUCTS = [
     "description": "Super Duolingo activated directly on your personal email address for 1 full year.",
     "currPrice": 13500,
     "oldPrice": 125985,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "12 Months (Personal Mail)",
@@ -2663,7 +2663,7 @@ var CATALOG_PRODUCTS = [
     "description": "Fallout 76 PC game digital key redeemable on Microsoft Store / Xbox PC app.",
     "currPrice": 3780,
     "oldPrice": 59985,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "Full Game License",
@@ -2694,7 +2694,7 @@ var CATALOG_PRODUCTS = [
     "description": "Play hundreds of high-quality PC games with friends, including new day-one releases.",
     "currPrice": 11625,
     "oldPrice": 17985,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "1 Month",
@@ -3097,7 +3097,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google Gemini Pro 18-Month activation: Advanced AI model, 2TB Google One cloud storage, and Docs/Gmail AI tools.",
     "currPrice": 1500,
     "oldPrice": 540000,
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "18 Months",
@@ -3376,7 +3376,7 @@ var CATALOG_PRODUCTS = [
     "description": "Snapchat+ exclusive features: #1 BFF pin, story rewatch count, custom app icons, and AI Bitmoji pets.",
     "currPrice": 7500,
     "oldPrice": 22485,
-    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "3 Months",
@@ -3407,7 +3407,7 @@ var CATALOG_PRODUCTS = [
     "description": "Peacock streaming: Premier League live, WWE network, live sports, and blockbuster films for 1 year.",
     "currPrice": 9000,
     "oldPrice": 119985,
-    "brandSymbol": "<img src=\"assets/icons/peacock.svg\" alt=\"Peacock\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/peacock.svg\" alt=\"Peacock\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "1 Year",
@@ -3655,7 +3655,7 @@ var CATALOG_PRODUCTS = [
     "description": "Snapchat+ semi-annual subscription with premium story boosts and custom themes.",
     "currPrice": 12000,
     "oldPrice": 37485,
-    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "6 Months",
@@ -4244,7 +4244,7 @@ var CATALOG_PRODUCTS = [
     "description": "Pre-activated Xbox player account. Instant digital delivery and verified warranty.",
     "currPrice": 1500,
     "oldPrice": 22485,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "Account Access",
@@ -4647,7 +4647,7 @@ var CATALOG_PRODUCTS = [
     "description": "Amazon Prime Video 6 months access to movies, series, and Amazon Originals in 4K. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 80910,
-    "brandSymbol": "<img src=\"assets/icons/primevideo.svg\" alt=\"Prime Video\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/primevideo.svg\" alt=\"Prime Video\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "plans": [
       {
         "duration": "6 Months",
@@ -4772,7 +4772,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "4.8k",
     "brandClass": "tile-gemini",
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "description": "Google AI Gemini Advanced model with 2M token context window, 2TB Google One cloud storage, and AI integrated into Docs, Gmail, and Slides.",
     "plans": [
       {
@@ -4810,7 +4810,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "3.8k",
     "brandClass": "tile-chatgpt",
-    "brandSymbol": "<img src=\"assets/chatgpt-logo.jpg\" alt=\"OpenAI\" style=\"width:34px; height:34px; object-fit:contain; border-radius:6px;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/chatgpt-logo.jpg\" alt=\"OpenAI\" style=\"width:34px; height:34px; object-fit:contain; border-radius:6px;\" loading=\"eager\" decoding=\"sync\">",
     "description": "OpenAI official subscription with GPT-4o, Advanced Voice Mode, DALL·E 3, code interpreter, and custom GPTs.",
     "plans": [
       {
@@ -5016,7 +5016,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "2.8k",
     "brandClass": "tile-duolingo",
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"lazy\" decoding=\"async\">",
+    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
     "description": "Master 40+ languages with Duolingo Super: Unlimited hearts, zero ads, unlimited test-outs, and targeted mistake review.",
     "plans": [
       {

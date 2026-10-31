@@ -2392,6 +2392,8 @@ const server = http.createServer(async (req, res) => {
           headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0';
           headers['Pragma'] = 'no-cache';
           headers['Expires'] = '0';
+        } else if (['.svg', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.woff', '.woff2'].includes(ext)) {
+          headers['Cache-Control'] = 'public, max-age=31536000, immutable';
         }
         res.writeHead(200, headers);
         res.end(content);

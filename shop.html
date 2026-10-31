@@ -862,10 +862,16 @@
         if (res.ok) {
           const apiData = await res.json();
           if (apiData.success && Array.isArray(apiData.data)) {
+            const prev = window.CATALOG_PRODUCTS;
+            const hasChanged = !prev || prev.length !== apiData.data.length ||
+              JSON.stringify(prev.map(p => ({ id: p.id, inStock: p.inStock, currPrice: p.currPrice, price: p.price }))) !==
+              JSON.stringify(apiData.data.map(p => ({ id: p.id, inStock: p.inStock, currPrice: p.currPrice, price: p.price })));
             window.CATALOG_PRODUCTS = apiData.data;
-            populateBrandDropdown();
-            updateCategoryBadges();
-            renderCatalog();
+            if (hasChanged) {
+              populateBrandDropdown();
+              updateCategoryBadges();
+              renderCatalog();
+            }
           }
         }
       } catch (err) {
