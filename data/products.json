@@ -2464,7 +2464,7 @@
     "appliedMultiplier": 3.2,
     "pricingRule": "Product Custom (1)",
     "resellerProductId": 1,
-    "lastSynchronizedAt": "2026-10-31T09:12:29.468Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.978Z",
     "overview": "Premium digital subscription for Google Gemini Pro 18M Invite.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -8848,7 +8848,7 @@
     "resellerProductId": 5,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.473Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.983Z",
     "variants": [
       {
         "id": "1m",
@@ -14126,7 +14126,7 @@
     "resellerProductId": 2,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.471Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.982Z",
     "variants": [
       {
         "id": "1m",
@@ -14175,7 +14175,7 @@
     "resellerProductId": 3,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.472Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.982Z",
     "variants": [
       {
         "id": "1m",
@@ -14224,7 +14224,7 @@
     "resellerProductId": 4,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.473Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.983Z",
     "variants": [
       {
         "id": "1m",
@@ -14273,7 +14273,7 @@
     "resellerProductId": 6,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.473Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.984Z",
     "variants": [
       {
         "id": "1m",
@@ -14322,7 +14322,7 @@
     "resellerProductId": 7,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-10-31T09:12:29.473Z",
+    "lastSynchronizedAt": "2026-10-31T14:26:15.984Z",
     "variants": [
       {
         "id": "1m",

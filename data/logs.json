@@ -1,5 +1,25 @@
 [
   {
+    "id": "log_1793456776381_ei7v",
+    "user": "Automated Fulfillment",
+    "role": "System",
+    "module": "Orders",
+    "action": "Auto-Dispatched",
+    "details": "Order ##CL-62963 fulfilled via Reseller API (Supplier Code: rs_sim_1793456776380)",
+    "timestamp": "2026-10-31T14:26:16.381Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1793456776377_h1kg",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 1 unit(s) of \"Google AI Pro Gemini 3M\" via Paystack. New stock — Total: 19, Reserved: 0, Available: 19",
+    "timestamp": "2026-10-31T14:26:16.377Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1791079443422_h8hn",
     "user": "Admin Manager",
     "role": "Admin",
