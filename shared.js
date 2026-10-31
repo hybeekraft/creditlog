@@ -83,14 +83,23 @@ const FLAG_ICONS = {
 };
 
 function getCurrency() {
-  return localStorage.getItem('creditlog_currency') || 'NGN';
+  if (typeof localStorage !== 'undefined') {
+    return localStorage.getItem('creditlog_currency') || 'NGN';
+  }
+  return 'NGN';
 }
 
 function setCurrency(curr) {
   const c = curr === 'USD' ? 'USD' : 'NGN';
-  localStorage.setItem('creditlog_currency', c);
-  updateCurrencyUI();
-  window.dispatchEvent(new CustomEvent('currencychange', { detail: { currency: c } }));
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('creditlog_currency', c);
+  }
+  if (typeof updateCurrencyUI === 'function') {
+    updateCurrencyUI();
+  }
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof CustomEvent !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('currencychange', { detail: { currency: c } }));
+  }
 }
 
 function toggleCurrency() {
@@ -99,29 +108,24 @@ function toggleCurrency() {
   setCurrency(next);
 }
 
-function getCurrencyDropdownHTML() {
+function getCurrencyToggleHTML() {
   const curr = getCurrency();
   const currLabel = curr === 'USD' ? 'USD $' : 'NGN ₦';
+  const targetLabel = curr === 'USD' ? 'NGN (₦)' : 'USD ($)';
   return `
-    <div class="currency-dropdown-wrap" data-currency-dropdown>
-      <button type="button" class="currency-dropdown-trigger" onclick="toggleCurrencyDropdown(event)" aria-haspopup="listbox" aria-expanded="false" aria-label="Select Currency">
-        <span class="curr-trigger-flag">${FLAG_ICONS[curr] || FLAG_ICONS.NGN}</span>
-        <span class="curr-trigger-code">${currLabel}</span>
-      </button>
-      <div class="currency-dropdown-menu" role="listbox">
-        <button type="button" class="currency-option-item ${curr === 'NGN' ? 'active' : ''}" data-curr="NGN" onclick="selectCurrency('NGN', event)" role="option" aria-selected="${curr === 'NGN'}">
-          <span class="curr-opt-flag">${FLAG_ICONS.NGN}</span>
-          <span class="curr-opt-code">NGN ₦</span>
-          <span class="curr-opt-check">✓</span>
-        </button>
-        <button type="button" class="currency-option-item ${curr === 'USD' ? 'active' : ''}" data-curr="USD" onclick="selectCurrency('USD', event)" role="option" aria-selected="${curr === 'USD'}">
-          <span class="curr-opt-flag">${FLAG_ICONS.USD}</span>
-          <span class="curr-opt-code">USD $</span>
-          <span class="curr-opt-check">✓</span>
-        </button>
-      </div>
-    </div>
+    <button type="button" class="currency-toggle-btn" onclick="toggleCurrency()" aria-label="Current currency: ${curr}. Click to switch to ${targetLabel}." title="Click to switch to ${targetLabel}">
+      <span class="curr-flag">${FLAG_ICONS[curr] || FLAG_ICONS.NGN}</span>
+      <span class="curr-code">${currLabel}</span>
+      <svg class="curr-switch-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+      </svg>
+    </button>
   `;
+}
+
+// Backward compatibility alias
+function getCurrencyDropdownHTML() {
+  return getCurrencyToggleHTML();
 }
 
 function toggleCurrencyDropdown(event) {
@@ -129,37 +133,7 @@ function toggleCurrencyDropdown(event) {
     event.preventDefault();
     event.stopPropagation();
   }
-  const trigger = event ? event.currentTarget : document.querySelector('.currency-dropdown-trigger');
-  const wrap = trigger ? trigger.closest('.currency-dropdown-wrap') : document.querySelector('.currency-dropdown-wrap');
-  if (!wrap) return;
-  const menu = wrap.querySelector('.currency-dropdown-menu');
-  const isOpen = menu && menu.classList.contains('show');
-
-  // Close any other open currency menus
-  document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
-    if (m !== menu) {
-      m.classList.remove('show');
-      const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
-      if (tr) {
-        tr.classList.remove('open');
-        tr.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-
-  if (isOpen) {
-    menu.classList.remove('show');
-    if (trigger) {
-      trigger.classList.remove('open');
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-  } else if (menu) {
-    menu.classList.add('show');
-    if (trigger) {
-      trigger.classList.add('open');
-      trigger.setAttribute('aria-expanded', 'true');
-    }
-  }
+  toggleCurrency();
 }
 
 function selectCurrency(curr, event) {
@@ -168,15 +142,6 @@ function selectCurrency(curr, event) {
     event.stopPropagation();
   }
   setCurrency(curr);
-  // Close open currency menus
-  document.querySelectorAll('.currency-dropdown-menu.show').forEach(m => {
-    m.classList.remove('show');
-    const tr = m.closest('.currency-dropdown-wrap')?.querySelector('.currency-dropdown-trigger');
-    if (tr) {
-      tr.classList.remove('open');
-      tr.setAttribute('aria-expanded', 'false');
-    }
-  });
 }
 
 function formatPrice(usdVal) {
@@ -204,8 +169,24 @@ function formatNaira(val) {
 
 function updateCurrencyUI() {
   const curr = getCurrency();
+  const currLabel = curr === 'USD' ? 'USD $' : 'NGN ₦';
+  const targetLabel = curr === 'USD' ? 'NGN (₦)' : 'USD ($)';
 
-  // 1. Update all currency dropdown wraps across DOM
+  // 1. Update all currency toggle buttons across DOM
+  document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+    const flagEl = btn.querySelector('.curr-flag') || btn.querySelector('.curr-trigger-flag');
+    const codeEl = btn.querySelector('.curr-code') || btn.querySelector('.curr-trigger-code');
+    if (flagEl && FLAG_ICONS[curr]) {
+      flagEl.innerHTML = FLAG_ICONS[curr];
+    }
+    if (codeEl) {
+      codeEl.textContent = currLabel;
+    }
+    btn.setAttribute('title', `Click to switch to ${targetLabel}`);
+    btn.setAttribute('aria-label', `Current currency: ${curr}. Click to switch to ${targetLabel}.`);
+  });
+
+  // 2. Update legacy currency dropdown wraps & triggers across DOM if present
   document.querySelectorAll('.currency-dropdown-wrap').forEach(wrap => {
     const flagEl = wrap.querySelector('.curr-trigger-flag');
     const codeEl = wrap.querySelector('.curr-trigger-code');
@@ -213,9 +194,13 @@ function updateCurrencyUI() {
       flagEl.innerHTML = FLAG_ICONS[curr];
     }
     if (codeEl) {
-      codeEl.textContent = curr === 'USD' ? 'USD $' : 'NGN ₦';
+      codeEl.textContent = currLabel;
     }
-
+    const trigger = wrap.querySelector('.currency-dropdown-trigger');
+    if (trigger) {
+      trigger.setAttribute('title', `Click to switch to ${targetLabel}`);
+      trigger.setAttribute('aria-label', `Current currency: ${curr}. Click to switch to ${targetLabel}.`);
+    }
     wrap.querySelectorAll('.currency-option-item').forEach(opt => {
       const optCurr = opt.getAttribute('data-curr');
       if (optCurr === curr) {
@@ -228,7 +213,7 @@ function updateCurrencyUI() {
     });
   });
 
-  // 2. Update all fallback currency toggle capsule buttons across DOM if present
+  // 3. Update all fallback currency toggle capsule buttons across DOM if present
   document.querySelectorAll('.currency-toggle-capsule').forEach(capsule => {
     capsule.querySelectorAll('.curr-pill-btn').forEach(btn => {
       const btnCurr = btn.getAttribute('data-curr') || (btn.textContent.includes('USD') ? 'USD' : 'NGN');
@@ -240,14 +225,6 @@ function updateCurrencyUI() {
         btn.setAttribute('aria-pressed', 'false');
       }
     });
-  });
-
-  // 3. Update any standalone currency buttons
-  document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
-    const codeEl = btn.querySelector('.curr-code');
-    const flagEl = btn.querySelector('.curr-flag');
-    if (codeEl) codeEl.textContent = curr;
-    if (flagEl) flagEl.textContent = curr === 'USD' ? '🇺🇸' : '🇳🇬';
   });
 
   // 4. Update hero ticker stock nodes dynamically if present
@@ -267,11 +244,11 @@ function mountGlobalCurrencyToggle() {
   const target = document.querySelector('.site-header .header-actions') || 
                  document.querySelector('.product-top-bar .top-bar-right') || 
                  document.querySelector('.checkout-top-bar');
-  if (target && !target.querySelector('.currency-dropdown-wrap') && !target.querySelector('.currency-toggle-capsule')) {
+  if (target && !target.querySelector('.currency-toggle-btn') && !target.querySelector('.currency-dropdown-wrap') && !target.querySelector('.currency-toggle-capsule')) {
     const temp = document.createElement('div');
-    temp.innerHTML = getCurrencyDropdownHTML().trim();
-    const dropdownEl = temp.firstElementChild;
-    target.prepend(dropdownEl);
+    temp.innerHTML = getCurrencyToggleHTML().trim();
+    const toggleEl = temp.firstElementChild;
+    target.prepend(toggleEl);
     updateCurrencyUI();
   }
 }
@@ -5406,7 +5383,12 @@ if (typeof module !== 'undefined' && module.exports) {
     renderBrandIcon,
     getBrandData,
     normalizeBrand,
-    getAllCatalogProducts
+    getAllCatalogProducts,
+    getCurrencyToggleHTML,
+    getCurrencyDropdownHTML,
+    formatPrice,
+    formatDualPrice,
+    USD_TO_NGN_RATE
   };
 }
 
