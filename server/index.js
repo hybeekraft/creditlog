@@ -89,8 +89,10 @@ const SOURCE_DATA_DIR = candidateDataDirs.find(d => fs.existsSync(d)) || candida
 });
 
 // Payment gateway keys
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_demo_creditlog_paystack';
-const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY || 'pk_test_demo_creditlog_paystack';
+const BACHS_API_KEY = process.env.BACHS_API_KEY || 'sk_test_demo_creditlog_bachs';
+const BACHS_WEBHOOK_SECRET = process.env.BACHS_WEBHOOK_SECRET || 'whsec_test_demo_creditlog_bachs';
+const BACHS_ENVIRONMENT = process.env.BACHS_ENVIRONMENT || 'live';
+const BACHS_BASE_URL = process.env.BACHS_BASE_URL || (BACHS_ENVIRONMENT === 'sandbox' ? 'https://sandbox-api.bachs.io' : 'https://api.bachs.io');
 const FLUTTERWAVE_SECRET_KEY = process.env.FLUTTERWAVE_SECRET_KEY || 'flw_sec_demo_creditlog';
 const FLUTTERWAVE_PUBLIC_KEY = process.env.FLUTTERWAVE_PUBLIC_KEY || 'flw_pub_demo_creditlog';
 
@@ -103,18 +105,81 @@ function getEffectiveFxRate() {
 }
 const USD_TO_NGN_RATE = getEffectiveFxRate();
 
-// Verify Paystack payment with their API
-async function verifyPaystackReference(reference) {
-  if (!reference) return { verified: false, error: 'No reference provided' };
-  const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
-  const isDemoKey = !secret || secret.includes('demo') || secret.includes('test_creditlog');
+// Create Bachs checkout session
+async function createBachsCheckoutSession(orderData, reqHost) {
+  const apiKey = process.env.BACHS_API_KEY || BACHS_API_KEY;
+  const isDemo = !apiKey || apiKey.includes('demo') || apiKey.includes('test_creditlog') || apiKey.includes('xxxx') || apiKey.startsWith('bachs_live_xxx');
+
+  const storeUrl = process.env.STORE_URL || `http://${reqHost || 'localhost:3000'}`;
+  const successUrl = `${storeUrl}/success.html?orderId=${encodeURIComponent(orderData.id)}`;
+  const cancelUrl = `${storeUrl}/checkout.html?orderId=${encodeURIComponent(orderData.id)}`;
+
+  if (isDemo) {
+    return {
+      id: `cs_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`,
+      checkout_url: successUrl,
+      status: 'pending',
+      isDemo: true
+    };
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    const amountVal = orderData.currency === 'USD' ? String(orderData.totalUsd) : String(orderData.totalNgn);
+
+    const resp = await fetch(`${BACHS_BASE_URL}/v1/checkout-sessions`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pricing: {
+          amount: amountVal,
+          currency: orderData.currency || 'USD'
+        },
+        customer: {
+          email: orderData.customerEmail,
+          name: orderData.customerName,
+          phone: orderData.customerPhone || undefined
+        },
+        metadata: {
+          orderId: orderData.id,
+          reference: orderData.reference,
+          productId: orderData.productId
+        },
+        success_url: successUrl,
+        cancel_url: cancelUrl
+      }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    const data = await resp.json();
+    return data;
+  } catch (err) {
+    console.warn('[Bachs] Checkout session create error:', err.message);
+    return {
+      id: `cs_${Date.now().toString(36)}`,
+      checkout_url: successUrl,
+      error: err.message,
+      isDemo: true
+    };
+  }
+}
+
+// Verify Bachs payment with API
+async function verifyBachsPayment(referenceOrId) {
+  if (!referenceOrId) return { verified: false, error: 'No reference or checkout ID provided' };
+  const apiKey = process.env.BACHS_API_KEY || BACHS_API_KEY;
+  const isDemoKey = !apiKey || apiKey.includes('demo') || apiKey.includes('test_creditlog') || apiKey.includes('xxxx') || apiKey.startsWith('bachs_live_xxx');
 
   if (isDemoKey) {
     return {
       verified: true,
-      amountKobo: null,
-      channel: 'card',
-      currency: 'NGN',
+      amount: null,
+      channel: 'bachs',
+      currency: 'USD',
       isLiveGateway: false
     };
   }
@@ -122,36 +187,37 @@ async function verifyPaystackReference(reference) {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
-    const resp = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`, {
+    const resp = await fetch(`${BACHS_BASE_URL}/v1/checkout-sessions/${encodeURIComponent(referenceOrId)}`, {
       headers: {
-        'Authorization': `Bearer ${secret}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       signal: controller.signal
     });
     clearTimeout(timeout);
     const data = await resp.json();
-    if (data && data.status === true && data.data && data.data.status === 'success') {
+    const status = (data && (data.status || (data.data && data.data.status))) || '';
+    const isSuccess = ['succeeded', 'completed', 'paid'].includes(String(status).toLowerCase());
+
+    if (isSuccess) {
       return {
         verified: true,
-        amountKobo: data.data.amount,
-        amountNgn: data.data.amount / 100,
-        currency: data.data.currency,
-        channel: data.data.channel,
+        channel: 'bachs',
+        status,
         isLiveGateway: true,
-        raw: data.data
+        raw: data
       };
     } else {
       return {
         verified: false,
-        error: (data && data.message) || 'Payment verification failed at Paystack',
+        error: (data && data.message) || `Payment status is ${status || 'unconfirmed'}`,
         raw: data
       };
     }
   } catch (err) {
     return {
       verified: false,
-      error: `Paystack verification request error: ${err.message}`
+      error: `Bachs verification request error: ${err.message}`
     };
   }
 }
@@ -445,7 +511,7 @@ function sendJSON(res, statusCode, data) {
     'Pragma': 'no-cache',
     'Expires': '0',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-paystack-signature, verif-hash, x-admin-token',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-bachs-signature, x-bachs-signature-v2, x-bachs-timestamp, verif-hash, x-admin-token',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
   });
   res.end(JSON.stringify(data));
@@ -473,7 +539,7 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-paystack-signature, verif-hash, x-admin-token',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-bachs-signature, x-bachs-signature-v2, x-bachs-timestamp, verif-hash, x-admin-token',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
     });
     return res.end();
@@ -1970,7 +2036,7 @@ const server = http.createServer(async (req, res) => {
       : `₦${totalNgn.toLocaleString('en-US')}`;
 
     const orderId = '#CL-' + Math.floor(10000 + Math.random() * 90000);
-    const selectedGateway = gateway || 'Paystack';
+    const selectedGateway = gateway || 'Bachs';
     const paymentRef = `${selectedGateway.toLowerCase().slice(0, 3)}_ref_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 6)}`;
 
     const newOrder = {
@@ -2010,10 +2076,31 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    // Initialize Bachs session if selected
+    let checkoutUrl = null;
+    let sessionId = null;
+    if (selectedGateway === 'Bachs') {
+      try {
+        const session = await createBachsCheckoutSession(newOrder, req.headers.host);
+        if (session && (session.checkout_url || session.url || session.id)) {
+          checkoutUrl = session.checkout_url || session.url || null;
+          sessionId = session.id || null;
+          if (sessionId && (!newOrder.reference || newOrder.reference.startsWith('bac_ref_'))) {
+            newOrder.reference = sessionId;
+            saveOrder(newOrder);
+          }
+        }
+      } catch (sessErr) {
+        console.warn('[Bachs] Session initialization skipped:', sessErr.message);
+      }
+    }
+
     return sendJSON(res, 201, {
       success: true,
       message: 'Order created and price verified.',
-      order: newOrder
+      order: newOrder,
+      checkoutUrl,
+      sessionId
     });
   }
 
@@ -2038,7 +2125,7 @@ const server = http.createServer(async (req, res) => {
           quantity: body.quantity || 1,
           price: body.amount || '$4.95',
           currency: body.currency || 'USD',
-          gateway: gateway || 'Paystack',
+          gateway: gateway || 'Bachs',
           date: new Date().toLocaleString('en-GB')
         };
       }
@@ -2084,7 +2171,7 @@ const server = http.createServer(async (req, res) => {
         recomputeProductStock(prod);
         saveProducts(products);
 
-        recordLog('Payment Gateway', 'Gateway', 'Inventory', 'Stock Sold', `Sold ${qty} unit(s) of "${prod.name}" via ${gateway || 'Paystack'}. New stock — Total: ${prod.totalStock}, Reserved: ${prod.reservedStock}, Available: ${prod.availableStock}`);
+        recordLog('Payment Gateway', 'Gateway', 'Inventory', 'Stock Sold', `Sold ${qty} unit(s) of "${prod.name}" via ${gateway || 'Bachs'}. New stock — Total: ${prod.totalStock}, Reserved: ${prod.reservedStock}, Available: ${prod.availableStock}`);
         console.log(`[Payment Success & Stock Sold] "${prod.name}" x${qty} — Total: ${prod.totalStock}, Reserved: ${prod.reservedStock}, Available: ${prod.availableStock}`);
       }
 
@@ -2119,7 +2206,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       order.reference = reference || order.reference || `pay_ref_${Date.now()}`;
-      order.gateway = gateway || order.gateway || 'Paystack';
+      order.gateway = gateway || order.gateway || 'Bachs';
       order.paidAt = new Date().toISOString();
 
       saveOrder(order);
@@ -2172,28 +2259,52 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // Paystack webhook handler
-  if (pathname === '/api/webhook/paystack' && req.method === 'POST') {
-    const paystackSig = req.headers['x-paystack-signature'];
-    const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
+  // Bachs webhook handler
+  if (pathname === '/api/webhook/bachs' && req.method === 'POST') {
+    const bachsSig = req.headers['x-bachs-signature'] || req.headers['x-bachs-signature-v2'];
+    const bachsTimestamp = req.headers['x-bachs-timestamp'];
+    const secret = process.env.BACHS_WEBHOOK_SECRET || BACHS_WEBHOOK_SECRET;
     const body = await parseBody(req);
 
-    // Verify Paystack signature
-    if (secret && !secret.includes('demo') && !secret.includes('test_creditlog') && paystackSig && req.rawBody) {
-      const hash = crypto.createHmac('sha512', secret).update(req.rawBody).digest('hex');
-      if (paystackSig !== hash) {
-        console.warn('[Paystack Webhook] Invalid signature rejected');
+    // Verify Bachs webhook signature
+    const isDemoSecret = !secret || secret.includes('demo') || secret.includes('test_creditlog') || secret.startsWith('whsec_xxx');
+    if (!isDemoSecret && bachsSig && req.rawBody) {
+      let valid = false;
+      if (bachsTimestamp) {
+        const expected = crypto.createHmac('sha256', secret).update(`${bachsTimestamp}.${req.rawBody}`).digest('hex');
+        if (bachsSig === expected) valid = true;
+      }
+      if (!valid) {
+        const directExpected = crypto.createHmac('sha256', secret).update(req.rawBody).digest('hex');
+        if (bachsSig === directExpected) valid = true;
+      }
+      if (!valid) {
+        console.warn('[Bachs Webhook] Invalid signature rejected');
         return sendJSON(res, 401, { error: 'invalid_signature' });
       }
     }
-    
-    if (body.event === 'charge.success') {
-      const data = body.data;
-      const ref = data.reference;
+
+    const event = body.event || body.type;
+    const isSuccessEvent = !event || [
+      'collection.succeeded',
+      'checkout.completed',
+      'charge.succeeded',
+      'charge.success',
+      'payment.succeeded'
+    ].includes(event);
+
+    if (isSuccessEvent) {
+      const data = body.data || body;
+      const ref = data.reference || data.id || data.sessionId || (data.metadata && (data.metadata.reference || data.metadata.orderId));
+      const orderId = (data.metadata && data.metadata.orderId) || data.orderId || (ref && ref.startsWith('#CL-') ? ref : null);
 
       await withInventoryTransaction(async () => {
         const orders = getAllOrders();
-        const order = orders.find(o => o.reference === ref || (data.metadata && data.metadata.orderId === o.id));
+        const order = orders.find(o => 
+          (orderId && o.id === orderId) || 
+          (ref && o.reference === ref) ||
+          (ref && o.id === ref)
+        );
 
         // Ignore if already delivered
         if (order && order.status !== 'Delivered') {
@@ -2237,6 +2348,7 @@ const server = http.createServer(async (req, res) => {
             recordLog('Fulfillment Warning', 'System', 'Orders', 'Fallback Dispatch (Webhook)', `Order #${order.id}: Supplier fulfillment skipped (${fulfillment ? fulfillment.message : 'no response'}). Fallback credentials assigned.`);
           }
 
+          order.gateway = 'Bachs';
           order.paidAt = new Date().toISOString();
           saveOrder(order);
 
@@ -2254,16 +2366,16 @@ const server = http.createServer(async (req, res) => {
                 status: order.status,
                 paidAt: order.paidAt,
                 id: order.id,
-                gateway: 'Paystack',
+                gateway: 'Bachs',
                 reference: order.reference,
                 totalNgn: order.totalNgn
               });
             } catch (botErr) {
-              console.warn('[Paystack Webhook] Error syncing order to bot DB:', botErr.message);
+              console.warn('[Bachs Webhook] Error syncing order to bot DB:', botErr.message);
             }
           }
 
-          console.log(`[Paystack Webhook] Order ${order.id} marked as Delivered via charge.success`);
+          console.log(`[Bachs Webhook] Order ${order.id} marked as Delivered via ${event || 'payment'}`);
         }
       });
     }

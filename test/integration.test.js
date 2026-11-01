@@ -119,7 +119,7 @@ test('5. Direct Guest Checkout Order Creation (/api/orders/create)', async () =>
       customerEmail: 'automation_test@creditlog.com',
       customerPhone: '+2348123456789',
       deliveryChannel: 'Email',
-      gateway: 'Paystack'
+      gateway: 'Bachs'
     })
   });
 
@@ -148,7 +148,7 @@ test('6. Server-Side Payment Verification & store.db Order Sync (/api/payment/ve
       customerEmail: 'verified_order@creditlog.com',
       customerPhone: '+2348000000001',
       deliveryChannel: 'Email',
-      gateway: 'Paystack'
+      gateway: 'Bachs'
     })
   });
   const createData = await createRes.json();
@@ -162,7 +162,7 @@ test('6. Server-Side Payment Verification & store.db Order Sync (/api/payment/ve
     body: JSON.stringify({
       orderId,
       reference,
-      gateway: 'Paystack'
+      gateway: 'Bachs'
     })
   });
 
@@ -180,14 +180,14 @@ test('6. Server-Side Payment Verification & store.db Order Sync (/api/payment/ve
   assert.equal(trackData.data[0].id, orderId);
 });
 
-test('7. Paystack Webhook Processing & Idempotency (/api/webhook/paystack)', async () => {
+test('7. Bachs Webhook Processing & Idempotency (/api/webhook/bachs)', async () => {
   const webhookPayload = {
-    event: 'charge.success',
+    event: 'collection.succeeded',
     data: {
       reference: 'test_idempotent_ref_' + Date.now(),
       amount: 1450000,
       currency: 'NGN',
-      status: 'success',
+      status: 'succeeded',
       metadata: {
         orderId: '#CL-TEST-IDEMPOTENT'
       }
@@ -195,17 +195,23 @@ test('7. Paystack Webhook Processing & Idempotency (/api/webhook/paystack)', asy
   };
 
   // First webhook execution
-  const res1 = await fetch(`${baseUrl}/api/webhook/paystack`, {
+  const res1 = await fetch(`${baseUrl}/api/webhook/bachs`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'X-Bachs-Signature': 'whsec_demo_signature'
+    },
     body: JSON.stringify(webhookPayload)
   });
   assert.equal(res1.status, 200);
 
   // Duplicate replay
-  const res2 = await fetch(`${baseUrl}/api/webhook/paystack`, {
+  const res2 = await fetch(`${baseUrl}/api/webhook/bachs`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'X-Bachs-Signature': 'whsec_demo_signature'
+    },
     body: JSON.stringify(webhookPayload)
   });
   assert.equal(res2.status, 200);

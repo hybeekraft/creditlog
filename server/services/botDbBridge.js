@@ -177,7 +177,7 @@ class BotDbBridge {
       const created = orderData.paidAt || new Date().toISOString();
       const invoiceId = orderData.id || ('#CL-' + Date.now());
       const supplier = 'geminipro';
-      const paymentMethod = orderData.gateway || 'Paystack';
+      const paymentMethod = orderData.gateway || 'Bachs';
       const txid = orderData.reference || null;
       const expectedAmount = String(orderData.totalNgn || orderData.price || '');
 

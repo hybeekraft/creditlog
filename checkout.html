@@ -430,15 +430,15 @@
               <span>3. Payment Gateway</span>
             </h2>
             <div class="gateways-list">
-              <div class="gateway-option-card active" id="gwCardPaystack" onclick="selectGateway('Paystack')">
+              <div class="gateway-option-card active" id="gwCardBachs" onclick="selectGateway('Bachs')">
                 <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="Paystack" checked style="accent-color: #D04515;">
+                  <input type="radio" name="paymentGateway" value="Bachs" checked style="accent-color: #D04515;">
                   <div>
-                    <div class="gw-name-text">Paystack Secure Checkout</div>
-                    <div class="gw-desc-text">Debit / Credit Cards (Mastercard, Visa, Verve), Bank Transfer & USSD</div>
+                    <div class="gw-name-text">Bachs Global & Local Checkout</div>
+                    <div class="gw-desc-text">Cards, Bank Transfer, Mobile Money & Stablecoins (USDT / USDC)</div>
                   </div>
                 </div>
-                <span style="font-size: 11px; font-weight: 800; background: #0BA4DB; color: #FFF; padding: 2px 8px; border-radius: 4px;">Paystack</span>
+                <span style="font-size: 11px; font-weight: 800; background: #0F172A; color: #FFF; padding: 2px 8px; border-radius: 4px;">Bachs</span>
               </div>
 
               <div class="gateway-option-card" id="gwCardFlutterwave" onclick="selectGateway('Flutterwave')">
@@ -532,7 +532,7 @@
       <div class="gateway-modal-card">
         <div class="gateway-modal-header" id="gwHeader">
           <div class="gw-brand-wrap">
-            <span class="gw-logo" id="gwLogo">Paystack</span>
+            <span class="gw-logo" id="gwLogo">Bachs</span>
             <div class="gw-secured-badge">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7c0-2.757-2.243-5-5-5zm-3 5c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"/></svg>
               <span>PCI-DSS Encrypted</span>
@@ -636,7 +636,7 @@
 
         <div class="gw-modal-footer">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          <span id="gwFooterText">Protected by 256-bit Paystack PCI Security</span>
+          <span id="gwFooterText">Protected by Bachs 256-bit PCI-DSS Security</span>
         </div>
       </div>
     </div>
@@ -649,7 +649,7 @@
     let currentDuration = '';
     let currentQty = 1;
     let selectedDeliveryChannel = 'Email';
-    let selectedGateway = 'Paystack';
+    let selectedGateway = 'Bachs';
     let currentProduct = null;
     let serverQuote = null;
     let createdOrder = null;
@@ -1049,8 +1049,8 @@
         header.classList.remove('flw-theme');
         tabs.classList.remove('flw-theme-tabs');
         submitBtn.classList.remove('flw-theme-btn');
-        logo.textContent = 'Paystack';
-        footer.textContent = 'Protected by Paystack 256-bit PCI-DSS Security';
+        logo.textContent = 'Bachs';
+        footer.textContent = 'Protected by Bachs 256-bit PCI-DSS Security';
       }
 
       document.getElementById('gwBtnText').textContent = `Authorize & Pay ${order.price}`;

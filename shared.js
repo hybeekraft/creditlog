@@ -5707,7 +5707,7 @@ async function lookupGuestOrder() {
         <span style="font-size:11px; background:#10B981; color:#FFF; font-weight:700; padding:2px 8px; border-radius:10px;">${order.status || 'Delivered'}</span>
       </div>
       <div style="font-size:13.5px; font-weight:700; margin-bottom:4px;">${order.product} · ${order.plan}</div>
-      <div style="font-size:11.5px; color:#94A3B8; margin-bottom:10px;">Date: ${order.date || 'Recent'} · Paid: ${order.price} via ${order.gateway || 'Paystack'}</div>
+      <div style="font-size:11.5px; color:#94A3B8; margin-bottom:10px;">Date: ${order.date || 'Recent'} · Paid: ${order.price} via ${order.gateway || 'Bachs'}</div>
       
       <div style="background:rgba(255,255,255,0.05); border-radius:8px; padding:10px; font-size:12px; font-family:monospace; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
@@ -5724,7 +5724,7 @@ async function lookupGuestOrder() {
         </div>
       </div>
       <div style="display:flex; justify-content:flex-end; gap:8px;">
-        <a href="success.html?id=${encodeURIComponent(order.id)}&product=${encodeURIComponent(order.product)}&plan=${encodeURIComponent(order.plan)}&amount=${encodeURIComponent(order.price)}&method=${encodeURIComponent(order.gateway || 'Paystack')}" class="copy-cred-btn" style="text-decoration:none;">View Full Receipt ↗</a>
+        <a href="success.html?id=${encodeURIComponent(order.id)}&product=${encodeURIComponent(order.product)}&plan=${encodeURIComponent(order.plan)}&amount=${encodeURIComponent(order.price)}&method=${encodeURIComponent(order.gateway || 'Bachs')}" class="copy-cred-btn" style="text-decoration:none;">View Full Receipt ↗</a>
       </div>
     `;
     resultsBox.appendChild(card);

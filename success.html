@@ -197,7 +197,7 @@
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Payment Gateway</span>
-          <span class="dt-value" id="successPaymentMethod">Paystack</span>
+          <span class="dt-value" id="successPaymentMethod">Bachs</span>
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Total Amount Paid</span>
@@ -260,7 +260,7 @@
     const plan = order.plan || params.get('plan') || '1 Month';
     const qty = order.quantity || params.get('qty') || 1;
     const amount = order.price || params.get('amount') || '$4.95';
-    const method = order.gateway || params.get('method') || 'Paystack';
+    const method = order.gateway || params.get('method') || 'Bachs';
     const date = order.date || new Date().toLocaleString('en-GB');
     const name = order.customerName || params.get('name') || 'Customer';
     const email = order.customerEmail || params.get('email') || 'customer@example.com';

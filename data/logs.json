@@ -1,5 +1,35 @@
 [
   {
+    "id": "log_1793534111866_a4s1",
+    "user": "Automated Fulfillment",
+    "role": "System",
+    "module": "Orders",
+    "action": "Auto-Dispatched",
+    "details": "Order ##CL-38067 fulfilled via Reseller API (Supplier Code: rs_sim_1793534111864)",
+    "timestamp": "2026-11-01T11:55:11.866Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1793534111862_6jw6",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 1 unit(s) of \"HMA VPN 20-30 Days\" via Bachs. New stock — Total: 19, Reserved: 0, Available: 19",
+    "timestamp": "2026-11-01T11:55:11.862Z",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "log_1793534044291_w7go",
+    "user": "Payment Gateway",
+    "role": "Gateway",
+    "module": "Inventory",
+    "action": "Stock Sold",
+    "details": "Sold 1 unit(s) of \"HMA VPN 20-30 Days\" via Bachs. New stock — Total: 19, Reserved: 0, Available: 19",
+    "timestamp": "2026-11-01T11:54:04.291Z",
+    "ip": "127.0.0.1"
+  },
+  {
     "id": "log_1793456776381_ei7v",
     "user": "Automated Fulfillment",
     "role": "System",
@@ -15,7 +45,7 @@
     "role": "Gateway",
     "module": "Inventory",
     "action": "Stock Sold",
-    "details": "Sold 1 unit(s) of \"Google AI Pro Gemini 3M\" via Paystack. New stock — Total: 19, Reserved: 0, Available: 19",
+    "details": "Sold 1 unit(s) of \"Google AI Pro Gemini 3M\" via Bachs. New stock — Total: 19, Reserved: 0, Available: 19",
     "timestamp": "2026-10-31T14:26:16.377Z",
     "ip": "127.0.0.1"
   },
@@ -245,7 +275,7 @@
     "role": "Gateway",
     "module": "Inventory",
     "action": "Stock Sold",
-    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 0, Reserved: 0, Available: 0",
+    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Bachs. New stock — Total: 0, Reserved: 0, Available: 0",
     "timestamp": "2026-09-26T11:04:44.063Z",
     "ip": "127.0.0.1"
   },
@@ -265,7 +295,7 @@
     "role": "Gateway",
     "module": "Inventory",
     "action": "Stock Sold",
-    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 8, Reserved: 0, Available: 8",
+    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Bachs. New stock — Total: 8, Reserved: 0, Available: 8",
     "timestamp": "2026-09-26T11:04:32.065Z",
     "ip": "127.0.0.1"
   },
@@ -295,7 +325,7 @@
     "role": "Gateway",
     "module": "Inventory",
     "action": "Stock Sold",
-    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 0, Reserved: 0, Available: 0",
+    "details": "Sold 8 unit(s) of \"Netflix Premium\" via Bachs. New stock — Total: 0, Reserved: 0, Available: 0",
     "timestamp": "2026-09-26T10:51:53.975Z",
     "ip": "127.0.0.1"
   },
@@ -315,7 +345,7 @@
     "role": "Gateway",
     "module": "Inventory",
     "action": "Stock Sold",
-    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Paystack. New stock — Total: 8, Reserved: 0, Available: 8",
+    "details": "Sold 2 unit(s) of \"Netflix Premium\" via Bachs. New stock — Total: 8, Reserved: 0, Available: 8",
     "timestamp": "2026-09-26T10:51:53.941Z",
     "ip": "127.0.0.1"
   },
