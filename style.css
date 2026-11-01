@@ -1,6 +1,4 @@
-/* ==========================================================================
-   CreditLog — Modern Design System & Stylesheet
-   ========================================================================== */
+/* Creditlog modern design system & stylesheet */
 
 :root {
   color-scheme: light;
@@ -10,7 +8,7 @@
   --font-primary: var(--font-display);
   --font-mono: "Space Mono", "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
 
-  /* Official Brand Palette Tokens */
+  /* Color palette */
   --parchment: #F4ECD8;
   --ink: #190D08;
   --orange: #D04515;
@@ -192,9 +190,7 @@ a {
   display: none !important;
 }
 
-/* ==========================================================================
-   Header Navigation (Storefront)
-   ========================================================================== */
+/* Header navigation */
 .site-header {
   background: rgba(247, 245, 238, 0.92);
   backdrop-filter: blur(24px) saturate(190%);
@@ -456,9 +452,7 @@ a {
   color: #FFFFFF;
 }
 
-/* ==========================================================================
-   Mobile Navigation Drawer (Completely Removed - Using Bottom Navigation Bar)
-   ========================================================================== */
+/* Mobile navigation drawer */
 .mobile-menu-toggle-btn,
 .mobile-nav-drawer,
 .mobile-nav-backdrop {
@@ -467,9 +461,7 @@ a {
   pointer-events: none !important;
 }
 
-/* ==========================================================================
-   Primary Buttons & Shared Badges
-   ========================================================================== */
+/* Primary buttons & shared badges */
 .primary-btn {
   background: var(--color-primary);
   color: #FFFFFF;
@@ -544,10 +536,7 @@ a {
   margin-left: 8px;
 }
 
-/* ==========================================================================
-/* ==========================================================================
-   SCREEN 1: APPLE DESIGN SYSTEM — SPOTLIGHT, SEGMENTED CONTROLS & DIRECTORY
-   ========================================================================== */
+/* Spotlight, segmented controls & directory */
 
 /* Apple-style Hero */
 .hero-section {
@@ -641,9 +630,7 @@ a {
   pointer-events: none;
 }
 
-/* ==========================================================================
-   APP DIRECTORY / SHOP SECTION
-   ========================================================================== */
+/* App directory / shop section */
 .catalog-section {
   padding: 0 28px 90px;
   max-width: 1560px;
@@ -1027,9 +1014,7 @@ option {
   transform: scale(0.96);
 }
 
-/* ==========================================================================
-   DIRECTORY DISPLAY: BENTO GRID VIEW
-   ========================================================================== */
+/* Directory display: bento grid view */
 .directory-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1216,9 +1201,7 @@ option {
   transform: scale(0.96);
 }
 
-/* ==========================================================================
-   DIRECTORY DISPLAY: COMPACT LIST VIEW
-   ========================================================================== */
+/* Directory display: compact list view */
 .directory-list,
 .directory-list-view {
   display: flex;
@@ -1356,9 +1339,7 @@ option {
   transform: scale(0.96);
 }
 
-/* ==========================================================================
-   FLOATING DYNAMIC ISLAND / CART DOCK
-   ========================================================================== */
+/* Floating dynamic island / cart dock */
 .floating-cart-island {
   position: fixed;
   bottom: 24px;
@@ -1439,9 +1420,7 @@ option {
   transform: scale(0.97);
 }
 
-/* ==========================================================================
-   APPLE-STYLE PLAN SELECTOR MODAL / SHEET
-   ========================================================================== */
+/* Apple-style plan selector modal / sheet */
 .product-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1703,9 +1682,7 @@ option {
   box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
 }
 
-/* ==========================================================================
-   SCREEN 2: PRODUCT DETAIL PAGE
-   ========================================================================== */
+/* Product detail page */
 .detail-container {
   max-width: 1200px;
   margin: 30px auto;
@@ -2137,9 +2114,7 @@ option {
   margin-bottom: 4px;
 }
 
-/* ==========================================================================
-   SCREEN 3: CART & 4-STEP CHECKOUT
-   ========================================================================== */
+/* Cart & 4-step checkout */
 .checkout-wrapper {
   max-width: 1040px;
   margin: 36px auto;
@@ -2625,9 +2600,7 @@ option {
   font-size: 15px;
 }
 
-/* ==========================================================================
-   SCREEN 4: ORDER SUCCESS SCREEN
-   ========================================================================== */
+/* Order success screen */
 .success-screen-wrapper {
   max-width: 520px;
   margin: 50px auto;
@@ -2734,9 +2707,7 @@ option {
   gap: 10px;
 }
 
-/* ==========================================================================
-   SCREEN 5: CUSTOMER DASHBOARD
-   ========================================================================== */
+/* Customer dashboard */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
@@ -3207,9 +3178,7 @@ option {
   color: var(--text-dark);
 }
 
-/* ==========================================================================
-   SCREEN 6: ADMIN DASHBOARD
-   ========================================================================== */
+/* Admin dashboard */
 .admin-kpi-grid,
 .admin-reseller-kpi-grid,
 .kpi-cards-grid {
@@ -3538,9 +3507,7 @@ option {
   color: var(--text-dark, #190D08) !important;
 }
 
-/* ==========================================================================
-   SCREEN 7: ADMIN ACTIVITY LOGS
-   ========================================================================== */
+/* Admin activity logs */
 .logs-toolbar-card {
   background: #FFFFFF;
   border: 1px solid var(--border-light);
@@ -3690,9 +3657,7 @@ option {
   border: 1px solid rgba(208, 69, 21, 0.14);
 }
 
-/* ==========================================================================
-   Global Toast Notifications
-   ========================================================================== */
+/* Global toast notifications */
 .toast-notification {
   position: fixed;
   bottom: 24px;
@@ -3734,9 +3699,7 @@ option {
   font-weight: 900;
 }
 
-/* ==========================================================================
-   Responsive Breakpoints
-   ========================================================================== */
+/* Responsive breakpoints */
 @media (max-width: 1024px) {
   .hero-container {
     text-align: center;
@@ -3828,9 +3791,7 @@ option {
   }
 }
 
-/* ==========================================================================
-   Admin Dashboard Universal Responsive Layout System
-   ========================================================================== */
+/* Admin dashboard universal responsive layout system */
 
 /* Zero horizontal spillover insurance */
 html,
@@ -3891,7 +3852,7 @@ body {
   letter-spacing: 0.05em;
 }
 
-/* Tablet Breakpoint (768px – 1024px): Preserves vertical sidebar on tablet devices */
+/* Tablet layout */
 @media (min-width: 768px) and (max-width: 1024px) {
   .dashboard-layout {
     display: flex;
@@ -4552,9 +4513,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   Click-to-Switch Currency Toggle (Nigeria 🇳🇬 NGN ₦ / USA 🇺🇸 USD $)
-   ========================================================================== */
+/* Click-to-switch currency toggle */
 .currency-toggle-btn,
 .currency-dropdown-trigger {
   display: inline-flex;
@@ -4763,9 +4722,7 @@ body {
   box-shadow: none !important;
 }
 
-/* ==========================================================================
-   RESPONSIVE MEDIA QUERIES (Mobile & Tablet Optimization)
-   ========================================================================== */
+/* Responsive media queries */
 
 /* 1. Large Tablets & Small Laptops (<= 1024px) */
 @media (max-width: 1024px) {
@@ -5116,9 +5073,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   Header Auth Action Buttons
-   ========================================================================== */
+/* Header auth action buttons */
 .btn-auth-signin {
   color: #CBD5E1;
   font-size: 13.5px;
@@ -5155,9 +5110,7 @@ body {
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.5);
 }
 
-/* ==========================================================================
-   Authentication Pages (Sign In & Sign Up)
-   ========================================================================== */
+/* Authentication pages */
 .auth-page-wrapper {
   min-height: 100vh;
   min-height: 100dvh;
@@ -5470,9 +5423,7 @@ body {
   justify-content: space-between;
 }
 
-/* ==========================================================================
-   Dedicated Customer Dashboard: Tab Views, Virtual Wallet Card & Account Profile
-   ========================================================================== */
+/* Customer dashboard */
 
 /* Tab Switching System */
 .dash-tab-section {
@@ -5961,9 +5912,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ==========================================================================
-   Payment Gateway Modal (Paystack & Flutterwave)
-   ========================================================================== */
+/* Payment gateway modal */
 .gateway-modal-backdrop {
   position: fixed;
   top: 0;
@@ -6241,9 +6190,7 @@ body {
   font-weight: 600;
 }
 
-/* ==========================================================================
-   Order Confirmation & Digital Credentials Presentation
-   ========================================================================== */
+/* Order confirmation & digital credentials presentation */
 .credentials-delivery-card {
   background: #190D08;
   border: 1.5px solid rgba(208, 69, 21, 0.35);
@@ -6356,9 +6303,7 @@ body {
   color: #FFFFFF;
 }
 
-/* ==========================================================================
-   Apple Design Responsive Breakpoints
-   ========================================================================== */
+/* Apple design responsive breakpoints */
 @media (max-width: 1280px) {
   .directory-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -6421,9 +6366,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   Redesigned Apple Landing Page Styles
-   ========================================================================== */
+/* Redesigned apple landing page styles */
 
 /* Enhanced Hero Section */
 .hero-section-landing {
@@ -6773,9 +6716,7 @@ body {
 
 
 
-/* ==========================================================================
-   Quick Benefits Section
-   ========================================================================== */
+/* Quick benefits section */
 .benefits-section {
   padding: 40px 24px 80px;
   max-width: 1240px;
@@ -6866,9 +6807,7 @@ body {
   margin: 0;
 }
 
-/* ==========================================================================
-   How It Works Section
-   ========================================================================== */
+/* How it works section */
 .how-it-works-section {
   padding: 40px 24px 80px;
   max-width: 1240px;
@@ -6969,9 +6908,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   SLEEK DARK LUXURY GLASSMORPHIC HERO SYSTEM
-   ========================================================================== */
+/* Sleek dark luxury glassmorphic hero system */
 .hero-section-editorial {
   padding: 24px 20px 40px;
   max-width: 1560px;
@@ -7220,9 +7157,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* --------------------------------------------------------------------------
-   REIMAGINED DEEP OBSIDIAN STOCK TICKER STRIP
-   -------------------------------------------------------------------------- */
+/* Ticker strip */
 .hero-slab-ticker {
   background: rgba(14, 8, 5, 0.96);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -7615,9 +7550,7 @@ body {
 }
 
 /* RESPONSIVE DESIGN ADJUSTMENTS */
-/* ==========================================================================
-   COMPREHENSIVE RESPONSIVE DESIGN SYSTEM
-   ========================================================================== */
+/* Responsive layout */
 
 /* 1. Tablet Landscape & Small Desktop (<= 1024px) */
 @media (max-width: 1024px) {
@@ -7937,9 +7870,7 @@ body {
 
 
 
-/* ==========================================================================
-   MINIMALIST SINGLE-ROW FOOTER (CLEAN INSPIRATION LAYOUT)
-   ========================================================================== */
+/* Minimalist single-row footer */
 .site-footer-minimal {
   background: #190D08;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -8043,9 +7974,7 @@ body {
 
 
 
-/* ==========================================================================
-   Clean Boxed Pagination (Terracotta Active Indicator & White Cards)
-   ========================================================================== */
+/* Clean boxed pagination */
 .catalog-pagination-wrap {
   display: flex;
   justify-content: center;
@@ -8132,9 +8061,7 @@ body {
   font-weight: 700;
 }
 
-/* ==========================================================================
-   SECTION TAG FLANK DIVIDER & FEATURED STOREFRONT SHOWCASE
-   ========================================================================== */
+/* Section tag flank divider & featured storefront showcase */
 .featured-storefront-section {
   padding: 30px 24px 70px;
   max-width: 1560px;

@@ -331,9 +331,7 @@ class SyncEngine {
     return 'Standard License';
   }
 
-  /**
-   * Main Synchronization Routine
-   */
+  // Sync products from reseller API and bot database
   async runCatalogSync() {
     if (this.isSyncing) {
       console.log('[SyncEngine] Sync already in progress, skipping duplicate invocation.');
@@ -364,7 +362,7 @@ class SyncEngine {
         localProducts = [];
       }
 
-      // Filter out cached products not in the active reseller catalog
+      // Remove products not in the reseller catalog
       localProducts = localProducts.filter(p => p.resellerProductId !== undefined && p.resellerProductId !== null && activeSupplierIdSet.has(String(p.resellerProductId).trim()));
 
       let newCount = 0;

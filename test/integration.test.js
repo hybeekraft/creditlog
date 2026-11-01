@@ -218,18 +218,18 @@ test('8. Product-Specific Requirements & Delivery Modes from Seller API', async 
   assert.equal(data.success, true);
   assert.ok(data.data.length >= 124, `Storefront should offer at least 124 products, got ${data.data.length}`);
 
-  // 1. Verify deliveryFormat and importantRequirements exist across products
+  // Check delivery format and requirements
   const productsWithRequirements = data.data.filter(p => p.importantRequirements && p.importantRequirements.trim().length > 0);
   assert.ok(productsWithRequirements.length > 20, `At least 20 products should have specific requirements, found ${productsWithRequirements.length}`);
 
   const productsWithDeliveryFmt = data.data.filter(p => p.deliveryFormat && p.deliveryFormat.trim().length > 0);
   assert.ok(productsWithDeliveryFmt.length > 50, `At least 50 products should have parsed delivery format, found ${productsWithDeliveryFmt.length}`);
 
-  // 2. Verify requirements are distinct and product-specific (NOT generic fixed text)
+  // Check requirements are product-specific
   const reqSet = new Set(productsWithRequirements.map(p => p.importantRequirements));
   assert.ok(reqSet.size > 5, `Requirements must be diverse and product-specific, got ${reqSet.size} unique requirement sets`);
 
-  // 3. Test single product detail endpoint returns seller-provided fields
+  // Check single product details endpoint
   const sample = productsWithRequirements[0];
   const detailRes = await fetch(`${baseUrl}/api/products/${encodeURIComponent(sample.id)}`);
   assert.equal(detailRes.status, 200);
@@ -262,7 +262,7 @@ test('9. Amazon Brand Consolidation: All Amazon/Prime products belong strictly t
     assert.equal(item.iconType, 'amazon', `Product ${item.id} must have iconType amazon`);
   }
 
-  // Ensure no product in the catalog is branded "Amazon Prime"
+  // Check for duplicate Amazon brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Amazon Prime' || p.brand === 'Prime Video' || p.brand === 'Amazon Prime Video');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split Amazon Prime/Prime Video brand');
 });
@@ -286,7 +286,7 @@ test('10. Apple TV+ Brand Consolidation: All Apple/Apple TV products belong stri
     assert.equal(item.iconType, 'appletv', `Product ${item.id} must have iconType appletv`);
   }
 
-  // Ensure no product in the catalog is branded with raw "Apple" or "Apple TV"
+  // Check for duplicate Apple brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Apple' || p.brand === 'Apple TV');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Apple" or "Apple TV" brand');
 });
@@ -312,7 +312,7 @@ test('11. Gemini Brand Consolidation: All Google Gemini and Gmail products belon
     assert.equal(item.iconType, 'gemini', `Product ${item.id} must have iconType gemini`);
   }
 
-  // Ensure no product in the catalog is branded with "Gmail" or "Google Gemini"
+  // Check for duplicate Gemini brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Gmail' || p.brand === 'Google Gemini');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Gmail" or "Google Gemini" brand');
 });
@@ -338,7 +338,7 @@ test('12. HMA VPN Brand Consolidation: All HMA and HideMyAss products belong str
     assert.equal(item.iconType, 'hma', `Product ${item.id} must have iconType hma`);
   }
 
-  // Ensure no product in the catalog is branded with raw "HMA" or "HideMyAss"
+  // Check for duplicate HMA brands
   const duplicateBrands = json.data.filter(p => p.brand === 'HMA' || p.brand === 'HideMyAss' || p.brand === 'HideMyAss VPN');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "HMA" or "HideMyAss" brand');
 });
@@ -364,7 +364,7 @@ test('13. Claude Brand Consolidation: All Claude and Anthropic products belong s
     assert.equal(item.iconType, 'claude', `Product ${item.id} must have iconType claude`);
   }
 
-  // Ensure no product in the catalog is branded with "Anthropic" or "Anthropic Claude"
+  // Check for duplicate Claude brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Anthropic' || p.brand === 'Anthropic Claude');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Anthropic" or "Anthropic Claude" brand');
 });
@@ -388,7 +388,7 @@ test('14. CapCut Brand Consolidation: All Capcut/CapCut products belong strictly
     assert.equal(item.iconType, 'capcut', `Product ${item.id} must have iconType capcut`);
   }
 
-  // Ensure no product in the catalog is branded with lowercase/mixed "Capcut"
+  // Check for duplicate CapCut brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Capcut');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Capcut" brand');
 });
@@ -412,7 +412,7 @@ test('15. KlingAI Brand Consolidation: All Kling/Kling AI products belong strict
     assert.equal(item.iconType, 'kling', `Product ${item.id} must have iconType kling`);
   }
 
-  // Ensure no product in the catalog is branded with split "Kling" or "Kling AI"
+  // Check for duplicate KlingAI brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Kling' || p.brand === 'Kling AI');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Kling" or "Kling AI" brand');
 });
@@ -436,7 +436,7 @@ test('16. Gamma Brand Consolidation: All Gamma/Gamma AI products belong strictly
     assert.equal(item.iconType, 'gamma', `Product ${item.id} must have iconType gamma`);
   }
 
-  // Ensure no product in the catalog is branded with "Gamma AI"
+  // Check for duplicate Gamma brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Gamma AI');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Gamma AI" brand');
 });
@@ -460,7 +460,7 @@ test('17. Proton VPN Brand Consolidation: All Proton/Proton VPN products belong 
     assert.equal(item.iconType, 'proton', `Product ${item.id} must have iconType proton`);
   }
 
-  // Ensure no product in the catalog is branded with raw "Proton" or "ProtonVPN"
+  // Check for duplicate Proton brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Proton' || p.brand === 'ProtonVPN');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Proton" brand');
 });
@@ -484,7 +484,7 @@ test('18. Microsoft Brand Consolidation: All Microsoft, Office 365, and O365 pro
     assert.equal(item.iconType, 'microsoft', `Product ${item.id} must have iconType microsoft`);
   }
 
-  // Ensure no product in the catalog is branded with split "Microsoft 365", "Office 365", or "O365"
+  // Check for duplicate Microsoft brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Microsoft 365' || p.brand === 'Office 365' || p.brand === 'O365');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Microsoft 365", "Office 365", or "O365" brand');
 });
@@ -509,7 +509,7 @@ test('19. Lovable Brand Consolidation: All Lovable/Loveable products belong stri
     assert.equal(item.iconType, 'lovable', `Product ${item.id} must have iconType lovable`);
   }
 
-  // Ensure no product in the catalog is branded with split "Loveable"
+  // Check for duplicate Lovable brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Loveable');
   assert.equal(duplicateBrands.length, 0, 'No product should have a split "Loveable" brand');
 });
@@ -535,7 +535,7 @@ test('20. Kimi Brand Consolidation: All Kimi API products belong strictly to "Ki
     assert.equal(item.iconType, 'kimi', `Product ${item.id} must have iconType kimi`);
   }
 
-  // Ensure no product in the catalog is branded as generic "API"
+  // Check for duplicate Kimi brands
   const apiBranded = json.data.filter(p => p.brand === 'API');
   assert.equal(apiBranded.length, 0, 'No product should have generic "API" brand');
 });
@@ -559,7 +559,7 @@ test('21. Qwen Brand Consolidation: All Qwen and Alibaba Qwen products belong st
     assert.equal(item.iconType, 'qwen', `Product ${item.id} must have iconType qwen`);
   }
 
-  // Ensure no product in the catalog is branded as "Alibaba Qwen"
+  // Check for duplicate Qwen brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Alibaba Qwen');
   assert.equal(duplicateBrands.length, 0, 'No product should have "Alibaba Qwen" brand');
 });
@@ -583,7 +583,7 @@ test('22. ChatGPT Brand Consolidation: All ChatGPT and OpenAI products belong st
     assert.equal(item.iconType, 'chatgpt', `Product ${item.id} must have iconType chatgpt`);
   }
 
-  // Ensure no product in the catalog is branded as "OpenAI ChatGPT" or "OpenAI"
+  // Check for duplicate ChatGPT brands
   const duplicateBrands = json.data.filter(p => p.brand === 'OpenAI ChatGPT' || p.brand === 'OpenAI');
   assert.equal(duplicateBrands.length, 0, 'No product should have "OpenAI ChatGPT" or "OpenAI" brand');
 });
@@ -607,7 +607,7 @@ test('23. Codex Brand Consolidation: All Codex and Codex API products belong str
     assert.equal(item.iconType, 'codex', `Product ${item.id} must have iconType codex`);
   }
 
-  // Ensure no product in the catalog is branded as "OpenAI Codex" or "Codex API"
+  // Check for duplicate Codex brands
   const duplicateBrands = json.data.filter(p => p.brand === 'OpenAI Codex' || p.brand === 'Codex API');
   assert.equal(duplicateBrands.length, 0, 'No product should have "OpenAI Codex" or "Codex API" brand');
 });
@@ -633,7 +633,7 @@ test('24. Storefront 5-Box Pagination Algorithm: Maintains 5 number boxes withou
   assert.deepEqual(fn(3, 14), [1, 2, 3, 4, 14]);
   assert.deepEqual(fn(4, 14), [1, 2, 3, 4, 14]);
 
-  // Case 3: Verify all pages for total = 14 maintain 5 boxes and never contain '...'
+  // Verify 5 boxes with no dots
   for (let c = 1; c <= 14; c++) {
     const items = fn(c, 14);
     assert.equal(items.length, 5, `Must have exactly 5 boxes for page ${c}`);
@@ -666,7 +666,7 @@ test('25. Xbox Brand Consolidation: All Xbox, Fallout, Bethesda, PC Game Pass, a
     assert.equal(item.iconType, 'xbox', `Product ${item.id} must have iconType xbox`);
   }
 
-  // Ensure no product in the catalog is branded with split "Bethesda / Xbox", "Bethesda", or "PC"
+  // Check for duplicate Xbox brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Bethesda / Xbox' || p.brand === 'Bethesda' || p.brand === 'PC');
   assert.equal(duplicateBrands.length, 0, 'No product should have "Bethesda / Xbox", "Bethesda", or "PC" brand');
 });
@@ -688,7 +688,7 @@ test('26. KREA Brand Consolidation: All Krea and KREA products belong strictly t
     assert.equal(item.brand, 'KREA', `Product ${item.id} (${item.name}) must have brand strictly set to "KREA", got "${item.brand}"`);
   }
 
-  // Ensure no product in the catalog is branded with split "Krea"
+  // Check for duplicate KREA brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Krea');
   assert.equal(duplicateBrands.length, 0, 'No product should have split "Krea" brand');
 });
@@ -796,7 +796,7 @@ test('29. NordVPN Brand & Icon Consolidation: All NordVPN products strictly have
 });
 
 test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdowns, authoritatively across all storefront pages', () => {
-  // 1. Verify shared.js generator returns click-to-switch button with clean flag and code only (no arrow icons)
+  // Check currency toggle markup
   const toggleHtml = shared.getCurrencyToggleHTML();
   assert.ok(toggleHtml.includes('currency-toggle-btn'), 'getCurrencyToggleHTML must generate .currency-toggle-btn');
   assert.ok(toggleHtml.includes('onclick="toggleCurrency()"'), 'Currency toggle button must invoke toggleCurrency() directly');
@@ -805,7 +805,7 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
   assert.ok(!toggleHtml.includes('curr-switch-icon'), 'Currency toggle must NOT have up/down arrow icons');
   assert.ok(!toggleHtml.includes('currency-dropdown-menu'), 'Toggle must not render dropdown menu');
 
-  // 2. Verify all storefront pages use clean .currency-toggle-btn without arrows
+  // Check storefront pages for currency toggle
   const pages = ['shop.html', 'index.html', 'product.html', 'checkout.html'];
   for (const pageName of pages) {
     const pageHtml = fs.readFileSync(path.resolve(__dirname, `../${pageName}`), 'utf8');
@@ -824,7 +824,7 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
     );
   }
 
-  // 3. Verify style.css includes .currency-toggle-btn styling with cursor pointer
+  // Check currency toggle styles
   const css = fs.readFileSync(path.resolve(__dirname, '../style.css'), 'utf8');
   assert.ok(css.includes('.currency-toggle-btn'), 'style.css must style .currency-toggle-btn');
   assert.ok(css.includes('display: none !important;'), 'style.css must hide any residual currency dropdown menus');

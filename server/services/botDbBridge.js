@@ -88,10 +88,7 @@ class BotDbBridge {
     }
   }
 
-  /**
-   * Synchronize or upsert a supplier product into store.db products table
-   * @param {Object} item - Normalized supplier product details
-   */
+  // Save or update supplier product in bot database
   upsertSupplierProduct(item) {
     if (!this.isAvailable()) return { success: false, reason: 'db_unavailable' };
 
@@ -138,9 +135,7 @@ class BotDbBridge {
     }
   }
 
-  /**
-   * Mark products absent from the supplier catalog as inactive in store.db
-   */
+  // Mark removed supplier products as inactive in bot database
   deactivateMissingSupplierProducts(activeSupplierIdSet) {
     if (!this.isAvailable()) return 0;
     try {
@@ -161,9 +156,7 @@ class BotDbBridge {
     }
   }
 
-  /**
-   * Record a verified storefront order into store.db orders table for unified transaction records
-   */
+  // Save storefront order to bot database
   recordOrder(orderData) {
     if (!this.isAvailable()) return null;
 

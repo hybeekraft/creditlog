@@ -11,16 +11,14 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
   <style>
-    /* ==========================================================================
-       Apple Senior Designer — Product Details Page Styles
-       ========================================================================== */
+    /* Product page styles */
     .product-page-shell {
       max-width: 900px;
       margin: 0 auto;
       padding: 24px 20px 80px;
     }
 
-    /* Top Bar with Cancel at the Top */
+    /* Top bar */
     .product-top-bar {
       display: flex;
       align-items: center;
@@ -62,7 +60,7 @@
       gap: 12px;
     }
 
-    /* Product Header Presentation */
+    /* Product header */
     .product-hero-card {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.08);
@@ -158,7 +156,7 @@
       border-top: 1px solid rgba(25, 13, 8, 0.08);
     }
 
-    /* Options & Purchase Matrix */
+    /* Product options */
     .purchase-section-card {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.08);
@@ -178,7 +176,7 @@
       display: block;
     }
 
-    /* Quantity Stepper Block */
+    /* Quantity stepper */
     .quantity-row {
       display: flex;
       align-items: center;
@@ -246,7 +244,7 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Price Summary & Buy Now Row */
+    /* Price summary */
     .summary-and-action-row {
       display: flex;
       align-items: center;
@@ -316,7 +314,7 @@
       pointer-events: none;
     }
 
-    /* Information Highlights (How It Is Delivered & Important Requirements) */
+    /* Highlights and rules */
     .info-card-block {
       background: #FFFFFF;
       border: 1px solid rgba(25, 13, 8, 0.08);
@@ -409,7 +407,7 @@
       }
     }
 
-    /* Live Stock Status Pill Badges */
+    /* Stock badges */
     .stock-pill-badge {
       display: inline-flex;
       align-items: center;
@@ -443,11 +441,11 @@
 </head>
 <body>
 
-  <!-- PRODUCT DETAIL CONTENT -->
+  <!-- Product details -->
   <main class="main-content">
     <div class="product-page-shell">
       
-      <!-- Cancel at the Top Bar -->
+      <!-- Top bar -->
       <div class="product-top-bar">
         <a href="shop.html" class="cancel-top-btn" id="cancelTopBtn">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
@@ -466,7 +464,7 @@
         </div>
       </div>
 
-      <!-- 1. Product Name, Icon, Description & Meta -->
+      <!-- Product header -->
       <section class="product-hero-card" id="productHeroCard">
         <div class="product-brand-row">
           <div class="product-icon-tile" id="productIconTile"></div>
@@ -500,7 +498,7 @@
         </p>
       </section>
 
-      <!-- 2. Product Description (Seller API Powered) -->
+      <!-- Product description -->
       <section class="info-card-block requirements-accent" id="productRequirementsCard">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -511,7 +509,7 @@
         </div>
       </section>
 
-      <!-- 3. Delivery Mode & How It Is Delivered -->
+      <!-- Delivery info -->
       <section class="info-card-block delivery-accent" id="productDeliveryCard">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
@@ -523,7 +521,7 @@
         </div>
       </section>
 
-      <!-- 4. Setup & Activation Instructions (Dynamic from Seller API) -->
+      <!-- Setup instructions -->
       <section class="info-card-block instructions-accent" id="productInstructionsCard" style="display: none; background: #FFFFFF; border: 1.5px solid rgba(25, 13, 8, 0.09); border-radius: 16px; padding: 20px; margin-top: 18px;">
         <h3 class="info-card-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D04515;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>

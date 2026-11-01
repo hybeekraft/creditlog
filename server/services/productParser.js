@@ -1,4 +1,4 @@
-// Parses product details, requirements, and instructions from supplier descriptions.
+// Parse product details from supplier description
 
 function parseProductDetails(name = '', desc = '') {
   desc = (desc || '').trim();
