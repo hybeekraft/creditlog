@@ -1597,8 +1597,22 @@ function normalizeBrand(rawBrand) {
   return b;
 }
 
+const EMPTY_BRAND = {
+  id: 'empty',
+  name: '',
+  color: 'transparent',
+  bg: 'rgba(25, 13, 8, 0.04)',
+  border: '1px solid rgba(25, 13, 8, 0.08)',
+  shadow: 'none',
+  textColor: 'transparent',
+  path: '',
+  svgHtml: '',
+  imgSrc: null,
+  isEmpty: true
+};
+
 function getBrandData(prod) {
-  if (!prod) return BRAND_ICON_REGISTRY[0];
+  if (!prod) return EMPTY_BRAND;
 
   // Custom logo uploaded in admin
   if (prod.logoUrl || prod.logo || prod.customLogo) {
@@ -1614,20 +1628,20 @@ function getBrandData(prod) {
       imgSrc: rawLogo,
       imgFull: baseMatch ? !!baseMatch.imgFull : false,
       svgHtml: baseMatch ? baseMatch.svgHtml : null,
-      path: baseMatch ? baseMatch.path : (BRAND_ICON_REGISTRY[0] ? BRAND_ICON_REGISTRY[0].path : ''),
+      path: baseMatch ? baseMatch.path : '',
       viewBox: baseMatch ? baseMatch.viewBox : '0 0 24 24'
     };
   }
 
   // Match by iconType
-  if (prod.iconType && prod.iconType !== 'cube' && prod.iconType !== 'vpn' && prod.iconType !== 'default') {
+  if (prod.iconType && prod.iconType !== 'cube' && prod.iconType !== 'vpn' && prod.iconType !== 'default' && prod.iconType !== 'other' && prod.iconType !== 'empty') {
     const iconKey = String(prod.iconType).toLowerCase().trim();
     const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey || (b.match && b.match.includes(iconKey)));
     if (iconMatch) return iconMatch;
   }
 
   // Match by brandClass
-  if (prod.brandClass && prod.brandClass !== 'tile-vpn' && prod.brandClass !== 'tile-brand-default') {
+  if (prod.brandClass && prod.brandClass !== 'tile-vpn' && prod.brandClass !== 'tile-brand-default' && prod.brandClass !== 'tile-other' && prod.brandClass !== 'tile-empty') {
     const cleanClass = String(prod.brandClass).replace(/^tile-/, '').toLowerCase().trim();
     const classMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === cleanClass);
     if (classMatch) return classMatch;
@@ -1640,13 +1654,14 @@ function getBrandData(prod) {
     if (directBrand) return directBrand;
     for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
       const b = BRAND_ICON_REGISTRY[i];
+      if (!b.match) continue;
       for (let j = 0; j < b.match.length; j++) {
         if (brandLower.includes(b.match[j])) return b;
       }
     }
   }
 
-  // Fallback: search by product name or id
+  // Match by product name or id
   const target = ((prod.name || '') + ' ' + (prod.id || '')).toLowerCase();
   if (target.includes('codex')) {
     const codex = BRAND_ICON_REGISTRY.find(b => b.id === 'codex');
@@ -1663,11 +1678,14 @@ function getBrandData(prod) {
 
   for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
     const b = BRAND_ICON_REGISTRY[i];
+    if (!b.match) continue;
     for (let j = 0; j < b.match.length; j++) {
       if (target.includes(b.match[j])) return b;
     }
   }
-  return BRAND_ICON_REGISTRY.find(b => b.id === 'gemini') || BRAND_ICON_REGISTRY[0];
+
+  // Empty default when icon or logo is not available
+  return EMPTY_BRAND;
 }
 
 function renderBrandIcon(prod, options) {
@@ -1676,20 +1694,18 @@ function renderBrandIcon(prod, options) {
   const isHero = !!opts.isHero;
   const boxSize = isHero ? '64px' : (opts.size ? opts.size + 'px' : '44px');
   const radius = isHero ? '16px' : (opts.radius ? opts.radius + 'px' : '12px');
-  const svgSize = isHero ? (brand.heroIconSize || 34) : (opts.iconSize || brand.iconSize || 24);
-  const textColor = brand.textColor || '#FFFFFF';
   const customId = opts.id ? ' id="' + opts.id + '"' : '';
   const extraClass = opts.className ? ' ' + opts.className : '';
-  const borderStyle = brand.border ? ' border: ' + brand.border + ';' : '';
 
+  // Return empty icon box if brand or logo is not available
+  if (!brand || brand.isEmpty || (!brand.imgSrc && !brand.path && !brand.svgHtml)) {
+    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: rgba(25, 13, 8, 0.04); border: 1px solid rgba(25, 13, 8, 0.08); width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>';
+  }
+
+  const svgSize = isHero ? (brand.heroIconSize || 34) : (opts.iconSize || brand.iconSize || 24);
+  const textColor = brand.textColor || '#FFFFFF';
+  const borderStyle = brand.border ? ' border: ' + brand.border + ';' : '';
   const viewBox = brand.viewBox || '0 0 24 24';
-  const hasFallbackVector = !!(brand.path || brand.svgHtml);
-  const svgInner = brand.svgHtml || (brand.stroke
-    ? '<path d="' + (brand.path || '') + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
-    : '<path d="' + (brand.path || '') + '"/>');
-  const fallbackSvg = hasFallbackVector
-    ? '<svg class="brand-fallback-vector" width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '" style="display:none; color: ' + textColor + '; pointer-events: none;">' + svgInner + '</svg>'
-    : '';
 
   if (brand.imgSrc) {
     const isFull = !!brand.imgFull;
@@ -1698,17 +1714,16 @@ function renderBrandIcon(prod, options) {
       ? 'width: 100%; height: 100%; object-fit: cover; border-radius: inherit; pointer-events: none;'
       : 'width: ' + svgSize + 'px; height: ' + svgSize + 'px; object-fit: contain; pointer-events: none;';
 
-    const onErrHandler = hasFallbackVector
-      ? "this.style.display='none'; const fb=this.parentElement?this.parentElement.querySelector('.brand-fallback-vector'):null; if(fb) fb.style.display='block';"
-      : "";
-
-    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0; overflow: hidden; position: relative;">' +
-      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" loading="eager" decoding="sync"' + (onErrHandler ? ' onerror="' + onErrHandler + '"' : '') + ' />' +
-      fallbackSvg +
+    return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + (brand.shadow || 'rgba(0,0,0,0.06)') + '; flex-shrink: 0; overflow: hidden; position: relative;">' +
+      '<img src="' + resolvedUrl + '" alt="' + (brand.name || '') + '" style="' + imgStyle + '" loading="eager" decoding="sync" onerror="this.style.display=\'none\';" />' +
       '</div>';
   }
 
-  return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' color: ' + textColor + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + brand.shadow + '; flex-shrink: 0;">' +
+  const svgInner = brand.svgHtml || (brand.stroke
+    ? '<path d="' + (brand.path || '') + '" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>'
+    : '<path d="' + (brand.path || '') + '"/>');
+
+  return '<div' + customId + ' class="directory-icon-box' + extraClass + '" style="background: ' + brand.bg + ';' + borderStyle + ' color: ' + textColor + '; width: ' + boxSize + '; height: ' + boxSize + '; border-radius: ' + radius + '; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px ' + (brand.shadow || 'rgba(0,0,0,0.06)') + '; flex-shrink: 0;">' +
     '<svg width="' + svgSize + '" height="' + svgSize + '" viewBox="' + viewBox + '" fill="' + (brand.stroke ? 'none' : (brand.svgHtml ? 'none' : 'currentColor')) + '">' + svgInner + '</svg>' +
     '</div>';
 }
@@ -1885,7 +1900,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google AI Pro Gemini Advanced with 2M context window, Gemini 1.5 Pro, and deep Google Workspace integration.",
     "currPrice": 10455,
     "oldPrice": 29985,
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -1916,7 +1931,7 @@ var CATALOG_PRODUCTS = [
     "description": "HideMyAss VPN premium license with global high-speed servers and lightning fast encryption.",
     "currPrice": 3750,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0084FF\"><path d=\"M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "20-30 Days",
@@ -1947,7 +1962,7 @@ var CATALOG_PRODUCTS = [
     "description": "Instant ready-to-use Microsoft Office 365 account with 1TB OneDrive cloud storage & desktop apps.",
     "currPrice": 6000,
     "oldPrice": 22500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6-12 Months",
@@ -1978,7 +1993,7 @@ var CATALOG_PRODUCTS = [
     "description": "Full Microsoft 365 Family subscription for up to 5 user slots with Word, Excel, PowerPoint & 1TB per user.",
     "currPrice": 18000,
     "oldPrice": 149985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months (5 Users)",
@@ -2009,7 +2024,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro quick pass: Unlock all VIP effects, filters, captions, and 4K 60fps export for 7 days.",
     "currPrice": 750,
     "oldPrice": 4485,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "7 Days",
@@ -2040,7 +2055,7 @@ var CATALOG_PRODUCTS = [
     "description": "Build full-stack apps effortlessly with Lovable Pro Lite 1 Year activation invite link.",
     "currPrice": 18000,
     "oldPrice": 72000,
-    "brandSymbol": "<img src=\"assets/icons/lovable.svg\" alt=\"Lovable\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2071,7 +2086,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro Team plan with collaborative editing, cloud storage, and shared media assets.",
     "currPrice": 3900,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month (Team)",
@@ -2102,7 +2117,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 1 Full Year: Unlimited hearts, no advertisements, personalized practice, and offline lessons.",
     "currPrice": 1500,
     "oldPrice": 125985,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -2133,7 +2148,7 @@ var CATALOG_PRODUCTS = [
     "description": "Duolingo Super 2 Months access with unlimited hearts and ads removed.",
     "currPrice": 750,
     "oldPrice": 21000,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "2 Months",
@@ -2164,7 +2179,7 @@ var CATALOG_PRODUCTS = [
     "description": "Super Duolingo activated directly on your personal email address for 1 full year.",
     "currPrice": 13500,
     "oldPrice": 125985,
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months (Personal Mail)",
@@ -2195,7 +2210,7 @@ var CATALOG_PRODUCTS = [
     "description": "Notion Business workspace with unlimited file uploads, 90-day page history, and advanced team permissions.",
     "currPrice": 3750,
     "oldPrice": 45000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.768c-.42-.326-.981-.7-2.055-.607L3.01 2.235c-.466.046-.56.326-.374.513l1.823 1.46zm.793 3.824v12.78c0 .793.42 1.073 1.26 1.026l14.288-.84c.84-.046.933-.56.933-1.166V6.96c0-.606-.373-.886-.98-.84l-14.52.84c-.653.047-.98.373-.98.84v.232zm13.12 1.352c.048.467 0 .934-.465.98l-.794.14v7.742c-.56.374-1.26.56-1.868.56-.98 0-1.447-.326-2.286-1.353l-4.106-6.436v6.297l1.493.326c.046.513-.374.933-.934.933l-3.36.187c-.046-.467.14-.933.607-.98l1.027-.234V9.81l-1.213-.093c-.047-.514.28-.934.84-.934l3.593-.233 4.293 6.576V9.436l-1.213-.14c-.047-.467.28-.933.84-.933l3.548-.233z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -2226,7 +2241,7 @@ var CATALOG_PRODUCTS = [
     "description": "Canva Pro Team member invite for 12 months with 100M+ stock assets, Magic Studio AI, Brand Kit, and resize.",
     "currPrice": 6750,
     "oldPrice": 82500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"url(#canvaGrad)\"/><path d=\"M14.6 7.8c-.8-.5-1.8-.7-2.9-.5-2.5.5-4.4 2.8-4.4 5.3 0 2.2 1.6 3.9 3.8 3.9 1.4 0 2.6-.7 3.3-1.8.3-.4.2-1-.2-1.3-.4-.3-1-.2-1.3.2-.5.7-1.1 1.1-1.8 1.1-1.2 0-2.1-.9-2.1-2.1 0-1.8 1.4-3.4 3.1-3.7.7-.1 1.3 0 1.8.3.4.3 1 .1 1.3-.3.3-.4.2-1-.2-1.3z\" fill=\"#FFF\"/><defs><linearGradient id=\"canvaGrad\" x1=\"2\" y1=\"2\" x2=\"22\" y2=\"22\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#00C4CC\"/><stop offset=\"1\" stop-color=\"#7D2AE8\"/></linearGradient></defs></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -2257,7 +2272,7 @@ var CATALOG_PRODUCTS = [
     "description": "Adobe Express Premium with Firefly generative AI credits, Adobe Fonts, and premium graphic templates.",
     "currPrice": 13455,
     "oldPrice": 59985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FA0F00\"><path d=\"M13.96 22H18.9L12.04 4.5h-.08L5.1 22h4.94l2-5.4h3.92l-2-5.4zM24 2h-7.6L24 22V2zM0 2h7.6L0 22V2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "4 Months",
@@ -2288,7 +2303,7 @@ var CATALOG_PRODUCTS = [
     "description": "Unlimited access to audiobooks, ebooks, magazines, and academic documents on Scribd/Everand.",
     "currPrice": 3750,
     "oldPrice": 17985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#1E7B85\"><path d=\"M18.8 4.2c-1.8-1.4-4.2-2.2-6.8-2.2-5.5 0-10 4.5-10 10s4.5 10 10 10c3.2 0 6.1-1.5 8-3.8-.3-.2-.5-.5-.7-.8-1.6 1.9-4 3.1-6.7 3.1-4.7 0-8.5-3.8-8.5-8.5s3.8-8.5 8.5-8.5c2.3 0 4.4.9 5.9 2.4.4-.5.8-.9 1.3-1.4-.4-.1-.7-.2-1-.3z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2319,7 +2334,7 @@ var CATALOG_PRODUCTS = [
     "description": "Special annual Adobe Express promo license with full design suite access.",
     "currPrice": 750,
     "oldPrice": 149985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FA0F00\"><path d=\"M13.96 22H18.9L12.04 4.5h-.08L5.1 22h4.94l2-5.4h3.92l-2-5.4zM24 2h-7.6L24 22V2zM0 2h7.6L0 22V2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -2350,7 +2365,7 @@ var CATALOG_PRODUCTS = [
     "description": "iLovePDF Desktop & Web Premium with unlimited file size, batch processing, and OCR text recognition.",
     "currPrice": 2250,
     "oldPrice": 72000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z\" fill=\"#E5322D\"/><path d=\"M14 2v6h6l-6-6z\" fill=\"#B3201C\"/><path d=\"M12 11.5c-1.5-1.5-3-1-3.5 0-.5 1 .5 2.5 3.5 4.5 3-2 4-3.5 3.5-4.5-.5-1-2-1.5-3.5 0z\" fill=\"#FFF\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2381,7 +2396,7 @@ var CATALOG_PRODUCTS = [
     "description": "Ultra-fast global VPN servers across 105 countries with Lightway protocol and zero logging.",
     "currPrice": 8970,
     "oldPrice": 19425,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#DA3A35\"/><path fill=\"#FFF\" d=\"M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm-1 4.5h2v7h-2v-7zm0 8.5h2v2h-2v-2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2412,7 +2427,7 @@ var CATALOG_PRODUCTS = [
     "description": "Ad-free YouTube and YouTube Music with background playback and video downloads.",
     "currPrice": 6900,
     "oldPrice": 58485,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"32\" height=\"32\"><path fill=\"#FF0000\" d=\"M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12c0 2 .2 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.3-1.9.5-3.8.5-5.8 0-2-.2-3.9-.5-5.8z\"/><path fill=\"#FFF\" d=\"m9.6 15.6 6.3-3.6-6.3-3.6v7.2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -2443,7 +2458,7 @@ var CATALOG_PRODUCTS = [
     "description": "Interactive classroom learning activity creator with unlimited resources and printable worksheets.",
     "currPrice": 5700,
     "oldPrice": 18000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"3\" y=\"4\" width=\"8\" height=\"7\" rx=\"2\" fill=\"#3B82F6\"/><rect x=\"13\" y=\"4\" width=\"8\" height=\"7\" rx=\"2\" fill=\"#10B981\"/><rect x=\"3\" y=\"13\" width=\"8\" height=\"7\" rx=\"2\" fill=\"#F59E0B\"/><rect x=\"13\" y=\"13\" width=\"8\" height=\"7\" rx=\"2\" fill=\"#EF4444\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2474,7 +2489,7 @@ var CATALOG_PRODUCTS = [
     "description": "JetBrains All Products Pack: IntelliJ IDEA Ultimate, PyCharm Pro, WebStorm, Rider, CLion, and more.",
     "currPrice": 6750,
     "oldPrice": 373500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\"><rect width=\"24\" height=\"24\" rx=\"5\" fill=\"#000\"/><path fill=\"#FF318C\" d=\"M3 3h9v9H3z\"/><path fill=\"#00CD70\" d=\"M12 12h9v9h-9z\"/><path fill=\"#FFF\" d=\"M5 18h14v2H5zM5 8h4v2H5z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2505,7 +2520,7 @@ var CATALOG_PRODUCTS = [
     "description": "Figma Professional & FigJam with unlimited version history, team libraries, and dev mode.",
     "currPrice": 9000,
     "oldPrice": 432000,
-    "brandSymbol": "<svg viewBox=\"0 0 38 57\" width=\"24\" height=\"36\"><path fill=\"#1abcfe\" d=\"M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z\"/><path fill=\"#0acf83\" d=\"M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z\"/><path fill=\"#ff7262\" d=\"M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z\"/><path fill=\"#f24e1e\" d=\"M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z\"/><path fill=\"#a259ff\" d=\"M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "2 Years",
@@ -2536,7 +2551,7 @@ var CATALOG_PRODUCTS = [
     "description": "Audio series and audiobooks with ad-free binge listening and offline downloads.",
     "currPrice": 750,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#EF4444\"/><path d=\"M8 7v10l4-2.5 4 2.5V7H8z\" fill=\"#FFF\"/><circle cx=\"12\" cy=\"10\" r=\"1.5\" fill=\"#EF4444\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -2567,7 +2582,7 @@ var CATALOG_PRODUCTS = [
     "description": "Stream award-winning Apple Originals, blockbuster films, and live sports in 4K HDR.",
     "currPrice": 1500,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#000\"/><path fill=\"#FFF\" d=\"M12.5 7.5c.6-.8 1-1.8.9-2.8-1 .1-2.1.7-2.7 1.4-.5.6-.9 1.6-.8 2.5 1.1.1 2-.5 2.6-1.1zm3.7 5.6c0-2.4 2-3.6 2.1-3.6-1.1-1.6-2.9-1.9-3.5-1.9-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.3 2.5 1.3-.1 1.8-.8 3.4-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.2-2.5 1-1.5 1.4-2.9 1.5-3-.1 0-2.9-1.1-2.9-4.2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2598,7 +2613,7 @@ var CATALOG_PRODUCTS = [
     "description": "Office 365 Plus genuine activation with 1TB cloud storage and full desktop productivity apps.",
     "currPrice": 2400,
     "oldPrice": 104985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2629,7 +2644,7 @@ var CATALOG_PRODUCTS = [
     "description": "Full CapCut Pro subscription for mobile and desktop video editing with VIP features.",
     "currPrice": 3750,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2660,7 +2675,7 @@ var CATALOG_PRODUCTS = [
     "description": "Fallout 76 PC game digital key redeemable on Microsoft Store / Xbox PC app.",
     "currPrice": 3780,
     "oldPrice": 59985,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Full Game License",
@@ -2691,7 +2706,7 @@ var CATALOG_PRODUCTS = [
     "description": "Play hundreds of high-quality PC games with friends, including new day-one releases.",
     "currPrice": 11625,
     "oldPrice": 17985,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2722,7 +2737,7 @@ var CATALOG_PRODUCTS = [
     "description": "AI Paraphrasing tool with unlimited words, 7 writing modes, grammar checker, and plagiarism detector.",
     "currPrice": 3750,
     "oldPrice": 29925,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#48B774\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-5h2v5zm0-7h-2V7h2v2.5z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -2753,7 +2768,7 @@ var CATALOG_PRODUCTS = [
     "description": "Complete antivirus and cyber threat defense for PC/Mac with ransomware shielding and webcam guard.",
     "currPrice": 8220,
     "oldPrice": 74985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FF7800\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path fill=\"#FFF\" d=\"M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm-1 3h2v4h-2V9zm0 5h2v2h-2v-2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2784,7 +2799,7 @@ var CATALOG_PRODUCTS = [
     "description": "All-in-one protection: award-winning antivirus, secure VPN, identity monitoring, and password manager.",
     "currPrice": 11190,
     "oldPrice": 134985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#C01818\"><path d=\"M12 1.5 2 5.5v7.2C2 18.2 6.3 23.3 12 24.5c5.7-1.2 10-6.3 10-11.8V5.5L12 1.5zm6.5 12.3c0 3.7-2.8 7.3-6.5 8.3-3.7-1-6.5-4.6-6.5-8.3V6.8l6.5-2.6 6.5 2.6v7z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -2815,7 +2830,7 @@ var CATALOG_PRODUCTS = [
     "description": "OpenAI ChatGPT Team tier with higher messaging limits, workspace management, and no training on team data.",
     "currPrice": 27000,
     "oldPrice": 45000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month (Team)",
@@ -2846,7 +2861,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus K12 Edu package with 2-year guaranteed access to GPT-4o, canvas, and advanced reasoning.",
     "currPrice": 7425,
     "oldPrice": 720000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "24 Months",
@@ -2877,7 +2892,7 @@ var CATALOG_PRODUCTS = [
     "description": "Official ChatGPT Plus 30-day subscription: GPT-4o, DALL·E 3, Browsing, and Advanced Voice Mode.",
     "currPrice": 11700,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "30 Days",
@@ -2908,7 +2923,7 @@ var CATALOG_PRODUCTS = [
     "description": "High-speed OpenAI Codex coding API access with 50M token allowance for code synthesis and autocomplete.",
     "currPrice": 6300,
     "oldPrice": 22500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (50M Tokens)",
@@ -2939,7 +2954,7 @@ var CATALOG_PRODUCTS = [
     "description": "OpenAI Codex API token pack for automated code generation, refactoring, and test writing.",
     "currPrice": 5400,
     "oldPrice": 12000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (10M Tokens)",
@@ -2970,7 +2985,7 @@ var CATALOG_PRODUCTS = [
     "description": "Anthropic Claude 3.5 Sonnet direct API key with massive 100M token ceiling for high-throughput pipelines.",
     "currPrice": 9000,
     "oldPrice": 37500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (100M Tokens)",
@@ -3001,7 +3016,7 @@ var CATALOG_PRODUCTS = [
     "description": "Anthropic Claude API key with 50M tokens allowance and top-tier speed.",
     "currPrice": 7500,
     "oldPrice": 27000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (50M Tokens)",
@@ -3032,7 +3047,7 @@ var CATALOG_PRODUCTS = [
     "description": "Anthropic Claude 3.5 API access with 10M tokens for daily development and research.",
     "currPrice": 4500,
     "oldPrice": 15000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (10M Tokens)",
@@ -3063,7 +3078,7 @@ var CATALOG_PRODUCTS = [
     "description": "Claude Anthropic developer account pre-loaded with $100 API balance valid for 30 days.",
     "currPrice": 3750,
     "oldPrice": 150000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "30 Days ($100 Balance)",
@@ -3094,7 +3109,7 @@ var CATALOG_PRODUCTS = [
     "description": "Google Gemini Pro 18-Month activation: Advanced AI model, 2TB Google One cloud storage, and Docs/Gmail AI tools.",
     "currPrice": 1500,
     "oldPrice": 540000,
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "18 Months",
@@ -3125,7 +3140,7 @@ var CATALOG_PRODUCTS = [
     "description": "xAI Grok 4.5 high-performance reasoning model API access with 15M tokens.",
     "currPrice": 3750,
     "oldPrice": 18000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (15M Tokens)",
@@ -3156,7 +3171,7 @@ var CATALOG_PRODUCTS = [
     "description": "Kling AI video generation credits for realistic cinematic text-to-video and image animation.",
     "currPrice": 825,
     "oldPrice": 7500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FF5000\"><path clip-rule=\"evenodd\" fill-rule=\"evenodd\" d=\"M5.493 21.234c-1.112-1.451-1.109-4.263-.081-7.459l-4.557-2.63a1.683 1.683 0 01-.85-1.304 1.505 1.505 0 01.08-.622 13.18 13.18 0 011.037-2.255c3.476-6.02 10.916-8.23 16.619-4.938.46.266.82.67 1.081 1.184.785 1.545.685 4.096-.234 6.954l4.557 2.631c.339.196.596.492.736.832a1.53 1.53 0 01.034 1.093 13.146 13.146 0 01-1.037 2.255c-3.476 6.02-10.916 8.23-16.619 4.938a2.6 2.6 0 01-.766-.68zm11.096-6.615c-2.073 3.591-5.808 5.316-8.343 3.852-1.267-.731-1.994-2.122-2.145-3.778-.095-1.035.036-2.173.4-3.32.217-.684.517-1.37.902-2.039l.008-.014c2.073-3.59 5.808-5.315 8.343-3.852.633.366 1.13.895 1.49 1.54.986 1.772.922 4.415-.285 6.914-.111.23-.232.457-.362.683l-.008.014z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "66 Credits Pack",
@@ -3187,7 +3202,7 @@ var CATALOG_PRODUCTS = [
     "description": "Ready-made Zoom Pro account: host up to 100 participants, unlimited meeting duration, and cloud recordings.",
     "currPrice": 6000,
     "oldPrice": 23985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#2D8CFF\"><path d=\"M5.033 14.649H.743a.74.74 0 0 1-.686-.458.74.74 0 0 1 .16-.808L3.19 10.41H1.06A1.06 1.06 0 0 1 0 9.35V4.717a1.06 1.06 0 0 1 1.06-1.06h9.544a1.06 1.06 0 0 1 1.06 1.06v4.633a1.06 1.06 0 0 1-1.06 1.06H7.477l2.973 2.973a.74.74 0 0 1 .16.808.74.74 0 0 1-.686.458H5.033zM13.2 6.36v11.28c0 .354.288.64.64.64h9.52a.64.64 0 0 0 .64-.64V6.36a.64.64 0 0 0-.64-.64h-9.52a.64.64 0 0 0-.64.64z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -3218,7 +3233,7 @@ var CATALOG_PRODUCTS = [
     "description": "xAI Grok 4.5 high/extra-high reasoning API tokens pack valid for 7 days.",
     "currPrice": 8250,
     "oldPrice": 52500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "7 Days (100M Tokens)",
@@ -3249,7 +3264,7 @@ var CATALOG_PRODUCTS = [
     "description": "Super Grok full access account with uncensored queries, deep search, and image analysis.",
     "currPrice": 5730,
     "oldPrice": 24000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "9-10 Days",
@@ -3280,7 +3295,7 @@ var CATALOG_PRODUCTS = [
     "description": "Genuine McAfee AntiVirus license key protecting 1 Windows/Mac/Android device for a full year.",
     "currPrice": 11220,
     "oldPrice": 59985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#C01818\"><path d=\"M12 1.5 2 5.5v7.2C2 18.2 6.3 23.3 12 24.5c5.7-1.2 10-6.3 10-11.8V5.5L12 1.5zm6.5 12.3c0 3.7-2.8 7.3-6.5 8.3-3.7-1-6.5-4.6-6.5-8.3V6.8l6.5-2.6 6.5 2.6v7z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year (1 Device)",
@@ -3311,7 +3326,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro 6 Months private account with dedicated cloud space and unrestricted VIP effects.",
     "currPrice": 21000,
     "oldPrice": 89985,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6 Months (Personal)",
@@ -3342,7 +3357,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro semi-annual subscription with all pro templates, auto-captions, and AI background tools.",
     "currPrice": 19500,
     "oldPrice": 89985,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6 Months",
@@ -3373,7 +3388,7 @@ var CATALOG_PRODUCTS = [
     "description": "Snapchat+ exclusive features: #1 BFF pin, story rewatch count, custom app icons, and AI Bitmoji pets.",
     "currPrice": 7500,
     "oldPrice": 22485,
-    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -3404,7 +3419,7 @@ var CATALOG_PRODUCTS = [
     "description": "Peacock streaming: Premier League live, WWE network, live sports, and blockbuster films for 1 year.",
     "currPrice": 9000,
     "oldPrice": 119985,
-    "brandSymbol": "<img src=\"assets/icons/peacock.svg\" alt=\"Peacock\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -3435,7 +3450,7 @@ var CATALOG_PRODUCTS = [
     "description": "Industry-leading AI voice cloning and lifelike text-to-speech with ElevenLabs 10k character tokens.",
     "currPrice": 2250,
     "oldPrice": 7500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "10k Credits",
@@ -3466,7 +3481,7 @@ var CATALOG_PRODUCTS = [
     "description": "Generate stunning presentations, web pages, and documents in seconds with Gamma AI Plus.",
     "currPrice": 16500,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M12 2L3 7v10l9 5 9-5V7l-9-5z\" fill=\"url(#gammaGrad)\"/><path d=\"M12 2v20M3 7l18 10M3 17L21 7\" stroke=\"#FFF\" stroke-width=\"0.75\" stroke-opacity=\"0.4\"/><defs><linearGradient id=\"gammaGrad\" x1=\"3\" y1=\"2\" x2=\"21\" y2=\"22\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#8B5CF6\"/><stop offset=\"1\" stop-color=\"#EC4899\"/></linearGradient></defs></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -3497,7 +3512,7 @@ var CATALOG_PRODUCTS = [
     "description": "AI prototyping canvas for React, Tailwind, and Figma UI design components.",
     "currPrice": 5250,
     "oldPrice": 54000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#8B5CF6\"/><path d=\"M12 4l1.8 5.2L19 11l-5.2 1.8L12 18l-1.8-5.2L5 11l5.2-1.8L12 4z\" fill=\"#FFF\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -3528,7 +3543,7 @@ var CATALOG_PRODUCTS = [
     "description": "Discover the latest iOS, Android, and web design patterns with Mobbin Pro 10x seats.",
     "currPrice": 13500,
     "oldPrice": 144000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#18181B\"/><path d=\"M6 17V7l6 6 6-6v10\" stroke=\"#FFF\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months (10x Seat)",
@@ -3559,7 +3574,7 @@ var CATALOG_PRODUCTS = [
     "description": "Functional music designed to improve focus, flow state, relaxation, and deep sleep.",
     "currPrice": 10050,
     "oldPrice": 104985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#0EA5E9\"/><path d=\"M6 12c0-3.3 2.7-6 6-6s6 2.7 6 6M8.5 12c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0z\" stroke=\"#FFF\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -3590,7 +3605,7 @@ var CATALOG_PRODUCTS = [
     "description": "Automated email messaging, newsletters, and user behavioral triggers on Customer.io.",
     "currPrice": 10500,
     "oldPrice": 150000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#FBBF24\"/><path d=\"M5 8l7 5 7-5v8H5V8zm0-2h14a1 1 0 0 1 1 1v1.5l-8 5.7-8-5.7V7a1 1 0 0 1 1-1z\" fill=\"#1E293B\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -3621,7 +3636,7 @@ var CATALOG_PRODUCTS = [
     "description": "Autonomous AI customer service and support agent with advanced resolution engine.",
     "currPrice": 10500,
     "oldPrice": 52500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#000\"/><path d=\"M7 8h10M7 12h7M7 16h4\" stroke=\"#00D4FF\" stroke-width=\"2.5\" stroke-linecap=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Advanced Plan",
@@ -3652,7 +3667,7 @@ var CATALOG_PRODUCTS = [
     "description": "Snapchat+ semi-annual subscription with premium story boosts and custom themes.",
     "currPrice": 12000,
     "oldPrice": 37485,
-    "brandSymbol": "<img src=\"assets/icons/snapchat.svg\" alt=\"Snapchat\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6 Months",
@@ -3683,7 +3698,7 @@ var CATALOG_PRODUCTS = [
     "description": "Warp modern 21st-century terminal with AI command search, workflow sharing, and fast cloud builds.",
     "currPrice": 9000,
     "oldPrice": 90000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#01B0FF\"><path d=\"M12.035 2.723h9.253A2.712 2.712 0 0 1 24 5.435v10.529a2.712 2.712 0 0 1-2.712 2.712H9.254a2.712 2.712 0 0 1-2.712-2.712V5.435a2.712 2.712 0 0 1 2.712-2.712h2.781zm-9.323 2.712A2.712 2.712 0 0 0 0 8.147v10.418a2.712 2.712 0 0 0 2.712 2.712h12.035a2.712 2.712 0 0 0 2.712-2.712V16.89H5.424A2.712 2.712 0 0 1 2.712 14.178V5.435z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -3714,7 +3729,7 @@ var CATALOG_PRODUCTS = [
     "description": "AI video portrait retouching, HD quality restoration, and facial enhancement for 7 days.",
     "currPrice": 3450,
     "oldPrice": 11985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#EC4899\"/><path d=\"M8 10h.01M16 10h.01M8 14c1.5 2 6.5 2 8 0\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "7 Days",
@@ -3745,7 +3760,7 @@ var CATALOG_PRODUCTS = [
     "description": "Sync your Kindle highlights, articles, tweets, and notes into Notion/Obsidian with Readwise Reader.",
     "currPrice": 8250,
     "oldPrice": 144000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#FACC15\"/><path d=\"M7 9h10M7 12h10M7 15h6\" stroke=\"#1F2937\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year",
@@ -3776,7 +3791,7 @@ var CATALOG_PRODUCTS = [
     "description": "Video podcast silence and filler word remover with 10 collaborative team member seats.",
     "currPrice": 10500,
     "oldPrice": 180000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#6366F1\"/><path d=\"M4 8h16v11H4V8zm0-3h16l-2 3H2l2-3zm5 0l2 3M14 5l2 3\" stroke=\"#FFF\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months (10 Seats)",
@@ -3807,7 +3822,7 @@ var CATALOG_PRODUCTS = [
     "description": "Autodesk Admin portal access granting AutoCAD, Revit, Maya, 3ds Max, and Inventor licenses.",
     "currPrice": 21000,
     "oldPrice": 375000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0696D7\"><path d=\"m.129 20.202 14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.79 4.79h8.496c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L11.4 24H.74A.61.61 0 0 1 .13 23.39c0-.281.164-.539.398-.656l11.41-7.149H4.379c-.234 0-.445-.188-.445-.445 0-.211.094-.328.21-.399l7.84-4.812H3.535A.61.61 0 0 1 2.925 9.32c0-.281.164-.539.399-.656L15.348 0h8.047c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L.129 20.202z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Annual Admin Access",
@@ -3838,7 +3853,7 @@ var CATALOG_PRODUCTS = [
     "description": "Complete Adobe Creative Cloud All Apps: Photoshop, Illustrator, Premiere Pro, After Effects, and 100GB Cloud.",
     "currPrice": 35115,
     "oldPrice": 89985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FA0F00\"><path d=\"M13.96 22H18.9L12.04 4.5h-.08L5.1 22h4.94l2-5.4h3.92l-2-5.4zM24 2h-7.6L24 22V2zM0 2h7.6L0 22V2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -3869,7 +3884,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus 1 Month guaranteed with 12h warranty replacement window. Instant digital delivery and verified warranty.",
     "currPrice": 12300,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month [W12H]",
@@ -3900,7 +3915,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus activated through Apple Pay billing. Instant digital delivery and verified warranty.",
     "currPrice": 12450,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -3931,7 +3946,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus via Momo wallet payment channel. Instant digital delivery and verified warranty.",
     "currPrice": 9000,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -3962,7 +3977,7 @@ var CATALOG_PRODUCTS = [
     "description": "Codex API high-volume 100M tokens daily key. Instant digital delivery and verified warranty.",
     "currPrice": 7500,
     "oldPrice": 37500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Day (100M Tokens)",
@@ -3993,7 +4008,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro 7-day single activation key. Instant digital delivery and verified warranty.",
     "currPrice": 750,
     "oldPrice": 4485,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "7 Days",
@@ -4024,7 +4039,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus 1-month via GGPay. Instant digital delivery and verified warranty.",
     "currPrice": 13320,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -4055,7 +4070,7 @@ var CATALOG_PRODUCTS = [
     "description": "ChatGPT Plus 1-month subscription charged to Google Play. Instant digital delivery and verified warranty.",
     "currPrice": 12000,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#10A37F\"><path d=\"M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -4086,7 +4101,7 @@ var CATALOG_PRODUCTS = [
     "description": "Surfshark VPN 2 Months voucher code with unlimited simultaneous device connections. Instant digital delivery and verified warranty.",
     "currPrice": 1500,
     "oldPrice": 37500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#17B794\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.93V18h-2v-1.07c-2.83-.48-5-2.94-5-5.93 0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.99-2.17 5.45-5 5.93z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "2 Months",
@@ -4117,7 +4132,7 @@ var CATALOG_PRODUCTS = [
     "description": "Netflix 4K Ultra HD full admin access with 5 private customizable PIN profiles. Instant digital delivery and verified warranty.",
     "currPrice": 3750,
     "oldPrice": 29985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#E50914\"><path d=\"m5.398 0 8.348 23.602c2.346.059 4.856.398 4.856.398L10.113 0H5.398zm8.489 0v9.172l4.715 13.355V0h-4.715zM5.398 14.828V24h4.715V1.473L5.398 14.828z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month (5 Profiles Admin)",
@@ -4148,7 +4163,7 @@ var CATALOG_PRODUCTS = [
     "description": "Anthropic Claude API 50M token quota spread across 3 calendar days. Instant digital delivery and verified warranty.",
     "currPrice": 9000,
     "oldPrice": 33000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Days (50M Tokens)",
@@ -4179,7 +4194,7 @@ var CATALOG_PRODUCTS = [
     "description": "Swiss-based high security Proton VPN Plus with NetShield adblocker and Secure Core architecture. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 14985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#6D4AFF\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path fill=\"#FFF\" d=\"M12 6a6 6 0 0 0-6 6c0 2.2 1.2 4.1 3 5.2V14a3 3 0 0 1 3-3h3.8A5.98 5.98 0 0 0 12 6z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -4210,7 +4225,7 @@ var CATALOG_PRODUCTS = [
     "description": "CapCut Pro 3 Months quarter subscription. Instant digital delivery and verified warranty.",
     "currPrice": 9000,
     "oldPrice": 44985,
-    "brandSymbol": "<svg viewBox=\"0 0 192 192\" width=\"28\" height=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"><path d=\"M170 42 22 124v14a12 12 0 0 0 12 12h78a12 12 0 0 0 12-12v-9.5\"/><path d=\"M170 150 22 68V54a12 12 0 0 1 12-12h78a12 12 0 0 1 12 12v9.5\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months",
@@ -4241,7 +4256,7 @@ var CATALOG_PRODUCTS = [
     "description": "Pre-activated Xbox player account. Instant digital delivery and verified warranty.",
     "currPrice": 1500,
     "oldPrice": 22485,
-    "brandSymbol": "<img src=\"assets/icons/xbox.svg\" alt=\"Xbox\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Account Access",
@@ -4272,7 +4287,7 @@ var CATALOG_PRODUCTS = [
     "description": "High tier Kling AI video generation credits package for studio production. Instant digital delivery and verified warranty.",
     "currPrice": 17070,
     "oldPrice": 52500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FF5000\"><path clip-rule=\"evenodd\" fill-rule=\"evenodd\" d=\"M5.493 21.234c-1.112-1.451-1.109-4.263-.081-7.459l-4.557-2.63a1.683 1.683 0 01-.85-1.304 1.505 1.505 0 01.08-.622 13.18 13.18 0 011.037-2.255c3.476-6.02 10.916-8.23 16.619-4.938.46.266.82.67 1.081 1.184.785 1.545.685 4.096-.234 6.954l4.557 2.631c.339.196.596.492.736.832a1.53 1.53 0 01.034 1.093 13.146 13.146 0 01-1.037 2.255c-3.476 6.02-10.916 8.23-16.619 4.938a2.6 2.6 0 01-.766-.68zm11.096-6.615c-2.073 3.591-5.808 5.316-8.343 3.852-1.267-.731-1.994-2.122-2.145-3.778-.095-1.035.036-2.173.4-3.32.217-.684.517-1.37.902-2.039l.008-.014c2.073-3.59 5.808-5.315 8.343-3.852.633.366 1.13.895 1.49 1.54.986 1.772.922 4.415-.285 6.914-.111.23-.232.457-.362.683l-.008.014z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month (750-1100 Credits)",
@@ -4303,7 +4318,7 @@ var CATALOG_PRODUCTS = [
     "description": "Fresh POP3/IMAP enabled Outlook / Hotmail email account. Instant digital delivery and verified warranty.",
     "currPrice": 150,
     "oldPrice": 1500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Instant Account",
@@ -4334,7 +4349,7 @@ var CATALOG_PRODUCTS = [
     "description": "Genuine digital retail license key for Windows 10/11 Pro with lifetime activation. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 299985,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Lifetime Retail License",
@@ -4365,7 +4380,7 @@ var CATALOG_PRODUCTS = [
     "description": "NordVPN 3 months activation code with Threat Protection and Double VPN. Instant digital delivery and verified warranty.",
     "currPrice": 5625,
     "oldPrice": 58500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0084FF\"><path d=\"M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months Voucher Code",
@@ -4396,7 +4411,7 @@ var CATALOG_PRODUCTS = [
     "description": "NordVPN 1 month high speed secure private connection. Instant digital delivery and verified warranty.",
     "currPrice": 4050,
     "oldPrice": 19485,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0084FF\"><path d=\"M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Month",
@@ -4427,7 +4442,7 @@ var CATALOG_PRODUCTS = [
     "description": "Notion Plus annual workspace subscription with unlimited blocks and file uploads. Instant digital delivery and verified warranty.",
     "currPrice": 3750,
     "oldPrice": 144000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.768c-.42-.326-.981-.7-2.055-.607L3.01 2.235c-.466.046-.56.326-.374.513l1.823 1.46zm.793 3.824v12.78c0 .793.42 1.073 1.26 1.026l14.288-.84c.84-.046.933-.56.933-1.166V6.96c0-.606-.373-.886-.98-.84l-14.52.84c-.653.047-.98.373-.98.84v.232zm13.12 1.352c.048.467 0 .934-.465.98l-.794.14v7.742c-.56.374-1.26.56-1.868.56-.98 0-1.447-.326-2.286-1.353l-4.106-6.436v6.297l1.493.326c.046.513-.374.933-.934.933l-3.36.187c-.046-.467.14-.933.607-.98l1.027-.234V9.81l-1.213-.093c-.047-.514.28-.934.84-.934l3.593-.233 4.293 6.576V9.436l-1.213-.14c-.047-.467.28-.933.84-.933l3.548-.233z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -4458,7 +4473,7 @@ var CATALOG_PRODUCTS = [
     "description": "Autodesk Education license for AutoCAD, Fusion 360, 3ds Max and Revit. Instant digital delivery and verified warranty.",
     "currPrice": 3000,
     "oldPrice": 300000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0696D7\"><path d=\"m.129 20.202 14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.79 4.79h8.496c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L11.4 24H.74A.61.61 0 0 1 .13 23.39c0-.281.164-.539.398-.656l11.41-7.149H4.379c-.234 0-.445-.188-.445-.445 0-.211.094-.328.21-.399l7.84-4.812H3.535A.61.61 0 0 1 2.925 9.32c0-.281.164-.539.399-.656L15.348 0h8.047c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L.129 20.202z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "1 Year (Edu)",
@@ -4489,7 +4504,7 @@ var CATALOG_PRODUCTS = [
     "description": "Comprehensive 3-year Autodesk suite access for design and architecture. Instant digital delivery and verified warranty.",
     "currPrice": 3750,
     "oldPrice": 900000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0696D7\"><path d=\"m.129 20.202 14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.79 4.79h8.496c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L11.4 24H.74A.61.61 0 0 1 .13 23.39c0-.281.164-.539.398-.656l11.41-7.149H4.379c-.234 0-.445-.188-.445-.445 0-.211.094-.328.21-.399l7.84-4.812H3.535A.61.61 0 0 1 2.925 9.32c0-.281.164-.539.399-.656L15.348 0h8.047c.21 0 .445.188.445.445 0 .211-.117.375-.258.469L.129 20.202z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Years (All Apps)",
@@ -4520,7 +4535,7 @@ var CATALOG_PRODUCTS = [
     "description": "Spotify Premium 3-month code. Instant digital delivery and verified warranty.",
     "currPrice": 2250,
     "oldPrice": 16485,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#1ED760\"><path d=\"M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "3 Months Promo",
@@ -4551,7 +4566,7 @@ var CATALOG_PRODUCTS = [
     "description": "Valve Steam gaming account pre-configured and region unlocked. Instant digital delivery and verified warranty.",
     "currPrice": 1500,
     "oldPrice": 22500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFF\"><path d=\"M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.005.105.005.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.707L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Account Access",
@@ -4582,7 +4597,7 @@ var CATALOG_PRODUCTS = [
     "description": "Deezer HiFi lossless FLAC audio streaming account. Instant digital delivery and verified warranty.",
     "currPrice": 750,
     "oldPrice": 16485,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#A238FF\"><path d=\"M.693 10.024c.381 0 .693-1.256.693-2.807 0-1.55-.312-2.807-.693-2.807C.312 4.41 0 5.666 0 7.217c0 1.551.312 2.807.693 2.807zm2.44 2.807c.383 0 .693-1.256.693-2.807 0-1.55-.31-2.807-.693-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44 2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44 2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44 2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44-2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44-2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44-2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807zm2.44-2.807c.383 0 .694-1.256.694-2.807 0-1.55-.311-2.807-.694-2.807-.381 0-.693 1.256-.693 2.807 0 1.551.312 2.807.693 2.807z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Premium Access",
@@ -4613,7 +4628,7 @@ var CATALOG_PRODUCTS = [
     "description": "Spotify Premium 2-month upgrade. Instant digital delivery and verified warranty.",
     "currPrice": 6000,
     "oldPrice": 30000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#1ED760\"><path d=\"M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "2 Months Individual",
@@ -4644,7 +4659,7 @@ var CATALOG_PRODUCTS = [
     "description": "Amazon Prime Video 6 months access to movies, series, and Amazon Originals in 4K. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 80910,
-    "brandSymbol": "<img src=\"assets/icons/primevideo.svg\" alt=\"Prime Video\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6 Months",
@@ -4675,7 +4690,7 @@ var CATALOG_PRODUCTS = [
     "description": "Apple TV+ 6 months streaming pass in 4K HDR. Instant digital delivery and verified warranty.",
     "currPrice": 6750,
     "oldPrice": 89910,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#000\"/><path fill=\"#FFF\" d=\"M12.5 7.5c.6-.8 1-1.8.9-2.8-1 .1-2.1.7-2.7 1.4-.5.6-.9 1.6-.8 2.5 1.1.1 2-.5 2.6-1.1zm3.7 5.6c0-2.4 2-3.6 2.1-3.6-1.1-1.6-2.9-1.9-3.5-1.9-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.3 2.5 1.3-.1 1.8-.8 3.4-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.2-2.5 1-1.5 1.4-2.9 1.5-3-.1 0-2.9-1.1-2.9-4.2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "6 Months",
@@ -4706,7 +4721,7 @@ var CATALOG_PRODUCTS = [
     "description": "Apple TV+ full 1-year pass with Ted Lasso, Morning Show, and live sports. Instant digital delivery and verified warranty.",
     "currPrice": 9000,
     "oldPrice": 148500,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#000\"/><path fill=\"#FFF\" d=\"M12.5 7.5c.6-.8 1-1.8.9-2.8-1 .1-2.1.7-2.7 1.4-.5.6-.9 1.6-.8 2.5 1.1.1 2-.5 2.6-1.1zm3.7 5.6c0-2.4 2-3.6 2.1-3.6-1.1-1.6-2.9-1.9-3.5-1.9-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.3 2.5 1.3-.1 1.8-.8 3.4-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.2-2.5 1-1.5 1.4-2.9 1.5-3-.1 0-2.9-1.1-2.9-4.2z\"/></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "12 Months",
@@ -4737,7 +4752,7 @@ var CATALOG_PRODUCTS = [
     "description": "Canva Pro team owner administrator panel for managing multiple seats. Instant digital delivery and verified warranty.",
     "currPrice": 4500,
     "oldPrice": 180000,
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"url(#canvaGrad)\"/><path d=\"M14.6 7.8c-.8-.5-1.8-.7-2.9-.5-2.5.5-4.4 2.8-4.4 5.3 0 2.2 1.6 3.9 3.8 3.9 1.4 0 2.6-.7 3.3-1.8.3-.4.2-1-.2-1.3-.4-.3-1-.2-1.3.2-.5.7-1.1 1.1-1.8 1.1-1.2 0-2.1-.9-2.1-2.1 0-1.8 1.4-3.4 3.1-3.7.7-.1 1.3 0 1.8.3.4.3 1 .1 1.3-.3.3-.4.2-1-.2-1.3z\" fill=\"#FFF\"/><defs><linearGradient id=\"canvaGrad\" x1=\"2\" y1=\"2\" x2=\"22\" y2=\"22\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#00C4CC\"/><stop offset=\"1\" stop-color=\"#7D2AE8\"/></linearGradient></defs></svg>",
+    "brandSymbol": "",
     "plans": [
       {
         "duration": "Admin Panel Access",
@@ -4769,7 +4784,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "4.8k",
     "brandClass": "tile-gemini",
-    "brandSymbol": "<img src=\"assets/icons/gemini.svg\" alt=\"Gemini\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "description": "Google AI Gemini Advanced model with 2M token context window, 2TB Google One cloud storage, and AI integrated into Docs, Gmail, and Slides.",
     "plans": [
       {
@@ -4807,7 +4822,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "3.8k",
     "brandClass": "tile-chatgpt",
-    "brandSymbol": "<img src=\"assets/chatgpt-logo.jpg\" alt=\"OpenAI\" style=\"width:34px; height:34px; object-fit:contain; border-radius:6px;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "description": "OpenAI official subscription with GPT-4o, Advanced Voice Mode, DALL·E 3, code interpreter, and custom GPTs.",
     "plans": [
       {
@@ -4883,7 +4898,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "2.1k",
     "brandClass": "tile-claude",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#D97706\"><path d=\"m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z\"/></svg>",
+    "brandSymbol": "",
     "description": "Anthropic Claude 3.5 Sonnet direct tokens and Pro access with Artifacts, 200k context window, and priority capacity.",
     "plans": [
       {
@@ -4948,7 +4963,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "3.4k",
     "brandClass": "tile-capcut",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FFFFFF\"><path d=\"M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91V8.72L6.354 12 0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12 24.19 6.443zM9.982 13.873l7.797 4.083H2.157l7.825-4.083zm7.741-7.828l-7.742 4.057-7.825-4.057h15.567z\"/></svg>",
+    "brandSymbol": "",
     "description": "CapCut Pro VIP Video Suite: Remove background, auto-captions in 90+ languages, 4K 60fps export, and exclusive transitions.",
     "plans": [
       {
@@ -5013,7 +5028,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "2.8k",
     "brandClass": "tile-duolingo",
-    "brandSymbol": "<img src=\"assets/icons/duolingo.svg\" alt=\"Duolingo\" style=\"width:30px; height:30px; object-fit:contain;\" loading=\"eager\" decoding=\"sync\">",
+    "brandSymbol": "",
     "description": "Master 40+ languages with Duolingo Super: Unlimited hearts, zero ads, unlimited test-outs, and targeted mistake review.",
     "plans": [
       {
@@ -5060,7 +5075,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "4.2k",
     "brandClass": "tile-canva",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"url(#canvaGrad)\"/><path d=\"M14.6 7.8c-.8-.5-1.8-.7-2.9-.5-2.5.5-4.4 2.8-4.4 5.3 0 2.2 1.6 3.9 3.8 3.9 1.4 0 2.6-.7 3.3-1.8.3-.4.2-1-.2-1.3-.4-.3-1-.2-1.3.2-.5.7-1.1 1.1-1.8 1.1-1.2 0-2.1-.9-2.1-2.1 0-1.8 1.4-3.4 3.1-3.7.7-.1 1.3 0 1.8.3.4.3 1 .1 1.3-.3.3-.4.2-1-.2-1.3z\" fill=\"#FFF\"/><defs><linearGradient id=\"canvaGrad\" x1=\"2\" y1=\"2\" x2=\"22\" y2=\"22\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#00C4CC\"/><stop offset=\"1\" stop-color=\"#7D2AE8\"/></linearGradient></defs></svg>",
+    "brandSymbol": "",
     "description": "12-month Canva Pro Team seat: Access 100M+ premium stock photos, graphics, brand kits, background remover, and Magic Studio AI tools.",
     "plans": [
       {
@@ -5089,7 +5104,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "1.9k",
     "brandClass": "tile-microsoft",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\"><path fill=\"#F25022\" d=\"M1 1h10v10H1z\"/><path fill=\"#7FBA00\" d=\"M13 1h10v10H13z\"/><path fill=\"#00A4EF\" d=\"M1 13h10v10H1z\"/><path fill=\"#FFB900\" d=\"M13 13h10v10H13z\"/></svg>",
+    "brandSymbol": "",
     "description": "Full Microsoft 365 cloud productivity suite: Word, Excel, PowerPoint, Outlook, and 1TB OneDrive cloud storage.",
     "plans": [
       {
@@ -5136,7 +5151,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "3.1k",
     "brandClass": "tile-adobe",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#FA0F00\"><path d=\"M13.96 22H18.9L12.04 4.5h-.08L5.1 22h4.94l2-5.4h3.92l-2-5.4zM24 2h-7.6L24 22V2zM0 2h7.6L0 22V2z\"/></svg>",
+    "brandSymbol": "",
     "description": "Adobe Creative Cloud All Apps & Adobe Express: Photoshop, Illustrator, Premiere Pro, InDesign, and 100GB Cloud Storage.",
     "plans": [
       {
@@ -5183,7 +5198,7 @@ const CORE_PRODUCTS = [
     "rating": 4.8,
     "reviews": "2.1k",
     "brandClass": "tile-vpn",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#0084FF\"><path d=\"M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z\"/></svg>",
+    "brandSymbol": "",
     "description": "Top-rated encryption and cybersecurity tools: ExpressVPN, HMA VPN, McAfee Total Protection, and Avast Security.",
     "plans": [
       {
@@ -5259,7 +5274,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "4.1k",
     "brandClass": "tile-netflix",
-    "brandSymbol": "<svg viewBox=\"0 0 111 200\" width=\"22\" height=\"36\"><defs><linearGradient id=\"nfShadowP\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#000000\" stop-opacity=\"0.6\"/><stop offset=\"25%\" stop-color=\"#000000\" stop-opacity=\"0.2\"/><stop offset=\"100%\" stop-color=\"#000000\" stop-opacity=\"0\"/></linearGradient></defs><path d=\"M0 0h37v200H0z\" fill=\"#E50914\"/><path d=\"M74 0h37v200H74z\" fill=\"#E50914\"/><polygon points=\"0,0 37,0 111,200 74,200\" fill=\"#E50914\"/><polygon points=\"0,0 37,0 111,200 74,200\" fill=\"url(#nfShadowP)\"/><path d=\"M0 200c37-7 74-7 111 0v10H0z\" fill=\"#000000\"/></svg>",
+    "brandSymbol": "",
     "description": "Admin Netflix 4K Ultra HD Premium 1M 5 Profiles. Watch on any screen with HDR and Spatial Audio. Instant digital delivery and verified warranty.",
     "plans": [
       {
@@ -5288,7 +5303,7 @@ const CORE_PRODUCTS = [
     "rating": 4.8,
     "reviews": "1.9k",
     "brandClass": "tile-spotify",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"#1ED760\"><path d=\"M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z\"/></svg>",
+    "brandSymbol": "",
     "description": "Ad-free offline music streaming in Ultra High Audio Quality with unlimited song skips on all devices.",
     "plans": [
       {
@@ -5317,7 +5332,7 @@ const CORE_PRODUCTS = [
     "rating": 4.9,
     "reviews": "3.6k",
     "brandClass": "tile-youtube",
-    "brandSymbol": "<svg viewBox=\"0 0 24 24\" width=\"32\" height=\"32\"><path fill=\"#FF0000\" d=\"M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12c0 2 .2 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.3-1.9.5-3.8.5-5.8 0-2-.2-3.9-.5-5.8z\"/><path fill=\"#FFF\" d=\"m9.6 15.6 6.3-3.6-6.3-3.6v7.2z\"/></svg>",
+    "brandSymbol": "",
     "description": "YouTube & YouTube Music ad-free streaming, background play with screen locked, and offline downloads.",
     "plans": [
       {
@@ -5408,7 +5423,7 @@ function getCart() {
       qty: 1,
       inStock: true,
       brandClass: 'tile-gemini',
-      brandSymbol: BOT_PRODUCTS[39].brandSymbol
+      brandSymbol: ''
     },
     {
       id: 'chatgpt-plus-30d',
@@ -5420,7 +5435,7 @@ function getCart() {
       qty: 1,
       inStock: true,
       brandClass: 'tile-chatgpt',
-      brandSymbol: BOT_PRODUCTS[32].brandSymbol
+      brandSymbol: ''
     }
   ];
   saveCart(defaultCart);

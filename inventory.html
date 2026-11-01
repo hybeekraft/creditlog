@@ -1617,9 +1617,12 @@
 
       if (val && typeof getBrandData === 'function') {
         const match = getBrandData({ name: val, brand: val });
-        if (match && match.id && brandSel) {
+        if (match && match.id && match.id !== 'empty' && brandSel) {
           brandSel.value = match.id;
           if (iconTypeEl) iconTypeEl.value = match.id;
+        } else if (brandSel && (!match || match.id === 'empty')) {
+          brandSel.value = '';
+          if (iconTypeEl) iconTypeEl.value = '';
         }
         updateLiveLogoPreview(mode, { brand: val, iconType: iconTypeEl ? iconTypeEl.value : '' });
       }
