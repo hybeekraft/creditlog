@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Determine persistent data directory
+// Data directory path
 const isVercel = Boolean(process.env.VERCEL);
 const candidateRoots = [process.cwd(), path.resolve(__dirname, '../..'), path.resolve(__dirname, '..')];
 const ROOT_DIR = candidateRoots.find(dir => fs.existsSync(path.join(dir, 'index.html'))) || process.cwd();
@@ -13,7 +13,7 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
-// Default Configuration
+// Default configuration
 const DEFAULT_CONFIG = {
   baseUrl: process.env.RESELLER_BASE_URL || 'https://api-geminipro.ignorelist.com/api/reseller/v1',
   apiKey: process.env.RESELLER_API_KEY || '',
@@ -23,7 +23,7 @@ const DEFAULT_CONFIG = {
   mode: 'live',
   lowBalanceThreshold: 5.0,
 
-  // Multi-vendor API registry
+  // Vendor API registry
   vendors: [
     {
       id: 'vendor_gemini',
@@ -39,8 +39,8 @@ const DEFAULT_CONFIG = {
     }
   ],
 
-  // Range-based price multipliers:
-  // If wholesale price falls in [min, max], this multiplier is applied
+  // Price multipliers by cost range
+
   priceTiers: [
     { id: 'tier_nano', min: 0.00, max: 0.99, multiplier: 3.50, label: 'Sub-Dollar ($0.00 – $0.99)' },
     { id: 'tier_micro', min: 1.00, max: 2.00, multiplier: 2.00, label: 'Micro ($1.00 – $2.00)' },
@@ -49,9 +49,9 @@ const DEFAULT_CONFIG = {
     { id: 'tier_upper', min: 15.01, max: 40.00, multiplier: 1.35, label: 'Upper ($15.01 – $40.00)' },
     { id: 'tier_high', min: 40.01, max: 999999, multiplier: 1.20, label: 'High ($40.01+)' }
   ],
-  // Product-specific overrides (productId -> multiplier)
+  // Product multiplier overrides
   productOverrides: {},
-  // Category-specific fallback multipliers
+  // Category multipliers
   categoryMultipliers: {
     ai: 1.75,
     gaming: 1.50,
@@ -74,7 +74,7 @@ function readConfig() {
         vendors: Array.isArray(parsed.vendors) ? parsed.vendors : []
       };
 
-      // Seamless migration: If vendors array is empty, populate from legacy baseUrl & apiKey
+      // Populate from legacy settings if vendors list is empty
       if (config.vendors.length === 0) {
         const legacyKey = (config.apiKey || '').trim();
         config.vendors.push({
@@ -90,13 +90,13 @@ function readConfig() {
           notes: 'Default wholesale supplier account'
         });
       } else {
-        // Ensure at least one vendor is set as default
+        // Ensure a default vendor is set
         if (!config.vendors.some(v => v.isDefault)) {
           config.vendors[0].isDefault = true;
         }
       }
 
-      // Synchronize legacy top-level credentials with the active default vendor
+      // Sync legacy credentials with default vendor
       const defaultVendor = config.vendors.find(v => v.isDefault) || config.vendors[0];
       if (defaultVendor) {
         config.baseUrl = defaultVendor.baseUrl || config.baseUrl;
@@ -122,7 +122,7 @@ function writeConfig(config) {
   }
 }
 
-// Reseller API Client
+// Reseller API client
 class ResellerService {
   constructor() {
     this.config = readConfig();
@@ -133,7 +133,7 @@ class ResellerService {
     return this.config;
   }
 
-  // Resolve target vendor by ID or default vendor
+  // Find vendor by ID or return default
   resolveVendor(vendorId = null) {
     this.config = readConfig();
     const vendors = Array.isArray(this.config.vendors) ? this.config.vendors : [];
@@ -144,7 +144,7 @@ class ResellerService {
     const def = vendors.find(v => v.isDefault) || vendors[0];
     if (def) return def;
 
-    // Fallback object
+    // Fallback
     return {
       id: 'vendor_default',
       name: 'Default Supplier',
@@ -195,7 +195,7 @@ class ResellerService {
     const baseUrl = (vendorData.baseUrl || '').trim() || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
     let apiKey = vendorData.apiKey !== undefined ? String(vendorData.apiKey).trim() : '';
 
-    // If apiKey is empty or masked in an update, keep existing key
+    // Keep existing key if not provided
     if (existingIndex >= 0 && (!apiKey || apiKey.includes('••••') || apiKey.includes('...'))) {
       apiKey = this.config.vendors[existingIndex].apiKey || '';
     }
@@ -231,12 +231,12 @@ class ResellerService {
       this.config.vendors.push(vendorRecord);
     }
 
-    // Ensure at least one default
+    // Ensure a default vendor exists
     if (!this.config.vendors.some(v => v.isDefault) && this.config.vendors.length > 0) {
       this.config.vendors[0].isDefault = true;
     }
 
-    // Synchronize legacy settings
+    // Sync legacy settings
     const def = this.config.vendors.find(v => v.isDefault) || this.config.vendors[0];
     if (def) {
       this.config.baseUrl = def.baseUrl;
@@ -256,12 +256,12 @@ class ResellerService {
     const wasDefault = (this.config.vendors.find(v => v.id === targetId) || {}).isDefault;
     this.config.vendors = this.config.vendors.filter(v => v.id !== targetId);
 
-    // If removed vendor was default, assign new default
+    // If deleted vendor was default, pick a new default
     if (wasDefault && this.config.vendors.length > 0) {
       this.config.vendors[0].isDefault = true;
     }
 
-    // Synchronize legacy settings
+    // Sync legacy settings
     const def = this.config.vendors.find(v => v.isDefault) || this.config.vendors[0];
     if (def) {
       this.config.baseUrl = def.baseUrl;
@@ -342,7 +342,7 @@ class ResellerService {
     if (updates.mode !== undefined) this.config.mode = updates.mode;
     if (updates.lowBalanceThreshold !== undefined) this.config.lowBalanceThreshold = Number(updates.lowBalanceThreshold) || 5.0;
 
-    // If top-level baseUrl or apiKey was updated, sync to default vendor
+    // Sync top-level credentials to default vendor
     if (Array.isArray(this.config.vendors) && this.config.vendors.length > 0) {
       const defIdx = this.config.vendors.findIndex(v => v.isDefault);
       const targetIdx = defIdx >= 0 ? defIdx : 0;
@@ -353,7 +353,7 @@ class ResellerService {
       }
     }
 
-    // Save Price Range Tiers
+    // Save price tiers
     if (updates.priceTiers && Array.isArray(updates.priceTiers)) {
       this.config.priceTiers = updates.priceTiers.map((tier, idx) => ({
         id: tier.id || ('tier_' + (idx + 1)),
@@ -364,7 +364,7 @@ class ResellerService {
       })).sort((a, b) => a.min - b.min);
     }
 
-    // Save Product Overrides
+    // Save product overrides
     if (updates.productOverrides && typeof updates.productOverrides === 'object') {
       const sanitized = {};
       Object.keys(updates.productOverrides).forEach(key => {
@@ -376,7 +376,7 @@ class ResellerService {
       this.config.productOverrides = sanitized;
     }
 
-    // Save Category Multipliers
+    // Save category multipliers
     if (updates.categoryMultipliers && typeof updates.categoryMultipliers === 'object') {
       this.config.categoryMultipliers = { ...this.config.categoryMultipliers, ...updates.categoryMultipliers };
     }
@@ -385,7 +385,7 @@ class ResellerService {
     return this.getSettings();
   }
 
-  // Calculate dynamic retail pricing based on range tiers and overrides
+  // Calculate retail price from tiers and overrides
   calculatePricing(wholesalePriceUsd, productId = null, category = null) {
     this.config = readConfig();
     const cost = Math.max(0, parseFloat(wholesalePriceUsd || 0));
@@ -398,7 +398,7 @@ class ResellerService {
     let ruleMatched = '';
     let ruleType = '';
 
-    // 1. Specific Product ID / Key Override (Highest Priority)
+    // 1. Product override
     if (productId !== null && productId !== undefined) {
       const pKey = String(productId).trim();
       const pKeyLower = pKey.toLowerCase();
@@ -416,7 +416,7 @@ class ResellerService {
       }
     }
 
-    // 2. Price Range Tier (if cost falls in [min, max])
+    // 2. Price tier
     if (multiplier === null) {
       const matchedTier = tiers.find(t => cost >= Number(t.min) && cost <= Number(t.max));
       if (matchedTier && Number(matchedTier.multiplier) > 0) {
@@ -426,14 +426,14 @@ class ResellerService {
       }
     }
 
-    // 3. Category Multiplier
+    // 3. Category multiplier
     if (multiplier === null && category && catMultipliers[category] !== undefined && Number(catMultipliers[category]) > 0) {
       multiplier = Number(catMultipliers[category]);
       ruleMatched = `Category (${category})`;
       ruleType = 'category';
     }
 
-    // 4. Fallback to default markup percentage
+    // 4. Default markup fallback
     if (multiplier === null) {
       multiplier = defaultMultiplier;
       ruleMatched = `Default Store Markup (+${this.config.markupPercent || 25}%)`;
@@ -506,17 +506,17 @@ class ResellerService {
     }
   }
 
-  // Account Information
+  // Account info
   async getInfo(vendorId = null) {
     return this.request('/account/info', {}, vendorId);
   }
 
-  // Live Balance Check
+  // Check balance
   async getBalance(vendorId = null) {
     return this.request('/account/balance', {}, vendorId);
   }
 
-  // Test Vendor Connection and Update Cached Balance
+  // Test connection and update balance
   async testVendor(vendorId) {
     const vendor = this.resolveVendor(vendorId);
     if (!vendor) return { ok: false, error: 'vendor_not_found', message: 'Vendor not found' };
@@ -547,7 +547,7 @@ class ResellerService {
     };
   }
 
-  // Available Products with Calculated Retail Pricing
+  // Products with retail pricing
   async getProducts(vendorId = null) {
     const vendor = this.resolveVendor(vendorId);
     const res = await this.request('/products', {}, vendor.id);
@@ -570,12 +570,12 @@ class ResellerService {
     return res;
   }
 
-  // Single Product Detail
+  // Product details
   async getProduct(productId, vendorId = null) {
     return this.request(`/products/${productId}`, {}, vendorId);
   }
 
-  // Create Order / Buy Goods
+  // Create order
   async createOrder(productId, quantity = 1, vendorId = null) {
     return this.request('/orders', {
       method: 'POST',
@@ -586,17 +586,17 @@ class ResellerService {
     }, vendorId);
   }
 
-  // List Orders
+  // List orders
   async getOrders(vendorId = null) {
     return this.request('/orders', {}, vendorId);
   }
 
-  // Get Single Order Status & Value
+  // Order status and value
   async getOrder(orderCode, vendorId = null) {
     return this.request(`/orders/${encodeURIComponent(orderCode)}`, {}, vendorId);
   }
 
-  // Automated CreditLog Order Fulfillment Engine
+  // Order fulfillment handler
   async fulfillCreditLogOrder(order, product, variant) {
     this.config = readConfig();
 
@@ -609,7 +609,7 @@ class ResellerService {
       };
     }
 
-    // Determine target vendor (Variant Vendor > Product Vendor > Default Vendor)
+    // Determine vendor for order
     const targetVendorId = (variant && variant.vendorId) || (product && product.vendorId) || null;
     const vendor = this.resolveVendor(targetVendorId);
 
@@ -621,7 +621,7 @@ class ResellerService {
       supplierProductId = product.resellerProductId;
     }
 
-    // Fallback: Check standard product mapping if not explicitly mapped
+    // Fallback to standard product mapping
     if (!supplierProductId && product) {
       supplierProductId = this.resolveSupplierProductId(product.id, variant ? variant.duration : null);
     }
@@ -639,7 +639,7 @@ class ResellerService {
 
     const qty = Math.max(1, parseInt(order.quantity || 1, 10));
 
-    // Safety guard: Never fulfill live wholesale orders during testing or for test customers
+    // Do not call live API during test runs
     const email = (order.customerEmail || '').toLowerCase();
     const isTestOrder = process.env.NODE_ENV === 'test' ||
                         process.env.DISABLE_LIVE_SUPPLIER === '1' ||
@@ -697,7 +697,7 @@ class ResellerService {
     }
   }
 
-  // Heuristic resolver for unmapped items
+  // Match unmapped items
   resolveSupplierProductId(productId, duration) {
     const slug = (productId || '').toLowerCase();
     if (slug.includes('gemini')) return 1;
@@ -710,7 +710,7 @@ class ResellerService {
     return null;
   }
 
-  // Internal wholesale gateway handler for catalog & fulfillment dispatch
+  // Gateway handler for catalog and orders
   mockResellerResponse(endpoint, options = {}, vendor = null) {
     const vendorName = vendor ? vendor.name : 'Gemini Pro Store';
     console.log(`[ResellerService:Gateway][${vendorName}] ${options.method || 'GET'} ${endpoint}`);

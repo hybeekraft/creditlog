@@ -25,7 +25,7 @@
 
 <body>
 
-  <!-- Global Main Navigation -->
+  <!-- Navigation -->
   <header class="site-header" id="siteHeader">
     <div class="header-container">
       <a href="index.html" class="brand-logo">
@@ -59,7 +59,7 @@
     </div>
   </header>
 
-  <!-- SHOP MAIN CONTENT -->
+  <!-- Main content -->
   <main class="main-content">
     
     <div class="shop-page-header">
@@ -72,9 +72,9 @@
       </p>
     </div>
 
-    <!-- Shop Section with Grid/List -->
+    <!-- Product list section -->
     <section class="catalog-section" id="catalogSection" style="padding-top: 10px;">
-      <!-- Dynamic Apple Segmented Category Navigation -->
+      <!-- Category tabs -->
       <div class="category-nav-wrapper">
         <div class="category-segmented-bar" id="categorySegmentedBar">
           <button class="category-pill-btn active" data-cat="all" onclick="filterCategory('all', this)">
@@ -104,9 +104,9 @@
         </div>
       </div>
 
-      <!-- Dynamic Controls Row: Search, Sort, and View Mode Toggle -->
+      <!-- Search and filters -->
       <div class="catalog-controls-row">
-        <!-- Fast Search Bar -->
+        <!-- Search bar -->
         <div class="catalog-search-wrap">
           <svg class="catalog-search-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
@@ -118,7 +118,7 @@
           <span class="catalog-search-shortcut">/</span>
         </div>
         <div class="catalog-controls-right">
-                    <!-- Apple Glassmorphic Brand Filter Dropdown -->
+          <!-- Category dropdown -->
           <div class="apple-dropdown-wrap" id="brandDropdownWrap">
             <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Category">
               <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
@@ -132,7 +132,7 @@
                 <input type="text" id="brandSearchInput" placeholder="Filter category..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
               </div>
               <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
-                <!-- Populated dynamically by populateBrandDropdown() -->
+                <!-- Populated by JS -->
               </div>
             </div>
           </div>
@@ -160,18 +160,18 @@
         </div>
       </div>
 
-      <!-- Live Directory Container -->
+      <!-- Product grid -->
       <div class="directory-grid" id="directoryGrid">
-        <!-- Rendered via JS -->
+        <!-- Rendered by JS -->
       </div>
 
-      <!-- Pagination Container (From Uiverse.io by uiverse-astronaut) -->
+      <!-- Pagination -->
       <div class="catalog-pagination-wrap" id="catalogPaginationWrap">
-        <!-- Rendered via JS -->
+        <!-- Rendered by JS -->
       </div>
     </section>
 
-    <!-- Minimal Clean Footer -->
+    <!-- Footer -->
     <footer class="site-footer-minimal">
       <div class="footer-minimal-container">
         <div class="footer-minimal-left">
@@ -217,7 +217,7 @@
 
   <script src="/shared.js"></script>
   <script>
-    // State Management
+    // State
     let currentCategory = 'all';
     let currentBrand = 'all';
     let catalogBrandSamples = {};
@@ -226,7 +226,7 @@
     let currentPage = 1;
     const PAGE_SIZE = 20;
 
-    // Global Key Listener for Quick Search (/)
+    // Focus search input when pressing /
     window.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         e.preventDefault();
@@ -238,7 +238,7 @@
       }
     });
 
-    // Brand normalization helper (ensures Amazon Prime / Prime Video consolidate into Amazon, and Apple / Apple TV consolidate into Apple TV+)
+    // Standardize brand names
     function normalizeBrand(rawBrand) {
       if (!rawBrand) return '';
       let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand);
@@ -298,7 +298,7 @@
       return b;
     }
 
-    // Helper: Category and Search Filter
+    // Filter products by category and search term
     function getFilteredProducts() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       return source.filter(prod => {
@@ -341,14 +341,14 @@
       });
     }
 
-    // Sorting Helper (Catalog default Alphabetical: A to Z)
+    // Sort products alphabetically
     function getSortedProducts(products) {
       const copy = [...products];
       copy.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
       return copy;
     }
 
-    // Update Category Badges
+    // Update category counts
     function updateCategoryBadges() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       const allCount = source.length;
@@ -371,13 +371,13 @@
       setBadge('badgeSec', secCount);
     }
 
-    // Direct Navigation to Product Detail Page
+    // Go to product page
     function navigateToProduct(prodId) {
       if (!prodId) return;
       window.location.href = `product.html?id=${encodeURIComponent(prodId)}`;
     }
 
-    // Render Function: Renders each product individually with pagination (max 20 per page)
+    // Render product catalog (up to 20 per page)
     function renderCatalog() {
       const filtered = getFilteredProducts();
       const sortedProducts = getSortedProducts(filtered);
@@ -390,7 +390,7 @@
       const totalItems = sortedProducts.length;
       const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
 
-      // Clamp currentPage
+      // Keep page within bounds
       if (currentPage > totalPages) currentPage = totalPages;
       if (currentPage < 1) currentPage = 1;
 
@@ -411,7 +411,7 @@
         return;
       }
 
-      // Slice to 20 items per page
+      // Get products for current page
       const pageProducts = sortedProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
       if (currentViewMode === 'grid') {
@@ -504,7 +504,7 @@
       renderPagination(totalPages);
     }
 
-    // Render Apple-Grade Pagination (From Uiverse.io by uiverse-astronaut)
+    // Render pagination buttons
     function renderPagination(totalPages) {
       const wrap = document.getElementById('catalogPaginationWrap');
       if (!wrap) return;
@@ -517,7 +517,7 @@
       const items = getPaginationItems(currentPage, totalPages);
       let html = `<nav class="cir-page" aria-label="Pagination">`;
 
-      // Previous page button (only shown when currentPage > 1 matching inspo)
+      // Previous page button
       if (currentPage > 1) {
         html += `
           <button class="cir-page__nav" type="button" aria-label="Previous page" onclick="goToPage(${currentPage - 1})">
@@ -529,7 +529,7 @@
         `;
       }
 
-      // Page numbers & Ellipsis gaps
+      // Page numbers
       items.forEach(item => {
         if (item === '...') {
           html += `<span class="cir-page__gap" aria-hidden="true">…</span>`;
@@ -548,7 +548,7 @@
         }
       });
 
-      // Next page button (only shown when currentPage < totalPages matching inspo)
+      // Next page button
       if (currentPage < totalPages) {
         html += `
           <button class="cir-page__nav" type="button" aria-label="Next page" onclick="goToPage(${currentPage + 1})">
@@ -564,7 +564,7 @@
       wrap.innerHTML = html;
     }
 
-    // Helper: Smart Pagination Range Algorithm (Maintains 5 number boxes without ellipsis)
+    // Show up to 5 page numbers
     function getPaginationItems(current, total) {
       if (total <= 5) {
         return Array.from({ length: total }, (_, i) => i + 1);
@@ -589,7 +589,7 @@
       }
     }
 
-    // Go to specific page
+    // Jump to page
     function goToPage(page) {
       const filtered = getFilteredProducts();
       const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
@@ -605,7 +605,7 @@
       }
     }
 
-    // Set View Mode (Grid vs List)
+    // Switch between grid and list view
     function setViewMode(mode) {
       currentViewMode = mode;
       document.getElementById('viewModeGrid').classList.toggle('active', mode === 'grid');
@@ -613,7 +613,7 @@
       renderCatalog();
     }
 
-    // Brand Dropdown Population & Filter
+    // Populate category dropdown
     function populateBrandDropdown() {
       const container = document.getElementById('brandOptionsList');
       if (!container) return;
@@ -750,7 +750,7 @@
       });
     }
 
-    // Close on outside click or Escape
+    // Close dropdown on click outside or escape
     document.addEventListener('click', (e) => {
       const brandWrap = document.getElementById('brandDropdownWrap');
       if (brandWrap && !brandWrap.contains(e.target)) {
@@ -780,7 +780,7 @@
       }
     });
 
-    // Clear search helper
+    // Reset filters and search
     function clearSearchAndReset() {
       currentSearch = '';
       currentCategory = 'all';
@@ -803,7 +803,7 @@
       renderCatalog();
     }
 
-    // Filter by Category with Apple Sliding Pill Integration
+    // Filter by category tab
     function filterCategory(cat, btnElem) {
       currentCategory = cat;
       currentBrand = 'all';
@@ -833,7 +833,7 @@
       }
     }
 
-    // Search Input
+    // Handle search typing
     function handleSearch(val) {
       currentSearch = val.trim();
       currentPage = 1;
@@ -843,7 +843,7 @@
       }
     }
 
-    // Robust Boot Function (handles both pre- and post-DOMContentLoaded states)
+    // Initialize catalog on page load
     async function bootCatalog() {
       populateBrandDropdown();
       updateCategoryBadges();
@@ -856,7 +856,7 @@
         initCardSpotlights();
       }
 
-      // Sync live inventory from server
+      // Refresh products from server
       try {
         const res = await fetch('/api/products');
         if (res.ok) {

@@ -1,8 +1,6 @@
-/* ==========================================================================
-   CreditLog — Shared Data, Digital Subscriptions Inventory & Multi-Currency System
-   ========================================================================== */
+// Shared product data, cart, and currency helpers
 
-// --- User Authentication & Session State ---
+// User authentication and session
 function getCurrentUser() {
   if (typeof localStorage === 'undefined') return null;
   const sessionStr = localStorage.getItem('creditlog_session');
@@ -52,8 +50,7 @@ function logoutUser() {
 }
 
 function renderHeaderAuth() {
-  // Profile avatar and admin menu are strictly reserved for backoffice admin pages (admin.html, inventory.html, customers.html, settings.html, activity-logs.html)
-  // Ensure no profile avatar or admin menu is ever injected into the public storefront header
+  // Only show the admin menu on admin pages, not on the public store
   const existingAuthWrap = document.getElementById('headerAuthContainer');
   if (existingAuthWrap) {
     existingAuthWrap.remove();
@@ -63,7 +60,7 @@ function renderHeaderAuth() {
     staticMenu.remove();
   }
 
-  // Remove obsolete links from desktop navigation
+  // Remove unused desktop nav links
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = (link.getAttribute('href') || '').toLowerCase();
     const text = link.textContent.trim().toLowerCase();
@@ -73,10 +70,10 @@ function renderHeaderAuth() {
   });
 }
 
-// --- Active Exchange Rate (1 USD = ₦1,500) ---
+// Exchange rate: 1 USD = ₦1,500
 const USD_TO_NGN_RATE = 1500;
 
-// --- Authoritative Multi-Currency System (NGN / USD) ---
+// Currency switcher (NGN and USD)
 const FLAG_ICONS = {
   NGN: `<svg class="flag-icon" width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);vertical-align:middle;flex-shrink:0;"><rect width="18" height="13" rx="2" fill="#008751"/><rect x="6" width="6" height="13" fill="#FFFFFF"/></svg>`,
   USD: `<svg class="flag-icon" width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);vertical-align:middle;flex-shrink:0;"><rect width="18" height="13" rx="2" fill="#B22234"/><path d="M0 1.5h18M0 3.5h18M0 5.5h18M0 7.5h18M0 9.5h18M0 11.5h18" stroke="#FFFFFF" stroke-width="1"/><rect width="8" height="7" rx="1" fill="#3C3B6E"/><circle cx="2" cy="1.8" r="0.5" fill="#FFFFFF"/><circle cx="4" cy="1.8" r="0.5" fill="#FFFFFF"/><circle cx="6" cy="1.8" r="0.5" fill="#FFFFFF"/><circle cx="3" cy="3.5" r="0.5" fill="#FFFFFF"/><circle cx="5" cy="3.5" r="0.5" fill="#FFFFFF"/><circle cx="2" cy="5.2" r="0.5" fill="#FFFFFF"/><circle cx="4" cy="5.2" r="0.5" fill="#FFFFFF"/><circle cx="6" cy="5.2" r="0.5" fill="#FFFFFF"/></svg>`
@@ -120,7 +117,7 @@ function getCurrencyToggleHTML() {
   `;
 }
 
-// Backward compatibility alias
+// Kept for backward compatibility
 function getCurrencyDropdownHTML() {
   return getCurrencyToggleHTML();
 }
@@ -159,7 +156,7 @@ function formatDualPrice(usdVal) {
   return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// Backward compatible formatter
+// Kept for backward compatibility
 function formatNaira(val) {
   return '₦' + Number(val).toLocaleString('en-US');
 }
@@ -169,7 +166,7 @@ function updateCurrencyUI() {
   const currLabel = curr === 'USD' ? 'USD $' : 'NGN ₦';
   const targetLabel = curr === 'USD' ? 'NGN (₦)' : 'USD ($)';
 
-  // 1. Update all currency toggle buttons across DOM
+  // Update currency toggle buttons
   document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
     const flagEl = btn.querySelector('.curr-flag') || btn.querySelector('.curr-trigger-flag');
     const codeEl = btn.querySelector('.curr-code') || btn.querySelector('.curr-trigger-code');
@@ -183,7 +180,7 @@ function updateCurrencyUI() {
     btn.setAttribute('aria-label', `Current currency: ${curr}. Click to switch to ${targetLabel}.`);
   });
 
-  // 2. Update legacy currency dropdown wraps & triggers across DOM if present
+  // Update dropdown triggers if present
   document.querySelectorAll('.currency-dropdown-wrap').forEach(wrap => {
     const flagEl = wrap.querySelector('.curr-trigger-flag');
     const codeEl = wrap.querySelector('.curr-trigger-code');
@@ -210,7 +207,7 @@ function updateCurrencyUI() {
     });
   });
 
-  // 3. Update all fallback currency toggle capsule buttons across DOM if present
+  // Update capsule buttons if present
   document.querySelectorAll('.currency-toggle-capsule').forEach(capsule => {
     capsule.querySelectorAll('.curr-pill-btn').forEach(btn => {
       const btnCurr = btn.getAttribute('data-curr') || (btn.textContent.includes('USD') ? 'USD' : 'NGN');
@@ -224,7 +221,7 @@ function updateCurrencyUI() {
     });
   });
 
-  // 4. Update hero ticker stock nodes dynamically if present
+  // Update prices in hero ticker
   document.querySelectorAll('.ticker-node[data-usd]').forEach(node => {
     const usd = parseFloat(node.getAttribute('data-usd'));
     if (!isNaN(usd)) {
@@ -237,7 +234,7 @@ function updateCurrencyUI() {
 }
 
 function mountGlobalCurrencyToggle() {
-  // Auto-mount if a page has .header-actions or .top-bar-right without a toggle
+  // Add currency button to header if missing
   const target = document.querySelector('.site-header .header-actions') || 
                  document.querySelector('.product-top-bar .top-bar-right') || 
                  document.querySelector('.checkout-top-bar');
@@ -250,7 +247,7 @@ function mountGlobalCurrencyToggle() {
   }
 }
 
-// Global dismiss listeners for currency dropdown
+// Close currency dropdown on click outside or escape
 if (typeof document !== 'undefined') {
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.currency-dropdown-wrap')) {
@@ -279,7 +276,7 @@ if (typeof document !== 'undefined') {
   });
 }
 
-// --- Stock Status Badges Helper ---
+// Stock badge
 function renderStockBadge(inStock) {
   if (inStock) {
     return `<span class="stock-badge in-stock"><span class="badge-dot in-stock-dot"></span>In Stock</span>`;
@@ -287,7 +284,7 @@ function renderStockBadge(inStock) {
   return `<span class="stock-badge out-of-stock"><span class="badge-dot out-stock-dot"></span>Sold Out</span>`;
 }
 
-// Universal Brand SVG Icon Registry (Simple Icons Standard)
+// Brand SVG icons
 var BRAND_ICON_REGISTRY = [
   {
     "id": "spotify",
@@ -1603,7 +1600,7 @@ function normalizeBrand(rawBrand) {
 function getBrandData(prod) {
   if (!prod) return BRAND_ICON_REGISTRY[0];
 
-  // 0. Direct custom logoUrl provided on product record (Admin uploaded or linked)
+  // Custom logo uploaded in admin
   if (prod.logoUrl || prod.logo || prod.customLogo) {
     const rawLogo = prod.logoUrl || prod.logo || prod.customLogo;
     const baseMatch = prod.iconType ? BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === String(prod.iconType).toLowerCase()) : null;
@@ -1622,21 +1619,21 @@ function getBrandData(prod) {
     };
   }
 
-  // 1. Direct match by explicit iconType (highest priority for specific brand icons)
+  // Match by iconType
   if (prod.iconType && prod.iconType !== 'cube' && prod.iconType !== 'vpn' && prod.iconType !== 'default') {
     const iconKey = String(prod.iconType).toLowerCase().trim();
     const iconMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === iconKey || (b.match && b.match.includes(iconKey)));
     if (iconMatch) return iconMatch;
   }
 
-  // 2. Direct match by brandClass (e.g., 'tile-chatgpt' -> 'chatgpt')
+  // Match by brandClass
   if (prod.brandClass && prod.brandClass !== 'tile-vpn' && prod.brandClass !== 'tile-brand-default') {
     const cleanClass = String(prod.brandClass).replace(/^tile-/, '').toLowerCase().trim();
     const classMatch = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === cleanClass);
     if (classMatch) return classMatch;
   }
 
-  // 3. Match against explicit brand field
+  // Match by brand name
   if (prod.brand) {
     const brandLower = normalizeBrand(prod.brand).toLowerCase().trim();
     const directBrand = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandLower || b.name.toLowerCase() === brandLower);
@@ -1649,7 +1646,7 @@ function getBrandData(prod) {
     }
   }
 
-  // 4. Fallback search on name & id, prioritizing primary software brands over generic words
+  // Fallback: search by product name or id
   const target = ((prod.name || '') + ' ' + (prod.id || '')).toLowerCase();
   if (target.includes('codex')) {
     const codex = BRAND_ICON_REGISTRY.find(b => b.id === 'codex');
@@ -1727,7 +1724,7 @@ function getAvailableBrandLogos() {
   }));
 }
 
-// Exact 24 Official Categories
+// Store categories
 var OFFICIAL_CATEGORIES = [
   'ChatGPT',
   'Gemini',
@@ -1789,7 +1786,7 @@ function getProductCategory(prod) {
   const name = (prod.name || '').toLowerCase().trim();
   const icon = (prod.iconType || '').toLowerCase().trim();
 
-  // 1. Direct Brand & Name Identification (highest fidelity)
+  // Match by brand or name
   if (brand === 'adobe' || name.includes('adobe') || icon === 'adobe' || name.includes('photoshop') || name.includes('illustrator')) return 'Adobe';
   if (brand === 'autodesk' || name.includes('autodesk') || icon === 'autodesk' || name.includes('autocad') || name.includes('3ds max') || name.includes('revit') || name.includes('maya')) return 'Autodesk';
   if (brand === 'elevenlabs' || name.includes('elevenlabs') || icon === 'elevenlabs') return 'ElevenLabs';
@@ -1811,7 +1808,7 @@ function getProductCategory(prod) {
   if (brand === 'spotify' || brand === 'apple music' || name.includes('spotify') || name.includes('apple music') || name.includes('deezer') || name.includes('tidal')) return 'Music';
   if (brand === 'netflix' || name.includes('netflix') || name.includes('disney') || name.includes('prime video') || name.includes('apple tv') || name.includes('hulu') || name.includes('crunchyroll') || name.includes('paramount') || name.includes('peacock') || name.includes('youtube premium')) return 'Streaming';
 
-  // 2. Existing valid botCategory
+  // Use existing category if valid
   if (prod.botCategory && OFFICIAL_CATEGORIES.includes(prod.botCategory)) {
     return prod.botCategory;
   }
@@ -1823,7 +1820,7 @@ function getProductCategory(prod) {
   if (prod.botCategory === 'Lovable') return 'AI Tools';
   if (prod.botCategory === 'Snapchat') return 'Social';
 
-  // 3. Keyword Checks in description & raw text
+  // Check keywords in description
   const desc = (prod.description || '').toLowerCase();
   const raw = brand + ' ' + name + ' ' + desc;
 
@@ -1868,7 +1865,7 @@ function renderCategoryIcon(categoryName, options) {
 }
 
 
-// --- FULL SUBSCRIPTIONS SHOP (All 93 Verified Items) ---
+// Product catalog
 var CATALOG_PRODUCTS = [
   {
     "id": "google-gemini-3m",
@@ -4755,7 +4752,7 @@ var CATALOG_PRODUCTS = [
   }
 ];
 
-// --- CORE FLAGSHIP PRODUCTS (Grouped Brand Suites for Product Detail Views) ---
+// Featured products
 const CORE_PRODUCTS = [
   {
     "id": "google-gemini-pro",
@@ -5336,10 +5333,10 @@ const CORE_PRODUCTS = [
   }
 ];
 
-// Alias for backward compatibility across existing references
+// Kept for backward compatibility
 const BOT_PRODUCTS = CATALOG_PRODUCTS;
 
-// Combined Shop: Core Flagships + Unique Individual Shop Items
+// All products combined
 const PRODUCTS = [
   ...CORE_PRODUCTS,
   ...CATALOG_PRODUCTS.filter(bp => !CORE_PRODUCTS.some(cp => cp.id === bp.id))
@@ -5389,7 +5386,7 @@ if (typeof module !== 'undefined' && module.exports) {
   };
 }
 
-// --- Cart Storage (Persistent across pages via localStorage) ---
+// Cart helpers
 function getCart() {
   const stored = localStorage.getItem('creditlog_cart');
   if (stored) {
@@ -5399,7 +5396,7 @@ function getCart() {
       console.error(e);
     }
   }
-  // Default cart with top popular in-stock items
+  // Default items if cart is empty
   const defaultCart = [
     {
       id: 'google-gemini-pro',
@@ -5445,10 +5442,10 @@ function updateCartBadge() {
 }
 
 function addToCart(productId, planDuration = '', qty = 1) {
-  // Look in both BOT_PRODUCTS and PRODUCTS
+  // Find product
   const prod = BOT_PRODUCTS.find(p => p.id === productId) || PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
 
-  // Find selected plan or fallback
+  // Find selected plan
   let plan = null;
   if (planDuration && prod.plans) {
     plan = prod.plans.find(pl => pl.duration === planDuration || pl.duration.includes(planDuration));
@@ -5493,7 +5490,7 @@ function addToCart(productId, planDuration = '', qty = 1) {
   return true;
 }
 
-// --- Global Toast Notification ---
+// Toast notification
 let toastTimer = null;
 function showToast(msg) {
   let toast = document.getElementById('toastNotification');
@@ -5531,9 +5528,7 @@ if (typeof document !== 'undefined') {
   });
 }
 
-// ==========================================================================
-// Mobile Navigation Drawer Removed (Using Bottom Navigation Bar)
-// ==========================================================================
+// Mobile navigation
 function toggleMobileNav() { }
 function openMobileNav() { }
 function closeMobileNav() {
@@ -5566,9 +5561,7 @@ function removeMobileBottomNav() {
   if (existingNav) existingNav.remove();
 }
 
-// ==========================================================================
-// Instant Guest Order Tracking Modal System (Zero Login Required)
-// ==========================================================================
+// Order tracking modal
 function ensureTrackOrderModalInDom() {
   if (document.getElementById('guestTrackOrderModal')) return;
 
@@ -5617,7 +5610,7 @@ function openTrackOrderModal() {
   const input = document.getElementById('trackOrderSearchInput');
   if (input) {
     input.focus();
-    // Auto-fill from recent order if available
+    // Auto-fill recent order if available
     const lastOrder = JSON.parse(localStorage.getItem('creditlog_last_order') || '{}');
     if (lastOrder.id && !input.value) {
       input.value = lastOrder.id;
@@ -5648,7 +5641,7 @@ async function lookupGuestOrder() {
 
   let orders = [];
 
-  // Try API first
+  // Look up on server
   try {
     const isId = query.startsWith('#') || query.toUpperCase().startsWith('CL');
     const param = isId ? `id=${encodeURIComponent(query)}` : `email=${encodeURIComponent(query)}`;
@@ -5663,7 +5656,7 @@ async function lookupGuestOrder() {
     console.warn('API track offline, falling back to local database:', err);
   }
 
-  // Fallback to localStorage
+  // Fallback to local storage
   if (orders.length === 0) {
     const local = JSON.parse(localStorage.getItem('creditlog_orders') || '[]');
     orders = local.filter(o =>
@@ -5723,9 +5716,7 @@ async function lookupGuestOrder() {
   });
 }
 
-// ==========================================================================
-// Apple-Grade Motion, Sliding Segmented Controls & Spotlight Interaction Engine
-// ==========================================================================
+// Sliding category pill and card hover effects
 
 function initSegmentedSlidingPill(barElement) {
   const bars = barElement ? [barElement] : document.querySelectorAll('.category-segmented-bar, .keynote-tab-switcher, .apple-segmented-bar');
@@ -5762,7 +5753,7 @@ function initSegmentedSlidingPill(barElement) {
       updateSlider(activeBtn, false);
     }
 
-    // Attach click listener to buttons inside bar
+    // Update active button on click
     const buttons = bar.querySelectorAll('button');
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -5772,7 +5763,7 @@ function initSegmentedSlidingPill(barElement) {
       });
     });
 
-    // ResizeObserver for robust layout updates
+    // Reposition slider on window resize
     if (window.ResizeObserver) {
       const ro = new ResizeObserver(() => {
         const curActive = bar.querySelector('.active');
@@ -5790,7 +5781,7 @@ function initCardSpotlights() {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      // Only compute if pointer is near or inside card
+      // Only update when pointer is near card
       if (x >= -50 && x <= rect.width + 50 && y >= -50 && y <= rect.height + 50) {
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
@@ -5799,7 +5790,7 @@ function initCardSpotlights() {
   }, { passive: true });
 }
 
-// Quick View Modal
+// Quick view modal
 function openQuickViewModal(productId) {
   const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
   const prod = source.find(p => p.id === productId);
@@ -5886,7 +5877,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
-// --- Responsive Admin Mobile Navbar Toggle ---
+// Admin mobile sidebar toggle
 function initAdminMobileNav() {
   const sidebar = document.getElementById('dashSidebar') || document.querySelector('.dash-sidebar');
   if (!sidebar) return;
@@ -5906,7 +5897,7 @@ function initAdminMobileNav() {
     }
   };
 
-  // Auto-close on link click when on mobile
+  // Close sidebar when a link is clicked
   sidebar.querySelectorAll('.menu-item').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth < 768 && sidebar.classList.contains('menu-open')) {
@@ -5922,7 +5913,7 @@ function initAdminMobileNav() {
     });
   });
 
-  // Auto-close when clicking outside
+  // Close sidebar on click outside
   document.addEventListener('click', function(e) {
     if (window.innerWidth < 768 && sidebar.classList.contains('menu-open')) {
       if (!sidebar.contains(e.target)) {
@@ -5939,14 +5930,14 @@ function initAdminMobileNav() {
   });
 }
 
-// Global Cache Clearing Utility
+// Clear client and server cache
 if (typeof window !== 'undefined') {
   window.clearSystemCache = async function(silent = false) {
     try {
       sessionStorage.clear();
       const adminToken = localStorage.getItem('creditlog_admin_token') || 'admin123';
       
-      // Purge cached client keys while preserving current admin authentication
+      // Clear local storage except auth tokens
       const keysToPurge = [];
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
@@ -5956,7 +5947,7 @@ if (typeof window !== 'undefined') {
       }
       keysToPurge.forEach(k => localStorage.removeItem(k));
 
-      // Request server-side cache clearance
+      // Tell server to clear its cache
       try {
         await fetch('/api/admin/clear-cache', {
           method: 'POST',
@@ -5981,7 +5972,7 @@ if (typeof window !== 'undefined') {
   };
 }
 
-// Admin Profile Dropdown Controller
+// Admin profile dropdown
 function initAdminProfileDropdown() {
   document.querySelectorAll('.admin-profile-wrapper').forEach(wrapper => {
     const trigger = wrapper.querySelector('.user-profile-badge') || wrapper;
@@ -6021,7 +6012,7 @@ function initAdminProfileDropdown() {
 }
 
 if (typeof document !== 'undefined') {
-  // Global click outside listener for admin profile dropdown
+  // Close admin menu on click outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.admin-profile-wrapper')) {
       document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
@@ -6032,7 +6023,7 @@ if (typeof document !== 'undefined') {
     }
   });
 
-  // Close admin profile dropdown on Escape
+  // Close admin menu on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.admin-profile-wrapper.active').forEach(w => {
@@ -6043,7 +6034,7 @@ if (typeof document !== 'undefined') {
     }
   });
 
-  // Run UI setups on load
+  // Initialize UI on page load
   document.addEventListener('DOMContentLoaded', () => {
     renderHeaderAuth();
     updateCartBadge();
@@ -6057,7 +6048,7 @@ if (typeof document !== 'undefined') {
     initAdminProfileDropdown();
   });
 
-  // In case script runs after DOMContentLoaded
+  // Run immediately if DOM is already ready
   if (document.readyState === 'interactive' || document.readyState === 'complete') {
     initAdminProfileDropdown();
   }

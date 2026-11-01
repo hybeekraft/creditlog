@@ -1,4 +1,4 @@
-// Vercel Serverless Function entry point for CreditLog REST API
+// Vercel serverless API entry point
 const server = require('../server/index.js');
 
 module.exports = (req, res) => {

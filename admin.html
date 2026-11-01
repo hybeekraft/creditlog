@@ -327,7 +327,7 @@
       loadAnalyticsData('7d');
       fetchResellerStatus();
 
-      // Check URL parameters for backward-compatible routing
+      // Check URL parameters for routing
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('open') === 'customers') {
         window.location.href = 'customers.html';
@@ -336,7 +336,7 @@
       }
     });
 
-    // --- Live Analytics & Dynamic Chart Engine ---
+    // Sales analytics and chart
     let currentAnalyticsData = null;
 
     async function loadAnalyticsData(timeframe = '7d') {
@@ -418,7 +418,7 @@
       const maxVal = Math.max(chart.maxRevenue || 100000, 1000);
       const N = points.length;
 
-      // Coordinate mapping constants
+      // Chart dimensions
       const startX = 50;
       const endX = 480;
       const topY = 30;
@@ -426,7 +426,7 @@
       const availWidth = endX - startX;
       const availHeight = baseY - topY;
 
-      // 1. Grid & Y-Axis Ticks
+      // Grid lines and Y-axis
       const gridGroup = document.getElementById('chartGridGroup');
       if (gridGroup) {
         let gridHtml = '';
@@ -441,13 +441,13 @@
           gridHtml += `<line x1="40" y1="${y.toFixed(1)}" x2="490" y2="${y.toFixed(1)}" stroke="rgba(25, 13, 8, 0.06)" stroke-dasharray="3 3"/>`;
           gridHtml += `<text x="36" y="${(y + 4).toFixed(1)}" class="chart-axis-label" text-anchor="end">${formattedTick}</text>`;
         });
-        // Base line
+        // Bottom axis line
         gridHtml += `<line x1="40" y1="${baseY}" x2="490" y2="${baseY}" stroke="rgba(25, 13, 8, 0.08)"/>`;
         gridHtml += `<text x="36" y="${baseY + 4}" class="chart-axis-label" text-anchor="end">0</text>`;
         gridGroup.innerHTML = gridHtml;
       }
 
-      // 2. Calculate Point Coordinates
+      // Point coordinates
       const coords = points.map((p, i) => {
         const x = N === 1 ? (startX + endX) / 2 : startX + (i / (N - 1)) * availWidth;
         const ratio = Math.min(1, Math.max(0, p.revenue / maxVal));
@@ -455,7 +455,7 @@
         return { x, y, point: p };
       });
 
-      // 3. Build Smooth Bézier Path
+      // Curve line path
       let pathD = `M ${coords[0].x.toFixed(1)} ${coords[0].y.toFixed(1)}`;
       for (let i = 1; i < coords.length; i++) {
         const prev = coords[i - 1];
@@ -474,7 +474,7 @@
       const areaPathEl = document.getElementById('chartAreaPath');
       if (areaPathEl) areaPathEl.setAttribute('d', areaD);
 
-      // 4. Interactive Dots with Tooltip Hover
+      // Data points and hover tooltips
       const dotsGroup = document.getElementById('chartDotsGroup');
       const container = document.querySelector('.chart-canvas-container');
 
@@ -487,7 +487,7 @@
         });
         dotsGroup.innerHTML = dotsHtml;
 
-        // Attach interactive hover & click handlers
+        // Hover handlers
         dotsGroup.querySelectorAll('.chart-dot').forEach(circle => {
           circle.addEventListener('mouseenter', function(e) {
             this.setAttribute('r', '7.5');
@@ -527,7 +527,7 @@
         });
       }
 
-      // 5. X-Axis Date Labels
+      // Date labels on X-axis
       const labelsGroup = document.getElementById('chartLabelsGroup');
       if (labelsGroup) {
         let labelsHtml = '';
@@ -538,7 +538,7 @@
       }
     }
 
-    // --- Dynamic Recent Orders List ---
+    // Recent orders table
     function renderRecentOrders(orders) {
       const container = document.getElementById('adminRecentOrdersList');
       if (!container) return;
@@ -572,7 +572,7 @@
       }).join('');
     }
 
-    // --- Reseller Status & Wholesale Integration ---
+    // Supplier status
     async function fetchResellerStatus() {
       try {
         const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
@@ -592,14 +592,14 @@
       const { settings, balance } = data;
       const isLive = settings.mode === 'live';
 
-      // Status Badge
+      // Status badge
       const badge = document.getElementById('resellerStatusBadge');
       if (badge) {
         badge.className = 'order-status-pill status-fulfilled';
         badge.textContent = '● Live Wholesale Active';
       }
 
-      // Balance
+      // Supplier balance
       const balVal = document.getElementById('resellerBalanceVal');
       const balSub = document.getElementById('resellerBalanceSub');
       if (balVal && balance) {
@@ -619,14 +619,14 @@
         }
       }
 
-      // Margin & Rate
+      // Margin and rate
       const marginVal = document.getElementById('resellerMarginVal');
       const rateSub = document.getElementById('resellerRateSub');
       const tierCount = settings.priceTiers ? settings.priceTiers.length : 5;
       if (marginVal) marginVal.textContent = `${tierCount} Tier Multipliers`;
       if (rateSub) rateSub.textContent = `FX: ₦${Number(settings.usdToNgnRate).toLocaleString()} / $1.00 USD`;
 
-      // Engine status
+      // Sync status
       const engineStatus = document.getElementById('resellerEngineStatus');
       if (engineStatus) {
         engineStatus.textContent = settings.autoFulfill ? 'Active' : 'Paused';

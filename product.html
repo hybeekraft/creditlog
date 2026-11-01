@@ -590,12 +590,12 @@
     let currentPlan = null;
     let currentQty = 1;
 
-    // Boot
+    // Initialize product page
     async function initProductPage() {
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('id') || 'netflix-premium';
 
-      // 1. Fetch live product details & stock from server API
+      // Load product details from server
       try {
         const res = await fetch(`/api/products/${encodeURIComponent(productId)}`);
         if (res.ok) {
@@ -608,13 +608,13 @@
         console.warn('API fallback to local shop:', e);
       }
 
-      // Offline fallback if needed
+      // Fallback to local catalog if offline
       if (!currentProduct) {
         const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS);
         currentProduct = source.find(p => p.id === productId) || source[0];
       }
 
-      // Setup initial plan
+      // Set default plan
       const defaultDuration = currentProduct.duration || '1 Month';
       const availableVariant = (currentProduct.variants && currentProduct.variants.length > 0)
         ? (currentProduct.variants.find(v => (v.availableStock === undefined || v.availableStock > 0) && v.inStock !== false) || currentProduct.variants[0])
@@ -638,8 +638,7 @@
         inStock: isProductInStock
       };
 
-      // Populate hero
-      // Populate Hero & Description from seller API
+      // Display product title and description
       document.getElementById('productTitle').textContent = currentProduct.name;
       document.getElementById('productCategoryTag').textContent = (currentProduct.botCategory || currentProduct.category || 'Subscription').toUpperCase();
       
@@ -662,7 +661,7 @@
         iconTile.outerHTML = renderBrandIcon(currentProduct, { isHero: true, id: 'productIconTile', className: 'product-icon-tile' });
       }
 
-      // Populate Description card (Seller API Powered)
+      // Display full description and requirements
       const reqEl = document.getElementById('productRequirements');
       const reqCard = document.getElementById('productRequirementsCard');
       const fullDesc = (currentProduct.description || currentProduct.importantRequirements || currentProduct.requirements || currentProduct.overview || '').trim();
@@ -690,7 +689,7 @@
         }
       }
 
-      // Populate Delivery Format & Mode from seller API
+      // Display delivery format
       const delEl = document.getElementById('productDelivery');
       const delBadge = document.getElementById('productDeliveryFormatBadge');
       const deliveryFmt = currentProduct.deliveryFormat || 'Instant Account Access';
@@ -702,7 +701,7 @@
         delEl.innerHTML = `<p style="margin: 0; font-size: 13.5px; color: #43332A; line-height: 1.5;">Automated instant dispatch occurs immediately upon payment confirmation. Your verified access credentials, assigned parameters, and confirmation receipt are displayed directly on your order screen and dispatched to your email address.</p>`;
       }
 
-      // Populate Instructions (if seller provided them)
+      // Display instructions if available
       const instCard = document.getElementById('productInstructionsCard');
       const instEl = document.getElementById('productInstructions');
       const rawInst = (currentProduct.instructions || '').trim();
@@ -713,7 +712,7 @@
         instCard.style.display = 'none';
       }
 
-      // Populate Warranty & Support Policy
+      // Display warranty policy
       const warEl = document.getElementById('productWarranty');
       const warText = currentProduct.warrantyPolicy || currentProduct.warranty || 'Guaranteed active upon initial receipt with dedicated support.';
       if (warEl) {
@@ -724,7 +723,7 @@
       updatePrice();
     }
 
-    // Update remaining stock indicator
+    // Update stock badge
     function updateStockBadge() {
       const badge = document.getElementById('productStockBadge');
       if (!badge || !currentProduct) return;
@@ -752,7 +751,7 @@
       updatePrice(true);
     }
 
-    // Update dynamic price & Buy button status
+    // Update price and buy button
     function updatePrice(animate = false) {
       if (!currentPlan) return;
       const unitUsd = currentPlan.usdPrice || currentProduct.usdPrice || 5.00;
@@ -795,7 +794,7 @@
       }
     }
 
-    // Buy Now -> Proceeds directly to Checkout with Reservation
+    // Proceed to checkout
     function handleBuyNow() {
       const isProductEnabled = currentProduct && currentProduct.enabled !== false;
       const isAvailable = isProductEnabled && currentPlan && currentPlan.inStock !== false && currentPlan.availableStock > 0;
@@ -809,7 +808,7 @@
       const duration = currentPlan.duration || currentProduct.duration || '1 Month';
       const qty = currentQty;
 
-      // Navigate directly to checkout without customer account wall
+      // Go to checkout page
       const checkoutUrl = `checkout.html?productId=${encodeURIComponent(prodId)}&duration=${encodeURIComponent(duration)}&qty=${qty}`;
       window.location.href = checkoutUrl;
     }

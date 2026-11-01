@@ -16,7 +16,7 @@
 
 <body>
 
-  <!-- Global Main Navigation -->
+  <!-- Navigation -->
   <header class="site-header" id="siteHeader">
     <div class="header-container">
       <a href="index.html" class="brand-logo">
@@ -50,31 +50,30 @@
     </div>
   </header>
 
-  <!-- STOREFRONT CONTENT -->
+  <!-- Storefront content -->
   <main class="main-content">
 
-    <!-- 1. TANGERINE CAPITAL INSPIRED HERO SLAB -->
-    <!-- 1. SLEEK DARK LUXURY GLASSMORPHIC HERO -->
+    <!-- Hero section -->
     <section class="hero-section-editorial" id="heroSection">
       <div class="editorial-hero-slab hero-luxury-glass">
-        <!-- Ambient decorative glow backdrops -->
+        <!-- Background glow -->
         <div class="hero-ambient-glow glow-top-right" aria-hidden="true"></div>
         <div class="hero-ambient-glow glow-bottom-left" aria-hidden="true"></div>
         <div class="hero-grid-mesh" aria-hidden="true"></div>
 
         <div class="hero-centered-content">
-          <!-- Tangerine 2-Word Headline -->
+          <!-- Headline -->
           <h1 class="hero-slab-headline">
             <span class="hero-tc-top">CreditLog</span>
             <span class="hero-giant-sticker">Exchange.</span>
           </h1>
 
-          <!-- Editorial Sublead -->
+          <!-- Subtitle -->
           <div class="hero-slab-sublead">
             The verified exchange for premium digital subscriptions.
           </div>
 
-          <!-- CTA Buttons -->
+          <!-- Call to action buttons -->
           <div class="hero-slab-actions">
             <a href="shop.html" class="slab-btn-primary-glow">
               <span>Browse Subscriptions</span>
@@ -91,7 +90,7 @@
           </div>
         </div>
 
-        <!-- Reimagined Glass Stock Ticker Strip -->
+        <!-- Price ticker strip -->
         <div class="hero-slab-ticker">
           <div class="ticker-marquee-viewport">
             <div class="ticker-track">
@@ -102,7 +101,7 @@
               <div class="ticker-node" data-usd="4.60">✦ YOUTUBE PREMIUM <strong>₦6,900</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
               <div class="ticker-node" data-usd="5.98">✦ EXPRESSVPN <strong>₦8,970</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
               <div class="ticker-node" data-usd="2.13">✦ SPOTIFY FAMILY <strong>₦3,200</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
-              <!-- Seamless Loop Duplication -->
+              <!-- Duplicate ticker items for continuous loop -->
               <div class="ticker-node" data-usd="4.53">✦ CHATGPT PLUS <strong>₦6,800</strong> <span class="ticker-pill pill-instant">+INSTANT</span></div>
               <div class="ticker-node" data-usd="6.30">✦ CLAUDE PRO <strong>₦9,450</strong> <span class="ticker-pill pill-stock">+IN STOCK</span></div>
               <div class="ticker-node" data-usd="3.99">✦ NETFLIX 4K <strong>₦5,985</strong> <span class="ticker-pill pill-verified">+VERIFIED</span></div>
@@ -116,10 +115,10 @@
       </div>
     </section>
 
-    <!-- 4. PROTOCOL & GUARANTEE SHOWCASE -->
+    <!-- Guarantee and features -->
     <section class="protocol-showcase-section" id="protocolSection">
       <div class="protocol-card-white">
-        <!-- Left Column: Visual Asset with Floating Badges -->
+        <!-- Feature image -->
         <div class="protocol-visual-box">
           <img src="assets/images/editorial-architecture.jpg" alt="CreditLog Automated Architecture" class="protocol-img" loading="lazy" decoding="async">
           <div class="floating-tag-bottom">
@@ -128,7 +127,7 @@
           </div>
         </div>
 
-        <!-- Right Column: Details & Feature Cards -->
+        <!-- Feature details -->
         <div class="protocol-content-box">
           <div class="protocol-header-block">
             <span class="protocol-eyebrow">AUTOMATED DISPATCH PROTOCOL</span>
@@ -204,7 +203,7 @@
       </div>
     </section>
 
-    <!-- 5. FEATURED STOREFRONT SHOWCASE -->
+    <!-- Featured subscriptions -->
     <section class="featured-storefront-section">
       <div class="section-tag-row">
         <span class="section-tag-line"></span>
@@ -223,7 +222,7 @@
 
       <div class="showcase-enclosure-box" style="background: transparent; border: none; padding: 0;">
         <div class="directory-grid" id="curatedGrid">
-          <!-- 3 cards rendered dynamically via JS -->
+          <!-- Rendered by JS -->
         </div>
 
         <div style="display: flex; justify-content: center; margin-top: 36px;">
@@ -235,7 +234,7 @@
       </div>
     </section>
 
-    <!-- Minimal Clean Footer -->
+    <!-- Footer -->
     <footer class="site-footer-minimal">
       <div class="footer-minimal-container">
         <div class="footer-minimal-left">
@@ -282,7 +281,7 @@
 
   <script src="/shared.js"></script>
   <script>
-    // Curated Home Directory Logic (Top 3 items matching sketch)
+    // Load featured products for homepage
     async function renderCuratedCards() {
       const container = document.getElementById('curatedGrid');
       if (!container) return;
@@ -304,7 +303,7 @@
         source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       }
       
-      // Top 4 featured items matching 4-column wide grid
+      // Display top 4 items
       const displayItems = source.slice(0, 4);
       container.innerHTML = '';
 

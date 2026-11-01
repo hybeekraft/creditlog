@@ -1,14 +1,10 @@
-/**
- * Product Parser Service for CreditLog
- * Extracts product-specific requirements, delivery format, warranty, and instructions
- * directly from the seller's API and Telegram bot catalog descriptions.
- */
+// Parses product details, requirements, and instructions from supplier descriptions.
 
 function parseProductDetails(name = '', desc = '') {
   desc = (desc || '').trim();
   const lines = desc.split('\n').map(l => l.trim()).filter(Boolean);
 
-  // 1. Delivery Format
+  // Delivery format
   let deliveryFormat = '';
   const mDeliv = desc.match(/Delivery format:?\s*([^\n\r]+)/i);
   if (mDeliv) {
@@ -25,7 +21,7 @@ function parseProductDetails(name = '', desc = '') {
     deliveryFormat = 'Direct Account Access';
   }
 
-  // 2. Warranty & Policy
+  // Warranty and policy
   let warranty = '';
   const mWar = desc.match(/((?:No warranty|Warranty:?|Replacement:?)[^\n\r]+)/i);
   if (mWar) {
@@ -40,7 +36,7 @@ function parseProductDetails(name = '', desc = '') {
     warranty = 'Guaranteed active upon initial delivery with priority assistance.';
   }
 
-  // 3. Product-Specific Requirements & Precautions
+  // Requirements and precautions
   let requirements = '';
   const mReq = desc.match(/((?:IMPORTANT|Important information|Notice|CAUTION|Note|PRECAUTIONS|LIMITATIONS):?[\s\S]*?)(?=(?:\n[A-Z\s]{4,}:|\n\d+\.|\Z))/i);
   if (mReq) {
@@ -57,7 +53,7 @@ function parseProductDetails(name = '', desc = '') {
     }
   }
 
-  // Fallback product-specific rules based on product type
+  // Fallback rules by product type
   if (!requirements) {
     const n = name.toLowerCase();
     if (n.includes('chatgpt') || n.includes('openai')) {
@@ -71,14 +67,14 @@ function parseProductDetails(name = '', desc = '') {
     }
   }
 
-  // 4. Instructions & Activation Steps
+  // Activation instructions
   let instructions = '';
   const mInst = desc.match(/((?:LOGIN INSTRUCTION|HOW TO LOG IN|HOW TO USE|INSTRUCTION|SETUP GUIDE|How to activate|How to redeem)[\s\S]*?)(?=(?:\nIMPORTANT|\nNOTE|\nWAR|\nDescription:|\Z))/i);
   if (mInst) {
     instructions = mInst[1].replace(/^(?:LOGIN INSTRUCTION|HOW TO LOG IN|HOW TO USE|INSTRUCTION|SETUP GUIDE|How to activate|How to redeem):?\s*/i, '').trim();
   }
 
-  // 5. Clean Overview
+  // Overview description
   let overview = '';
   const mDesc = desc.match(/Description:?\s*([^\n\r]+(?:\n[^\n\r]+)?)/i);
   if (mDesc) {

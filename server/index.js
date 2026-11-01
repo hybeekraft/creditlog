@@ -16,7 +16,7 @@ const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const RESERVATIONS_FILE = path.join(DATA_DIR, 'reservations.json');
 const LOGS_FILE = path.join(DATA_DIR, 'logs.json');
 
-// Explicit static references for @vercel/nft dependency tracing during Vercel builds
+// Static references for Vercel builds
 if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
   try {
     fs.readFileSync(path.join(process.cwd(), 'style.css'));
@@ -60,12 +60,12 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
   } catch (e) {}
 }
 
-// Ensure data folder and seed files exist
+// Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
-// Seed bundled default JSON data if running in ephemeral environment
+// Copy initial data files if missing
 const candidateDataDirs = [
   path.join(ROOT_DIR, 'data'),
   path.join(process.cwd(), 'data'),
@@ -88,7 +88,7 @@ const SOURCE_DATA_DIR = candidateDataDirs.find(d => fs.existsSync(d)) || candida
   }
 });
 
-// Payment Gateway Config
+// Payment gateway keys
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_demo_creditlog_paystack';
 const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY || 'pk_test_demo_creditlog_paystack';
 const FLUTTERWAVE_SECRET_KEY = process.env.FLUTTERWAVE_SECRET_KEY || 'flw_sec_demo_creditlog';
@@ -103,7 +103,7 @@ function getEffectiveFxRate() {
 }
 const USD_TO_NGN_RATE = getEffectiveFxRate();
 
-// Real Server-to-Server Paystack Verification Helper
+// Verify Paystack payment with their API
 async function verifyPaystackReference(reference) {
   if (!reference) return { verified: false, error: 'No reference provided' };
   const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
@@ -156,12 +156,12 @@ async function verifyPaystackReference(reference) {
   }
 }
 
-// Admin Secret Authentication Token
+// Admin token
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'creditlog_admin_secret_key_2026';
 const ADMIN_TOKEN = 'cl_adm_' + crypto.createHash('sha256').update(ADMIN_SECRET).digest('hex').substring(0, 32);
 
-// --- Serial Transaction Mutex Queue ---
-// Ensures ACID-like atomicity: no two checkout or stock operations can run concurrently
+// Queue operations one at a time
+// Prevents concurrent checkout or stock conflicts
 let inventoryTransactionMutex = Promise.resolve();
 function withInventoryTransaction(operation) {
   const next = inventoryTransactionMutex.then(async () => {
@@ -176,7 +176,7 @@ function withInventoryTransaction(operation) {
   return next;
 }
 
-// --- JSON Database Operations ---
+// File helpers for JSON data
 function readJSON(filePath, fallback = []) {
   try {
     if (!fs.existsSync(filePath)) return fallback;
@@ -300,14 +300,14 @@ function recordLog(user, role, module, action, details) {
   return entry;
 }
 
-// Recompute product stock invariants:
-// totalStock >= 0, reservedStock >= 0, availableStock = max(0, total - reserved)
-// inStock = (availableStock > 0 && enabled !== false)
+// Recalculate available stock and inStock status
+
+
 function recomputeProductStock(product) {
   if (product.enabled === undefined) product.enabled = true;
   
   if (product.variants && Array.isArray(product.variants) && product.variants.length > 0) {
-    // If product has a single variant, synchronize variant totalStock with product totalStock
+    // Sync stock if product has only one variant
     if (product.variants.length === 1 && product.totalStock !== undefined) {
       product.variants[0].totalStock = Math.max(0, parseInt(product.totalStock || 0, 10));
     }
@@ -341,7 +341,7 @@ function recomputeProductStock(product) {
   return product;
 }
 
-// Background cleanup for abandoned reservations (15 minutes TTL)
+// Release held stock after 15 minutes if checkout was abandoned
 function cleanupExpiredReservations() {
   const reservations = getAllReservations();
   const now = Date.now();
@@ -353,7 +353,7 @@ function cleanupExpiredReservations() {
       r.status = 'expired';
       modified = true;
 
-      // Release reserved stock back
+      // Return held stock to inventory
       const prod = products.find(p => p.id === r.productId);
       if (prod) {
         prod.reservedStock = Math.max(0, (prod.reservedStock || 0) - r.quantity);
@@ -376,7 +376,7 @@ function cleanupExpiredReservations() {
   }
 }
 
-// Run cleanup every 30 seconds
+// Check for expired reservations every 30 seconds
 setInterval(() => {
   withInventoryTransaction(async () => {
     cleanupExpiredReservations();
@@ -414,7 +414,7 @@ function generateCredentials(productName, customerEmail, notes) {
   };
 }
 
-// Admin Auth Verification
+// Verify admin request
 function verifyAdmin(req) {
   const auth = req.headers['authorization'] || '';
   const token = auth.replace(/^Bearer\s+/i, '').trim();
@@ -422,7 +422,7 @@ function verifyAdmin(req) {
   return token === ADMIN_TOKEN || headerToken === ADMIN_TOKEN || token === 'admin123' || headerToken === 'admin123';
 }
 
-// --- Request Body Parser ---
+// Parse JSON request body
 function parseBody(req) {
   return new Promise((resolve) => {
     let body = '';
@@ -451,7 +451,7 @@ function sendJSON(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
-// --- MIME Types for Static Serving ---
+// File content types
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -467,9 +467,9 @@ const MIME_TYPES = {
   '.xml': 'application/xml'
 };
 
-// --- HTTP Server ---
+// HTTP server
 const server = http.createServer(async (req, res) => {
-  // CORS Preflight
+  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     res.writeHead(204, {
       'Access-Control-Allow-Origin': '*',
@@ -496,15 +496,15 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // =========================================================================
-  // ADMIN AUTHENTICATION
-  // =========================================================================
+
+  // Admin login
+
   if (pathname === '/api/admin/login' && req.method === 'POST') {
     const body = await parseBody(req);
     const { username, email, password } = body;
     const userOrEmail = (username || email || '').trim().toLowerCase();
     
-    // Default Admin credentials: admin / admin123 or admin@creditlog.com / admin123
+    // Default credentials: admin / admin123
     const isValid = (userOrEmail === 'admin' || userOrEmail === 'admin@creditlog.com') && (password === 'admin123' || password === 'admin');
     
     if (isValid) {
@@ -527,11 +527,11 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // =========================================================================
-  // ADMIN INVENTORY & CMS REST API
-  // =========================================================================
 
-  // 1. GET /api/admin/inventory — Live Stock, Reserved, Available
+  // Admin inventory and product routes
+
+
+  // GET /api/admin/inventory - list products and stock
   if (pathname === '/api/admin/inventory' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -573,7 +573,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 1b. POST /api/admin/upload-logo — Upload Custom Brand Logo File
+  // POST /api/admin/upload-logo - upload brand logo
   if (pathname === '/api/admin/upload-logo' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -635,7 +635,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // 2. POST /api/admin/products — Add New Product with Initial Stock
+  // POST /api/admin/products - add new product
   if (pathname === '/api/admin/products' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -804,7 +804,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 2b. PUT /api/admin/products/:id — Full Product & Branding Update
+  // PUT /api/admin/products/:id - update product
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)$/) && req.method === 'PUT') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -954,7 +954,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 3. PUT /api/admin/products/:id/stock — Set Exact Stock Quantity
+  // PUT /api/admin/products/:id/stock - update stock quantity
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)\/stock$/) && req.method === 'PUT') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -995,7 +995,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 4. POST /api/admin/products/:id/stock-adjust — Increase or Reduce Stock (+ / -)
+  // POST /api/admin/products/:id/stock-adjust - adjust stock quantity
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)\/stock-adjust$/) && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1036,7 +1036,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 5. PUT /api/admin/products/:id/price — Change Product Price
+  // PUT /api/admin/products/:id/price - update price
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)\/price$/) && req.method === 'PUT') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1074,7 +1074,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 6. POST /api/admin/products/:id/toggle-status — Enable/Disable Product Immediately
+  // POST /api/admin/products/:id/toggle-status - enable or disable product
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)\/toggle-status$/) && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1107,7 +1107,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 7. PUT /api/admin/products/:id/variants — Manage Variant-Specific Stocks & Prices
+  // PUT /api/admin/products/:id/variants - update product variants
   if (pathname.match(/^\/api\/admin\/products\/([^/]+)\/variants$/) && req.method === 'PUT') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1152,7 +1152,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 8. DELETE /api/admin/products/:id — Delete Product
+  // DELETE /api/admin/products/:id - delete product
   if (pathname.startsWith('/api/admin/products/') && req.method === 'DELETE') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1180,7 +1180,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 9. GET /api/admin/logs — Activity Logs
+  // GET /api/admin/logs - get activity logs
   if (pathname === '/api/admin/logs' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1189,7 +1189,7 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 200, { success: true, count: logs.length, logs });
   }
 
-  // 10. GET /api/admin/customers — Aggregated Customer Directory from Store Orders
+  // GET /api/admin/customers - get customer list from orders
   if (pathname === '/api/admin/customers' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1244,7 +1244,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 11. GET /api/admin/orders — Store Orders Directory
+  // GET /api/admin/orders - get order list
   if (pathname === '/api/admin/orders' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1280,7 +1280,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 12. GET /api/admin/analytics — Live Store Analytics, KPIs & Revenue Trends
+  // GET /api/admin/analytics - sales and revenue analytics
   if (pathname === '/api/admin/analytics' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1289,7 +1289,7 @@ const server = http.createServer(async (req, res) => {
     const orders = getAllOrders();
     const timeframe = (query.timeframe || '7d').toLowerCase();
 
-    // Overall Store KPIs
+    // Calculate store totals
     let totalSalesNgn = 0;
     let pendingDeliveries = 0;
     const uniqueCustomers = new Set();
@@ -1307,7 +1307,7 @@ const server = http.createServer(async (req, res) => {
       }
     });
 
-    // Timeframe bucket calculation
+    // Group into time periods
     const now = new Date();
     const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59));
     
@@ -1331,12 +1331,12 @@ const server = http.createServer(async (req, res) => {
       const bucketEndDate = new Date(today.getTime() - endOffsetDays * 86400000);
       const bucketStartDate = new Date(today.getTime() - (startOffsetDays + 1) * 86400000 + 1000);
 
-      // Label formatting
+      // Date label
       const bDay = bucketEndDate.getUTCDate();
       const bMonth = monthNames[bucketEndDate.getUTCMonth()];
       const label = `${String(bDay).padStart(2, '0')} ${bMonth}`;
 
-      // Aggregate orders in window
+      // Add orders in this period
       let bucketRevenue = 0;
       let bucketOrderCount = 0;
 
@@ -1357,7 +1357,7 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
-    // Dynamic Y-axis scaling
+    // Scale chart axis
     const maxVal = Math.max(...chartPoints.map(p => p.revenue), 50000);
     const step = maxVal > 500000 ? 100000 : (maxVal > 200000 ? 50000 : 25000);
     const maxRevenue = Math.ceil(maxVal / step) * step;
@@ -1368,7 +1368,7 @@ const server = http.createServer(async (req, res) => {
       Math.round(maxRevenue * 0.25)
     ];
 
-    // Recent orders (top 6 formatted)
+    // Top 6 recent orders
     const recentOrders = orders.slice(0, 6).map(o => ({
       id: o.id,
       product: o.product || 'Digital Subscription',
@@ -1398,12 +1398,12 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 13. POST /api/admin/clear-cache — Clear Server In-Memory Cache & Invalidate Static Caches
+  // POST /api/admin/clear-cache - clear server cache
   if (pathname === '/api/admin/clear-cache' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
     }
-    // Force reload config
+    // Reload config file
     resellerService.loadConfig();
     recordLog('Admin Manager', 'Admin', 'System', 'Clear Cache', 'All server-side caches and temporary session states purged.');
     return sendJSON(res, 200, {
@@ -1412,11 +1412,11 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // =========================================================================
-  // RESELLER / SUPPLIER API INTEGRATION (AUTOMATED WHOLESALE DISPATCH)
-  // =========================================================================
 
-  // GET /api/admin/reseller/status — Connection Status, Wallet Balance, Store Info
+  // Supplier API routes
+
+
+  // GET /api/admin/reseller/status - supplier connection and balance
   if (pathname === '/api/admin/reseller/status' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1435,7 +1435,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/admin/reseller/settings — Save API Key, Exchange Rate, Margin
+  // POST /api/admin/reseller/settings - save supplier settings
   if (pathname === '/api/admin/reseller/settings' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1450,7 +1450,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // GET /api/admin/reseller/vendors — List All Configured Supplier Vendors
+  // GET /api/admin/reseller/vendors - list supplier vendors
   if (pathname === '/api/admin/reseller/vendors' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1462,7 +1462,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/admin/reseller/vendors — Add or Update a Supplier Vendor
+  // POST /api/admin/reseller/vendors - save supplier vendor
   if (pathname === '/api/admin/reseller/vendors' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1480,7 +1480,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/admin/reseller/vendors/:id/test — Test Vendor Connection & Refresh Balance
+  // POST /api/admin/reseller/vendors/:id/test - test vendor connection
   if (pathname.startsWith('/api/admin/reseller/vendors/') && pathname.endsWith('/test') && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1495,7 +1495,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/admin/reseller/vendors/:id/default — Set Primary/Default Supplier Vendor
+  // POST /api/admin/reseller/vendors/:id/default - set default vendor
   if (pathname.startsWith('/api/admin/reseller/vendors/') && pathname.endsWith('/default') && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1510,7 +1510,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // DELETE /api/admin/reseller/vendors/:id — Remove Supplier Vendor
+  // DELETE /api/admin/reseller/vendors/:id - remove vendor
   if (pathname.startsWith('/api/admin/reseller/vendors/') && req.method === 'DELETE' && !pathname.endsWith('/test') && !pathname.endsWith('/default')) {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1525,7 +1525,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // GET /api/admin/reseller/products — Live Catalog from Reseller API (supports ?vendorId=...)
+  // GET /api/admin/reseller/products - get supplier catalog
   if (pathname === '/api/admin/reseller/products' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1539,7 +1539,7 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 200, result);
   }
 
-  // POST /api/admin/reseller/test-order — Place test/sample order
+  // POST /api/admin/reseller/test-order - place test order
   if (pathname === '/api/admin/reseller/test-order' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1553,7 +1553,7 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, result.ok ? 200 : 400, result);
   }
 
-  // POST /api/admin/reseller/calculate-price — Calculate dynamic price with range multipliers
+  // POST /api/admin/reseller/calculate-price - calculate retail price
   if (pathname === '/api/admin/reseller/calculate-price' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1564,7 +1564,7 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 200, { success: true, pricing });
   }
 
-  // POST /api/admin/reseller/apply-multipliers — Apply tiered multipliers to store inventory
+  // POST /api/admin/reseller/apply-multipliers - apply price multipliers
   if (pathname === '/api/admin/reseller/apply-multipliers' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1613,7 +1613,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/admin/reseller/sync — Trigger Full Supplier & Telegram Bot Catalog Sync
+  // POST /api/admin/reseller/sync - sync products from supplier
   if (pathname === '/api/admin/reseller/sync' && req.method === 'POST') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1629,7 +1629,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // GET /api/admin/reseller/sync/status — Get Last Sync Details & Status
+  // GET /api/admin/reseller/sync/status - get sync status
   if (pathname === '/api/admin/reseller/sync/status' && req.method === 'GET') {
     if (!verifyAdmin(req)) {
       return sendJSON(res, 401, { success: false, message: 'Unauthorized: Admin authentication required.' });
@@ -1640,11 +1640,11 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // =========================================================================
-  // TRANSACTIONAL INVENTORY RESERVATION SYSTEM (ACID Safe)
-  // =========================================================================
 
-  // POST /api/inventory/reserve — Reserve Stock When Checkout Starts
+  // Stock hold and reservation routes
+
+
+  // POST /api/inventory/reserve - hold stock during checkout
   if (pathname === '/api/inventory/reserve' && req.method === 'POST') {
     const body = await parseBody(req);
     const { productId, duration, quantity, customerEmail } = body;
@@ -1664,7 +1664,7 @@ const server = http.createServer(async (req, res) => {
         return sendJSON(res, 400, { success: false, message: 'This product is currently disabled by store administrator.' });
       }
 
-      // Check variant stock or product stock
+      // Check available stock
       let targetVariant = null;
       if (product.variants && product.variants.length > 0 && duration) {
         targetVariant = product.variants.find(v => v.duration.toLowerCase() === duration.toLowerCase() || v.id === duration);
@@ -1688,13 +1688,13 @@ const server = http.createServer(async (req, res) => {
         });
       }
 
-      // Atomically Reserve
+      // Create stock reservation
       const token = 'resv_' + crypto.randomBytes(12).toString('hex');
       const now = Date.now();
       const ttlMinutes = 15;
       const expiresAt = now + (ttlMinutes * 60 * 1000);
 
-      // Increment reserved stock
+      // Update reserved count
       product.reservedStock = (product.reservedStock || 0) + requestedQty;
       if (targetVariant) {
         targetVariant.reservedStock = (targetVariant.reservedStock || 0) + requestedQty;
@@ -1738,7 +1738,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // POST /api/inventory/release — Release Reserved Stock (If Payment Fails or Cancelled)
+  // POST /api/inventory/release - release held stock
   if (pathname === '/api/inventory/release' && req.method === 'POST') {
     const body = await parseBody(req);
     const { reservationToken, orderId } = body;
@@ -1788,15 +1788,15 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // =========================================================================
-  // STOREFRONT PUBLIC APIS
-  // =========================================================================
 
-  // 1. GET /api/products — Shop Listing with Live Stock Stats
+  // Storefront public routes
+
+
+  // GET /api/products - list active shop products
   if (pathname === '/api/products' && req.method === 'GET') {
     let products = getAllProducts().map(p => recomputeProductStock(p));
 
-    // Non-admin storefront only sees enabled products
+    // Only show enabled products to customers
     if (!verifyAdmin(req)) {
       products = products.filter(p => p.enabled !== false);
     }
@@ -1839,7 +1839,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 2. GET /api/products/:id — Single Product Details with Live Stock
+  // GET /api/products/:id - single product details
   if (pathname.startsWith('/api/products/') && req.method === 'GET') {
     const prodId = pathname.replace('/api/products/', '');
     const products = getAllProducts();
@@ -1858,7 +1858,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 3. POST /api/orders/quote — Authoritative Server-side Price Calculation
+  // POST /api/orders/quote - calculate order price
   if (pathname === '/api/orders/quote' && req.method === 'POST') {
     const body = await parseBody(req);
     const { productId, duration, quantity, qty, currency } = body;
@@ -1909,7 +1909,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 4. POST /api/orders/create — Server-side Validated Order Creation
+  // POST /api/orders/create - create order
   if (pathname === '/api/orders/create' && req.method === 'POST') {
     const body = await parseBody(req);
     const { 
@@ -1997,7 +1997,7 @@ const server = http.createServer(async (req, res) => {
 
     saveOrder(newOrder);
 
-    // Link reservation to this orderId
+    // Link stock reservation to this order
     if (reservationToken) {
       const reservations = getAllReservations();
       const r = reservations.find(x => x.token === reservationToken);
@@ -2014,7 +2014,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 5. POST /api/payment/verify — Verify Transaction Server-Side & Finalize Sold Stock
+  // POST /api/payment/verify - verify payment and fulfill order
   if (pathname === '/api/payment/verify' && req.method === 'POST') {
     const body = await parseBody(req);
     const { reference, orderId, gateway, reservationToken } = body;
@@ -2040,7 +2040,7 @@ const server = http.createServer(async (req, res) => {
         };
       }
 
-      // Convert Reserved Stock -> Sold Stock (Total Stock decreased, Reserved Stock decreased)
+      // Deduct sold quantity from stock
       const token = reservationToken || order.reservationToken;
       const reservations = getAllReservations();
       let resv = reservations.find(r => r.token === token || (order.id && r.orderId === order.id));
@@ -2051,7 +2051,7 @@ const server = http.createServer(async (req, res) => {
       const qty = parseInt(order.quantity || 1, 10);
 
       if (prod) {
-        // If there was an active reservation, decrease both total and reserved
+        // Decrease both total and reserved stock
         if (resv && resv.status === 'pending') {
           resv.status = 'completed';
           resv.completedAt = new Date().toISOString();
@@ -2068,7 +2068,7 @@ const server = http.createServer(async (req, res) => {
             }
           }
         } else {
-          // Direct sale without pre-reservation (safety fallback)
+          // Direct sale fallback
           prod.totalStock = Math.max(0, (prod.totalStock || 0) - qty);
           if (order.plan && prod.variants) {
             const v = prod.variants.find(va => va.duration === order.plan);
@@ -2085,7 +2085,7 @@ const server = http.createServer(async (req, res) => {
         console.log(`[Payment Success & Stock Sold] "${prod.name}" x${qty} — Total: ${prod.totalStock}, Reserved: ${prod.reservedStock}, Available: ${prod.availableStock}`);
       }
 
-      // Trigger automated reseller wholesale fulfillment
+      // Fulfill order with supplier API
       const targetVariant = order.plan && prod && prod.variants ? prod.variants.find(va => va.duration === order.plan) : null;
       let fulfillment = await resellerService.fulfillCreditLogOrder(order, prod, targetVariant);
 
@@ -2121,7 +2121,7 @@ const server = http.createServer(async (req, res) => {
 
       saveOrder(order);
 
-      // Synchronize transaction with Telegram bot SQLite store.db
+      // Save order to telegram bot database
       if (botDbBridge.isAvailable()) {
         try {
           botDbBridge.recordOrder({
@@ -2169,13 +2169,13 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 6. Paystack Webhook Handler (Idempotent & Authenticated)
+  // Paystack webhook handler
   if (pathname === '/api/webhook/paystack' && req.method === 'POST') {
     const paystackSig = req.headers['x-paystack-signature'];
     const secret = process.env.PAYSTACK_SECRET_KEY || PAYSTACK_SECRET_KEY;
     const body = await parseBody(req);
 
-    // Verify HMAC-SHA512 webhook signature when secret is configured
+    // Verify Paystack signature
     if (secret && !secret.includes('demo') && !secret.includes('test_creditlog') && paystackSig && req.rawBody) {
       const hash = crypto.createHmac('sha512', secret).update(req.rawBody).digest('hex');
       if (paystackSig !== hash) {
@@ -2192,9 +2192,9 @@ const server = http.createServer(async (req, res) => {
         const orders = getAllOrders();
         const order = orders.find(o => o.reference === ref || (data.metadata && data.metadata.orderId === o.id));
 
-        // Idempotency: skip if already delivered or finalized
+        // Ignore if already delivered
         if (order && order.status !== 'Delivered') {
-          // Deduct stock if not already finalized
+          // Deduct stock
           const products = getAllProducts();
           const prod = products.find(p => p.id === order.productId || p.name === order.product);
           if (prod) {
@@ -2205,7 +2205,7 @@ const server = http.createServer(async (req, res) => {
             saveProducts(products);
           }
 
-          // Trigger automated reseller wholesale fulfillment
+          // Fulfill order with supplier API
           const targetVariant = order.plan && prod && prod.variants ? prod.variants.find(va => va.duration === order.plan) : null;
           let fulfillment = await resellerService.fulfillCreditLogOrder(order, prod, targetVariant);
 
@@ -2237,7 +2237,7 @@ const server = http.createServer(async (req, res) => {
           order.paidAt = new Date().toISOString();
           saveOrder(order);
 
-          // Sync to bot database
+          // Save order to telegram bot database
           if (botDbBridge.isAvailable()) {
             try {
               botDbBridge.recordOrder({
@@ -2267,7 +2267,7 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 200, { received: true });
   }
 
-  // 7. GET /api/orders/track — Public Guest Order Tracking
+  // GET /api/orders/track - order tracking
   if (pathname === '/api/orders/track' && req.method === 'GET') {
     const searchTerm = (query.id || query.email || query.q || query.query || '').trim();
     if (!searchTerm) {
@@ -2294,7 +2294,7 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 8. GET /api/stats — Storefront Real-time Statistics
+  // GET /api/stats - store statistics
   if (pathname === '/api/stats' && req.method === 'GET') {
     const products = getAllProducts().map(p => recomputeProductStock(p));
     const orders = getAllOrders();
@@ -2308,13 +2308,13 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-  // 301 Redirect for legacy /catalogue paths to /shop.html
+  // Redirect old /catalogue URL to /shop.html
   if (pathname === '/catalogue' || pathname === '/catalogue.html') {
     res.writeHead(301, { 'Location': '/shop.html' });
     return res.end();
   }
 
-  // Clean 204 handler for favicon.ico
+  // Empty response for favicon.ico
   if (pathname === '/favicon.ico') {
     res.writeHead(204, { 'Content-Type': 'image/x-icon' });
     return res.end();
@@ -2324,7 +2324,7 @@ const server = http.createServer(async (req, res) => {
 
   const cleanReqPath = reqPath.replace(/^\/+/, '');
 
-  // Search candidate root directories (for both local and Vercel Lambda runtime)
+  // Find file in root directories
   const candidateFilePaths = [
     path.join(ROOT_DIR, cleanReqPath),
     path.join(process.cwd(), cleanReqPath),
@@ -2332,7 +2332,7 @@ const server = http.createServer(async (req, res) => {
     path.join(__dirname, cleanReqPath)
   ];
 
-  // If requesting from /icons/ alias, also check assets/icons/
+  // Check assets/icons/ for icon requests
   if (cleanReqPath.startsWith('icons/')) {
     const assetIconPath = 'assets/' + cleanReqPath;
     candidateFilePaths.unshift(
@@ -2342,7 +2342,7 @@ const server = http.createServer(async (req, res) => {
     );
   }
 
-  // If static file requested under clean-url path (e.g. /shop/assets/icons/duolingo.svg or /shop/style.css)
+  // Handle nested paths for static assets
   const strippedReqPath = cleanReqPath.replace(/^(shop|product|checkout|success|admin|inventory|activity-logs)\//, '');
   if (strippedReqPath !== cleanReqPath) {
     candidateFilePaths.push(
@@ -2356,7 +2356,7 @@ const server = http.createServer(async (req, res) => {
     try { return fs.existsSync(p) && fs.statSync(p).isFile(); } catch (e) { return false; }
   });
 
-  // Clean URL resolution (e.g. /shop -> /shop.html)
+  // Match clean URL to .html file
   if (!filePath) {
     filePath = candidateFilePaths.map(p => p + '.html').find(p => {
       try { return fs.existsSync(p) && fs.statSync(p).isFile(); } catch (e) { return false; }
@@ -2370,7 +2370,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       return res.end(`404 Not Found: ${pathname}`);
     }
-    // SPA Fallback for client-side routing
+    // Fallback to index.html
     const fallbackPaths = [
       path.join(ROOT_DIR, 'index.html'),
       path.join(process.cwd(), 'index.html'),
@@ -2405,7 +2405,7 @@ if (require.main === module) {
   server.listen(PORT, () => {
     console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
     console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
-    // Continuous automatic supplier catalog sync every 15 minutes
+    // Sync supplier catalog every 15 minutes
     syncEngine.startPeriodicSync(15);
   });
 }

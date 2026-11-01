@@ -173,7 +173,7 @@ class BotDbBridge {
         VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
-      const userId = 0; // 0 denotes storefront guest purchase
+      const userId = 0; // Guest purchase
       const productId = orderData.botProductId || null;
       const productName = orderData.productName || orderData.product || 'Digital Subscription';
       const priceCents = Math.round((parseFloat(orderData.totalUsd || orderData.usdPrice || 0)) * 100);

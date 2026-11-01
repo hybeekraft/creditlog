@@ -96,7 +96,7 @@
 
 <body>
   <div class="dashboard-layout admin-layout">
-    <!-- Admin Sidebar -->
+    <!-- Sidebar -->
     <aside class="dash-sidebar admin-sidebar" id="dashSidebar">
       <div class="dash-sidebar-header">
         <div class="dash-sidebar-header-left">
@@ -121,7 +121,7 @@
           </a>
         </div>
 
-        <!-- Mobile Header Profile Dropdown -->
+        <!-- Mobile profile menu -->
         <div class="admin-profile-wrapper mobile-nav-profile">
           <div class="user-profile-badge mobile-profile-badge" id="adminUserBadgeMobile">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
@@ -198,7 +198,7 @@
       </nav>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main content -->
     <main class="dash-main-area">
       <header class="dash-top-bar">
         <div>
@@ -207,7 +207,7 @@
           </p>
         </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
-          <!-- Admin Profile with Interactive Dropdown Menu -->
+          <!-- Admin profile menu -->
           <div class="admin-profile-wrapper desktop-profile-wrapper" id="adminProfileWrapper">
             <div class="user-profile-badge" id="adminUserBadge">
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
@@ -242,7 +242,7 @@
         </div>
       </header>
 
-      <!-- Customer KPI Metrics Grid -->
+      <!-- Customer KPI metrics -->
       <div class="admin-kpi-grid">
         <div class="kpi-metric-card">
           <div class="kpi-card-header">
@@ -311,7 +311,7 @@
         </div>
       </div>
 
-      <!-- Main Directory Panel -->
+      <!-- Directory panel -->
       <div class="chart-panel-card" style="margin-bottom: 30px;">
         <div class="panel-header-row" style="margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
           <div>
@@ -339,7 +339,7 @@
           </div>
         </div>
 
-        <!-- Filter Controls Strip -->
+        <!-- Filter controls -->
         <div class="cust-filter-toolbar"
           style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; background: rgba(25, 13, 8, 0.02); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(25, 13, 8, 0.06);">
           <div style="position: relative; flex: 1; min-width: 240px;" class="cust-search-wrap">
@@ -365,7 +365,7 @@
           </div>
         </div>
 
-        <!-- Customers List Cards Container -->
+        <!-- Customer cards list -->
         <div id="customersListContainer" style="display: flex; flex-direction: column; gap: 12px;">
           <div style="text-align: center; padding: 40px; color: #705E51;">Loading customer directory...</div>
         </div>
@@ -495,7 +495,7 @@
 
         return `
           <div class="cust-row-card">
-            <!-- Left Info -->
+            <!-- Left info -->
             <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0;">
               <div class="cust-avatar-circle">${initials}</div>
               <div style="min-width: 0; flex: 1;">
@@ -531,7 +531,7 @@
               </div>
             </div>
 
-            <!-- Right Spend & Actions -->
+            <!-- Spend and actions -->
             <div class="cust-card-actions" style="text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
               <div>
                 <div style="font-size: 17px; font-weight: 800; color: #190D08;">₦${c.totalSpentNgn.toLocaleString('en-US')}</div>

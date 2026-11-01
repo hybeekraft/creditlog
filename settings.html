@@ -293,7 +293,7 @@
 
 <body>
   <div class="dashboard-layout admin-layout">
-    <!-- Admin Sidebar -->
+    <!-- Sidebar -->
     <aside class="dash-sidebar admin-sidebar" id="dashSidebar">
       <div class="dash-sidebar-header">
         <div class="dash-sidebar-header-left">
@@ -318,7 +318,7 @@
           </a>
         </div>
 
-        <!-- Mobile Header Profile Dropdown -->
+        <!-- Mobile profile menu -->
         <div class="admin-profile-wrapper mobile-nav-profile">
           <div class="user-profile-badge mobile-profile-badge" id="adminUserBadgeMobile">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
@@ -395,7 +395,7 @@
       </nav>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main content -->
     <main class="dash-main-area">
       <header class="dash-top-bar">
         <div>
@@ -404,7 +404,7 @@
             multipliers, and instant fulfillment.</p>
         </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
-          <!-- Admin Profile with Interactive Dropdown Menu -->
+          <!-- Admin profile menu -->
           <div class="admin-profile-wrapper desktop-profile-wrapper" id="adminProfileWrapper">
             <div class="user-profile-badge" id="adminUserBadge">
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Admin" class="avatar-img-sm" loading="lazy" decoding="async">
@@ -439,7 +439,7 @@
         </div>
       </header>
 
-      <!-- Settings Status Ribbon -->
+      <!-- Status ribbon -->
       <div class="settings-status-ribbon">
         <div class="status-ribbon-item">
           <div class="status-ribbon-icon">
@@ -504,7 +504,7 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
+      <!-- Tabs navigation -->
       <div class="settings-tabs-bar" style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
         <button type="button" class="settings-tab-btn active" id="tabBtnCredentials"
           onclick="switchSettingsTab('credentials')">
@@ -540,9 +540,9 @@
         </button>
       </div>
 
-      <!-- Main Settings Form -->
+      <!-- Settings form -->
       <form id="settingsForm" onsubmit="handleSettingsSubmit(event)">
-        <!-- TAB 1: Credentials, Multi-Vendor & FX -->
+        <!-- Tab: Suppliers and FX -->
         <div id="tabContentCredentials" class="settings-card">
           <div
             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 14px; flex-wrap: wrap; gap: 10px;">
@@ -576,7 +576,7 @@
             </div>
           </div>
 
-          <!-- Add / Edit Vendor Inline Panel -->
+          <!-- Supplier editor panel -->
           <div id="vendorFormPanel"
             style="display: none; background: #FFFDF8; border: 1.5px solid rgba(208,69,21,0.25); border-radius: 12px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(208,69,21,0.06);">
             <div
@@ -671,7 +671,7 @@
             </div>
           </div>
 
-          <!-- Configured Vendors List -->
+          <!-- Configured suppliers -->
           <div style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 4px;">
               <div style="font-size: 13.5px; font-weight: 800; color: #190D08;">Connected Supplier Accounts</div>
@@ -679,11 +679,11 @@
                 fallback</div>
             </div>
             <div id="vendorsListContainer" style="display: flex; flex-direction: column; gap: 12px;">
-              <!-- Populated via renderVendorsList -->
+              <!-- Rendered by renderVendorsList -->
             </div>
           </div>
 
-          <!-- FX Exchange Rate & Global Fulfillment Engine -->
+          <!-- Exchange rate and fulfillment settings -->
           <div style="border-top: 1px solid rgba(25,13,8,0.08); padding-top: 20px; margin-top: 10px;">
             <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 800; color: #190D08;">Global FX Exchange Rate &
               Store Markup</h4>
@@ -739,7 +739,7 @@
               </div>
             </div>
 
-            <!-- Hidden inputs to retain backward compatibility if older scripts inspect inputBaseUrl / inputApiKey -->
+            <!-- Hidden legacy inputs -->
             <input type="hidden" id="inputBaseUrl" value="">
             <input type="hidden" id="inputApiKey" value="">
             <div id="currentMaskedNotice" style="display:none;"></div>
@@ -753,7 +753,7 @@
           </div>
         </div>
 
-        <!-- TAB 2: Dynamic Price Tiers -->
+        <!-- Tab: Price tiers -->
         <div id="tabContentTiers" class="settings-card" style="display: none;">
           <div
             style="background: rgba(208, 69, 21, 0.05); border: 1px solid rgba(208, 69, 21, 0.16); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 12.5px; color: #190D08; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
@@ -782,9 +782,9 @@
             </button>
           </div>
 
-          <!-- Dynamic Tiers List -->
+          <!-- Price tiers list -->
           <div id="priceTiersContainer" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;">
-            <!-- Populated via renderPriceTiers -->
+            <!-- Rendered by renderPriceTiers -->
           </div>
 
           <div
@@ -800,7 +800,7 @@
           </div>
         </div>
 
-        <!-- TAB: Product Multipliers -->
+        <!-- Tab: Product multipliers -->
         <div id="tabContentProducts" class="settings-card" style="display: none;">
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; border-bottom: 1px solid rgba(25,13,8,0.08); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
@@ -830,7 +830,7 @@
             </button>
           </div>
 
-          <!-- Add Product Override Card -->
+          <!-- Add product override -->
           <div
             style="background: #FFFDF8; border: 1px solid rgba(208,69,21,0.2); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
             <div
@@ -871,14 +871,14 @@
               </div>
             </div>
 
-            <!-- Live Calculation Preview -->
+            <!-- Price preview -->
             <div id="overridePreviewBar"
               style="display: none; margin-top: 12px; font-size: 12px; color: #190D08; font-weight: 600; padding: 8px 12px; background: #FFFFFF; border-radius: 8px; border: 1px dashed rgba(208,69,21,0.3);">
               Calculated Retail: <span id="overridePreviewText" style="color: #D04515; font-weight: 800;"></span>
             </div>
           </div>
 
-          <!-- Active Overrides Header & Container -->
+          <!-- Active overrides -->
           <div style="margin-bottom: 16px;">
             <div
               style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
@@ -892,7 +892,7 @@
               </div>
             </div>
 
-            <!-- Table Header Labels -->
+            <!-- Table headers -->
             <div class="product-override-header">
               <div>Product & Identifier</div>
               <div>Wholesale Cost</div>
@@ -902,7 +902,7 @@
             </div>
 
             <div id="productOverridesContainer" style="display: flex; flex-direction: column; gap: 8px;">
-              <!-- Dynamically populated via renderProductOverrides -->
+              <!-- Rendered by renderProductOverrides -->
             </div>
 
             <div id="emptyOverridesNotice"
@@ -925,7 +925,7 @@
           </div>
         </div>
 
-        <!-- TAB 3: Category Multipliers -->
+        <!-- Tab: Category multipliers -->
         <div id="tabContentCategories" class="settings-card" style="display: none;">
           <div style="margin-bottom: 16px;">
             <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #190D08;">Category-Level Fallback
@@ -996,7 +996,7 @@
         </div>
       </form>
 
-      <!-- TAB: Supplier Catalog & Tests -->
+      <!-- Tab: Supplier catalog and tests -->
       <div id="tabContentCatalog" class="settings-card" style="display: none;">
         <div
           style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
@@ -1030,7 +1030,7 @@
           </div>
         </div>
 
-        <!-- Supplier Products Container -->
+        <!-- Supplier products list -->
         <div id="supplierProductsList" style="display: flex; flex-direction: column; gap: 10px;">
           <div style="text-align: center; padding: 30px; color: #705E51;">Click 'Refresh Catalog' or switch to this tab
             to query the supplier API.</div>
@@ -1076,14 +1076,14 @@
       const vendors = Array.isArray(settings.vendors) ? settings.vendors : [];
       window.currentVendors = vendors;
 
-      // Render Vendors Registry
+      // Render suppliers list
       renderVendorsList(vendors);
 
-      // Find active default vendor
+      // Find default supplier
       const defaultVendor = vendors.find(v => v.isDefault) || vendors[0] || {};
       const isDefaultLive = defaultVendor.mode === 'live' && defaultVendor.isConfigured;
 
-      // Status Ribbon Metric 1: Connected Vendors & Connection State
+      // Supplier connection status
       const stText = document.getElementById('resellerStatusText');
       const stPill = document.getElementById('resellerStatusPill');
       if (stText && stPill) {
@@ -1099,7 +1099,7 @@
         }
       }
 
-      // Status Ribbon Metric 2: Default Supplier Balance
+      // Supplier balance
       const balVal = document.getElementById('resellerBalanceVal');
       const balSub = document.getElementById('resellerBalanceSub');
       if (balVal) {
@@ -1112,7 +1112,7 @@
         }
       }
 
-      // FX & Engine
+      // Exchange rate and fulfillment
       const rateVal = document.getElementById('resellerRateVal');
       if (rateVal) rateVal.textContent = `₦${Number(settings.usdToNgnRate || 1550).toLocaleString()}`;
 
@@ -1122,13 +1122,13 @@
         engVal.style.color = settings.autoFulfill ? '#16A34A' : '#705E51';
       }
 
-      // Populate FX & Global Store Inputs
+      // Fill form values
       document.getElementById('inputRate').value = settings.usdToNgnRate || 1550;
       document.getElementById('inputMarkup').value = settings.markupPercent || 25;
       document.getElementById('inputLowBalanceThreshold').value = settings.lowBalanceThreshold || 5;
       document.getElementById('inputAutoFulfill').checked = settings.autoFulfill !== false;
 
-      // Keep hidden legacy inputs updated
+      // Update hidden fields
       const baseEl = document.getElementById('inputBaseUrl');
       if (baseEl) baseEl.value = defaultVendor.baseUrl || settings.baseUrl || '';
 
@@ -1140,14 +1140,14 @@
       if (cats.productivity) document.getElementById('catMult_productivity').value = cats.productivity;
       if (cats.security) document.getElementById('catMult_security').value = cats.security;
 
-      // Price Tiers
+      // Price tiers
       renderPriceTiers(settings.priceTiers);
 
-      // Product Multipliers (Overrides)
+      // Product multiplier overrides
       renderProductOverrides(settings.productOverrides || {});
     }
 
-    // --- Multi-Vendor Management Functions ---
+    // Supplier management helpers
     function renderVendorsList(vendors) {
       const container = document.getElementById('vendorsListContainer');
       const badge = document.getElementById('vendorCountBadge');
@@ -1516,7 +1516,7 @@
       return tiers.sort((a, b) => a.min - b.min);
     }
 
-    // --- Product-Specific Multipliers Manager ---
+    // Product-specific multipliers
     window.allProductsCatalog = {};
 
     async function loadAllProductsCatalog(forceRefresh = false) {
@@ -1536,7 +1536,7 @@
 
         window.allProductsCatalog = {};
 
-        // 1. Supplier items
+        // Supplier items
         if (resellerData.ok && Array.isArray(resellerData.products)) {
           resellerData.products.forEach(p => {
             const cost = parseFloat(p.price || 0);
@@ -1550,7 +1550,7 @@
           });
         }
 
-        // 2. Store items
+        // Store items
         if (storeData.success && Array.isArray(storeData.products)) {
           storeData.products.forEach(p => {
             const cost = p.wholesaleUsd ? parseFloat(p.wholesaleUsd) : (p.usdPrice ? parseFloat(p.usdPrice) : 0);

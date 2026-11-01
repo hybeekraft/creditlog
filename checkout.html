@@ -458,7 +458,7 @@
 
         </div>
 
-        <!-- Right: Order Summary & Authoritative Server Price -->
+        <!-- Right: Order summary -->
         <aside class="order-summary-card">
           <h3 style="font-size: 16px; font-weight: 800; color: #190D08; margin-bottom: 16px;">Order Summary</h3>
           
@@ -659,7 +659,7 @@
     let reservationExpiresAt = null;
     let countdownIntervalId = null;
 
-    // Handle Cancel & Return
+    // Cancel and go back
     async function handleCancel() {
       await releaseStockReservation();
       if (currentProductId) {
@@ -669,7 +669,7 @@
       }
     }
 
-    // Release active reservation
+    // Release held stock
     async function releaseStockReservation() {
       if (!activeReservationToken) return;
       const token = activeReservationToken;
@@ -686,7 +686,7 @@
       }
     }
 
-    // Reserve stock on server
+    // Hold stock on server
     async function reserveStock(qty) {
       if (countdownIntervalId) clearInterval(countdownIntervalId);
       
@@ -765,14 +765,14 @@
       countdownIntervalId = setInterval(tick, 1000);
     }
 
-    // Boot
+    // Initialize checkout
     async function initCheckout() {
       const urlParams = new URLSearchParams(window.location.search);
       currentProductId = urlParams.get('productId') || urlParams.get('id') || 'netflix-premium';
       currentDuration = urlParams.get('duration') || urlParams.get('plan') || '';
       currentQty = parseInt(urlParams.get('qty') || '1', 10) || 1;
 
-      // 1. Fetch live product from API
+      // Load product from server
       try {
         const res = await fetch(`/api/products/${encodeURIComponent(currentProductId)}`);
         if (res.ok) {
@@ -785,7 +785,7 @@
         console.warn('API product fetch fallback in checkout:', e);
       }
 
-      // 2. Local fallback if offline
+      // Fallback to local catalog if offline
       if (!currentProduct) {
         const source = (typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS;
         currentProduct = source.find(p => p.id === currentProductId) || source[0];
@@ -797,18 +797,18 @@
         currentDuration = currentProduct.plans[0].duration;
       }
 
-      // Populate display
+      // Update order summary
       document.getElementById('summaryProdTitle').textContent = currentProduct.name;
       document.getElementById('summaryProdOption').textContent = `Option: ${currentDuration || currentProduct.duration || 'Standard'}`;
       document.getElementById('summaryQtyDisplay').textContent = currentQty;
 
-      // Populate Delivery Format
+      // Show delivery format
       const delFmtEl = document.getElementById('summaryDeliveryFormat');
       if (delFmtEl) {
         delFmtEl.textContent = `Delivery: ${currentProduct.deliveryFormat || 'Instant Dispatch'}`;
       }
 
-      // Populate Product-Specific Requirements Banner (NO LONGER GENERIC!)
+      // Show product requirements
       const reqBanner = document.getElementById('summaryRequirementsBanner');
       const reqText = document.getElementById('summaryRequirementsText');
       if (reqBanner && reqText) {
@@ -821,7 +821,7 @@
         }
       }
 
-      // Adapt product-specific input label based on seller delivery format
+      // Update field label for delivery type
       const specLabel = document.querySelector('label[for="productSpecificInput"]');
       const specInput = document.getElementById('productSpecificInput');
       if (specLabel && specInput && currentProduct) {
@@ -841,20 +841,20 @@
         iconTile.outerHTML = renderBrandIcon(currentProduct, { size: 44, radius: 12, id: 'summaryIconTile', className: 'summary-icon-tile' });
       }
 
-      // Pre-fill existing customer info if saved
+      // Pre-fill saved customer info
       const savedCust = JSON.parse(localStorage.getItem('creditlog_last_customer') || '{}');
       if (savedCust.name) document.getElementById('custName').value = savedCust.name;
       if (savedCust.email) document.getElementById('custEmail').value = savedCust.email;
       if (savedCust.phone) document.getElementById('custPhone').value = savedCust.phone;
 
-      // Request authoritative server price quote
+      // Get price quote from server
       await fetchServerQuote();
 
-      // Reserve stock on server
+      // Hold stock on server
       await reserveStock(currentQty);
     }
 
-    // Server-side authoritative price quote
+    // Get order quote from server
     async function fetchServerQuote() {
       const activeCurr = getCurrency();
       try {
@@ -891,7 +891,7 @@
         console.warn('Quote API fallback:', err);
       }
 
-      // Offline fallback calculation using authoritative rates
+      // Fallback calculation if offline
       const plan = (currentProduct && currentProduct.variants) ? currentProduct.variants.find(p => p.duration === currentDuration) : null;
       const unit = plan ? plan.usdPrice : (currentProduct ? currentProduct.usdPrice : 5.00);
       const totalUsd = unit * currentQty;
@@ -899,7 +899,7 @@
       document.getElementById('summaryTotalBig').textContent = formatPrice(totalUsd);
     }
 
-    // Adjust quantity directly on checkout
+    // Change quantity
     async function adjustQty(delta) {
       const nextQty = Math.max(1, Math.min(20, currentQty + delta));
       if (nextQty === currentQty) return;
@@ -909,7 +909,7 @@
       await reserveStock(currentQty);
     }
 
-    // Select delivery channel
+    // Choose delivery channel
     function selectChannel(chan) {
       selectedDeliveryChannel = chan;
       document.querySelectorAll('.channel-pill-btn').forEach(b => b.classList.remove('active'));
@@ -929,7 +929,7 @@
       }
     }
 
-    // Select payment gateway
+    // Choose payment method
     function selectGateway(gw) {
       selectedGateway = gw;
       document.querySelectorAll('.gateway-option-card').forEach(c => c.classList.remove('active'));
@@ -941,7 +941,7 @@
       }
     }
 
-    // Proceed directly to Payment (Server creates order & calculates authoritative price)
+    // Create order and proceed to payment
     async function handleProceedToPayment() {
       const name = document.getElementById('custName').value.trim();
       const email = document.getElementById('custEmail').value.trim();
@@ -950,7 +950,7 @@
       const productSpecific = document.getElementById('productSpecificInput').value.trim();
       const notes = document.getElementById('orderNotes').value.trim();
 
-      // Validation
+      // Validate fields
       if (!name) {
         showToast('Please enter your Full Name.');
         document.getElementById('custName').focus();
@@ -967,14 +967,14 @@
         return;
       }
 
-      // Save customer details for next time
+      // Save customer details for future orders
       localStorage.setItem('creditlog_last_customer', JSON.stringify({ name, email, phone }));
 
       const payBtn = document.getElementById('proceedPayBtn');
       payBtn.disabled = true;
       payBtn.innerHTML = `<span>Verifying Order with Server...</span>`;
 
-      // 1. Create order on server (server calculates authoritative price & links reservation)
+      // Create order on server
       try {
         const res = await fetch('/api/orders/create', {
           method: 'POST',
@@ -1025,11 +1025,11 @@
       payBtn.disabled = false;
       payBtn.innerHTML = `<span>Proceed to Payment (${createdOrder.price})</span>`;
 
-      // 2. Open interactive payment gateway modal
+      // Open payment modal
       openGatewayModal(createdOrder);
     }
 
-    // Open Payment Gateway Modal
+    // Show payment modal
     function openGatewayModal(order) {
       const modal = document.getElementById('paymentGatewayModal');
       document.getElementById('gwCustomerEmail').textContent = order.customerEmail;
@@ -1104,7 +1104,7 @@
       document.getElementById('gwUssdDisplay').textContent = code;
     }
 
-    // Authorize & Verify Payment Server-Side
+    // Verify payment with server
     function authorizeGatewayPayment() {
       const submitBtn = document.getElementById('gwPaySubmitBtn');
       const btnText = document.getElementById('gwBtnText');
@@ -1115,7 +1115,7 @@
       setTimeout(async () => {
         btnText.innerHTML = `Payment Approved! Dispatching Credentials...`;
 
-        // Server-Side Payment Verification Call (Converts Reserved Stock -> Sold Stock)
+        // Confirm payment and finalize stock
         try {
           const verifyRes = await fetch('/api/payment/verify', {
             method: 'POST',
@@ -1146,22 +1146,22 @@
           console.warn('Verification API sync fallback:', err);
         }
 
-        // Reservation has now successfully converted into sold stock
+        // Stock successfully finalized
         activeReservationToken = null;
         if (countdownIntervalId) clearInterval(countdownIntervalId);
 
-        // Save last order in localStorage for confirmation screen
+        // Save order details locally for confirmation
         localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
 
         setTimeout(() => {
           closeGatewayModal();
-          // Navigate to Success screen with verified order details
+          // Go to success page
           window.location.href = `success.html?orderId=${encodeURIComponent(createdOrder.id)}`;
         }, 700);
       }, 1100);
     }
 
-    // Release reservation if user leaves page without paying
+    // Release held stock if user leaves without paying
     window.addEventListener('beforeunload', () => {
       if (activeReservationToken) {
         navigator.sendBeacon('/api/inventory/release', JSON.stringify({ reservationToken: activeReservationToken }));

@@ -8,7 +8,7 @@ try {
   shared = require(path.resolve(__dirname, '../../shared.js'));
 } catch (e) {}
 
-// Determine persistent data directory
+// Data directory path
 const isVercel = Boolean(process.env.VERCEL);
 const candidateRoots = [process.cwd(), path.resolve(__dirname, '../..'), path.resolve(__dirname, '..')];
 const ROOT_DIR = candidateRoots.find(dir => fs.existsSync(path.join(dir, 'index.html'))) || process.cwd();
@@ -344,7 +344,7 @@ class SyncEngine {
     console.log('[SyncEngine] Starting full supplier & bot catalog synchronization...');
 
     try {
-      // 1. Fetch live products from Wholesale Supplier API
+      // 1. Fetch supplier products
       const supplierRes = await resellerService.getProducts();
       if (!supplierRes || !supplierRes.ok || !Array.isArray(supplierRes.products)) {
         throw new Error(supplierRes ? (supplierRes.message || supplierRes.error || 'Invalid supplier response') : 'No supplier response');
@@ -353,7 +353,7 @@ class SyncEngine {
       const supplierProducts = supplierRes.products;
       const activeSupplierIdSet = new Set(supplierProducts.map(p => String(p.id || p.productId).trim()));
 
-      // 2. Load local products.json
+      // 2. Load local products
       let localProducts = [];
       try {
         if (fs.existsSync(PRODUCTS_FILE)) {
@@ -369,14 +369,14 @@ class SyncEngine {
       let stockCount = 0;
       let outOfStockCount = 0;
 
-      // 3. Process every supplier product
+      // 3. Process supplier products
       for (const sp of supplierProducts) {
         const supplierId = String(sp.id || sp.productId).trim();
         const costUsd = parseFloat(sp.price || 0);
         const supplierStock = sp.stock !== undefined ? parseInt(sp.stock, 10) : 0;
         const isSupplierInStock = sp.inStock !== false && supplierStock > 0;
 
-        // Pricing calculation (applying CreditLog's configured tiered markup)
+        // Calculate retail price
         const pricing = sp.pricing || resellerService.calculatePricing(costUsd, supplierId, sp.category);
         const retailUsd = pricing.retailUsd;
         const parsed = parseProductDetails(sp.name, sp.description);
@@ -385,7 +385,7 @@ class SyncEngine {
           outOfStockCount++;
         }
 
-        // Match in products.json
+        // Match local product
         let existing = localProducts.find(p => 
           (p.resellerProductId !== undefined && String(p.resellerProductId).trim() === supplierId) ||
           p.id === `sp_${supplierId}` ||
@@ -412,7 +412,7 @@ class SyncEngine {
             stockCount++;
           }
 
-          // Synchronize rich seller details
+          // Sync product details
           if (sp.description && sp.description.trim()) {
             existing.description = sp.description.trim();
           }
@@ -482,7 +482,7 @@ class SyncEngine {
             }
           }
 
-          // Sync variant 0 if present
+          // Sync first variant if present
           if (existing.variants && existing.variants.length > 0) {
             existing.variants[0].wholesaleUsd = costUsd;
             existing.variants[0].usdPrice = retailUsd;
@@ -492,7 +492,7 @@ class SyncEngine {
             existing.variants[0].resellerProductId = Number(supplierId);
           }
         } else {
-          // New product from supplier! Create and add to storefront
+          // Add new supplier product to store
           const brand = this.normalizeBrand(this.inferBrand(sp.name));
           const category = this.inferCategory(sp.name, sp.category);
           const duration = this.inferDuration(sp.name);
@@ -553,7 +553,7 @@ class SyncEngine {
           newCount++;
         }
 
-        // 4. Synchronize into Telegram Bot SQLite database (store.db)
+        // 4. Sync to Telegram bot database
         if (botDbBridge.isAvailable()) {
           botDbBridge.upsertSupplierProduct({
             supplierProductId: supplierId,
@@ -568,7 +568,7 @@ class SyncEngine {
         }
       }
 
-      // 4.5 Synchronize all active products from Telegram Bot database (store.db)
+      // Sync active products from Telegram bot database
       if (botDbBridge.isAvailable()) {
         try {
           const botProducts = botDbBridge.getAllProducts().filter(bp => bp.active === 1);
@@ -577,7 +577,7 @@ class SyncEngine {
             const botCostUsd = bp.supplier_price ? (bp.supplier_price / 100) : (botPriceUsd * 0.7);
             const parsed = parseProductDetails(bp.name, bp.description);
 
-            // Find match in localProducts
+            // Find match in local products
             let match = localProducts.find(p => 
               (p.botProductId && p.botProductId === bp.id) ||
               (bp.supplier_product_id && String(p.resellerProductId).trim() === String(bp.supplier_product_id).trim()) ||
@@ -686,7 +686,7 @@ class SyncEngine {
                 }
               }
             } else {
-              // Add missing active bot product to storefront catalog
+              // Add bot product to store catalog
               const brand = this.normalizeBrand(this.inferBrand(bp.name));
               const category = this.inferCategory(bp.name, bp.category);
               let botCat = bp.category;
@@ -755,7 +755,7 @@ class SyncEngine {
         }
       }
 
-      // 5. Detect and deactivate missing/retired supplier products (only if supplier returned a full catalog)
+      // 5. Deactivate retired supplier products
       let deactivatedCount = 0;
       if (supplierProducts.length >= 20) {
         for (const p of localProducts) {
@@ -777,7 +777,7 @@ class SyncEngine {
         botDbBridge.deactivateMissingSupplierProducts(activeSupplierIdSet);
       }
 
-      // 6. Save updated catalog to products.json
+      // 6. Save updated catalog
       fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(localProducts, null, 2), 'utf8');
 
       this.syncStatus = {
@@ -806,15 +806,13 @@ class SyncEngine {
     }
   }
 
-  /**
-   * Start scheduled periodic polling every X minutes
-   */
+  // Start periodic sync timer
   startPeriodicSync(intervalMinutes = 15) {
     if (this.syncTimer) clearInterval(this.syncTimer);
     const ms = Math.max(1, intervalMinutes) * 60 * 1000;
     console.log(`[SyncEngine] Scheduled continuous supplier sync every ${intervalMinutes} minutes.`);
 
-    // Run first sync shortly after boot (e.g. 2 seconds)
+    // Run initial sync after startup
     this.initialSyncTimer = setTimeout(() => {
       this.runCatalogSync().catch(e => console.error('[SyncEngine] Initial sync error:', e));
     }, 2000);
