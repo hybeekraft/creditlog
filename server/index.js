@@ -1794,6 +1794,9 @@ const server = http.createServer(async (req, res) => {
 
   // GET /api/products - list active shop products
   if (pathname === '/api/products' && req.method === 'GET') {
+    if (query.refresh === '1' || query.fresh === '1' || getAllProducts().length === 0) {
+      await syncEngine.runCatalogSync().catch(err => console.error('[SyncEngine] Sync error:', err.message));
+    }
     let products = getAllProducts().map(p => recomputeProductStock(p));
 
     // Only show enabled products to customers
@@ -2402,9 +2405,11 @@ const server = http.createServer(async (req, res) => {
 });
 
 if (require.main === module) {
-  server.listen(PORT, () => {
+  server.listen(PORT, async () => {
     console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
     console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
+    // Load products directly from reseller API
+    await syncEngine.runCatalogSync().catch(err => console.error('[SyncEngine] Initial sync error:', err.message));
     // Sync supplier catalog every 15 minutes
     syncEngine.startPeriodicSync(15);
   });

@@ -710,6 +710,26 @@ class ResellerService {
     return null;
   }
 
+  loadFallbackProducts() {
+    const fixtureFile = path.join(DATA_DIR, 'reseller_catalog_fixture.json');
+    if (fs.existsSync(fixtureFile)) {
+      try {
+        const data = JSON.parse(fs.readFileSync(fixtureFile, 'utf8'));
+        if (Array.isArray(data) && data.length > 0) return data;
+      } catch (e) {}
+    }
+    return [
+      { id: 1, productId: 1, name: 'Google Gemini Pro 18M Invite', title: 'Google Gemini Pro 18M Invite', price: '0.90', currency: 'USD', stock: 25, inStock: true, supplier: 'gemini_direct' },
+      { id: 2, productId: 2, name: 'ChatGPT Plus 1 Month Private Account', title: 'ChatGPT Plus 1 Month Private Account', price: '8.50', currency: 'USD', stock: 12, inStock: true, supplier: 'openai_direct' },
+      { id: 3, productId: 3, name: 'Duolingo Super 1 Year Invite Link', title: 'Duolingo Super 1 Year Invite Link', price: '1.20', currency: 'USD', stock: 40, inStock: true, supplier: 'duo_family' },
+      { id: 4, productId: 4, name: 'Xbox Game Pass PC Digital Key', title: 'Xbox Game Pass PC Digital Key', price: '3.00', currency: 'USD', stock: 15, inStock: true, supplier: 'ms_wholesale' },
+      { id: 5, productId: 5, name: 'Amazon Prime Video 6 Months', title: 'Amazon Prime Video 6 Months', price: '2.50', currency: 'USD', stock: 18, inStock: true, supplier: 'amazon_direct' },
+      { id: 6, productId: 6, name: 'Lovable Pro Lite 1 Year Invite', title: 'Lovable Pro Lite 1 Year Invite', price: '10.00', currency: 'USD', stock: 8, inStock: true, supplier: 'lovable_direct' },
+      { id: 7, productId: 7, name: 'Snapchat Plus 3 Months License', title: 'Snapchat Plus 3 Months License', price: '4.50', currency: 'USD', stock: 14, inStock: true, supplier: 'snap_direct' },
+      { id: 197, productId: 197, name: 'API Kimi 100M Tokens 7D', title: 'API Kimi 100M Tokens 7D', price: '2.50', currency: 'USD', stock: 20, inStock: true, supplier: 'kimi_direct' }
+    ];
+  }
+
   // Gateway handler for catalog and orders
   mockResellerResponse(endpoint, options = {}, vendor = null) {
     const vendorName = vendor ? vendor.name : 'Gemini Pro Store';
@@ -737,15 +757,15 @@ class ResellerService {
     if (endpoint === '/products') {
       return {
         ok: true,
-        products: [
-          { id: 1, productId: 1, name: 'Google Gemini Pro 18M Invite', title: 'Google Gemini Pro 18M Invite', price: '0.90', currency: 'USD', stock: 25, inStock: true, supplier: 'gemini_direct' },
-          { id: 2, productId: 2, name: 'ChatGPT Plus 1 Month Private Account', title: 'ChatGPT Plus 1 Month Private Account', price: '8.50', currency: 'USD', stock: 12, inStock: true, supplier: 'openai_direct' },
-          { id: 3, productId: 3, name: 'Duolingo Super 1 Year Invite Link', title: 'Duolingo Super 1 Year Invite Link', price: '1.20', currency: 'USD', stock: 40, inStock: true, supplier: 'duo_family' },
-          { id: 4, productId: 4, name: 'Xbox Game Pass PC Digital Key', title: 'Xbox Game Pass PC Digital Key', price: '3.00', currency: 'USD', stock: 15, inStock: true, supplier: 'ms_wholesale' },
-          { id: 5, productId: 5, name: 'Amazon Prime Video 6 Months', title: 'Amazon Prime Video 6 Months', price: '2.50', currency: 'USD', stock: 18, inStock: true, supplier: 'amazon_direct' },
-          { id: 6, productId: 6, name: 'Lovable Pro Lite 1 Year Invite', title: 'Lovable Pro Lite 1 Year Invite', price: '10.00', currency: 'USD', stock: 8, inStock: true, supplier: 'lovable_direct' },
-          { id: 7, productId: 7, name: 'Snapchat Plus 3 Months License', title: 'Snapchat Plus 3 Months License', price: '4.50', currency: 'USD', stock: 14, inStock: true, supplier: 'snap_direct' }
-        ]
+        products: this.loadFallbackProducts()
+
+
+
+
+
+
+
+
       };
     }
 

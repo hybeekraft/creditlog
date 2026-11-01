@@ -364,6 +364,9 @@ class SyncEngine {
         localProducts = [];
       }
 
+      // Filter out cached products not in the active reseller catalog
+      localProducts = localProducts.filter(p => p.resellerProductId !== undefined && p.resellerProductId !== null && activeSupplierIdSet.has(String(p.resellerProductId).trim()));
+
       let newCount = 0;
       let pricesCount = 0;
       let stockCount = 0;
@@ -685,70 +688,8 @@ class SyncEngine {
                   match.iconType = this.inferIconType(match.brand);
                 }
               }
-            } else {
-              // Add bot product to store catalog
-              const brand = this.normalizeBrand(this.inferBrand(bp.name));
-              const category = this.inferCategory(bp.name, bp.category);
-              let botCat = bp.category;
-              if (botCat === 'xAI Grok') botCat = 'Grok';
-              if (botCat === 'DeepSeek AI') botCat = 'DeepSeek API';
-              if (botCat === 'Airtable') botCat = 'Office';
-              const duration = this.inferDuration(bp.name);
-              const slugId = `bot_${bp.id}_${bp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`.substring(0, 48);
-
-              const botStock = bp.supplier_stock !== null && bp.supplier_stock !== undefined ? bp.supplier_stock : 10;
-              const newProd = {
-                id: slugId,
-                botProductId: bp.id,
-                name: bp.name,
-                rawName: `${bp.name} · $${botPriceUsd.toFixed(2)}`,
-                category,
-                botCategory: botCat,
-                brand,
-                duration,
-                wholesaleUsd: botCostUsd,
-                usdPrice: botPriceUsd,
-                usdOldPrice: Number((botPriceUsd * 1.35).toFixed(2)),
-                discount: '25% OFF',
-                inStock: bp.active === 1 && botStock > 0,
-                rating: 4.9,
-                reviews: '920+',
-                brandClass: this.inferBrandClass(brand),
-                iconType: this.inferIconType(brand),
-                description: bp.description || `Premium digital access for ${bp.name}.`,
-                overview: parsed.overview,
-                deliveryFormat: parsed.deliveryFormat,
-                deliveryType: bp.delivery_type || 'auto',
-                importantRequirements: parsed.requirements,
-                requirements: parsed.requirements,
-                instructions: parsed.instructions,
-                warrantyPolicy: parsed.warranty,
-                hasSpecialRequirements: parsed.hasSpecialRequirements,
-                totalStock: botStock,
-                reservedStock: 0,
-                availableStock: botStock,
-                enabled: true,
-                resellerProductId: bp.supplier_product_id ? Number(bp.supplier_product_id) : null,
-                appliedMultiplier: 1.45,
-                pricingRule: 'Bot Store DB',
-                lastSynchronizedAt: new Date().toISOString(),
-                variants: [
-                  {
-                    id: '1m',
-                    duration,
-                    wholesaleUsd: botCostUsd,
-                    usdPrice: botPriceUsd,
-                    totalStock: botStock,
-                    reservedStock: 0,
-                    availableStock: botStock,
-                    inStock: bp.active === 1 && botStock > 0,
-                    resellerProductId: bp.supplier_product_id ? Number(bp.supplier_product_id) : null
-                  }
-                ]
-              };
-              localProducts.push(newProd);
-              newCount++;
             }
+              
           }
         } catch (botSyncErr) {
           console.warn('[SyncEngine] Error merging bot products:', botSyncErr.message);
