@@ -65,6 +65,13 @@ After deletion:
 * Keep the code consistent with the existing project structure and coding style.
 * Handle errors properly and do not hide potential problems.
 
+### 3.1. Humanized, Simple & Concise Code Comments (MANDATORY)
+* **Simple, short, and straight to the point:** Write brief, clear comments that get straight to the message without unnecessary fluff.
+* **Sound like a real human:** Write comments the way an experienced, sensible developer writes them. Avoid robotic, repetitive, academic, or over-engineered AI commentary.
+* **Never state the obvious:** Do not write comments that merely repeat what the line of code already says (e.g., avoid `// set status to true` or `// initialize array`).
+* **Focus on the "why":** Clarify tricky logic, edge cases, external API quirks, or non-obvious business requirements in plain, everyday language.
+* **Keep code clean of comment clutter:** A few well-placed, humanized words are far more valuable than paragraphs of generated text.
+
 ### 4. Refactoring Rule
 Whenever we replace or restructure an existing implementation:
 * Identify what is being replaced.
