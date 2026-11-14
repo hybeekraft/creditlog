@@ -83,6 +83,7 @@ class SyncEngine {
     if (n.includes('kling')) return 'KlingAI';
     if (n.includes('gamma')) return 'Gamma';
     if (n.includes('proton')) return 'Proton VPN';
+    if (n.includes('adguard')) return 'AdGuard';
     if (n.includes('office') || n.includes('microsoft') || n.includes('o365')) return 'Microsoft';
     if (n.includes('xbox') || n.includes('bethesda') || n.includes('fallout') || n.includes('game pass') || n.includes('pc game')) return 'Xbox';
     if (n.includes('krea')) return 'KREA';
@@ -150,6 +151,9 @@ class SyncEngine {
     }
     if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
       return 'Proton VPN';
+    }
+    if (lower === 'adguard' || lower === 'adguard vpn') {
+      return 'AdGuard';
     }
     if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
       return 'Microsoft';
@@ -220,6 +224,7 @@ class SyncEngine {
     if (b.includes('kling')) return 'tile-kling';
     if (b.includes('gamma')) return 'tile-gamma';
     if (b.includes('proton')) return 'tile-proton';
+    if (b.includes('adguard')) return 'tile-adguard';
     if (b.includes('nordvpn')) return 'tile-nordvpn';
     if (b.includes('surfshark')) return 'tile-surfshark';
     if (b.includes('expressvpn')) return 'tile-expressvpn';
@@ -280,6 +285,7 @@ class SyncEngine {
     if (b.includes('kling')) return 'kling';
     if (b.includes('gamma')) return 'gamma';
     if (b.includes('proton')) return 'proton';
+    if (b.includes('adguard')) return 'adguard';
     if (b.includes('nordvpn')) return 'nordvpn';
     if (b.includes('surfshark')) return 'surfshark';
     if (b.includes('expressvpn')) return 'expressvpn';

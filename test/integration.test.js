@@ -836,5 +836,37 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
   assert.ok(css.includes('display: none !important;'), 'style.css must hide any residual currency dropdown menus');
 });
 
+test('31. AdGuard Brand & Icon Consolidation: All AdGuard products strictly have tile-adguard and adguard SVG icon', async () => {
+  const res = await fetch(`${baseUrl}/api/products`);
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.equal(json.success, true);
+
+  const adguardItems = json.data.filter(p =>
+    (p.name && p.name.toLowerCase().includes('adguard')) ||
+    (p.brand && p.brand.toLowerCase().includes('adguard'))
+  );
+
+  assert.ok(adguardItems.length > 0, 'Must have AdGuard items in catalog');
+
+  for (const item of adguardItems) {
+    assert.equal(item.brand, 'AdGuard', `Product ${item.id} must have brand AdGuard, got ${item.brand}`);
+    assert.equal(item.brandClass, 'tile-adguard', `Product ${item.id} must have brandClass tile-adguard`);
+    assert.equal(item.iconType, 'adguard', `Product ${item.id} must have iconType adguard`);
+
+    const brandData = shared.getBrandData ? shared.getBrandData(item) : null;
+    assert.ok(brandData, `Product ${item.id} must resolve brand data`);
+    assert.equal(brandData.id, 'adguard', `Product ${item.id} getBrandData must resolve to adguard icon`);
+    assert.equal(brandData.imgSrc, 'assets/icons/AdGuard.svg');
+
+    const iconHtml = shared.renderBrandIcon(item);
+    assert.ok(iconHtml.includes('/assets/icons/AdGuard.svg'), 'AdGuard icon HTML must reference /assets/icons/AdGuard.svg');
+  }
+
+  const iconFilePath = path.resolve(__dirname, '../assets/icons/AdGuard.svg');
+  assert.ok(fs.existsSync(iconFilePath), 'assets/icons/AdGuard.svg must exist on disk');
+});
+
+
 
 
