@@ -377,6 +377,8 @@
       window.location.href = `product.html?id=${encodeURIComponent(prodId)}`;
     }
 
+    let isCatalogLoading = true;
+
     // Render product catalog (up to 20 per page)
     function renderCatalog() {
       const filtered = getFilteredProducts();
@@ -398,6 +400,14 @@
       if (totalItems === 0) {
         if (paginationWrap) paginationWrap.innerHTML = '';
         container.className = 'directory-grid';
+        if (isCatalogLoading) {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; color: var(--text-muted); font-size: 14px;">
+              Loading subscriptions...
+            </div>
+          `;
+          return;
+        }
         container.innerHTML = `
           <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; background: rgba(25, 13, 8, 0.02); border-radius: 20px; border: 1px dashed rgba(25, 13, 8, 0.12);">
             <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(208, 69, 21, 0.08); border: 1px solid rgba(208, 69, 21, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #D04515;">
@@ -876,6 +886,11 @@
         }
       } catch (err) {
         console.warn('Shop live sync fallback:', err);
+      } finally {
+        isCatalogLoading = false;
+        if (!window.CATALOG_PRODUCTS || window.CATALOG_PRODUCTS.length === 0) {
+          renderCatalog();
+        }
       }
     }
 

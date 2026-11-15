@@ -480,6 +480,45 @@ function generateCredentials(productName, customerEmail, notes) {
   };
 }
 
+// Resolve normalized brand, icon type, and brand class
+function resolveProductBranding(rawBrand, requestedIcon = '') {
+  let brand = rawBrand ? String(rawBrand).trim() : '';
+  let icon = (requestedIcon || '').toLowerCase().trim();
+  const lower = brand.toLowerCase();
+
+  const brandRules = [
+    { match: ['amazon', 'amazon prime', 'amazon prime video', 'prime video', 'primevideo'], brand: 'Amazon', icon: 'amazon' },
+    { match: ['apple', 'apple tv', 'apple tv+', 'appletv', 'appletv+', 'apple tv plus'], brand: 'Apple TV+', icon: 'appletv' },
+    { match: ['gemini', 'google gemini', 'google ai', 'gmail', 'google'], brand: 'Gemini', icon: 'gemini' },
+    { match: ['hma', 'hma vpn', 'hidemyass', 'hidemyass vpn'], brand: 'HMA VPN', icon: 'hma' },
+    { match: ['claude', 'anthropic', 'anthropic claude'], brand: 'Claude', icon: 'claude' },
+    { match: ['capcut'], brand: 'CapCut', icon: 'capcut' },
+    { match: ['kling', 'kling ai', 'klingai'], brand: 'KlingAI', icon: 'kling' },
+    { match: ['gamma', 'gamma ai'], brand: 'Gamma', icon: 'gamma' },
+    { match: ['proton', 'proton vpn', 'protonvpn'], brand: 'Proton VPN', icon: 'proton' },
+    { match: ['adguard', 'adguard vpn'], brand: 'AdGuard', icon: 'adguard' },
+    { match: ['microsoft', 'microsoft 365', 'o365', 'office 365', 'office365'], brand: 'Microsoft', icon: 'microsoft' },
+    { match: ['lovable', 'loveable'], brand: 'Lovable', icon: 'lovable' },
+    { match: ['kimi', 'api', 'api kimi', 'kimi api'], brand: 'Kimi', icon: 'kimi' },
+    { match: ['qwen', 'alibaba qwen', 'tongyi qwen'], brand: 'Qwen', icon: 'qwen' },
+    { match: ['codex', 'openai codex', 'codex api'], brand: 'Codex', icon: 'codex' },
+    { match: ['chatgpt', 'openai chatgpt', 'openai', 'gpt'], brand: 'ChatGPT', icon: 'chatgpt' }
+  ];
+
+  const matched = brandRules.find(r => r.match.includes(lower));
+  if (matched) {
+    brand = matched.brand;
+    if (!icon || icon === 'other' || icon === 'cube') {
+      icon = matched.icon;
+    }
+  } else if (!icon || icon === 'other') {
+    icon = 'cube';
+  }
+
+  const brandClass = icon === 'cube' ? 'tile-brand-default' : `tile-${icon}`;
+  return { brand, iconType: icon, brandClass };
+}
+
 // Verify admin request
 function verifyAdmin(req) {
   const auth = req.headers['authorization'] || '';
@@ -745,100 +784,12 @@ const server = http.createServer(async (req, res) => {
           ];
 
       const rawBrand = brand ? brand.trim() : name.split(' ')[0];
-      const normalizedBrand = (function(b) {
-        if (!b) return '';
-        const s = String(b).trim();
-        const lower = s.toLowerCase();
-        if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
-          return 'Amazon';
-        }
-        if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
-          return 'Apple TV+';
-        }
-        if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
-          return 'Gemini';
-        }
-        if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
-          return 'HMA VPN';
-        }
-        if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
-          return 'Claude';
-        }
-        if (lower === 'capcut') {
-          return 'CapCut';
-        }
-        if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
-          return 'KlingAI';
-        }
-        if (lower === 'gamma' || lower === 'gamma ai') {
-          return 'Gamma';
-        }
-        if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
-          return 'Proton VPN';
-        }
-        if (lower === 'adguard' || lower === 'adguard vpn') {
-          return 'AdGuard';
-        }
-        if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
-          return 'Microsoft';
-        }
-        if (lower === 'lovable' || lower === 'loveable') {
-          return 'Lovable';
-        }
-        if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
-          return 'Kimi';
-        }
-        if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
-          return 'Qwen';
-        }
-        if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
-          return 'Codex';
-        }
-        if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
-          return 'ChatGPT';
-        }
-        return s;
-      })(rawBrand);
-
-      let effectiveIcon = (iconType || category || 'other').toLowerCase().trim();
-      if (normalizedBrand === 'Amazon' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'amazon';
-      } else if (normalizedBrand === 'Apple TV+' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'appletv';
-      } else if (normalizedBrand === 'Gemini' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'gemini';
-      } else if (normalizedBrand === 'HMA VPN' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'hma';
-      } else if (normalizedBrand === 'Claude' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'claude';
-      } else if (normalizedBrand === 'CapCut' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'capcut';
-      } else if (normalizedBrand === 'KlingAI' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'kling';
-      } else if (normalizedBrand === 'Gamma' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'gamma';
-      } else if (normalizedBrand === 'Proton VPN' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'proton';
-      } else if (normalizedBrand === 'AdGuard' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'adguard';
-      } else if (normalizedBrand === 'Microsoft' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'microsoft';
-      } else if (normalizedBrand === 'Lovable' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'lovable';
-      } else if (normalizedBrand === 'Kimi' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'kimi';
-      } else if (normalizedBrand === 'Qwen' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'qwen';
-      } else if (normalizedBrand === 'Codex' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'codex';
-      } else if (normalizedBrand === 'ChatGPT' && (effectiveIcon === 'other' || effectiveIcon === 'cube' || !effectiveIcon)) {
-        effectiveIcon = 'chatgpt';
-      }
+      const branding = resolveProductBranding(rawBrand, iconType || category);
 
       const newProduct = {
         id: uniqueId,
         name: name.trim(),
-        brand: normalizedBrand,
+        brand: branding.brand,
         category: (category || 'streaming').toLowerCase(),
         duration: duration || '1 Month',
         usdPrice: parsedPrice,
@@ -851,8 +802,8 @@ const server = http.createServer(async (req, res) => {
         inStock: initialTotal > 0,
         rating: 4.9,
         reviews: '100+',
-        brandClass: `tile-${effectiveIcon}`,
-        iconType: effectiveIcon,
+        brandClass: branding.brandClass,
+        iconType: branding.iconType,
         logoUrl: logoUrl ? logoUrl.trim() : undefined,
         description: description || 'Verified private digital subscription with instant credentials dispatch upon payment.',
         importantRequirements: (importantRequirements || body.requirements || '').trim(),
@@ -894,106 +845,11 @@ const server = http.createServer(async (req, res) => {
 
       if (body.name !== undefined) prod.name = body.name.trim();
       if (body.brand !== undefined) {
-        const s = String(body.brand).trim();
-        const lower = s.toLowerCase();
-        if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
-          prod.brand = 'Amazon';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'amazon';
-            prod.brandClass = 'tile-amazon';
-          }
-        } else if (lower === 'apple' || lower === 'apple tv' || lower === 'apple tv+' || lower === 'appletv' || lower === 'appletv+' || lower === 'apple tv plus') {
-          prod.brand = 'Apple TV+';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'appletv';
-            prod.brandClass = 'tile-appletv';
-          }
-        } else if (lower === 'gemini' || lower === 'google gemini' || lower === 'google ai' || lower === 'gmail' || lower === 'google') {
-          prod.brand = 'Gemini';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'gemini';
-            prod.brandClass = 'tile-gemini';
-          }
-        } else if (lower === 'hma' || lower === 'hma vpn' || lower === 'hidemyass' || lower === 'hidemyass vpn') {
-          prod.brand = 'HMA VPN';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'hma';
-            prod.brandClass = 'tile-hma';
-          }
-        } else if (lower === 'claude' || lower === 'anthropic' || lower === 'anthropic claude') {
-          prod.brand = 'Claude';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'claude';
-            prod.brandClass = 'tile-claude';
-          }
-        } else if (lower === 'capcut') {
-          prod.brand = 'CapCut';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'capcut';
-            prod.brandClass = 'tile-capcut';
-          }
-        } else if (lower === 'kling' || lower === 'kling ai' || lower === 'klingai') {
-          prod.brand = 'KlingAI';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'kling';
-            prod.brandClass = 'tile-kling';
-          }
-        } else if (lower === 'gamma' || lower === 'gamma ai') {
-          prod.brand = 'Gamma';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'gamma';
-            prod.brandClass = 'tile-gamma';
-          }
-        } else if (lower === 'proton' || lower === 'proton vpn' || lower === 'protonvpn') {
-          prod.brand = 'Proton VPN';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'proton';
-            prod.brandClass = 'tile-proton';
-          }
-        } else if (lower === 'adguard' || lower === 'adguard vpn') {
-          prod.brand = 'AdGuard';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'adguard';
-            prod.brandClass = 'tile-adguard';
-          }
-        } else if (lower === 'microsoft' || lower === 'microsoft 365' || lower === 'o365' || lower === 'office 365' || lower === 'office365') {
-          prod.brand = 'Microsoft';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'microsoft';
-            prod.brandClass = 'tile-microsoft';
-          }
-        } else if (lower === 'lovable' || lower === 'loveable') {
-          prod.brand = 'Lovable';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'lovable';
-            prod.brandClass = 'tile-lovable';
-          }
-        } else if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
-          prod.brand = 'Kimi';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'kimi';
-            prod.brandClass = 'tile-kimi';
-          }
-        } else if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
-          prod.brand = 'Qwen';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'qwen';
-            prod.brandClass = 'tile-qwen';
-          }
-        } else if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
-          prod.brand = 'Codex';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'codex';
-            prod.brandClass = 'tile-codex';
-          }
-        } else if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
-          prod.brand = 'ChatGPT';
-          if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other') {
-            prod.iconType = 'chatgpt';
-            prod.brandClass = 'tile-chatgpt';
-          }
-        } else {
-          prod.brand = s;
+        const branding = resolveProductBranding(body.brand, body.iconType || prod.iconType);
+        prod.brand = branding.brand;
+        if (!prod.iconType || prod.iconType === 'cube' || prod.iconType === 'other' || body.iconType !== undefined) {
+          prod.iconType = branding.iconType;
+          prod.brandClass = branding.brandClass;
         }
       }
       if (body.category !== undefined) prod.category = body.category.toLowerCase().trim();

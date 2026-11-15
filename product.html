@@ -612,6 +612,13 @@
         currentProduct = source.find(p => p.id === productId) || source[0];
       }
 
+      if (!currentProduct) {
+        document.getElementById('productTitle').textContent = 'Product Not Available';
+        const descEl = document.getElementById('productDescription');
+        if (descEl) descEl.textContent = 'This subscription is currently unavailable or has been removed from the catalog.';
+        return;
+      }
+
       // Set default plan
       const defaultDuration = currentProduct.duration || '1 Month';
       const availableVariant = (currentProduct.variants && currentProduct.variants.length > 0)

@@ -789,6 +789,11 @@
         currentProduct = source.find(p => p.id === currentProductId) || source[0];
       }
 
+      if (!currentProduct) {
+        document.getElementById('summaryProdTitle').textContent = 'Product Unavailable';
+        return;
+      }
+
       if (!currentDuration && currentProduct.variants && currentProduct.variants.length > 0) {
         currentDuration = currentProduct.variants[0].duration;
       } else if (!currentDuration && currentProduct.plans && currentProduct.plans.length > 0) {

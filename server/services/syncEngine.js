@@ -207,64 +207,11 @@ class SyncEngine {
   }
 
   inferBrandClass(brand = '') {
-    const b = brand.toLowerCase();
-    if (b.includes('amazon') || b.includes('prime')) return 'tile-amazon';
-    if (b.includes('apple')) return 'tile-appletv';
-    if (b.includes('codex')) return 'tile-codex';
-    if (b.includes('chatgpt') || b.includes('openai')) return 'tile-chatgpt';
-    if (b.includes('claude') || b.includes('anthropic')) return 'tile-claude';
-    if (b.includes('gemini') || b.includes('gmail')) return 'tile-gemini';
-    if (b.includes('canva')) return 'tile-canva';
-    if (b.includes('netflix')) return 'tile-netflix';
-    if (b.includes('spotify')) return 'tile-spotify';
-    if (b.includes('youtube')) return 'tile-youtube';
-    if (b.includes('duolingo')) return 'tile-duolingo';
-    if (b.includes('hma') || b.includes('hidemyass')) return 'tile-hma';
-    if (b.includes('capcut')) return 'tile-capcut';
-    if (b.includes('kling')) return 'tile-kling';
-    if (b.includes('gamma')) return 'tile-gamma';
-    if (b.includes('proton')) return 'tile-proton';
-    if (b.includes('adguard')) return 'tile-adguard';
-    if (b.includes('nordvpn')) return 'tile-nordvpn';
-    if (b.includes('surfshark')) return 'tile-surfshark';
-    if (b.includes('expressvpn')) return 'tile-expressvpn';
-    if (b.includes('microsoft') || b.includes('office')) return 'tile-microsoft';
-    if (b.includes('xbox') || b.includes('bethesda') || b.includes('fallout') || b.includes('game pass') || b.includes('pc game')) return 'tile-xbox';
-    if (b.includes('krea')) return 'tile-krea';
-    if (b.includes('adobe') || b.includes('photoshop')) return 'tile-adobe';
-    if (b.includes('autodesk') || b.includes('autocad')) return 'tile-autodesk';
-    if (b.includes('deepseek')) return 'tile-deepseek';
-    if (b.includes('cursor')) return 'tile-cursor';
-    if (b.includes('discord')) return 'tile-discord';
-    if (b.includes('lovable') || b.includes('loveable')) return 'tile-lovable';
-    if (b.includes('kimi')) return 'tile-kimi';
-    if (b.includes('qwen')) return 'tile-qwen';
-    if (b.includes('airtable')) return 'tile-airtable';
-    if (b.includes('elevenreader')) return 'tile-elevenreader';
-    if (b.includes('flux')) return 'tile-flux';
-    if (b.includes('framer')) return 'tile-framer';
-    if (b.includes('freepik')) return 'tile-freepik';
-    if (b.includes('google')) return 'tile-google';
-    if (b.includes('grammarly')) return 'tile-grammarly';
-    if (b.includes('heygen')) return 'tile-heygen';
-    if (b.includes('higgsfield')) return 'tile-higgsfield';
-    if (b.includes('icloud')) return 'tile-icloud';
-    if (b.includes('ipvanish')) return 'tile-ipvanish';
-    if (b.includes('kiro')) return 'tile-kiro';
-    if (b.includes('manus')) return 'tile-manus';
-    if (b.includes('muse')) return 'tile-muse';
-    if (b.includes('n8n')) return 'tile-n8n';
-    if (b.includes('openart')) return 'tile-openart';
-    if (b.includes('peacock')) return 'tile-peacock';
-    if (b.includes('perplexity')) return 'tile-perplexity';
-    if (b.includes('pixverse')) return 'tile-pixverse';
-    if (b.includes('quizlet')) return 'tile-quizlet';
-    if (b.includes('seedance')) return 'tile-seedance';
-    if (b.includes('hotspot') || b.includes('shield')) return 'tile-shield-vpn';
-    if (b.includes('veo')) return 'tile-veo';
-    if (b.includes('vidiq')) return 'tile-vidiq';
-
-    return 'tile-brand-default';
+    const icon = this.inferIconType(brand);
+    if (icon === 'cube') return 'tile-brand-default';
+    if (icon === 'shield_vpn') return 'tile-shield-vpn';
+    if (icon === 'muse_ai') return 'tile-muse';
+    return `tile-${icon}`;
   }
 
   inferIconType(brand = '') {
