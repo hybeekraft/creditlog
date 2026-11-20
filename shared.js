@@ -15,13 +15,12 @@ function getCurrentUser() {
 function guardAdminPage() {
   if (typeof window === 'undefined' || !window.location) return true;
   const path = window.location.pathname.toLowerCase();
-  if (path.endsWith('admin.html') || path.endsWith('admin-dashboard.html') || path.endsWith('activity-logs.html') || path.endsWith('inventory.html')) {
+  if (path.endsWith('admin.html') || path.endsWith('admin-dashboard.html') || path.endsWith('activity-logs.html') || path.endsWith('inventory.html') || path.endsWith('customers.html') || path.endsWith('settings.html') || path.endsWith('orders.html') || path.endsWith('bot-settings.html')) {
     const user = getCurrentUser();
-    if (!user || !user.role || user.role.toLowerCase() !== 'admin') {
-      if (typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('auth_redirect_msg', 'Access restricted: Admin panel is only accessible to store administrators.');
-      }
-      window.location.href = 'index.html';
+    const token = localStorage.getItem('creditlog_admin_token');
+    if (!user || !token || !['admin', 'manager', 'support'].includes(String(user.role || '').toLowerCase())) {
+      const next = encodeURIComponent(window.location.pathname.split('/').pop() + window.location.search);
+      window.location.href = `login.html?next=${next}`;
       return false;
     }
   }
@@ -2497,7 +2496,7 @@ if (typeof window !== 'undefined') {
   window.clearSystemCache = async function(silent = false) {
     try {
       sessionStorage.clear();
-      const adminToken = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const adminToken = localStorage.getItem('creditlog_admin_token') || '';
       
       // Clear local storage except auth tokens
       const keysToPurge = [];

@@ -1194,24 +1194,15 @@
   <script>
     // State
     let productsList = [];
-    let currentAdminToken = localStorage.getItem('creditlog_admin_token') || 'cl_adm_1833f75f64dd20f20009f5e3830bc0e9';
+    let currentAdminToken = localStorage.getItem('creditlog_admin_token') || '';
     let activeEditingProdId = null;
     let currentVariantsBuffer = [];
 
     // Check admin session
     function checkAdminAuth() {
       const user = getCurrentUser();
-      if (!user || user.role !== 'Admin') {
-        // Set session for manager
-        const adminSession = {
-          name: 'Admin Manager',
-          role: 'Admin',
-          email: 'admin@creditlog.com'
-        };
-        setCurrentUser(adminSession);
-      }
       const adminNameEl = document.getElementById('adminProfileName');
-      if (adminNameEl && user) adminNameEl.textContent = user.name;
+      if (adminNameEl && user) adminNameEl.textContent = user.name || user.email;
     }
 
     // Load products from server
@@ -1225,18 +1216,8 @@
         });
 
         if (res.status === 401) {
-          // Retry login
-          const loginRes = await fetch('/api/admin/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: 'admin', password: 'admin123' })
-          });
-          const loginData = await loginRes.json();
-          if (loginData.success && loginData.token) {
-            currentAdminToken = loginData.token;
-            localStorage.setItem('creditlog_admin_token', loginData.token);
-            return loadInventory();
-          }
+          logoutUser();
+          return;
         }
 
         const data = await res.json();
@@ -1436,6 +1417,20 @@
         return;
       }
       try {
+        const product = productsList.find(item => item.id === activeEditingProdId);
+        if (product && !product.autoFulfill) {
+          const raw = val ? prompt(`Paste ${val} real delivery items, one per line. Existing unsold items will be replaced.`, '') : '';
+          if (val && raw === null) return;
+          const items = (raw || '').split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+          if (items.length !== val) { showToast(`Enter exactly ${val} delivery items.`); return; }
+          const res = await fetch(`/api/admin/products/${encodeURIComponent(activeEditingProdId)}/stock-items`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentAdminToken },
+            body: JSON.stringify({ items, replace: true })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.success) { showToast(data.message || 'Failed to update stock.'); return; }
+          closeStockEditModal(); showToast(data.message); loadInventory(); return;
+        }
         const res = await fetch(`/api/admin/products/${encodeURIComponent(activeEditingProdId)}/stock`, {
           method: 'PUT',
           headers: {
@@ -1749,6 +1744,13 @@
       const howItIsDelivered = document.getElementById('addDelivery') ? document.getElementById('addDelivery').value.trim() : '';
       const iconType = document.getElementById('addIconType').value;
       const logoUrl = document.getElementById('addLogoUrl').value;
+      let stockItems = [];
+      if (totalStock > 0) {
+        const raw = prompt(`Paste ${totalStock} real delivery items, one per line. No stock will be created from a quantity alone.`, '');
+        if (raw === null) return;
+        stockItems = raw.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+        if (stockItems.length !== totalStock) { showToast(`Enter exactly ${totalStock} delivery items.`); return; }
+      }
 
       try {
         const res = await fetch('/api/admin/products', {
@@ -1764,6 +1766,7 @@
             category,
             usdPrice,
             totalStock,
+            stockItems,
             duration,
             description,
             importantRequirements,

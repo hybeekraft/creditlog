@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orders · CreditLog Admin</title><link rel="stylesheet" href="/style.css">
+  <style>
+    body{background:#fbf6ea;color:#190d08}.orders-wrap{max-width:1240px;margin:40px auto;padding:0 20px}.orders-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap}.orders-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.orders-nav a,.refresh-btn,.action-btn{padding:9px 13px;border:1px solid rgba(25,13,8,.15);border-radius:9px;background:#fff;color:#190d08;text-decoration:none;font-weight:700;cursor:pointer}.orders-nav a[aria-current=page],.action-btn.primary{background:#d04515;color:#fff;border-color:#d04515}.orders-table-wrap{overflow:auto;border:1px solid rgba(25,13,8,.12);border-radius:16px;background:#fff}.orders-table{width:100%;border-collapse:collapse;min-width:980px}.orders-table th,.orders-table td{padding:13px 14px;text-align:left;border-bottom:1px solid rgba(25,13,8,.08);vertical-align:top}.orders-table th{font-size:12px;text-transform:uppercase;color:#705e51;background:#fffaf2}.orders-table td{font-size:14px}.order-actions{display:flex;gap:6px;flex-wrap:wrap}.action-btn{padding:6px 9px;font-size:12px}.action-btn:disabled{opacity:.5;cursor:not-allowed}.status{font-weight:800}.error{color:#a52818;margin:14px 0}.muted{color:#705e51}
+  </style>
+</head>
+<body>
+  <main class="orders-wrap">
+    <header class="orders-head"><div><a href="/" style="color:#d04515;font-weight:800;text-decoration:none">CreditLog</a><h1>Orders</h1><p class="muted">Orders from the shared Telegram and web store database.</p></div><button class="refresh-btn" id="refreshOrders">Refresh</button></header>
+    <nav class="orders-nav" aria-label="Admin navigation"><a href="admin.html">Dashboard</a><a href="inventory.html">Inventory</a><a href="orders.html" aria-current="page">Orders</a><a href="customers.html">Customers</a><a href="settings.html">Settings</a><a href="activity-logs.html">Activity</a><button class="refresh-btn" onclick="logoutUser()">Sign out</button></nav>
+    <p id="ordersMessage" class="muted" aria-live="polite">Loading orders…</p><div class="error" id="ordersError" role="alert"></div>
+    <div class="orders-table-wrap"><table class="orders-table"><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Payment</th><th>Status</th><th>Delivery</th><th>Actions</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+  </main>
+  <script src="/shared.js"></script>
+  <script>
+    const token = () => localStorage.getItem('creditlog_admin_token') || '';
+    const canManage = ['admin','manager'].includes(String((getCurrentUser() || {}).role || '').toLowerCase());
+    const escapeText = value => String(value || '');
+    async function loadOrders() {
+      const message = document.getElementById('ordersMessage'), error = document.getElementById('ordersError'), body = document.getElementById('ordersBody');
+      message.textContent = 'Loading orders…'; error.textContent = ''; body.replaceChildren();
+      try {
+        const response = await fetch('/api/admin/orders?limit=200', {headers:{Authorization:`Bearer ${token()}`}});
+        const result = await response.json();
+        if (response.status === 401) { logoutUser(); return; }
+        if (!response.ok || !result.success) throw new Error(result.message || 'Could not load orders.');
+        message.textContent = `${result.total || 0} orders`;
+        for (const order of result.orders || []) {
+          const tr = document.createElement('tr');
+          const values = [order.id, `${order.customerName || 'Customer'}\n${order.customerEmail || ''}\n${order.customerPhone || ''}`, `${order.product || ''} × ${order.quantity || 1}`, `${order.gateway || '—'}\n${order.reference || ''}\n${order.price || ''}`, order.status, order.deliveredValue || order.expectedAmount || '—'];
+          for (const value of values) { const td=document.createElement('td'); td.textContent=escapeText(value); td.style.whiteSpace='pre-line'; tr.appendChild(td); }
+          const actions = document.createElement('td'), group=document.createElement('div'); group.className='order-actions';
+          const addAction=(label, action, primary=false)=>{const button=document.createElement('button');button.type='button';button.textContent=label;button.className=`action-btn${primary?' primary':''}`;button.disabled=!canManage;button.onclick=()=>runAction(order,action);group.appendChild(button);};
+          if (['Pending','Paid','Processing'].includes(order.status)) { addAction('Approve','approve',true); addAction('Reject','reject'); }
+          if (['Paid','Processing'].includes(order.status)) addAction('Deliver','deliver');
+          if (!['Refunded','Rejected','Cancelled'].includes(order.status)) addAction('Mark refunded','refund');
+          actions.appendChild(group);tr.appendChild(actions);body.appendChild(tr);
+        }
+        if (!result.orders?.length) message.textContent = 'No orders yet.';
+      } catch (err) { error.textContent=err.message || 'Could not load orders.';message.textContent=''; }
+    }
+    async function runAction(order, action) {
+      const body = {};
+      if (action === 'deliver') { const payload=prompt('Enter the delivery content to send to the customer:'); if (!payload?.trim()) return; body.payload=payload.trim(); }
+      if (action === 'refund' && !confirm('Mark this order as refunded? This does not initiate a provider refund.')) return;
+      try { const response=await fetch(`/api/admin/orders/${encodeURIComponent(order.botOrderId || order.id)}/${action}`,{method:'POST',headers:{Authorization:`Bearer ${token()}`,'Content-Type':'application/json'},body:JSON.stringify(body)}); const result=await response.json(); if(!response.ok||!result.success) throw new Error(result.message||'Action failed.'); await loadOrders(); }
+      catch(err){document.getElementById('ordersError').textContent=err.message||'Action failed.';}
+    }
+    document.getElementById('refreshOrders').addEventListener('click',loadOrders);loadOrders();
+  </script>
+</body>
+</html>

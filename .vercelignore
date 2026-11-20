@@ -1,0 +1,7 @@
+.env
+.env.example
+.vscode/
+AGENTS.md
+MIGRATION_AUDIT.md
+migration-staging/
+test/

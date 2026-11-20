@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const resellerService = require('./services/resellerService');
 const botDbBridge = require('./services/botDbBridge');
 const syncEngine = require('./services/syncEngine');
+const { proxyRequest } = require('./services/sharedBackendProxy');
 
 const PORT = process.env.PORT || 3000;
 const isVercel = Boolean(process.env.VERCEL);
@@ -29,6 +30,9 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'robots.txt'));
     fs.readFileSync(path.join(process.cwd(), 'sitemap.xml'));
     fs.readFileSync(path.join(process.cwd(), 'admin.html'));
+    fs.readFileSync(path.join(process.cwd(), 'orders.html'));
+    fs.readFileSync(path.join(process.cwd(), 'bot-settings.html'));
+    fs.readFileSync(path.join(process.cwd(), 'login.html'));
     fs.readFileSync(path.join(process.cwd(), 'inventory.html'));
     fs.readFileSync(path.join(process.cwd(), 'activity-logs.html'));
     fs.readFileSync(path.join(process.cwd(), 'customers.html'));
@@ -47,6 +51,9 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(__dirname, '..', 'checkout.html'));
     fs.readFileSync(path.join(__dirname, '..', 'success.html'));
     fs.readFileSync(path.join(__dirname, '..', 'admin.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'orders.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'bot-settings.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'login.html'));
     fs.readFileSync(path.join(__dirname, '..', 'inventory.html'));
     fs.readFileSync(path.join(__dirname, '..', 'activity-logs.html'));
     fs.readFileSync(path.join(__dirname, '..', 'customers.html'));
@@ -223,7 +230,7 @@ async function verifyBachsPayment(referenceOrId) {
 }
 
 // Admin token
-const ADMIN_SECRET = process.env.ADMIN_SECRET || 'creditlog_admin_secret_key_2026';
+const ADMIN_SECRET = process.env.ADMIN_SECRET || crypto.randomBytes(32).toString('hex');
 const ADMIN_TOKEN = 'cl_adm_' + crypto.createHash('sha256').update(ADMIN_SECRET).digest('hex').substring(0, 32);
 
 // Queue operations one at a time
@@ -524,7 +531,7 @@ function verifyAdmin(req) {
   const auth = req.headers['authorization'] || '';
   const token = auth.replace(/^Bearer\s+/i, '').trim();
   const headerToken = req.headers['x-admin-token'] || '';
-  return token === ADMIN_TOKEN || headerToken === ADMIN_TOKEN || token === 'admin123' || headerToken === 'admin123';
+  return token === ADMIN_TOKEN || headerToken === ADMIN_TOKEN;
 }
 
 // Parse JSON request body
@@ -601,6 +608,14 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  if (pathname.startsWith('/api/') && process.env.CREDITLOG_BACKEND_URL) {
+    return proxyRequest(req, res, `${pathname}${parsedUrl.search}`);
+  }
+  if (pathname.startsWith('/api/')) {
+    res.writeHead(503, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+    return res.end(JSON.stringify({ success: false, message: 'Shared CreditLog backend is not configured.' }));
+  }
+
 
   // Admin login
 
@@ -609,27 +624,10 @@ const server = http.createServer(async (req, res) => {
     const { username, email, password } = body;
     const userOrEmail = (username || email || '').trim().toLowerCase();
     
-    // Default credentials: admin / admin123
-    const isValid = (userOrEmail === 'admin' || userOrEmail === 'admin@creditlog.com') && (password === 'admin123' || password === 'admin');
-    
-    if (isValid) {
-      recordLog('Admin Manager', 'Admin', 'Auth', 'Sign In', 'Admin logged into CMS dashboard');
-      return sendJSON(res, 200, {
-        success: true,
-        message: 'Admin authentication successful',
-        token: ADMIN_TOKEN,
-        user: {
-          name: 'Admin Manager',
-          role: 'Admin',
-          email: 'admin@creditlog.com'
-        }
-      });
-    } else {
-      return sendJSON(res, 401, {
-        success: false,
-        message: 'Invalid admin username or password.'
-      });
-    }
+    return sendJSON(res, 503, {
+      success: false,
+      message: 'Admin authentication requires the shared CreditLog backend.'
+    });
   }
 
 
@@ -2387,10 +2385,10 @@ if (require.main === module) {
   server.listen(PORT, async () => {
     console.log(`[CreditLog] Storefront Server & REST API active at http://localhost:${PORT}/`);
     console.log(`[CreditLog] Database initialized at ${DATA_DIR}`);
-    // Load products directly from reseller API
-    await syncEngine.runCatalogSync().catch(err => console.error('[SyncEngine] Initial sync error:', err.message));
-    // Sync supplier catalog every 15 minutes
-    syncEngine.startPeriodicSync(15);
+    if (!process.env.CREDITLOG_BACKEND_URL) {
+      await syncEngine.runCatalogSync().catch(err => console.error('[SyncEngine] Initial sync error:', err.message));
+      syncEngine.startPeriodicSync(15);
+    }
   });
 }
 

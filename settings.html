@@ -400,6 +400,7 @@
       <header class="dash-top-bar">
         <div>
           <h1 class="welcome-heading">Store Settings & Reseller API</h1>
+          <p class="welcome-sub">For bot runtime controls, use <a href="bot-settings.html">Telegram bot settings</a>.</p>
           <p class="welcome-sub">Manage wholesale supplier connection, FX exchange rate, dynamic price range
             multipliers, and instant fulfillment.</p>
         </div>
@@ -1055,7 +1056,7 @@
 
     async function fetchResellerStatus() {
       try {
-        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const token = localStorage.getItem('creditlog_admin_token') || '';
         const res = await fetch('/api/admin/reseller/status', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -1337,7 +1338,7 @@
       if (apiKey) payload.apiKey = apiKey;
 
       showToast('Saving vendor API credentials...');
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch('/api/admin/reseller/vendors', {
           method: 'POST',
@@ -1364,7 +1365,7 @@
 
     async function testVendorConnection(vendorId) {
       showToast('Testing connection and checking supplier balance...');
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}/test`, {
           method: 'POST',
@@ -1393,7 +1394,7 @@
 
     async function setVendorDefault(vendorId) {
       showToast('Updating default wholesale supplier...');
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}/default`, {
           method: 'POST',
@@ -1420,7 +1421,7 @@
       if (!confirm(`Are you sure you want to remove the supplier vendor "${vendorName}"?\n\nThis will remove its API credentials from CreditLog.`)) return;
 
       showToast('Removing supplier vendor...');
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch(`/api/admin/reseller/vendors/${encodeURIComponent(vendorId)}`, {
           method: 'DELETE',
@@ -1524,7 +1525,7 @@
       const simSelect = document.getElementById('simProductSelect');
       if (!select) return;
 
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const [storeRes, resellerRes] = await Promise.all([
           fetch('/api/admin/inventory', { headers: { 'Authorization': `Bearer ${token}` } }),
@@ -1792,7 +1793,7 @@
 
     async function handleSettingsSubmit(e) {
       e.preventDefault();
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       const defaultVendor = (window.currentVendors || []).find(v => v.isDefault) || (window.currentVendors || [])[0] || {};
       const baseUrl = (document.getElementById('inputBaseUrl')?.value.trim()) || defaultVendor.baseUrl || 'https://api-geminipro.ignorelist.com/api/reseller/v1';
       const apiKey = document.getElementById('inputApiKey')?.value.trim() || '';
@@ -1849,7 +1850,7 @@
 
     async function applyMultipliersToStore() {
       if (!confirm('Apply these tiered multipliers across all store products and variants in your catalog?')) return;
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       showToast('Recalculating and syncing store inventory prices...');
       try {
         const res = await fetch('/api/admin/reseller/apply-multipliers', {
@@ -1885,7 +1886,7 @@
       const vendorId = vSelect ? vSelect.value : '';
       const url = vendorId ? `/api/admin/reseller/products?vendorId=${encodeURIComponent(vendorId)}` : '/api/admin/reseller/products';
 
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch(url, {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -1934,7 +1935,7 @@
     }
 
     async function testResellerOrder() {
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       const vendorId = document.getElementById('catalogVendorSelect')?.value || null;
       showToast('Dispatching test order to supplier API...');
       try {
@@ -1959,7 +1960,7 @@
     }
 
     async function syncCatalogAndBot() {
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       showToast('Synchronizing with wholesale supplier API & Telegram bot database...');
       try {
         const res = await fetch('/api/admin/reseller/sync', {

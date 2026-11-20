@@ -40,7 +40,7 @@
   </header>
 
   <!-- Order confirmation -->
-  <main class="main-content">
+  <main class="main-content" id="successMain" style="display:none">
     <div class="success-screen-wrapper">
       <div class="success-card" style="max-width: 640px; text-align: left;">
         <!-- Success badge -->
@@ -50,9 +50,9 @@
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
-          <h2 class="success-title" style="margin-bottom: 6px;">Payment Approved & Order Confirmed!</h2>
+          <h2 class="success-title" id="successHeading" style="margin-bottom: 6px;">Order status</h2>
           <p class="success-sub" style="margin: 0 auto; max-width: 480px;">
-            Your digital subscription has been automatically provisioned and is ready for use.
+            Payment and delivery updates will appear here when confirmed by CreditLog.
           </p>
         </div>
 
@@ -106,7 +106,7 @@
             <div class="cred-row">
               <span class="cred-lbl">Assigned Account / Email</span>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="cred-val" id="credAccount">cl-member@creditlog-access.com</span>
+                <span class="cred-val" id="credAccount">—</span>
                 <button type="button" class="copy-cred-btn" onclick="copyText('credAccount', 'Account Email')">Copy</button>
               </div>
             </div>
@@ -114,7 +114,7 @@
             <div class="cred-row">
               <span class="cred-lbl">Password / Secret Key</span>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="cred-val" id="credPassword">CL-89241-PASS!</span>
+                <span class="cred-val" id="credPassword">—</span>
                 <button type="button" class="copy-cred-btn" onclick="togglePasswordVisibility()">Show</button>
                 <button type="button" class="copy-cred-btn" onclick="copyText('credPassword', 'Password')">Copy</button>
               </div>
@@ -123,7 +123,7 @@
             <div class="cred-row">
               <span class="cred-lbl">Profile / PIN Assigned</span>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="cred-val" id="credProfile">Profile 1 (PIN: 8492)</span>
+                <span class="cred-val" id="credProfile">—</span>
                 <button type="button" class="copy-cred-btn" onclick="copyText('credProfile', 'Profile PIN')">Copy</button>
               </div>
             </div>
@@ -161,11 +161,11 @@
         <h3 class="box-heading">Transaction & Delivery Summary</h3>
         <div class="order-detail-row">
           <span class="dt-label">Order Number</span>
-          <span class="dt-value bold" id="successOrderId">#CL-10482</span>
+          <span class="dt-value bold" id="successOrderId">—</span>
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Transaction Reference</span>
-          <span class="dt-value" id="successRef" style="font-family: monospace; font-size: 12px; color: #D04515;">pstk_ref_92817294</span>
+          <span class="dt-value" id="successRef" style="font-family: monospace; font-size: 12px; color: #D04515;">—</span>
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Product Name</span>
@@ -185,7 +185,7 @@
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Phone / WhatsApp</span>
-          <span class="dt-value" id="successCustomerPhone">+234 812 345 6789</span>
+          <span class="dt-value" id="successCustomerPhone">—</span>
         </div>
         <div class="order-detail-row">
           <span class="dt-label">Delivery Channel</span>
@@ -239,15 +239,36 @@
     const params = new URLSearchParams(window.location.search);
     const orderIdParam = params.get('orderId') || params.get('id');
     let order = JSON.parse(localStorage.getItem('creditlog_last_order') || '{}');
+    const accessToken = order.accessToken || new URLSearchParams(window.location.hash.slice(1)).get('access') || '';
+    if (!orderIdParam || !accessToken) { window.location.replace('shop.html'); return; }
+    order.accessToken = accessToken;
+    localStorage.setItem('creditlog_last_order', JSON.stringify(order));
+
+    document.querySelector('.cred-grid')?.replaceChildren();
+    document.querySelector('.cred-instructions')?.remove();
+    document.querySelector('.credentials-delivery-card')?.querySelector('.cred-status-badge')?.replaceChildren(document.createTextNode('Payment pending'));
+    const deliveryNotice = document.querySelector('.credentials-delivery-card');
+    const payloadDisplay = document.createElement('pre');
+    payloadDisplay.style.cssText = 'white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0;padding:14px;border-radius:10px;background:#fffaf2;color:#190d08';
+    deliveryNotice?.appendChild(payloadDisplay);
+
+    if (String(order.gateway || '').toLowerCase() === 'bachs') {
+      try {
+        const verify = await fetch('/api/payment/verify', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:order.botOrderId || orderIdParam,accessToken})});
+        const verified = await verify.json();
+        if (verified.order) order = {...order,...verified.order};
+        localStorage.setItem('creditlog_last_order', JSON.stringify(order));
+      } catch (e) { console.warn('Payment verification is pending:', e); }
+    }
 
     // Fetch order from server if orderId is set
     if (orderIdParam) {
       try {
-        const res = await fetch(`/api/orders/track?id=${encodeURIComponent(orderIdParam)}`);
+        const res = await fetch(`/api/orders/track?id=${encodeURIComponent(orderIdParam)}`, {headers:{'X-Order-Access':accessToken}});
         if (res.ok) {
           const data = await res.json();
           if (data.success && data.data && data.data.length > 0) {
-            order = data.data[0];
+            order = {...order,...data.data[0]};
           }
         }
       } catch (e) {
@@ -255,19 +276,30 @@
       }
     }
 
-    const orderId = order.id || orderIdParam || '#CL-' + Math.floor(10000 + Math.random() * 90000);
-    const product = order.product || params.get('product') || 'Digital Subscription';
-    const plan = order.plan || params.get('plan') || '1 Month';
+    const orderId = order.id || orderIdParam;
+    const product = order.product || 'Digital product';
+    const plan = order.plan || '';
     const qty = order.quantity || params.get('qty') || 1;
-    const amount = order.price || params.get('amount') || '$4.95';
-    const method = order.gateway || params.get('method') || 'Bachs';
+    const amount = order.price || '—';
+    const method = order.gateway || '—';
     const date = order.date || new Date().toLocaleString('en-GB');
-    const name = order.customerName || params.get('name') || 'Customer';
-    const email = order.customerEmail || params.get('email') || 'customer@example.com';
-    const phone = order.customerPhone || params.get('phone') || '+234 812 345 6789';
+    const name = order.customerName || 'Customer';
+    const email = order.customerEmail || '—';
+    const phone = order.customerPhone || '—';
     const deliveryChan = order.deliveryChannel || 'Email';
-    const ref = order.reference || params.get('ref') || 'pay_ref_' + Math.random().toString(36).substring(2, 9);
+    const ref = order.reference || '—';
     const notes = order.productSpecificInfo || order.notes || params.get('notes') || '';
+
+    const delivered = Boolean(order.deliveredValue);
+    document.getElementById('successHeading').textContent = delivered ? 'Payment confirmed · Order delivered' : `Order ${order.status || 'Pending'}`;
+    document.querySelector('.success-sub').textContent = delivered ? 'Your delivery is shown below and a receipt was sent to your email.' : 'Your order is recorded. Payment or delivery is still being confirmed.';
+    payloadDisplay.textContent = delivered ? order.deliveredValue : 'Delivery details appear here after payment verification and fulfillment.';
+    document.querySelector('.cred-status-badge').textContent = delivered ? 'Delivered' : order.status || 'Pending';
+    document.querySelector('.credentials-delivery-card').querySelector('.cred-grid')?.remove();
+    document.querySelector('.credentials-delivery-card').querySelector('.cred-instructions')?.remove();
+    const notice = document.querySelector('.success-card > div[style*="rgba(16, 185, 129"]');
+    if (notice) notice.style.display = delivered ? 'flex' : 'none';
+    document.querySelectorAll('[onclick="resendReceiptEmail()"], [onclick="copyAllCredentials()"]')?.forEach(button => button.style.display = 'none');
 
     // Fill order details
     document.getElementById('successOrderId').textContent = orderId;
@@ -291,7 +323,7 @@
     }
 
     // Check for supplier delivery link
-    const deliveredVal = order.deliveredValue || (order.credentials ? (order.credentials.value || order.credentials.password) : null);
+    const deliveredVal = order.deliveredValue || null;
     if (deliveredVal && (deliveredVal.startsWith('http://') || deliveredVal.startsWith('https://'))) {
       const box = document.getElementById('directActivationBox');
       const text = document.getElementById('directActivationLinkText');
@@ -304,16 +336,8 @@
     }
 
     // Set access credentials
-    const creds = order.credentials || {
-      account: email.includes('@') ? email : `member_${Math.floor(100 + Math.random() * 900)}@creditlog-access.com`,
-      password: deliveredVal || `CL-${Math.random().toString(36).substring(2, 8).toUpperCase()}!`,
-      profile: 'Profile 1 (PIN: ' + Math.floor(1000 + Math.random() * 9000) + ')'
-    };
-
-    rawPassword = creds.password || deliveredVal;
-    document.getElementById('credAccount').textContent = creds.account;
-    document.getElementById('credPassword').textContent = '••••••••••••';
-    document.getElementById('credProfile').textContent = creds.profile || (creds.pin ? `PIN: ${creds.pin}` : 'Profile 1');
+    rawPassword = order.deliveredValue || order.credentials?.value || order.credentials?.password || '';
+    document.getElementById('successMain').style.display = '';
   });
 
   function copyDirectActivationLink() {

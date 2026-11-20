@@ -391,7 +391,7 @@
       const container = document.getElementById('customersListContainer');
       container.innerHTML = '<div style="text-align: center; padding: 40px; color: #705E51;">Loading customer intelligence...</div>';
 
-      const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+      const token = localStorage.getItem('creditlog_admin_token') || '';
       try {
         const res = await fetch('/api/admin/customers', {
           headers: { 'Authorization': `Bearer ${token}` }

@@ -74,7 +74,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
           Inventory & CMS
         </a>
-        <a href="#orders" class="menu-item active" onclick="document.getElementById('orders')?.scrollIntoView({behavior: 'smooth'})">
+        <a href="orders.html" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           Orders
         </a>
@@ -341,7 +341,7 @@
 
     async function loadAnalyticsData(timeframe = '7d') {
       try {
-        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const token = localStorage.getItem('creditlog_admin_token') || '';
         const res = await fetch('/api/admin/analytics?timeframe=' + encodeURIComponent(timeframe), {
           headers: { 'Authorization': 'Bearer ' + token }
         });
@@ -575,7 +575,7 @@
     // Supplier status
     async function fetchResellerStatus() {
       try {
-        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const token = localStorage.getItem('creditlog_admin_token') || '';
         const res = await fetch('/api/admin/reseller/status', {
           headers: { 'Authorization': 'Bearer ' + token }
         });
@@ -639,7 +639,7 @@
         showToast('Verifying wholesale API gateway connection...');
       }
       try {
-        const token = localStorage.getItem('creditlog_admin_token') || 'admin123';
+        const token = localStorage.getItem('creditlog_admin_token') || '';
         const res = await fetch('/api/admin/reseller/status', {
           headers: { 'Authorization': 'Bearer ' + token }
         });
