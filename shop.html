@@ -82,7 +82,6 @@
             <h2 class="category-selection-title">Choose a category</h2>
             <p class="category-selection-subtitle">Browse verified digital subscriptions by category</p>
           </div>
-          <span class="category-total-badge" id="categoryTotalBadge">24 categories</span>
         </div>
 
         <!-- Search Bar for Categories & Subscriptions -->
@@ -1017,11 +1016,6 @@
       });
 
       container.innerHTML = html;
-
-      const totalBadge = document.getElementById('categoryTotalBadge');
-      if (totalBadge) {
-        totalBadge.textContent = `${cats.length} categories`;
-      }
     }
 
     function updateActiveCategoryIndicator(cat) {
