@@ -207,16 +207,45 @@
 
   <script src="/shared.js"></script>
   <script>
-    const LOGS = [
-      { time: '15 Sep 2026 14:32', user: 'Admin', userRole: 'admin', action: 'Updated product price', module: 'Products', recordId: 'PRD-102', ip: '102.89.12.34', status: 'Success' },
-      { time: '15 Sep 2026 13:21', user: 'Customer', userRole: 'cust', action: 'Purchased subscription', module: 'Orders', recordId: 'ORD-10482', ip: '197.210.45.67', status: 'Success' },
-      { time: '14 Sep 2026 17:48', user: 'Admin', userRole: 'admin', action: 'Updated discount', module: 'Discounts', recordId: 'DISC-07', ip: '102.89.12.34', status: 'Success' },
-      { time: '14 Sep 2026 11:16', user: 'Admin', userRole: 'admin', action: 'Added new product', module: 'Products', recordId: 'PRD-103', ip: '102.89.12.34', status: 'Success' },
-      { time: '13 Sep 2026 09:03', user: 'Customer', userRole: 'cust', action: 'Logged in', module: 'Auth', recordId: '-', ip: '197.210.45.67', status: 'Success' },
-      { time: '12 Sep 2026 16:27', user: 'Admin', userRole: 'admin', action: 'Changed order status', module: 'Orders', recordId: 'ORD-10467', ip: '102.89.12.34', status: 'Success' },
-      { time: '12 Sep 2026 14:32', user: 'Customer', userRole: 'cust', action: 'Purchased subscription', module: 'Orders', recordId: 'ORD-10461', ip: '197.210.45.67', status: 'Success' },
-      { time: '10 Sep 2026 18:14', user: 'Admin', userRole: 'admin', action: 'Updated product price', module: 'Products', recordId: 'PRD-101', ip: '102.89.12.34', status: 'Success' }
-    ];
+    let LOGS = [];
+
+    async function loadLiveLogs() {
+      const token = localStorage.getItem('creditlog_admin_token') || '';
+      try {
+        const res = await fetch('/api/admin/logs', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.status === 401) {
+          logoutUser();
+          return;
+        }
+        const data = await res.json();
+        if (data.success && Array.isArray(data.logs)) {
+          LOGS = data.logs.map(l => {
+            let formattedTime = l.created_at || '';
+            try {
+              const dt = new Date(l.created_at);
+              if (!isNaN(dt.getTime())) {
+                formattedTime = dt.toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+              }
+            } catch (e) {}
+            return {
+              time: formattedTime,
+              user: l.actor || 'Admin',
+              userRole: (l.actor || '').toLowerCase().includes('cust') ? 'cust' : 'admin',
+              action: l.action || 'System Action',
+              module: (l.action || '').split(' ')[0] || 'System',
+              recordId: l.details || '-',
+              ip: '127.0.0.1',
+              status: 'Success'
+            };
+          });
+          renderLogs();
+        }
+      } catch (err) {
+        console.warn('Live logs unavailable, falling back:', err);
+      }
+    }
 
     function renderLogs() {
       const userFilter = document.getElementById('filterUser')?.value || 'all';
@@ -280,6 +309,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderLogs();
+      loadLiveLogs();
       const user = getCurrentUser();
       if (user && user.name) {
         const el = document.getElementById('adminProfileName');

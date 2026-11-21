@@ -1521,7 +1521,6 @@
 
     async function loadAllProductsCatalog(forceRefresh = false) {
       const select = document.getElementById('selectOverrideProduct');
-      const simSelect = document.getElementById('simProductSelect');
       if (!select) return;
 
       const token = localStorage.getItem('creditlog_admin_token') || '';

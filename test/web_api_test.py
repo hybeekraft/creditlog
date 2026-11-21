@@ -145,6 +145,32 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
         body = await allowed.json()
         self.assertEqual(body["data"][0]["customerEmail"], "private@example.com")
 
+    async def test_inventory_reserve_and_release(self):
+        bot.db.execute("INSERT INTO stock(product_id,payload) VALUES(?, 'key-1')", (self.product_id,))
+        reserve_res = await self.client.post("/api/inventory/reserve", headers=self.headers, json={"productId": self.product_id, "quantity": 1})
+        self.assertEqual(reserve_res.status, 200)
+        reserve_data = await reserve_res.json()
+        self.assertTrue(reserve_data["success"])
+        self.assertIn("reservationToken", reserve_data)
+
+        release_res = await self.client.post("/api/inventory/release", headers=self.headers, json={"reservationToken": reserve_data["reservationToken"]})
+        self.assertEqual(release_res.status, 200)
+        release_data = await release_res.json()
+        self.assertTrue(release_data["success"])
+
+    async def test_admin_upload_logo(self):
+        login = await self.client.post("/api/admin/login", headers=self.headers, json={"username": "admin@example.com", "password": "test-password-that-is-long-enough"})
+        token = (await login.json())["token"]
+        upload_res = await self.client.post(
+            "/api/admin/upload-logo",
+            headers={**self.headers, "Authorization": f"Bearer {token}"},
+            json={"fileName": "test-brand.png", "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="}
+        )
+        self.assertEqual(upload_res.status, 200)
+        upload_data = await upload_res.json()
+        self.assertTrue(upload_data["success"])
+        self.assertIn("assets/icons/logo-", upload_data["url"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -723,8 +723,8 @@
             }
           }
           return true;
-        } else {
-          // Out of stock
+        } else if (res.status === 409 || (data && data.inStock === false)) {
+          // Out of stock confirmed
           activeReservationToken = null;
           if (banner) banner.style.display = 'none';
           if (errorBanner) {
@@ -738,9 +738,21 @@
           }
           showToast(data.message || 'Product is currently out of stock.');
           return false;
+        } else {
+          // Graceful fallback for direct checkout
+          if (payBtn && serverQuote && serverQuote.inStock !== false) {
+            payBtn.disabled = false;
+            payBtn.classList.remove('disabled');
+            payBtn.innerHTML = `<span>Proceed to Payment (${serverQuote.formattedPrice})</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+          }
+          return true;
         }
       } catch (err) {
-        console.warn('Reservation error:', err);
+        console.warn('Reservation notice:', err);
+        if (payBtn && serverQuote && serverQuote.inStock !== false) {
+          payBtn.disabled = false;
+          payBtn.classList.remove('disabled');
+        }
         return false;
       }
     }
