@@ -31,7 +31,6 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'sitemap.xml'));
     fs.readFileSync(path.join(process.cwd(), 'admin.html'));
     fs.readFileSync(path.join(process.cwd(), 'orders.html'));
-    fs.readFileSync(path.join(process.cwd(), 'bot-settings.html'));
     fs.readFileSync(path.join(process.cwd(), 'login.html'));
     fs.readFileSync(path.join(process.cwd(), 'inventory.html'));
     fs.readFileSync(path.join(process.cwd(), 'activity-logs.html'));
@@ -52,7 +51,6 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(__dirname, '..', 'success.html'));
     fs.readFileSync(path.join(__dirname, '..', 'admin.html'));
     fs.readFileSync(path.join(__dirname, '..', 'orders.html'));
-    fs.readFileSync(path.join(__dirname, '..', 'bot-settings.html'));
     fs.readFileSync(path.join(__dirname, '..', 'login.html'));
     fs.readFileSync(path.join(__dirname, '..', 'inventory.html'));
     fs.readFileSync(path.join(__dirname, '..', 'activity-logs.html'));

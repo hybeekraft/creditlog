@@ -28,9 +28,7 @@ function guardAdminPage() {
     '/settings': 'settings.html',
     '/settings.html': 'settings.html',
     '/orders': 'orders.html',
-    '/orders.html': 'orders.html',
-    '/bot-settings': 'bot-settings.html',
-    '/bot-settings.html': 'bot-settings.html'
+    '/orders.html': 'orders.html'
   };
   const page = protectedPages[path];
   if (page) {
