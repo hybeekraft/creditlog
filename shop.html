@@ -121,6 +121,36 @@
           </div>
         </div>
 
+        <!-- Category tabs -->
+        <div class="category-nav-wrapper" style="margin-bottom: 20px;">
+          <div class="category-segmented-bar" id="categorySegmentedBar">
+            <button type="button" class="category-pill-btn active" data-cat="all" onclick="filterCategory('all', this)">
+              <span>All Tools</span>
+              <span class="category-pill-badge" id="badgeAll">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="ai" onclick="filterCategory('ai', this)">
+              <span>AI & LLMs</span>
+              <span class="category-pill-badge" id="badgeAi">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="design" onclick="filterCategory('design', this)">
+              <span>Design & Studio</span>
+              <span class="category-pill-badge" id="badgeDesign">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="learning_prod" onclick="filterCategory('learning_prod', this)">
+              <span>Productivity</span>
+              <span class="category-pill-badge" id="badgeProd">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="streaming_gaming" onclick="filterCategory('streaming_gaming', this)">
+              <span>Entertainment</span>
+              <span class="category-pill-badge" id="badgeEnt">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="security" onclick="filterCategory('security', this)">
+              <span>Security & VPN</span>
+              <span class="category-pill-badge" id="badgeSec">0</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Search and filters -->
         <div class="catalog-controls-row">
           <!-- Search bar -->
@@ -728,6 +758,15 @@
       currentBrand = (brandVal === 'all') ? 'all' : (label || brandVal);
       if (currentBrand !== 'all') {
         currentCategory = 'all';
+        const bar = document.getElementById('categorySegmentedBar');
+        if (bar) {
+          bar.querySelectorAll('.category-pill-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+          });
+          if (typeof initSegmentedSlidingPill === 'function') {
+            initSegmentedSlidingPill(bar);
+          }
+        }
       }
       currentPage = 1;
       updateActiveCategoryIndicator(currentBrand);
@@ -841,7 +880,7 @@
       renderCatalog();
     }
 
-    // Filter by category tab (legacy compatibility)
+    // Filter by category tab
     function filterCategory(cat, btnElem) {
       currentCategory = cat;
       currentBrand = 'all';
@@ -855,6 +894,16 @@
         item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
       });
       currentPage = 1;
+      const bar = document.getElementById('categorySegmentedBar');
+      if (bar) {
+        bar.querySelectorAll('.category-pill-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-cat') === cat);
+        });
+        if (typeof initSegmentedSlidingPill === 'function') {
+          initSegmentedSlidingPill(bar);
+        }
+      }
+      updateActiveCategoryIndicator(cat);
       renderCatalog();
     }
 
@@ -1025,12 +1074,35 @@
         ? getAllCatalogProducts()
         : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
 
+      const catDisplayNames = {
+        all: 'All Products',
+        ai: 'AI & LLMs',
+        design: 'Design & Studio',
+        learning_prod: 'Productivity',
+        streaming_gaming: 'Entertainment',
+        security: 'Security & VPN'
+      };
+
       if (cat === 'all' || !cat) {
         const total = source.length;
         container.innerHTML = `
           <div class="active-category-chip">
             <span class="active-cat-name">All Products</span>
             <span class="active-cat-badge">${total} subscriptions</span>
+          </div>
+        `;
+      } else if (catDisplayNames[cat]) {
+        let count = 0;
+        if (cat === 'ai') count = source.filter(p => p.category === 'ai').length;
+        else if (cat === 'design') count = source.filter(p => p.category === 'design').length;
+        else if (cat === 'learning_prod') count = source.filter(p => p.category === 'learning' || p.category === 'productivity').length;
+        else if (cat === 'streaming_gaming') count = source.filter(p => p.category === 'streaming' || p.category === 'gaming' || p.category === 'social').length;
+        else if (cat === 'security') count = source.filter(p => p.category === 'security').length;
+
+        container.innerHTML = `
+          <div class="active-category-chip">
+            <span class="active-cat-name">${catDisplayNames[cat]}</span>
+            <span class="active-cat-badge">${count} subscriptions</span>
           </div>
         `;
       } else {
@@ -1060,6 +1132,16 @@
       const prodView = document.getElementById('categoryProductsView');
       if (selView) selView.style.display = 'none';
       if (prodView) prodView.style.display = 'block';
+
+      const bar = document.getElementById('categorySegmentedBar');
+      if (bar) {
+        bar.querySelectorAll('.category-pill-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+        });
+        if (typeof initSegmentedSlidingPill === 'function') {
+          initSegmentedSlidingPill(bar);
+        }
+      }
 
       updateActiveCategoryIndicator(cat);
 
@@ -1151,6 +1233,7 @@
       initCategorySearchListeners();
       populateBrandDropdown();
       renderCategoryCards();
+      updateCategoryBadges();
 
       const params = new URLSearchParams(window.location.search);
       const initialCat = params.get('category');
@@ -1176,6 +1259,11 @@
             window.CATALOG_PRODUCTS = apiData.data;
             populateBrandDropdown();
             renderCategoryCards();
+            updateCategoryBadges();
+            const bar = document.getElementById('categorySegmentedBar');
+            if (bar && typeof initSegmentedSlidingPill === 'function') {
+              initSegmentedSlidingPill(bar);
+            }
             if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
               renderCatalog();
               updateActiveCategoryIndicator(currentBrand);
@@ -1189,6 +1277,11 @@
               window.CATALOG_PRODUCTS = fbData;
               populateBrandDropdown();
               renderCategoryCards();
+              updateCategoryBadges();
+              const bar = document.getElementById('categorySegmentedBar');
+              if (bar && typeof initSegmentedSlidingPill === 'function') {
+                initSegmentedSlidingPill(bar);
+              }
               if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
                 renderCatalog();
                 updateActiveCategoryIndicator(currentBrand);
@@ -1206,6 +1299,11 @@
               window.CATALOG_PRODUCTS = fbData;
               populateBrandDropdown();
               renderCategoryCards();
+              updateCategoryBadges();
+              const bar = document.getElementById('categorySegmentedBar');
+              if (bar && typeof initSegmentedSlidingPill === 'function') {
+                initSegmentedSlidingPill(bar);
+              }
               if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
                 renderCatalog();
                 updateActiveCategoryIndicator(currentBrand);
