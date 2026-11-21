@@ -74,100 +74,118 @@
 
     <!-- Product list section -->
     <section class="catalog-section" id="catalogSection" style="padding-top: 10px;">
-      <!-- Category tabs -->
-      <div class="category-nav-wrapper">
-        <div class="category-segmented-bar" id="categorySegmentedBar">
-          <button class="category-pill-btn active" data-cat="all" onclick="filterCategory('all', this)">
-            <span>All Tools</span>
-            <span class="category-pill-badge" id="badgeAll"></span>
-          </button>
-          <button class="category-pill-btn" data-cat="ai" onclick="filterCategory('ai', this)">
-            <span>AI & LLMs</span>
-            <span class="category-pill-badge" id="badgeAi">0</span>
-          </button>
-          <button class="category-pill-btn" data-cat="design" onclick="filterCategory('design', this)">
-            <span>Design & Studio</span>
-            <span class="category-pill-badge" id="badgeDesign">0</span>
-          </button>
-          <button class="category-pill-btn" data-cat="learning_prod" onclick="filterCategory('learning_prod', this)">
-            <span>Productivity</span>
-            <span class="category-pill-badge" id="badgeProd">0</span>
-          </button>
-          <button class="category-pill-btn" data-cat="streaming_gaming" onclick="filterCategory('streaming_gaming', this)">
-            <span>Entertainment</span>
-            <span class="category-pill-badge" id="badgeEnt">0</span>
-          </button>
-          <button class="category-pill-btn" data-cat="security" onclick="filterCategory('security', this)">
-            <span>Security & VPN</span>
-            <span class="category-pill-badge" id="badgeSec">0</span>
-          </button>
+      
+      <!-- 1. CATEGORY SELECTION VIEW (Landing View) -->
+      <div id="categorySelectionView" class="category-selection-view">
+        <div class="category-selection-header">
+          <div class="category-selection-title-group">
+            <h2 class="category-selection-title">Choose a category</h2>
+            <p class="category-selection-subtitle">Browse verified digital subscriptions by category</p>
+          </div>
+          <span class="category-total-badge" id="categoryTotalBadge">24 categories</span>
+        </div>
+
+        <!-- Search Bar for Categories & Subscriptions -->
+        <div class="category-selection-search-row">
+          <div class="catalog-search-wrap" style="max-width: 100%;">
+            <svg class="catalog-search-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd" />
+            </svg>
+            <input type="text" id="categorySearchInput" class="catalog-search-input"
+              placeholder="Search subscriptions or categories (e.g. ChatGPT, Netflix, Canva)..." oninput="handleCategorySearch(this.value)">
+            <span class="catalog-search-shortcut">/</span>
+          </div>
+        </div>
+
+        <!-- 4-column Grid of Category Cards -->
+        <div class="category-cards-grid" id="categoryCardsGrid">
+          <!-- Populated by JS -->
         </div>
       </div>
 
-      <!-- Search and filters -->
-      <div class="catalog-controls-row">
-        <!-- Search bar -->
-        <div class="catalog-search-wrap">
-          <svg class="catalog-search-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clip-rule="evenodd" />
-          </svg>
-          <input type="text" id="catalogSearchInput" class="catalog-search-input"
-            placeholder="Search subscriptions (e.g. ChatGPT, Netflix, Canva)..." oninput="handleSearch(this.value)">
-          <span class="catalog-search-shortcut">/</span>
+      <!-- 2. CATEGORY PRODUCTS VIEW (Drill-Down View) -->
+      <div id="categoryProductsView" class="category-products-view" style="display: none;">
+        <!-- Header with Back Button and Active Category Info -->
+        <div class="category-view-top-bar">
+          <button type="button" class="back-to-categories-btn" onclick="showCategorySelectionView()" title="Back to All Categories">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>All Categories</span>
+          </button>
+          
+          <div class="active-category-indicator" id="activeCategoryIndicator">
+            <!-- Icon + Category Title + Count -->
+          </div>
         </div>
-        <div class="catalog-controls-right">
-          <!-- Category dropdown -->
-          <div class="apple-dropdown-wrap" id="brandDropdownWrap">
-            <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Category">
-              <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
-              <span id="brandDropdownLabel">All Category</span>
-              <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-              </svg>
-            </button>
-            <div class="apple-dropdown-menu hidden" id="brandDropdownMenu" role="menu" style="max-height: 380px; overflow-y: auto; min-width: 260px;">
-              <div class="dropdown-search-box" style="padding: 4px 6px 8px; border-bottom: 1px solid rgba(25, 13, 8, 0.08); margin-bottom: 4px; position: sticky; top: -6px; background: #FFFFFF; z-index: 2;">
-                <input type="text" id="brandSearchInput" placeholder="Filter category..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
-              </div>
-              <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
-                <!-- Populated by JS -->
+
+        <!-- Search and filters -->
+        <div class="catalog-controls-row">
+          <!-- Search bar -->
+          <div class="catalog-search-wrap">
+            <svg class="catalog-search-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd" />
+            </svg>
+            <input type="text" id="catalogSearchInput" class="catalog-search-input"
+              placeholder="Search subscriptions in this category..." oninput="handleSearch(this.value)">
+            <span class="catalog-search-shortcut">/</span>
+          </div>
+          <div class="catalog-controls-right">
+            <!-- Category dropdown -->
+            <div class="apple-dropdown-wrap" id="brandDropdownWrap">
+              <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Category">
+                <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
+                <span id="brandDropdownLabel">All Category</span>
+                <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </button>
+              <div class="apple-dropdown-menu hidden" id="brandDropdownMenu" role="menu" style="max-height: 380px; overflow-y: auto; min-width: 260px;">
+                <div class="dropdown-search-box" style="padding: 4px 6px 8px; border-bottom: 1px solid rgba(25, 13, 8, 0.08); margin-bottom: 4px; position: sticky; top: -6px; background: #FFFFFF; z-index: 2;">
+                  <input type="text" id="brandSearchInput" placeholder="Filter category..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
+                </div>
+                <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
+                  <!-- Populated by JS -->
+                </div>
               </div>
             </div>
-          </div>
 
-
-          <div class="view-mode-toggle" id="viewModeToggle">
-            <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                <rect x="1" y="1" width="6" height="6" rx="1.5" />
-                <rect x="9" y="1" width="6" height="6" rx="1.5" />
-                <rect x="1" y="9" width="6" height="6" rx="1.5" />
-                <rect x="9" y="9" width="6" height="6" rx="1.5" />
-              </svg>
-              <span>Grid</span>
-            </button>
-            <button type="button" class="view-mode-btn" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                <rect x="1" y="2" width="14" height="2.5" rx="1" />
-                <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
-                <rect x="1" y="11.5" width="14" height="2.5" rx="1" />
-              </svg>
-              <span>List</span>
-            </button>
+            <div class="view-mode-toggle" id="viewModeToggle">
+              <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                  <rect x="1" y="1" width="6" height="6" rx="1.5" />
+                  <rect x="9" y="1" width="6" height="6" rx="1.5" />
+                  <rect x="1" y="9" width="6" height="6" rx="1.5" />
+                  <rect x="9" y="9" width="6" height="6" rx="1.5" />
+                </svg>
+                <span>Grid</span>
+              </button>
+              <button type="button" class="view-mode-btn" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                  <rect x="1" y="2" width="14" height="2.5" rx="1" />
+                  <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
+                  <rect x="1" y="11.5" width="14" height="2.5" rx="1" />
+                </svg>
+                <span>List</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Product grid -->
-      <div class="directory-grid" id="directoryGrid">
-        <!-- Rendered by JS -->
-      </div>
+        <!-- Product grid -->
+        <div class="directory-grid" id="directoryGrid">
+          <!-- Rendered by JS -->
+        </div>
 
-      <!-- Pagination -->
-      <div class="catalog-pagination-wrap" id="catalogPaginationWrap">
-        <!-- Rendered by JS -->
+        <!-- Pagination -->
+        <div class="catalog-pagination-wrap" id="catalogPaginationWrap">
+          <!-- Rendered by JS -->
+        </div>
       </div>
     </section>
 
@@ -190,6 +208,7 @@
           <a href="index.html">Home</a>
           <a href="shop.html">Shop</a>
           <a href="index.html#faqSection">FAQ</a>
+          <a href="/login?next=admin.html">Admin</a>
         </nav>
 
         <div class="footer-minimal-socials">
@@ -230,10 +249,19 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         e.preventDefault();
-        const searchInput = document.getElementById('catalogSearchInput');
-        if (searchInput) {
-          searchInput.focus();
-          searchInput.select();
+        const catView = document.getElementById('categorySelectionView');
+        if (catView && catView.style.display !== 'none') {
+          const catSearch = document.getElementById('categorySearchInput');
+          if (catSearch) {
+            catSearch.focus();
+            catSearch.select();
+          }
+        } else {
+          const searchInput = document.getElementById('catalogSearchInput');
+          if (searchInput) {
+            searchInput.focus();
+            searchInput.select();
+          }
         }
       }
     });
@@ -700,17 +728,10 @@
       currentBrand = (brandVal === 'all') ? 'all' : (label || brandVal);
       if (currentBrand !== 'all') {
         currentCategory = 'all';
-        const bar = document.getElementById('categorySegmentedBar');
-        if (bar) {
-          bar.querySelectorAll('.category-pill-btn').forEach(b => {
-            b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
-          });
-          if (typeof initSegmentedSlidingPill === 'function') {
-            initSegmentedSlidingPill(bar);
-          }
-        }
       }
       currentPage = 1;
+      updateActiveCategoryIndicator(currentBrand);
+
       const labelEl = document.getElementById('brandDropdownLabel');
       const trigger = document.getElementById('brandDropdownTrigger');
       const prefixEl = document.getElementById('brandDropdownPrefix');
@@ -743,6 +764,15 @@
         trigger.classList.remove('active');
         trigger.setAttribute('aria-expanded', 'false');
       }
+
+      const url = new URL(window.location);
+      if (currentBrand === 'all') {
+        url.searchParams.set('category', 'all');
+      } else {
+        url.searchParams.set('category', currentBrand);
+      }
+      window.history.pushState({ category: currentBrand }, '', url.toString());
+
       renderCatalog();
     }
 
@@ -807,13 +837,11 @@
       document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
         item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
       });
-      document.querySelectorAll('.category-pill-btn').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
-      });
+      updateActiveCategoryIndicator('all');
       renderCatalog();
     }
 
-    // Filter by category tab
+    // Filter by category tab (legacy compatibility)
     function filterCategory(cat, btnElem) {
       currentCategory = cat;
       currentBrand = 'all';
@@ -827,23 +855,10 @@
         item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
       });
       currentPage = 1;
-      const bar = document.getElementById('categorySegmentedBar');
-      if (bar) {
-        bar.querySelectorAll('.category-pill-btn').forEach(b => b.classList.remove('active'));
-      }
-      if (btnElem) {
-        btnElem.classList.add('active');
-      }
       renderCatalog();
-      if (typeof initSegmentedSlidingPill === 'function' && bar) {
-        initSegmentedSlidingPill(bar);
-      }
-      if (typeof initCardSpotlights === 'function') {
-        initCardSpotlights();
-      }
     }
 
-    // Handle search typing
+    // Handle search typing in category product view
     function handleSearch(val) {
       currentSearch = val.trim();
       currentPage = 1;
@@ -853,15 +868,305 @@
       }
     }
 
+    // Handle search in category selection view
+    function handleCategorySearch(val) {
+      const q = (val || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('#categoryCardsGrid .category-select-card');
+      const source = (typeof getAllCatalogProducts === 'function')
+        ? getAllCatalogProducts()
+        : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+
+      cards.forEach(card => {
+        if (card.classList.contains('category-card-all')) {
+          card.style.display = 'flex';
+          return;
+        }
+        const catKey = (card.getAttribute('data-cat') || '').toLowerCase();
+        const displayName = (card.querySelector('.category-card-name')?.textContent || '').toLowerCase();
+
+        const catMatches = !q || catKey.includes(q) || displayName.includes(q);
+
+        let prodMatches = false;
+        if (q) {
+          prodMatches = source.some(p => {
+            const pCat = (typeof getProductCategory === 'function' ? getProductCategory(p) : (p.botCategory || '')).toLowerCase();
+            if (pCat !== catKey) return false;
+            return (p.name && p.name.toLowerCase().includes(q)) ||
+                   (p.brand && p.brand.toLowerCase().includes(q)) ||
+                   (p.description && p.description.toLowerCase().includes(q));
+          });
+        }
+
+        if (catMatches || prodMatches) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function initCategorySearchListeners() {
+      const catSearchInput = document.getElementById('categorySearchInput');
+      if (catSearchInput) {
+        catSearchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const query = (catSearchInput.value || '').trim();
+            if (query) {
+              openCategory('all');
+              const searchInput = document.getElementById('catalogSearchInput');
+              if (searchInput) searchInput.value = query;
+              handleSearch(query);
+            }
+          }
+        });
+      }
+    }
+
+    // Render 4-column category selection grid (Warm Apple/CreditLog theme)
+    function renderCategoryCards() {
+      const container = document.getElementById('categoryCardsGrid');
+      if (!container) return;
+      const source = (typeof getAllCatalogProducts === 'function')
+        ? getAllCatalogProducts()
+        : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+
+      const totalAll = source.length;
+      const inStockAll = source.filter(p => p.inStock !== false).length;
+
+      const cats = (typeof OFFICIAL_CATEGORIES !== 'undefined') ? OFFICIAL_CATEGORIES : [
+        'ChatGPT', 'Gemini', 'Grok', 'Codex API', 'Claude', 'Kimi',
+        'Video AI', 'ElevenLabs', 'AI Tools', 'Qwen API', 'DeepSeek API', 'Cursor API',
+        'Adobe', 'Autodesk', 'Design', 'Office', 'Education', 'Streaming',
+        'Music', 'VPN', 'Security', 'Games', 'Social', 'Discord'
+      ];
+
+      // Compute in-stock & total counts per category
+      const catStats = {};
+      cats.forEach(c => { catStats[c] = { total: 0, inStock: 0 }; });
+
+      source.forEach(prod => {
+        const cat = (typeof getProductCategory === 'function')
+          ? getProductCategory(prod)
+          : (prod.botCategory || 'AI Tools');
+        if (!catStats[cat]) {
+          catStats[cat] = { total: 0, inStock: 0 };
+        }
+        catStats[cat].total += 1;
+        if (prod.inStock !== false) {
+          catStats[cat].inStock += 1;
+        }
+      });
+
+      let html = `
+        <div class="category-select-card category-card-all" onclick="openCategory('all')" role="button" tabindex="0">
+          <div class="category-card-left">
+            <div class="category-card-icon-wrap category-all-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </div>
+            <div class="category-card-details">
+              <div class="category-card-name">All products</div>
+              <div class="category-card-avail">
+                <span class="category-stock-dot"></span>
+                <span>${inStockAll} / ${totalAll} available</span>
+              </div>
+            </div>
+          </div>
+          <div class="category-card-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+      `;
+
+      cats.forEach(cat => {
+        const stats = catStats[cat] || { total: 0, inStock: 0 };
+        const iconHtml = (typeof renderCategoryIcon === 'function')
+          ? renderCategoryIcon(cat, { size: 40, radius: 10, iconSize: 22 })
+          : '';
+        const safeEscaped = cat.replace(/'/g, "\\'");
+
+        html += `
+          <div class="category-select-card" data-cat="${cat.toLowerCase()}" onclick="openCategory('${safeEscaped}')" role="button" tabindex="0">
+            <div class="category-card-left">
+              <div class="category-card-icon-wrap">
+                ${iconHtml}
+              </div>
+              <div class="category-card-details">
+                <div class="category-card-name">${cat}</div>
+                <div class="category-card-avail">
+                  <span class="category-stock-dot"></span>
+                  <span>${stats.inStock} / ${stats.total} available</span>
+                </div>
+              </div>
+            </div>
+            <div class="category-card-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      const totalBadge = document.getElementById('categoryTotalBadge');
+      if (totalBadge) {
+        totalBadge.textContent = `${cats.length} categories`;
+      }
+    }
+
+    function updateActiveCategoryIndicator(cat) {
+      const container = document.getElementById('activeCategoryIndicator');
+      if (!container) return;
+      const source = (typeof getAllCatalogProducts === 'function')
+        ? getAllCatalogProducts()
+        : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
+
+      if (cat === 'all' || !cat) {
+        const total = source.length;
+        container.innerHTML = `
+          <div class="active-category-chip">
+            <span class="active-cat-name">All Products</span>
+            <span class="active-cat-badge">${total} subscriptions</span>
+          </div>
+        `;
+      } else {
+        const count = source.filter(p => {
+          const pCat = (typeof getProductCategory === 'function' ? getProductCategory(p) : (p.botCategory || '')).toLowerCase();
+          return pCat === cat.toLowerCase();
+        }).length;
+        const iconHtml = (typeof renderCategoryIcon === 'function')
+          ? renderCategoryIcon(cat, { size: 24, radius: 7, iconSize: 14 })
+          : '';
+        container.innerHTML = `
+          <div class="active-category-chip">
+            ${iconHtml}
+            <span class="active-cat-name">${cat}</span>
+            <span class="active-cat-badge">${count} subscriptions</span>
+          </div>
+        `;
+      }
+    }
+
+    function openCategory(cat, pushState = true) {
+      currentBrand = (cat === 'all') ? 'all' : cat;
+      currentCategory = 'all';
+      currentPage = 1;
+
+      const selView = document.getElementById('categorySelectionView');
+      const prodView = document.getElementById('categoryProductsView');
+      if (selView) selView.style.display = 'none';
+      if (prodView) prodView.style.display = 'block';
+
+      updateActiveCategoryIndicator(cat);
+
+      // Update brand dropdown trigger
+      const labelEl = document.getElementById('brandDropdownLabel');
+      const prefixEl = document.getElementById('brandDropdownPrefix');
+      const trigger = document.getElementById('brandDropdownTrigger');
+      if (labelEl) {
+        labelEl.textContent = (cat === 'all') ? 'All Category' : cat;
+      }
+      if (prefixEl) {
+        if (cat === 'all') {
+          prefixEl.innerHTML = '🏷️';
+        } else if (typeof renderCategoryIcon === 'function') {
+          prefixEl.innerHTML = renderCategoryIcon(cat, { size: 18, radius: 5, iconSize: 11 });
+        }
+      }
+      if (trigger) {
+        trigger.classList.toggle('filter-active', cat !== 'all');
+      }
+
+      document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
+        const b = item.getAttribute('data-brand');
+        item.classList.toggle('active', b === (cat === 'all' ? 'all' : cat.toLowerCase()));
+      });
+
+      if (pushState) {
+        const url = new URL(window.location);
+        if (cat === 'all') {
+          url.searchParams.set('category', 'all');
+        } else {
+          url.searchParams.set('category', cat);
+        }
+        window.history.pushState({ category: cat }, '', url.toString());
+      }
+
+      renderCatalog();
+
+      const catSection = document.getElementById('catalogSection');
+      if (catSection) {
+        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (typeof initCardSpotlights === 'function') {
+        initCardSpotlights();
+      }
+    }
+
+    function showCategorySelectionView(pushState = true) {
+      currentCategory = 'all';
+      currentBrand = 'all';
+      currentSearch = '';
+      const searchInput = document.getElementById('catalogSearchInput');
+      if (searchInput) searchInput.value = '';
+      const catSearchInput = document.getElementById('categorySearchInput');
+      if (catSearchInput) {
+        catSearchInput.value = '';
+        handleCategorySearch('');
+      }
+
+      const selView = document.getElementById('categorySelectionView');
+      const prodView = document.getElementById('categoryProductsView');
+      if (selView) selView.style.display = 'block';
+      if (prodView) prodView.style.display = 'none';
+
+      if (pushState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('category');
+        window.history.pushState({}, '', url.pathname + (url.search || ''));
+      }
+
+      const catSection = document.getElementById('catalogSection');
+      if (catSection) {
+        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    window.addEventListener('popstate', () => {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      if (cat) {
+        openCategory(cat, false);
+      } else {
+        showCategorySelectionView(false);
+      }
+    });
+
     // Initialize catalog on page load
     async function bootCatalog() {
+      initCategorySearchListeners();
       populateBrandDropdown();
-      updateCategoryBadges();
-      renderCatalog();
-      const bar = document.getElementById('categorySegmentedBar');
-      if (typeof initSegmentedSlidingPill === 'function' && bar) {
-        initSegmentedSlidingPill(bar);
+      renderCategoryCards();
+
+      const params = new URLSearchParams(window.location.search);
+      const initialCat = params.get('category');
+      if (initialCat) {
+        openCategory(initialCat, false);
+      } else {
+        const selView = document.getElementById('categorySelectionView');
+        const prodView = document.getElementById('categoryProductsView');
+        if (selView) selView.style.display = 'block';
+        if (prodView) prodView.style.display = 'none';
       }
+
       if (typeof initCardSpotlights === 'function') {
         initCardSpotlights();
       }
@@ -872,23 +1177,49 @@
         if (res.ok) {
           const apiData = await res.json();
           if (apiData.success && Array.isArray(apiData.data)) {
-            const prev = window.CATALOG_PRODUCTS;
-            const hasChanged = !prev || prev.length !== apiData.data.length ||
-              JSON.stringify(prev.map(p => ({ id: p.id, inStock: p.inStock, currPrice: p.currPrice, price: p.price }))) !==
-              JSON.stringify(apiData.data.map(p => ({ id: p.id, inStock: p.inStock, currPrice: p.currPrice, price: p.price })));
             window.CATALOG_PRODUCTS = apiData.data;
-            if (hasChanged) {
-              populateBrandDropdown();
-              updateCategoryBadges();
+            populateBrandDropdown();
+            renderCategoryCards();
+            if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
               renderCatalog();
+              updateActiveCategoryIndicator(currentBrand);
+            }
+          }
+        } else {
+          const fallbackRes = await fetch('/data/products.json').catch(() => null);
+          if (fallbackRes && fallbackRes.ok) {
+            const fbData = await fallbackRes.json();
+            if (Array.isArray(fbData)) {
+              window.CATALOG_PRODUCTS = fbData;
+              populateBrandDropdown();
+              renderCategoryCards();
+              if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
+                renderCatalog();
+                updateActiveCategoryIndicator(currentBrand);
+              }
             }
           }
         }
       } catch (err) {
         console.warn('Shop live sync fallback:', err);
+        try {
+          const fallbackRes = await fetch('/data/products.json');
+          if (fallbackRes.ok) {
+            const fbData = await fallbackRes.json();
+            if (Array.isArray(fbData)) {
+              window.CATALOG_PRODUCTS = fbData;
+              populateBrandDropdown();
+              renderCategoryCards();
+              if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
+                renderCatalog();
+                updateActiveCategoryIndicator(currentBrand);
+              }
+            }
+          }
+        } catch (e) {}
       } finally {
         isCatalogLoading = false;
-        if (!window.CATALOG_PRODUCTS || window.CATALOG_PRODUCTS.length === 0) {
+        if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
           renderCatalog();
         }
       }
@@ -901,7 +1232,9 @@
     }
 
     window.addEventListener('currencychange', () => {
-      renderCatalog();
+      if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
+        renderCatalog();
+      }
     });
 
 

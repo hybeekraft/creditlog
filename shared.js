@@ -14,12 +14,30 @@ function getCurrentUser() {
 
 function guardAdminPage() {
   if (typeof window === 'undefined' || !window.location) return true;
-  const path = window.location.pathname.toLowerCase();
-  if (path.endsWith('admin.html') || path.endsWith('admin-dashboard.html') || path.endsWith('activity-logs.html') || path.endsWith('inventory.html') || path.endsWith('customers.html') || path.endsWith('settings.html') || path.endsWith('orders.html') || path.endsWith('bot-settings.html')) {
+  const path = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  const protectedPages = {
+    '/admin': 'admin.html',
+    '/admin.html': 'admin.html',
+    '/admin-dashboard.html': 'admin.html',
+    '/activity-logs': 'activity-logs.html',
+    '/activity-logs.html': 'activity-logs.html',
+    '/inventory': 'inventory.html',
+    '/inventory.html': 'inventory.html',
+    '/customers': 'customers.html',
+    '/customers.html': 'customers.html',
+    '/settings': 'settings.html',
+    '/settings.html': 'settings.html',
+    '/orders': 'orders.html',
+    '/orders.html': 'orders.html',
+    '/bot-settings': 'bot-settings.html',
+    '/bot-settings.html': 'bot-settings.html'
+  };
+  const page = protectedPages[path];
+  if (page) {
     const user = getCurrentUser();
     const token = localStorage.getItem('creditlog_admin_token');
     if (!user || !token || !['admin', 'manager', 'support'].includes(String(user.role || '').toLowerCase())) {
-      const next = encodeURIComponent(window.location.pathname.split('/').pop() + window.location.search);
+      const next = encodeURIComponent(page + window.location.search);
       window.location.href = `login.html?next=${next}`;
       return false;
     }

@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const http = require('node:http');
+const { brotliCompressSync } = require('node:zlib');
 const { proxyRequest } = require('../server/services/sharedBackendProxy');
 
 function makeResponse() {
@@ -78,5 +79,34 @@ test('proxy fails closed when backend credentials are missing', async () => {
   } finally {
     if (previous === undefined) delete process.env.CREDITLOG_BACKEND_SECRET;
     else process.env.CREDITLOG_BACKEND_SECRET = previous;
+  }
+});
+
+test('proxy removes content encoding after fetch decompresses the backend response', async () => {
+  const previous = {
+    url: process.env.CREDITLOG_BACKEND_URL,
+    secret: process.env.CREDITLOG_BACKEND_SECRET
+  };
+  const backend = http.createServer((_req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Content-Encoding': 'br' });
+    res.end(brotliCompressSync('{"success":true}'));
+  });
+
+  await new Promise(resolve => backend.listen(0, '127.0.0.1', resolve));
+  process.env.CREDITLOG_BACKEND_URL = `http://127.0.0.1:${backend.address().port}`;
+  process.env.CREDITLOG_BACKEND_SECRET = 'test-backend-secret';
+  const response = makeResponse();
+
+  try {
+    await proxyRequest({ method: 'GET', headers: {} }, response, '/api/products');
+    assert.equal(response.statusCode, 200);
+    assert.equal(response.headers['content-encoding'], undefined);
+    assert.deepEqual(JSON.parse(response.body), { success: true });
+  } finally {
+    await new Promise(resolve => backend.close(resolve));
+    if (previous.url === undefined) delete process.env.CREDITLOG_BACKEND_URL;
+    else process.env.CREDITLOG_BACKEND_URL = previous.url;
+    if (previous.secret === undefined) delete process.env.CREDITLOG_BACKEND_SECRET;
+    else process.env.CREDITLOG_BACKEND_SECRET = previous.secret;
   }
 });

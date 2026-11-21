@@ -51,7 +51,7 @@ async function proxyRequest(req, res, requestPath) {
     const response = await fetch(target, { method, headers, body });
     const responseHeaders = {};
     response.headers.forEach((value, name) => {
-      if (!['connection', 'content-length', 'keep-alive', 'transfer-encoding'].includes(name.toLowerCase())) {
+      if (!['connection', 'content-encoding', 'content-length', 'keep-alive', 'transfer-encoding'].includes(name.toLowerCase())) {
         responseHeaders[name] = value;
       }
     });
