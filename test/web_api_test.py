@@ -103,6 +103,26 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
         inventory = await self.client.get("/api/admin/inventory", headers={**self.headers, "Authorization": f"Bearer {body['token']}"})
         self.assertEqual(inventory.status, 200)
 
+    async def test_supplier_order_history_requires_admin_and_omits_delivery_payload(self):
+        from unittest.mock import AsyncMock, patch
+
+        mock_supplier = AsyncMock()
+        mock_supplier.get_orders.return_value = [{
+            "orderCode": "SUP-12", "productId": "streaming-1", "price": 4.5,
+            "quantity": 1, "status": "completed", "value": "private-delivery-code",
+        }]
+        denied = await self.client.get("/api/admin/supplier/orders", headers=self.headers)
+        self.assertEqual(denied.status, 401)
+
+        login = await self.client.post("/api/admin/login", headers=self.headers, json={"username": "admin@example.com", "password": "test-password-that-is-long-enough"})
+        token = (await login.json())["token"]
+        with patch.object(bot.supplier_registry, "get", return_value=mock_supplier):
+            response = await self.client.get("/api/admin/supplier/orders", headers={**self.headers, "Authorization": f"Bearer {token}"})
+        result = await response.json()
+        self.assertEqual(response.status, 200)
+        self.assertEqual(result["orders"][0]["orderCode"], "SUP-12")
+        self.assertNotIn("value", result["orders"][0])
+
     async def test_payment_cannot_be_verified_without_order_receipt_token(self):
         cur = bot.db.execute("INSERT INTO orders(user_id,product_id,product_name,price,quantity,status,customer_email,payment_method,invoice_id) VALUES(0,1,'API test item',1250,1,'pending','customer@example.com','bachs','fake-session')")
         response = await self.client.post("/api/payment/verify", headers=self.headers, json={"orderId": f"#CL-{cur.lastrowid}", "reference": "fake-session"})

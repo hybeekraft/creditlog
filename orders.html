@@ -4,15 +4,16 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Orders · CreditLog Admin</title><link rel="stylesheet" href="/style.css">
   <style>
-    body{background:#fbf6ea;color:#190d08}.orders-wrap{max-width:1240px;margin:40px auto;padding:0 20px}.orders-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap}.orders-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.orders-nav a,.refresh-btn,.action-btn{padding:9px 13px;border:1px solid rgba(25,13,8,.15);border-radius:9px;background:#fff;color:#190d08;text-decoration:none;font-weight:700;cursor:pointer}.orders-nav a[aria-current=page],.action-btn.primary{background:#d04515;color:#fff;border-color:#d04515}.orders-table-wrap{overflow:auto;border:1px solid rgba(25,13,8,.12);border-radius:16px;background:#fff}.orders-table{width:100%;border-collapse:collapse;min-width:980px}.orders-table th,.orders-table td{padding:13px 14px;text-align:left;border-bottom:1px solid rgba(25,13,8,.08);vertical-align:top}.orders-table th{font-size:12px;text-transform:uppercase;color:#705e51;background:#fffaf2}.orders-table td{font-size:14px}.order-actions{display:flex;gap:6px;flex-wrap:wrap}.action-btn{padding:6px 9px;font-size:12px}.action-btn:disabled{opacity:.5;cursor:not-allowed}.status{font-weight:800}.error{color:#a52818;margin:14px 0}.muted{color:#705e51}
+    body{background:#fbf6ea;color:#190d08}.orders-wrap{max-width:1240px;margin:40px auto;padding:0 20px}.orders-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap}.orders-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.orders-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.orders-nav a,.refresh-btn,.action-btn,.supplier-select{padding:9px 13px;border:1px solid rgba(25,13,8,.15);border-radius:9px;background:#fff;color:#190d08;text-decoration:none;font-weight:700;cursor:pointer}.orders-nav a[aria-current=page],.action-btn.primary{background:#d04515;color:#fff;border-color:#d04515}.orders-table-wrap{overflow:auto;border:1px solid rgba(25,13,8,.12);border-radius:16px;background:#fff}.orders-table{width:100%;border-collapse:collapse;min-width:980px}.orders-table th,.orders-table td{padding:13px 14px;text-align:left;border-bottom:1px solid rgba(25,13,8,.08);vertical-align:top}.orders-table th{font-size:12px;text-transform:uppercase;color:#705e51;background:#fffaf2}.orders-table td{font-size:14px}.order-actions{display:flex;gap:6px;flex-wrap:wrap}.action-btn{padding:6px 9px;font-size:12px}.action-btn:disabled{opacity:.5;cursor:not-allowed}.status{font-weight:800}.error{color:#a52818;margin:14px 0}.muted{color:#705e51}
   </style>
 </head>
 <body>
   <main class="orders-wrap">
-    <header class="orders-head"><div><a href="/" style="color:#d04515;font-weight:800;text-decoration:none">CreditLog</a><h1>Orders</h1><p class="muted">Orders from the shared Telegram and web store database.</p></div><button class="refresh-btn" id="refreshOrders">Refresh</button></header>
-    <nav class="orders-nav" aria-label="Admin navigation"><a href="admin.html">Dashboard</a><a href="inventory.html">Inventory</a><a href="orders.html" aria-current="page">Orders</a><a href="customers.html">Customers</a><a href="settings.html">Settings</a><a href="activity-logs.html">Activity</a><button class="refresh-btn" onclick="logoutUser()">Sign out</button></nav>
+    <header class="orders-head"><div><a href="/" style="color:#d04515;font-weight:800;text-decoration:none">CreditLog</a><h1>Orders</h1><p class="muted">Orders from the shared Telegram and web store database.</p></div><div class="orders-tools"><button class="refresh-btn" id="refreshOrders">Refresh</button><select class="supplier-select" id="supplierOrderVendor" aria-label="Supplier"></select><button class="refresh-btn" id="refreshSupplierOrders">Supplier history</button></div></header>
+    <nav class="orders-nav" aria-label="Admin navigation"><a href="admin.html">Dashboard</a><a href="inventory.html">Inventory</a><a href="orders.html" aria-current="page">Orders</a><a href="customers.html">Customers</a><a href="settings.html">Settings</a><a href="bot-settings.html">Telegram bot &amp; payments</a><a href="activity-logs.html">Activity</a><button class="refresh-btn" onclick="logoutUser()">Sign out</button></nav>
     <p id="ordersMessage" class="muted" aria-live="polite">Loading orders…</p><div class="error" id="ordersError" role="alert"></div>
     <div class="orders-table-wrap"><table class="orders-table"><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Payment</th><th>Status</th><th>Delivery</th><th>Actions</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+    <section id="supplierOrdersPanel" hidden style="margin-top:32px"><h2>Supplier order history</h2><p id="supplierOrdersMessage" class="muted" aria-live="polite"></p><div class="error" id="supplierOrdersError" role="alert"></div><div class="orders-table-wrap"><table class="orders-table"><thead><tr><th>Supplier order</th><th>Product</th><th>Amount</th><th>Quantity</th><th>Status</th><th>Created</th></tr></thead><tbody id="supplierOrdersBody"></tbody></table></div></section>
   </main>
   <script src="/shared.js"></script>
   <script>
@@ -49,7 +50,33 @@
       try { const response=await fetch(`/api/admin/orders/${encodeURIComponent(order.botOrderId || order.id)}/${action}`,{method:'POST',headers:{Authorization:`Bearer ${token()}`,'Content-Type':'application/json'},body:JSON.stringify(body)}); const result=await response.json(); if(!response.ok||!result.success) throw new Error(result.message||'Action failed.'); await loadOrders(); }
       catch(err){document.getElementById('ordersError').textContent=err.message||'Action failed.';}
     }
-    document.getElementById('refreshOrders').addEventListener('click',loadOrders);loadOrders();
+    async function loadSupplierOrders(){
+      const panel=document.getElementById('supplierOrdersPanel'),message=document.getElementById('supplierOrdersMessage'),error=document.getElementById('supplierOrdersError'),body=document.getElementById('supplierOrdersBody');
+      panel.hidden=false;message.textContent='Loading supplier order history…';error.textContent='';body.replaceChildren();
+      try {
+        const vendorId=document.getElementById('supplierOrderVendor').value;
+        const query=vendorId?`?vendorId=${encodeURIComponent(vendorId)}`:'';
+        const response=await fetch(`/api/admin/supplier/orders${query}`,{headers:{Authorization:`Bearer ${token()}`}});
+        const result=await response.json();
+        if(response.status===401){logoutUser();return;}
+        if(!response.ok||!result.success)throw new Error(result.message||'Could not load supplier order history.');
+        message.textContent=`${result.count} supplier orders · ${result.supplier}`;
+        for(const order of result.orders||[]){const row=document.createElement('tr');for(const key of ['orderCode','product','amount','quantity','status','createdAt']){const cell=document.createElement('td');cell.textContent=String(order[key]??'—')||'—';row.appendChild(cell);}body.appendChild(row);}
+        if(!result.count)message.textContent='No supplier orders found.';
+      }catch(err){error.textContent=err.message||'Could not load supplier order history.';message.textContent='';}
+    }
+    async function loadSupplierOptions(){
+      const select=document.getElementById('supplierOrderVendor');
+      try {
+        const response=await fetch('/api/admin/reseller/vendors',{headers:{Authorization:`Bearer ${token()}`}});
+        const result=await response.json();
+        if(!response.ok||!result.success)throw new Error();
+        select.replaceChildren();
+        for(const vendor of result.vendors||[]){const option=document.createElement('option');option.value=vendor.id;option.textContent=vendor.name+(vendor.isDefault?' · Primary':'');select.appendChild(option);}
+        if(!select.options.length){const option=document.createElement('option');option.value='';option.textContent='Primary supplier';select.appendChild(option);}
+      }catch{select.replaceChildren();const option=document.createElement('option');option.value='';option.textContent='Primary supplier';select.appendChild(option);}
+    }
+    document.getElementById('refreshOrders').addEventListener('click',loadOrders);document.getElementById('refreshSupplierOrders').addEventListener('click',loadSupplierOrders);loadOrders();loadSupplierOptions();
   </script>
 </body>
 </html>
