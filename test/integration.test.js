@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'test';
 process.env.DISABLE_LIVE_SUPPLIER = '1';
 
+const http = require('node:http');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
@@ -14,11 +15,130 @@ const shared = require('../shared.js');
 
 const TEST_PORT = 3199;
 let baseUrl = `http://localhost:${TEST_PORT}`;
+let mockBackend = null;
+const ordersMap = new Map();
+const previousBackendUrl = process.env.CREDITLOG_BACKEND_URL;
+const previousBackendSecret = process.env.CREDITLOG_BACKEND_SECRET;
 
 test.before(async () => {
+  const productsFilePath = path.resolve(__dirname, '../data/products.json');
+
+  mockBackend = http.createServer((req, res) => {
+    const parsed = new URL(req.url, 'http://127.0.0.1');
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => {
+      let body = {};
+      try {
+        body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {};
+      } catch (e) {}
+
+      const pathname = parsed.pathname;
+      const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+
+      if (pathname === '/api/products' && req.method === 'GET') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: true, data: products }));
+      }
+
+      if (pathname.startsWith('/api/products/') && req.method === 'GET') {
+        const id = decodeURIComponent(pathname.replace('/api/products/', ''));
+        const item = products.find(p => String(p.id) === id);
+        if (!item) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ success: false, message: 'Not found' }));
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: true, data: item }));
+      }
+
+      if (pathname === '/api/orders/quote' && req.method === 'POST') {
+        const product = products.find(p => String(p.id) === String(body.productId)) || products[0];
+        const qty = Number(body.quantity) || 1;
+        const totalNgn = (product.priceNgn || 5000) * qty;
+        const totalUsd = (product.priceUsd || 5) * qty;
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          success: true,
+          productId: product.id,
+          quantity: qty,
+          totalNgn,
+          totalUsd,
+          currency: body.currency || 'NGN'
+        }));
+      }
+
+      if (pathname === '/api/orders/create' && req.method === 'POST') {
+        const product = products.find(p => String(p.id) === String(body.productId)) || products[0];
+        const orderId = '#CL-TEST-' + Date.now();
+        const order = {
+          id: orderId,
+          productId: product.id,
+          customerName: body.customerName,
+          customerEmail: body.customerEmail,
+          customerPhone: body.customerPhone,
+          deliveryChannel: body.deliveryChannel || 'Email',
+          gateway: body.gateway || 'Bachs',
+          status: 'Pending',
+          reference: 'ref-' + Date.now(),
+          price: '₦5,000'
+        };
+        ordersMap.set(orderId, order);
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          success: true,
+          order,
+          checkoutUrl: 'https://checkout.bachs.finance/pay/test',
+          accessToken: 'token-test-123'
+        }));
+      }
+
+      if (pathname === '/api/payment/verify' && req.method === 'POST') {
+        const orderId = body.orderId || '#CL-TEST-1';
+        const order = ordersMap.get(orderId) || { id: orderId };
+        order.status = 'Delivered';
+        order.credentials = 'Username: verified_user\nPassword: secretPassword';
+        ordersMap.set(orderId, order);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          success: true,
+          verified: true,
+          status: 'Completed',
+          order
+        }));
+      }
+
+      if (pathname === '/api/orders/track' && req.method === 'GET') {
+        const orderId = parsed.searchParams.get('id');
+        const order = ordersMap.get(orderId) || {
+          id: orderId,
+          status: 'Delivered',
+          customerEmail: 'verified_order@creditlog.com'
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          success: true,
+          data: [order]
+        }));
+      }
+
+      if (pathname === '/api/webhook/bachs' && req.method === 'POST') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: true, message: 'Bachs webhook processed' }));
+      }
+
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Not found' }));
+    });
+  });
+
+  await new Promise(resolve => mockBackend.listen(0, '127.0.0.1', resolve));
+  process.env.CREDITLOG_BACKEND_URL = `http://127.0.0.1:${mockBackend.address().port}`;
+  process.env.CREDITLOG_BACKEND_SECRET = 'test-integration-secret';
+
   await new Promise((resolve) => {
     server.listen(TEST_PORT, () => {
-      console.log(`[Test Server] Running on ${baseUrl}`);
+      console.log(`[Test Server] Running on ${baseUrl} (Proxying to mock shared backend)`);
       resolve();
     });
   });
@@ -36,6 +156,14 @@ test.after(async () => {
       resolve();
     });
   });
+  if (mockBackend) {
+    await new Promise(resolve => mockBackend.close(resolve));
+  }
+  if (previousBackendUrl === undefined) delete process.env.CREDITLOG_BACKEND_URL;
+  else process.env.CREDITLOG_BACKEND_URL = previousBackendUrl;
+  if (previousBackendSecret === undefined) delete process.env.CREDITLOG_BACKEND_SECRET;
+  else process.env.CREDITLOG_BACKEND_SECRET = previousBackendSecret;
+
   const handles = process._getActiveHandles ? process._getActiveHandles() : [];
   console.log('Remaining active handles:', handles.map(h => (h.constructor ? h.constructor.name : typeof h)));
   setTimeout(() => process.exit(0), 100).unref();

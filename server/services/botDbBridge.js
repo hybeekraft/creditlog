@@ -19,6 +19,10 @@ class BotDbBridge {
     if (!DatabaseSync) return false;
 
     const candidatePaths = [
+      path.resolve(__dirname, '../../../creditlogbot/store.db'),
+      path.resolve(__dirname, '../../creditlogbot/store.db'),
+      path.resolve(__dirname, '../creditlogbot/store.db'),
+      'C:/Users/DELL/creditlogbot/store.db',
       path.resolve(__dirname, '../../../creditlog_bot/store.db'),
       path.resolve(__dirname, '../../creditlog_bot/store.db'),
       path.resolve(__dirname, '../creditlog_bot/store.db'),
@@ -65,7 +69,8 @@ class BotDbBridge {
     } catch (e) {
       console.warn('[BotDbBridge] Error reading usd_ngn_rate:', e.message);
     }
-    return null;
+    const envRate = parseFloat(process.env.USD_NGN_RATE);
+    return !isNaN(envRate) && envRate > 0 ? envRate : 1650;
   }
 
   getAllProducts() {
