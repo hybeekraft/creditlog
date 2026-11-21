@@ -1800,7 +1800,10 @@ var OFFICIAL_CATEGORIES = [
   'Security',
   'Games',
   'Social',
-  'Discord'
+  'Discord',
+  'Muse AI',
+  'Lovable',
+  'CapCut'
 ];
 
 var CATEGORY_ICON_MAP = {
@@ -1818,7 +1821,7 @@ var CATEGORY_ICON_MAP = {
   'Cursor API': 'cursor',
   'Adobe': 'adobe',
   'Autodesk': 'autodesk',
-  'Design': 'capcut',
+  'Design': 'canva',
   'Office': 'microsoft',
   'Education': 'duolingo',
   'Streaming': 'netflix',
@@ -1827,7 +1830,10 @@ var CATEGORY_ICON_MAP = {
   'Security': 'security_cat',
   'Games': 'games_cat',
   'Social': 'social_cat',
-  'Discord': 'discord'
+  'Discord': 'discord',
+  'Muse AI': 'muse',
+  'Lovable': 'lovable',
+  'CapCut': 'capcut'
 };
 
 function getProductCategory(prod) {
@@ -1838,6 +1844,9 @@ function getProductCategory(prod) {
   const icon = (prod.iconType || '').toLowerCase().trim();
 
   // Match by brand or name
+  if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'CapCut';
+  if (brand === 'lovable' || name.includes('lovable') || icon === 'lovable' || name.includes('loveable')) return 'Lovable';
+  if (brand === 'muse' || brand === 'muse ai' || name.includes('muse') || icon === 'muse') return 'Muse AI';
   if (brand === 'adobe' || name.includes('adobe') || icon === 'adobe' || name.includes('photoshop') || name.includes('illustrator')) return 'Adobe';
   if (brand === 'autodesk' || name.includes('autodesk') || icon === 'autodesk' || name.includes('autocad') || name.includes('3ds max') || name.includes('revit') || name.includes('maya')) return 'Autodesk';
   if (brand === 'elevenlabs' || name.includes('elevenlabs') || icon === 'elevenlabs') return 'ElevenLabs';
@@ -1853,7 +1862,6 @@ function getProductCategory(prod) {
   if (brand === 'codex' || name.includes('codex') || icon === 'codex' || (name.includes('astra') && !name.includes('nastran'))) return 'Codex API';
 
   if (brand === 'duolingo' || name.includes('duolingo') || icon === 'duolingo') return 'Education';
-  if (brand === 'capcut' || name.includes('capcut') || icon === 'capcut') return 'Design';
   if (brand === 'xbox' || name.includes('xbox') || icon === 'xbox' || name.includes('bethesda') || name.includes('fallout') || name.includes('game pass') || name.includes('pc game')) return 'Games';
   if (brand === 'snapchat' || name.includes('snapchat') || icon === 'snapchat') return 'Social';
   if (brand === 'spotify' || brand === 'apple music' || name.includes('spotify') || name.includes('apple music') || name.includes('deezer') || name.includes('tidal')) return 'Music';
@@ -1868,7 +1876,8 @@ function getProductCategory(prod) {
   if (prod.botCategory === 'Airtable') return 'Office';
   if (prod.botCategory === 'Duolingo') return 'Education';
   if (prod.botCategory === 'Xbox') return 'Games';
-  if (prod.botCategory === 'Lovable') return 'AI Tools';
+  if (prod.botCategory === 'Lovable') return 'Lovable';
+  if (prod.botCategory === 'CapCut' || prod.botCategory === 'Capcut') return 'CapCut';
   if (prod.botCategory === 'Snapchat') return 'Social';
 
   // Check keywords in description

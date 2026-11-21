@@ -962,6 +962,11 @@
         </div>
 
         <div class="cms-form-group">
+          <label for="editSupplierProductId">Supplier product ID (blank for manual fulfillment)</label>
+          <input type="text" id="editSupplierProductId" class="cms-form-input" maxlength="180" placeholder="Supplier SKU">
+        </div>
+
+        <div class="cms-form-group">
           <label>Default Duration</label>
           <input type="text" id="addDuration" class="cms-form-input" placeholder="e.g. 1 Month" value="1 Month">
         </div>
@@ -1843,6 +1848,7 @@
       const howItIsDelivered = document.getElementById('editDelivery').value.trim();
       const iconType = document.getElementById('editIconType').value;
       const logoUrl = document.getElementById('editLogoUrl').value;
+      const supplierProductId = document.getElementById('editSupplierProductId').value.trim();
 
       try {
         const res = await fetch(`/api/admin/products/${encodeURIComponent(prodId)}`, {
@@ -1861,6 +1867,7 @@
             description,
             importantRequirements,
             howItIsDelivered,
+            supplierProductId,
             iconType: iconType || undefined,
             logoUrl: logoUrl || ''
           })

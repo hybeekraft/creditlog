@@ -699,9 +699,9 @@ test('26. KREA Brand Consolidation: All Krea and KREA products belong strictly t
   assert.equal(duplicateBrands.length, 0, 'No product should have split "Krea" brand');
 });
 
-test('27. Official Storefront Categories: Exactly 24 categories in specified sequence with valid icons and catalog mapping', async () => {
+test('27. Official Storefront Categories: Exactly 27 categories in specified sequence with valid icons and catalog mapping', async () => {
   const shared = require('../shared.js');
-  const EXPECTED_24 = [
+  const EXPECTED_27 = [
     'ChatGPT', 'Gemini', 'Grok',
     'Codex API', 'Claude', 'Kimi',
     'Video AI', 'ElevenLabs', 'AI Tools',
@@ -709,13 +709,14 @@ test('27. Official Storefront Categories: Exactly 24 categories in specified seq
     'Adobe', 'Autodesk', 'Design',
     'Office', 'Education', 'Streaming',
     'Music', 'VPN', 'Security',
-    'Games', 'Social', 'Discord'
+    'Games', 'Social', 'Discord',
+    'Muse AI', 'Lovable', 'CapCut'
   ];
 
-  assert.equal(shared.OFFICIAL_CATEGORIES.length, 24, 'Must have exactly 24 official categories');
-  assert.deepEqual(shared.OFFICIAL_CATEGORIES, EXPECTED_24, 'Categories must match exact list and sequence');
+  assert.equal(shared.OFFICIAL_CATEGORIES.length, 27, 'Must have exactly 27 official categories');
+  assert.deepEqual(shared.OFFICIAL_CATEGORIES, EXPECTED_27, 'Categories must match exact list and sequence');
 
-  for (const cat of EXPECTED_24) {
+  for (const cat of EXPECTED_27) {
     const iconHtml = shared.renderCategoryIcon(cat, { size: 22, radius: 6, iconSize: 13 });
     assert.ok(iconHtml && (iconHtml.includes('<svg') || iconHtml.includes('<img')), `Category "${cat}" must render a valid icon`);
   }
@@ -727,7 +728,7 @@ test('27. Official Storefront Categories: Exactly 24 categories in specified seq
 
   for (const prod of json.data) {
     const cat = shared.getProductCategory(prod);
-    assert.ok(EXPECTED_24.includes(cat), `Product "${prod.name}" (${prod.id}) must map to one of 24 categories, got "${cat}"`);
+    assert.ok(EXPECTED_27.includes(cat), `Product "${prod.name}" (${prod.id}) must map to one of 27 categories, got "${cat}"`);
   }
 
   // Verify shop.html dropdown contains All Category + 24 categories

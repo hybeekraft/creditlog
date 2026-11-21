@@ -49,7 +49,7 @@
         localStorage.setItem('creditlog_admin_token', result.token);
         setCurrentUser(result.user);
         const requested = new URLSearchParams(location.search).get('next') || 'admin.html';
-        const allowed = ['admin.html', 'inventory.html', 'customers.html', 'settings.html', 'activity-logs.html', 'orders.html'];
+        const allowed = ['admin.html', 'inventory.html', 'customers.html', 'settings.html', 'activity-logs.html', 'orders.html', 'bot-settings.html'];
         location.replace(allowed.includes(requested.split('?')[0]) ? requested : 'admin.html');
       } catch (err) {
         error.textContent = err.message || 'Unable to sign in. Check your connection and try again.';
