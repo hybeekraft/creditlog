@@ -106,7 +106,7 @@
 
       <!-- 2. CATEGORY PRODUCTS VIEW (Drill-Down View) -->
       <div id="categoryProductsView" class="category-products-view" style="display: none;">
-        <!-- Header with Back Button and Active Category Info -->
+        <!-- Header with Back Button -->
         <div class="category-view-top-bar">
           <button type="button" class="back-to-categories-btn" onclick="showCategorySelectionView()" title="Back to All Categories">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -115,10 +115,6 @@
             </svg>
             <span>All Categories</span>
           </button>
-          
-          <div class="active-category-indicator" id="activeCategoryIndicator">
-            <!-- Icon + Category Title + Count -->
-          </div>
         </div>
 
         <!-- Category tabs -->
@@ -165,25 +161,6 @@
             <span class="catalog-search-shortcut">/</span>
           </div>
           <div class="catalog-controls-right">
-            <!-- Category dropdown -->
-            <div class="apple-dropdown-wrap" id="brandDropdownWrap">
-              <button type="button" class="apple-sort-trigger" id="brandDropdownTrigger" onclick="toggleBrandMenu(event)" aria-haspopup="true" aria-expanded="false" title="Filter by Category">
-                <span class="sort-icon-prefix" id="brandDropdownPrefix">🏷️</span>
-                <span id="brandDropdownLabel">All Category</span>
-                <svg class="sort-chevron-icon" width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                </svg>
-              </button>
-              <div class="apple-dropdown-menu hidden" id="brandDropdownMenu" role="menu" style="max-height: 380px; overflow-y: auto; min-width: 260px;">
-                <div class="dropdown-search-box" style="padding: 4px 6px 8px; border-bottom: 1px solid rgba(25, 13, 8, 0.08); margin-bottom: 4px; position: sticky; top: -6px; background: #FFFFFF; z-index: 2;">
-                  <input type="text" id="brandSearchInput" placeholder="Filter category..." oninput="filterBrandList(this.value)" onclick="event.stopPropagation()" style="width: 100%; padding: 6px 10px; font-size: 12px; border-radius: 6px; border: 1px solid rgba(25, 13, 8, 0.12); outline: none; background: #FAF7F2; color: #190D08;">
-                </div>
-                <div id="brandOptionsList" style="display: flex; flex-direction: column; gap: 2px;">
-                  <!-- Populated by JS -->
-                </div>
-              </div>
-            </div>
-
             <div class="view-mode-toggle" id="viewModeToggle">
               <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
