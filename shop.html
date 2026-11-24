@@ -250,7 +250,7 @@
           </div>
           <div class="catalog-controls-right">
             <div class="view-mode-toggle" id="viewModeToggle">
-              <button type="button" class="view-mode-btn active" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
+              <button type="button" class="view-mode-btn" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                   <rect x="1" y="1" width="6" height="6" rx="1.5" />
                   <rect x="9" y="1" width="6" height="6" rx="1.5" />
@@ -259,7 +259,7 @@
                 </svg>
                 <span>Grid</span>
               </button>
-              <button type="button" class="view-mode-btn" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
+              <button type="button" class="view-mode-btn active" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                   <rect x="1" y="2" width="14" height="2.5" rx="1" />
                   <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
@@ -271,8 +271,8 @@
           </div>
         </div>
 
-        <!-- Product grid -->
-        <div class="directory-grid" id="directoryGrid">
+        <!-- Product grid / list -->
+        <div class="directory-list-view" id="directoryGrid">
           <!-- Rendered by JS -->
         </div>
 
@@ -335,7 +335,7 @@
     let currentBrand = 'all';
     let catalogBrandSamples = {};
     let currentSearch = '';
-    let currentViewMode = 'grid';
+    let currentViewMode = 'list';
     let currentPage = 1;
     const PAGE_SIZE = 20;
 
