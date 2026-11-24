@@ -2320,6 +2320,7 @@ function initSegmentedSlidingPill(barElement) {
       if (!animate) slider.style.transition = 'none';
       const barRect = bar.getBoundingClientRect();
       const btnRect = activeBtn.getBoundingClientRect();
+      if (barRect.width === 0 || btnRect.width === 0) return;
       const leftOffset = btnRect.left - barRect.left + bar.scrollLeft;
       const width = btnRect.width;
 
@@ -2334,10 +2335,17 @@ function initSegmentedSlidingPill(barElement) {
       }
     }
 
+    bar._updateSlider = updateSlider;
+
     const activeBtn = bar.querySelector('.active') || bar.querySelector('button');
     if (activeBtn) {
       updateSlider(activeBtn, false);
     }
+
+    if (bar.dataset.sliderListenersBound === 'true') {
+      return;
+    }
+    bar.dataset.sliderListenersBound = 'true';
 
     // Update active button on click
     const buttons = bar.querySelectorAll('button');

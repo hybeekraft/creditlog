@@ -122,27 +122,115 @@
           <div class="category-segmented-bar" id="categorySegmentedBar">
             <button type="button" class="category-pill-btn active" data-cat="all" onclick="filterCategory('all', this)">
               <span>All Tools</span>
-              <span class="category-pill-badge" id="badgeAll">0</span>
+              <span class="category-pill-badge">0</span>
             </button>
-            <button type="button" class="category-pill-btn" data-cat="ai" onclick="filterCategory('ai', this)">
-              <span>AI & LLMs</span>
-              <span class="category-pill-badge" id="badgeAi">0</span>
+            <button type="button" class="category-pill-btn" data-cat="ChatGPT" onclick="filterCategory('ChatGPT', this)">
+              <span>ChatGPT</span>
+              <span class="category-pill-badge">0</span>
             </button>
-            <button type="button" class="category-pill-btn" data-cat="design" onclick="filterCategory('design', this)">
-              <span>Design & Studio</span>
-              <span class="category-pill-badge" id="badgeDesign">0</span>
+            <button type="button" class="category-pill-btn" data-cat="Gemini" onclick="filterCategory('Gemini', this)">
+              <span>Gemini</span>
+              <span class="category-pill-badge">0</span>
             </button>
-            <button type="button" class="category-pill-btn" data-cat="learning_prod" onclick="filterCategory('learning_prod', this)">
-              <span>Productivity</span>
-              <span class="category-pill-badge" id="badgeProd">0</span>
+            <button type="button" class="category-pill-btn" data-cat="Grok" onclick="filterCategory('Grok', this)">
+              <span>Grok</span>
+              <span class="category-pill-badge">0</span>
             </button>
-            <button type="button" class="category-pill-btn" data-cat="streaming_gaming" onclick="filterCategory('streaming_gaming', this)">
-              <span>Entertainment</span>
-              <span class="category-pill-badge" id="badgeEnt">0</span>
+            <button type="button" class="category-pill-btn" data-cat="Codex API" onclick="filterCategory('Codex API', this)">
+              <span>Codex API</span>
+              <span class="category-pill-badge">0</span>
             </button>
-            <button type="button" class="category-pill-btn" data-cat="security" onclick="filterCategory('security', this)">
-              <span>Security & VPN</span>
-              <span class="category-pill-badge" id="badgeSec">0</span>
+            <button type="button" class="category-pill-btn" data-cat="Claude" onclick="filterCategory('Claude', this)">
+              <span>Claude</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Kimi" onclick="filterCategory('Kimi', this)">
+              <span>Kimi</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Video AI" onclick="filterCategory('Video AI', this)">
+              <span>Video AI</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="ElevenLabs" onclick="filterCategory('ElevenLabs', this)">
+              <span>ElevenLabs</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="AI Tools" onclick="filterCategory('AI Tools', this)">
+              <span>AI Tools</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Qwen API" onclick="filterCategory('Qwen API', this)">
+              <span>Qwen API</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="DeepSeek API" onclick="filterCategory('DeepSeek API', this)">
+              <span>DeepSeek API</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Cursor API" onclick="filterCategory('Cursor API', this)">
+              <span>Cursor API</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Adobe" onclick="filterCategory('Adobe', this)">
+              <span>Adobe</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Autodesk" onclick="filterCategory('Autodesk', this)">
+              <span>Autodesk</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Design" onclick="filterCategory('Design', this)">
+              <span>Design</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Office" onclick="filterCategory('Office', this)">
+              <span>Office</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Education" onclick="filterCategory('Education', this)">
+              <span>Education</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Streaming" onclick="filterCategory('Streaming', this)">
+              <span>Streaming</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Music" onclick="filterCategory('Music', this)">
+              <span>Music</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="VPN" onclick="filterCategory('VPN', this)">
+              <span>VPN</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Security" onclick="filterCategory('Security', this)">
+              <span>Security</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Games" onclick="filterCategory('Games', this)">
+              <span>Games</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Social" onclick="filterCategory('Social', this)">
+              <span>Social</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Discord" onclick="filterCategory('Discord', this)">
+              <span>Discord</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Muse AI" onclick="filterCategory('Muse AI', this)">
+              <span>Muse AI</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="Lovable" onclick="filterCategory('Lovable', this)">
+              <span>Lovable</span>
+              <span class="category-pill-badge">0</span>
+            </button>
+            <button type="button" class="category-pill-btn" data-cat="CapCut" onclick="filterCategory('CapCut', this)">
+              <span>CapCut</span>
+              <span class="category-pill-badge">0</span>
             </button>
           </div>
         </div>
@@ -382,27 +470,61 @@
       return copy;
     }
 
-    // Update category counts
+    // Update category counts on capsule buttons
     function updateCategoryBadges() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
-      const allCount = source.length;
-      const aiCount = source.filter(p => p.category === 'ai').length;
-      const designCount = source.filter(p => p.category === 'design').length;
-      const prodCount = source.filter(p => p.category === 'learning' || p.category === 'productivity').length;
-      const entCount = source.filter(p => p.category === 'streaming' || p.category === 'gaming' || p.category === 'social').length;
-      const secCount = source.filter(p => p.category === 'security').length;
+      const bar = document.getElementById('categorySegmentedBar');
+      if (!bar) return;
 
-      const setBadge = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      };
+      const catCounts = {};
+      source.forEach(prod => {
+        const cat = (typeof getProductCategory === 'function' ? getProductCategory(prod) : (prod.botCategory || 'AI Tools')).toLowerCase();
+        catCounts[cat] = (catCounts[cat] || 0) + 1;
+      });
 
-      setBadge('badgeAll', allCount);
-      setBadge('badgeAi', aiCount);
-      setBadge('badgeDesign', designCount);
-      setBadge('badgeProd', prodCount);
-      setBadge('badgeEnt', entCount);
-      setBadge('badgeSec', secCount);
+      bar.querySelectorAll('.category-pill-btn').forEach(btn => {
+        const cat = (btn.getAttribute('data-cat') || '').toLowerCase();
+        const badge = btn.querySelector('.category-pill-badge');
+        if (!badge) return;
+        if (cat === 'all') {
+          badge.textContent = source.length;
+        } else {
+          badge.textContent = catCounts[cat] || 0;
+        }
+      });
+    }
+
+    // Highlight category in capsule bar, position sliding pill, and scroll active pill into view
+    function setActiveCategoryPill(cat) {
+      const bar = document.getElementById('categorySegmentedBar');
+      if (!bar) return;
+
+      const target = (cat || 'all').toLowerCase().trim();
+      let activeBtn = null;
+
+      bar.querySelectorAll('.category-pill-btn').forEach(btn => {
+        const btnCat = (btn.getAttribute('data-cat') || '').toLowerCase().trim();
+        const isMatch = (target === 'all') ? (btnCat === 'all') : (btnCat === target);
+        btn.classList.toggle('active', isMatch);
+        if (isMatch) activeBtn = btn;
+      });
+
+      if (!activeBtn) {
+        const allBtn = bar.querySelector('.category-pill-btn[data-cat="all"]');
+        if (allBtn) {
+          allBtn.classList.add('active');
+          activeBtn = allBtn;
+        }
+      }
+
+      requestAnimationFrame(() => {
+        if (typeof initSegmentedSlidingPill === 'function') {
+          initSegmentedSlidingPill(bar);
+        }
+        if (activeBtn) {
+          activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
     }
 
     // Go to product page
@@ -733,18 +855,8 @@
 
     function selectBrandOption(brandVal, label) {
       currentBrand = (brandVal === 'all') ? 'all' : (label || brandVal);
-      if (currentBrand !== 'all') {
-        currentCategory = 'all';
-        const bar = document.getElementById('categorySegmentedBar');
-        if (bar) {
-          bar.querySelectorAll('.category-pill-btn').forEach(b => {
-            b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
-          });
-          if (typeof initSegmentedSlidingPill === 'function') {
-            initSegmentedSlidingPill(bar);
-          }
-        }
-      }
+      currentCategory = 'all';
+      setActiveCategoryPill(currentBrand);
       currentPage = 1;
       updateActiveCategoryIndicator(currentBrand);
 
@@ -853,34 +965,28 @@
       document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
         item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
       });
+      setActiveCategoryPill('all');
       updateActiveCategoryIndicator('all');
       renderCatalog();
     }
 
-    // Filter by category tab
+    // Filter by category capsule pill
     function filterCategory(cat, btnElem) {
-      currentCategory = cat;
-      currentBrand = 'all';
-      const brandLabel = document.getElementById('brandDropdownLabel');
-      if (brandLabel) brandLabel.textContent = 'All Category';
-      const brandPrefix = document.getElementById('brandDropdownPrefix');
-      if (brandPrefix) brandPrefix.innerHTML = '🏷️';
-      const brandTrigger = document.getElementById('brandDropdownTrigger');
-      if (brandTrigger) brandTrigger.classList.remove('filter-active');
-      document.querySelectorAll('#brandDropdownMenu .apple-dropdown-item').forEach(item => {
-        item.classList.toggle('active', item.getAttribute('data-brand') === 'all');
-      });
+      currentBrand = (cat === 'all') ? 'all' : cat;
+      currentCategory = 'all';
       currentPage = 1;
-      const bar = document.getElementById('categorySegmentedBar');
-      if (bar) {
-        bar.querySelectorAll('.category-pill-btn').forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-cat') === cat);
-        });
-        if (typeof initSegmentedSlidingPill === 'function') {
-          initSegmentedSlidingPill(bar);
-        }
+
+      setActiveCategoryPill(currentBrand);
+      updateActiveCategoryIndicator(currentBrand);
+
+      const url = new URL(window.location);
+      if (currentBrand === 'all') {
+        url.searchParams.set('category', 'all');
+      } else {
+        url.searchParams.set('category', currentBrand);
       }
-      updateActiveCategoryIndicator(cat);
+      window.history.pushState({ category: currentBrand }, '', url.toString());
+
       renderCatalog();
     }
 
@@ -1110,15 +1216,7 @@
       if (selView) selView.style.display = 'none';
       if (prodView) prodView.style.display = 'block';
 
-      const bar = document.getElementById('categorySegmentedBar');
-      if (bar) {
-        bar.querySelectorAll('.category-pill-btn').forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
-        });
-        if (typeof initSegmentedSlidingPill === 'function') {
-          initSegmentedSlidingPill(bar);
-        }
-      }
+      setActiveCategoryPill(currentBrand);
 
       updateActiveCategoryIndicator(cat);
 
@@ -1205,6 +1303,19 @@
       }
     });
 
+    function applyCatalogData(data) {
+      if (!Array.isArray(data)) return;
+      window.CATALOG_PRODUCTS = data;
+      populateBrandDropdown();
+      renderCategoryCards();
+      updateCategoryBadges();
+      if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
+        setActiveCategoryPill(currentBrand);
+        renderCatalog();
+        updateActiveCategoryIndicator(currentBrand);
+      }
+    }
+
     // Initialize catalog on page load
     async function bootCatalog() {
       initCategorySearchListeners();
@@ -1233,37 +1344,12 @@
         if (res.ok) {
           const apiData = await res.json();
           if (apiData.success && Array.isArray(apiData.data)) {
-            window.CATALOG_PRODUCTS = apiData.data;
-            populateBrandDropdown();
-            renderCategoryCards();
-            updateCategoryBadges();
-            const bar = document.getElementById('categorySegmentedBar');
-            if (bar && typeof initSegmentedSlidingPill === 'function') {
-              initSegmentedSlidingPill(bar);
-            }
-            if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
-              renderCatalog();
-              updateActiveCategoryIndicator(currentBrand);
-            }
+            applyCatalogData(apiData.data);
           }
         } else {
           const fallbackRes = await fetch('/data/products.json').catch(() => null);
           if (fallbackRes && fallbackRes.ok) {
-            const fbData = await fallbackRes.json();
-            if (Array.isArray(fbData)) {
-              window.CATALOG_PRODUCTS = fbData;
-              populateBrandDropdown();
-              renderCategoryCards();
-              updateCategoryBadges();
-              const bar = document.getElementById('categorySegmentedBar');
-              if (bar && typeof initSegmentedSlidingPill === 'function') {
-                initSegmentedSlidingPill(bar);
-              }
-              if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
-                renderCatalog();
-                updateActiveCategoryIndicator(currentBrand);
-              }
-            }
+            applyCatalogData(await fallbackRes.json());
           }
         }
       } catch (err) {
@@ -1271,21 +1357,7 @@
         try {
           const fallbackRes = await fetch('/data/products.json');
           if (fallbackRes.ok) {
-            const fbData = await fallbackRes.json();
-            if (Array.isArray(fbData)) {
-              window.CATALOG_PRODUCTS = fbData;
-              populateBrandDropdown();
-              renderCategoryCards();
-              updateCategoryBadges();
-              const bar = document.getElementById('categorySegmentedBar');
-              if (bar && typeof initSegmentedSlidingPill === 'function') {
-                initSegmentedSlidingPill(bar);
-              }
-              if (document.getElementById('categoryProductsView')?.style.display !== 'none') {
-                renderCatalog();
-                updateActiveCategoryIndicator(currentBrand);
-              }
-            }
+            applyCatalogData(await fallbackRes.json());
           }
         } catch (e) {}
       } finally {

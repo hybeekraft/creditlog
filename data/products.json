@@ -54,7 +54,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 118,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.863Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.198Z",
     "overview": "🛡 HMA VPN 20-30 Days\n\n📦 You receive: activation key / account data\n\n📱 Works on Android and PC",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -63,7 +63,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 241,
+    "botProductId": 254,
     "botCategory": "VPN"
   },
   {
@@ -121,7 +121,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 69,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.875Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.208Z",
     "overview": "O365 ready account.\n\nReady account provided by the shop.\n\nRandom duration: 6-12 months.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -131,7 +131,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
     "botProductId": 205,
-    "botCategory": "Office"
+    "botCategory": "Music"
   },
   {
     "id": "microsoft-365-family-5u",
@@ -188,7 +188,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 167,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.875Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.208Z",
     "overview": "Shop-provided account.\n\nDo not change the password during the 12-month period, so automatic renewal can remain active.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -255,7 +255,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 62,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.867Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.201Z",
     "overview": "CapCut Pro 7 Days.\n\nRecommended login: 1-2 devices only. Frequent access/login problems are not covered. Avoid logging in on too many devices so CapCut does not flag the account.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -318,7 +318,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 131,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.857Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.190Z",
     "overview": "Lovable Pro Lite for 12 months with 300 credits.\n\n• No payment method required for activation\n\n• Redeem on your own account",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -327,7 +327,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 172,
+    "botProductId": 183,
     "botCategory": "Lovable",
     "retiredBySupplier": true
   },
@@ -386,7 +386,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 57,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.867Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.201Z",
     "overview": "Capcut Pro 1 Month Team Plan - Full Date - NO Renew - No warranty\n\n- Log in 2 Devices\n\n- Format: Mail | Password Capcut",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -395,7 +395,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty. Delivered as-is by upstream provider; guaranteed active upon initial delivery.",
     "hasSpecialRequirements": false,
-    "botProductId": 265,
+    "botProductId": 277,
     "botCategory": "CapCut"
   },
   {
@@ -453,7 +453,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 160,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.871Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.204Z",
     "overview": "Duolingo Super 12 Months\n\nFormat: redeem link for activation.\n\nActivate the subscription using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -462,7 +462,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ gpt-5.6-luna\n  🌍 gpt-5.6-terra\n  ☀️ gpt-5.6-sol\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16cKyUu_8Ij",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 107,
+    "botProductId": 112,
     "botCategory": "Education"
   },
   {
@@ -520,7 +520,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 164,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.872Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.204Z",
     "overview": "Duolingo Super 2 Months\n\nFormat: redeem link for activation.\n\nActivate the subscription using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -585,7 +585,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 49,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.875Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.208Z",
     "overview": "• Payment method required for activation\n\n• 300 Notion Credits per Month\n\n• Must be redeemed within 48 hours of purchase",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -594,7 +594,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 201,
+    "botProductId": 213,
     "botCategory": "Office"
   },
   {
@@ -652,7 +652,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 76,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.872Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.205Z",
     "overview": "Scribd Premium for 1 month.\n\nLog in directly.\n\nBecause this is based on a trial version, downloads may be limited. Please read carefully before purchase.",
     "deliveryFormat": "account and password.",
     "deliveryType": "auto",
@@ -661,7 +661,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty is provided.",
     "hasSpecialRequirements": false,
-    "botProductId": 288,
+    "botProductId": 232,
     "botCategory": "Office"
   },
   {
@@ -719,7 +719,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 108,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.863Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.199Z",
     "overview": "🔻 Full access to all iLovePDF tools\n\n🔻 Unlimited document processing\n\n🔻 Access across Web, Mobile, and Desktop",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -728,7 +728,7 @@
     "instructions": "1. Open the ChatGPT website or app.\n2. Enter the provided email and password.\n3. When ChatGPT asks for the 2FA code, open https://2fa.live/.\n4. Enter the provided 2FA key and generate the current 6-digit code.\n5. Enter the code in ChatGPT. The code changes every 30 seconds.",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 214,
+    "botProductId": 225,
     "botCategory": "Office"
   },
   {
@@ -786,7 +786,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 124,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.864Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.199Z",
     "overview": "Wordwall is a versatile tool that helps transform dry assignments into engaging interactive games like lucky spins or crossword puzzles.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -795,7 +795,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 207,
+    "botProductId": 218,
     "botCategory": "Office"
   },
   {
@@ -853,7 +853,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 123,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.864Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.199Z",
     "overview": "Figma Pro Education Plan 2 year\n\nVery stable accounts\n\nFormat, email | password",
     "deliveryFormat": "Email | Password | 2FA",
     "deliveryType": "auto",
@@ -862,7 +862,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 85,
+    "botProductId": 89,
     "botCategory": "Design"
   },
   {
@@ -920,7 +920,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 162,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.878Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.212Z",
     "overview": "Pocket FM Premium 3 Months\n\nFormat: redeem link for activation.\n\nActivate Pocket FM Premium using the received link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -929,7 +929,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 188,
+    "botProductId": 200,
     "botCategory": "Music"
   },
   {
@@ -987,16 +987,16 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 87,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.869Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.201Z",
     "overview": "Capcut pro 1 month",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
+    "importantRequirements": "Compatible with official apps across Windows, macOS, Android, iOS, and Linux. Maximum concurrent devices depend on the vendor plan.",
+    "requirements": "Compatible with official apps across Windows, macOS, Android, iOS, and Linux. Maximum concurrent devices depend on the vendor plan.",
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 255,
+    "botProductId": 268,
     "botCategory": "CapCut"
   },
   {
@@ -1054,7 +1054,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 91,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.846Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.183Z",
     "overview": "🔑 API CLAUDE - 10M Token - 1 day\n\n⚡ Seamlessly compatible with all tools & IDEs: 9router, Claude Dev, Cursor, VS Code, etc.\n\n⏳ Validity: 1 Day",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -1063,7 +1063,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ claude-opus-4.6\n  ⚡ claude-opus-4.7\n  ⚡ claude-opus-4.8\n  👑 claude-opus-5\n  🚀 claude-sonnet-5\n\n📊 Check quota balance & expiry date:\nhttps://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide:\nhttps://docs.google.com/document/d/16smXXteTwJYdrxTfd",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 50,
+    "botProductId": 53,
     "botCategory": "Claude"
   },
   {
@@ -1121,7 +1121,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 55,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.845Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.183Z",
     "overview": "Redeem code for Claude API credits.\n\nAccess via API Gateway:\n\n• Sign up at https://api.mwapi.dev/",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -1130,7 +1130,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 43,
+    "botProductId": 46,
     "botCategory": "Claude"
   },
   {
@@ -1188,7 +1188,7 @@
     "appliedMultiplier": 3.2,
     "pricingRule": "Product Custom (1)",
     "resellerProductId": 1,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.845Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.182Z",
     "overview": "🔥 Gemini Pro 18 Months\n\nDelivery: activation link.\n\nPlease check and activate the link immediately after purchase.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1197,7 +1197,7 @@
     "instructions": "",
     "warrantyPolicy": "replacement or refund is provided later.",
     "hasSpecialRequirements": true,
-    "botProductId": 283,
+    "botProductId": 146,
     "botCategory": "Gemini"
   },
   {
@@ -1255,7 +1255,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 73,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.845Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.183Z",
     "overview": "Kling 66 Credits.\n\nIf you do not change/fake IP, the account may show busy/error and this is not covered.\n\nLogin using an incognito/private browser window.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -1320,7 +1320,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 149,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.864Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.199Z",
     "overview": "ElevenLabs Free account with 10k credits.\n\nFor text-to-speech, AI voiceovers, content creation, YouTube, podcasts, and audio projects.\n\nDelivery is automatic after payment confirmation.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
@@ -1329,7 +1329,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 122,
+    "botProductId": 127,
     "botCategory": "ElevenLabs"
   },
   {
@@ -1387,7 +1387,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 169,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.859Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.193Z",
     "overview": "customer.io essentials 1year",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1454,7 +1454,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 172,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.876Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.209Z",
     "overview": "⚡ Duration: 12 Month\n\n⚡ Official Coupon Code\n\n⚡ On Your Account",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -1520,7 +1520,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 176,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.869Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.202Z",
     "overview": "- Coupon with activation process.\n\n- Go to Plan & Billing under Workspace Settings (click Workspace in the upper left corner). Under \"Configure your plan\", you can use the + button to set seats to 10. You can also add teammates later; note that the deal term begins upon checkout, not when teammates are added. Toggle the billing switch to Billed Yearly. Click Proceed to checkout\n\n- Apply the promo code at checkout with the \"add promotion code\" button (note: a form of payment is required to complete redemption)",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1587,7 +1587,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 177,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.873Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.205Z",
     "overview": "🚀 Autodesk Admin Panel | 3,000 User Invites\n\n📌 Package Details\n\n🔹 Autodesk Admin Dashboard Access",
     "deliveryFormat": "\"Email | Gmail Password | Gmail Recovery\"",
     "deliveryType": "auto",
@@ -1654,7 +1654,7 @@
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
     "resellerProductId": 34,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.866Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.200Z",
     "overview": "CapCut Pro for 6-7 days.\n\nFormat: mail | password.\n\nAutomatic delivery after payment confirmation.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1664,7 +1664,7 @@
     "importantRequirements": "that video creation is not yet available!\n\n⚡ Use the key immediately: enter the API key directly following the instructions, no code change or website activation needed.\n\n📊 Actively check the usage level of your key at: https://vibi.top/docs-setup/vi/usage\n\n🎯 This package is specifically for Grok, suitable if you want to focus on experiencing xAI's models.\n\n📖 User guide: https://vibi.top/docs-setup/vi",
     "requirements": "that video creation is not yet available!\n\n⚡ Use the key immediately: enter the API key directly following the instructions, no code change or website activation needed.\n\n📊 Actively check the usage level of your key at: https://vibi.top/docs-setup/vi/usage\n\n🎯 This package is specifically for Grok, suitable if you want to focus on experiencing xAI's models.\n\n📖 User guide: https://vibi.top/docs-setup/vi",
     "instructions": "",
-    "botProductId": 263
+    "botProductId": 273
   },
   {
     "id": "proton-vpn-plus-1m",
@@ -1681,7 +1681,7 @@
     "reviews": "1.8k",
     "brandClass": "tile-proton",
     "iconType": "proton",
-    "description": "🛡️ Proton VPN Plus – 1 Month (Private Account)\n\n✅ Private account with full access\n✅ Premium subscription for 1 month\n✅ High-speed servers in 140+ countries\n✅ Supports streaming & gaming\n✅ Secure Core & Kill Switch\n✅ No-logs policy & strong encryption\n✅ Works on Windows, Android, iPhone, macOS & more\n✅ Fast delivery after payment\n\nNo warranty.",
+    "description": "🔑 API CLAUDE - 50M Token - 2 days\n\n⚡ Seamlessly compatible with all tools & IDEs: 9router, Claude Dev, Cursor, VS Code, etc.\n⏳ Validity: 2 Days\n\n📋 Quick Setup Instructions:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ claude-opus-4.6\n  ⚡ claude-opus-4.7\n  ⚡ claude-opus-4.8\n  👑 claude-opus-5\n  🚀 claude-sonnet-5\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16smXXteTwJYdrxTfdZlJvOkSEFkVL_6UBxoXcXZH6Gc/edit?tab=t.tbg84q5rs9yi\n\n⚠️ Important Notice: The validity period only starts counting once the redeem code is activated. You can store or resell the code for up to 30 days.\n\nNo warranty.",
     "totalStock": 0,
     "reservedStock": 0,
     "availableStock": 0,
@@ -1721,9 +1721,9 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 119,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.884Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "overview": "🛡️ Proton VPN Plus – 1 Month (Private Account)\n\n✅ Private account with full access\n\n✅ Premium subscription for 1 month",
-    "deliveryFormat": "Direct Account Access",
+    "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
     "importantRequirements": "Compatible with official apps across Windows, macOS, Android, iOS, and Linux. Maximum concurrent devices depend on the vendor plan.",
     "requirements": "Compatible with official apps across Windows, macOS, Android, iOS, and Linux. Maximum concurrent devices depend on the vendor plan.",
@@ -1731,7 +1731,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
     "botProductId": 58,
-    "botCategory": "Codex API"
+    "botCategory": "Claude"
   },
   {
     "id": "klingai-750-1100-credits-1m",
@@ -1748,7 +1748,7 @@
     "reviews": "410",
     "brandClass": "tile-kling",
     "iconType": "kling",
-    "description": "CapCut Pro Team for 1 month, with 1200 AI credits.\n\nFormat: email | CapCut password.\nNo renewal.\nLogin limit: 1 mobile phone and 1 laptop. Avoid excessive login attempts or additional devices.\n\nNo warranty.",
+    "description": "KlingAI account for 1 month with a random balance of 750-1100 credits.\n\nA tool for generating AI videos from your ideas.\n\nNo warranty is provided.",
     "totalStock": 0,
     "reservedStock": 0,
     "availableStock": 0,
@@ -1788,17 +1788,17 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "resellerProductId": 166,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.859Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.193Z",
     "overview": "KlingAI account for 1 month with a random balance of 750-1100 credits.\n\nA tool for generating AI videos from your ideas.",
     "deliveryFormat": "API Key / Token Secret",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
+    "importantRequirements": "The instructions below are required only if the issued account asks for an email verification code.\n\nLog in with the provided email address. You can get the verification code at:",
+    "requirements": "The instructions below are required only if the issued account asks for an email verification code.\n\nLog in with the provided email address. You can get the verification code at:",
     "instructions": "",
     "warrantyPolicy": "No warranty is provided.",
     "hasSpecialRequirements": false,
     "botProductId": 266,
-    "botCategory": "Video AI"
+    "botCategory": "VPN"
   },
   {
     "id": "spotify-premium-3m-soldout",
@@ -1855,7 +1855,7 @@
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
     "resellerProductId": 163,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.878Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.214Z",
     "overview": "Spotify Premium 3M\n\nBuy only if you are sure you can activate. You need to know the right way and have the right payment method to activate. Don't spam that you are unable to activate after buying.\n\nActivate 3 Months of Spotify Premium directly on your own eligible Spotify account using the provided redeem/activation link.",
     "deliveryFormat": "Activation / Invitation Link",
     "deliveryType": "auto",
@@ -1920,7 +1920,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "resellerProductId": 82,
-    "lastSynchronizedAt": "2026-11-21T18:20:05.877Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.211Z",
     "overview": "Amazon Prime Video – 6 Months\n\nEnjoy 6 months of Amazon Prime Video and stream thousands of popular movies, TV shows, Amazon Originals, and exclusive content.\n\nFeatures:",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
@@ -1952,7 +1952,7 @@
     "resellerProductId": 257,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.839Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.177Z",
     "variants": [
       {
         "id": "1m",
@@ -1974,7 +1974,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 218,
+    "botProductId": 230,
     "botCategory": "Qwen API"
   },
   {
@@ -2001,7 +2001,7 @@
     "resellerProductId": 106,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.840Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.178Z",
     "variants": [
       {
         "id": "1m",
@@ -2050,7 +2050,7 @@
     "resellerProductId": 19,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.841Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.179Z",
     "variants": [
       {
         "id": "1m",
@@ -2072,7 +2072,7 @@
     "instructions": "1. Open the ChatGPT website or app.\n2. Enter the provided email and password.\n3. When ChatGPT asks for the 2FA code, open https://2fa.live/.\n4. Enter the provided 2FA key and generate the current 6-digit code.\n5. Enter the code in ChatGPT. The code changes every 30 seconds.",
     "warrantyPolicy": "No warranty. Buy at your own risk.",
     "hasSpecialRequirements": true,
-    "botProductId": 36,
+    "botProductId": 39,
     "botCategory": "ChatGPT"
   },
   {
@@ -2099,7 +2099,7 @@
     "resellerProductId": 63,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.841Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.179Z",
     "variants": [
       {
         "id": "1m",
@@ -2121,7 +2121,7 @@
     "instructions": "1. Open the ChatGPT website or app.\n2. Enter the email and password.\n3. When ChatGPT asks for the two-factor authentication code, use the 2FA key in Google Authenticator, any 2FA code generator, or a 2FA website. Example website: https://2fa.online/\n4. Copy the current 6-digit code and enter it in ChatGPT. The code refreshes every 30 seconds.",
     "warrantyPolicy": "No warranty. The product is provided as-is.",
     "hasSpecialRequirements": true,
-    "botProductId": 32,
+    "botProductId": 35,
     "botCategory": "ChatGPT"
   },
   {
@@ -2148,7 +2148,7 @@
     "resellerProductId": 115,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.842Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.179Z",
     "variants": [
       {
         "id": "1m",
@@ -2171,7 +2171,7 @@
     "warrantyPolicy": "No warranty. The product is provided as-is.",
     "hasSpecialRequirements": true,
     "botCategory": "ChatGPT",
-    "botProductId": 35
+    "botProductId": 38
   },
   {
     "id": "sp_111_chatgpt-plus-1m-gpay",
@@ -2197,7 +2197,7 @@
     "resellerProductId": 111,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.842Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.180Z",
     "variants": [
       {
         "id": "1m",
@@ -2245,7 +2245,7 @@
     "resellerProductId": 296,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.842Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.180Z",
     "variants": [
       {
         "id": "1m",
@@ -2267,7 +2267,7 @@
     "instructions": "1. Open the ChatGPT website or app.\n2. Enter the email and password.\n3. When ChatGPT asks for the two-factor authentication code, use the 2FA key in Google Authenticator, any 2FA code generator, or a 2FA website. Example website: https://2fa.online/\n4. Copy the current 6-digit code and enter it in ChatGPT. The code refreshes every 30 seconds.\n\nFOR ACCOUNTS WITHOUT 2FA:\nImmediately after purchase, set up your own 2FA for private use and save the 2FA key.\nThe provided mailbox may stop working. If a verification code is sent to it, the shop may be unable to retrieve the code.",
     "warrantyPolicy": "No warranty. The product is provided as-is.",
     "hasSpecialRequirements": true,
-    "botProductId": 30,
+    "botProductId": 32,
     "botCategory": "ChatGPT"
   },
   {
@@ -2294,7 +2294,7 @@
     "resellerProductId": 159,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.842Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.180Z",
     "variants": [
       {
         "id": "1m",
@@ -2343,7 +2343,7 @@
     "resellerProductId": 281,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.843Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.181Z",
     "variants": [
       {
         "id": "1m",
@@ -2365,7 +2365,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ gpt-5.6-luna\n  🌍 gpt-5.6-terra\n  ☀️ gpt-5.6-sol\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16cKyUu_8Ij",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 68,
+    "botProductId": 71,
     "botCategory": "Codex API"
   },
   {
@@ -2392,7 +2392,7 @@
     "resellerProductId": 285,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.834Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.174Z",
     "variants": [
       {
         "id": "1m",
@@ -2414,7 +2414,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 57,
+    "botProductId": 60,
     "botCategory": "Codex API"
   },
   {
@@ -2441,7 +2441,7 @@
     "resellerProductId": 282,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.843Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.181Z",
     "variants": [
       {
         "id": "1m",
@@ -2463,7 +2463,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ gpt-5.6-luna\n  🌍 gpt-5.6-terra\n  ☀️ gpt-5.6-sol\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16cKyUu_8Ij",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 72,
+    "botProductId": 75,
     "botCategory": "Codex API"
   },
   {
@@ -2490,7 +2490,7 @@
     "resellerProductId": 286,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.843Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.181Z",
     "variants": [
       {
         "id": "1m",
@@ -2512,7 +2512,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 61,
+    "botProductId": 64,
     "botCategory": "Codex API"
   },
   {
@@ -2539,7 +2539,7 @@
     "resellerProductId": 283,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.844Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.181Z",
     "variants": [
       {
         "id": "1m",
@@ -2561,7 +2561,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ gpt-5.6-luna\n  🌍 gpt-5.6-terra\n  ☀️ gpt-5.6-sol\n  💫 gpt-6-astra\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16cKyUu_8Ij",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 66,
+    "botProductId": 69,
     "botCategory": "Codex API"
   },
   {
@@ -2588,7 +2588,7 @@
     "resellerProductId": 287,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.844Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.182Z",
     "variants": [
       {
         "id": "1m",
@@ -2610,7 +2610,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 63,
+    "botProductId": 66,
     "botCategory": "Codex API"
   },
   {
@@ -2637,7 +2637,7 @@
     "resellerProductId": 140,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.844Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.182Z",
     "variants": [
       {
         "id": "1m",
@@ -2660,7 +2660,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
     "botCategory": "ChatGPT",
-    "botProductId": 27
+    "botProductId": 29
   },
   {
     "id": "sp_112_super-grok-7-days",
@@ -2686,7 +2686,7 @@
     "resellerProductId": 112,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.846Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.184Z",
     "variants": [
       {
         "id": "1m",
@@ -2733,7 +2733,7 @@
     "resellerProductId": 256,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.847Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.184Z",
     "variants": [
       {
         "id": "1m",
@@ -2755,7 +2755,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 216,
+    "botProductId": 228,
     "botCategory": "Qwen API"
   },
   {
@@ -2782,7 +2782,7 @@
     "resellerProductId": 284,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.847Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.184Z",
     "variants": [
       {
         "id": "1m",
@@ -2804,7 +2804,7 @@
     "instructions": "s:\n🔹 Step 1: Visit 👉 https://miraiapi.com/usage/#redeem to redeem your code (Enter the code provided in your order details).\n🔹 Step 2: Visit 👉 https://miraiapi.com/usage/#config to configure your API Key, select your target App, and choose the ideal Model.\n✨ All done & Ready to code!\n\n🌐 Base URL: https://api.miraiapi.com/v1\n🔑 API Key: sk-...\n🤖 Available Models:\n  ⚡ claude-opus-4.6\n  ⚡ claude-opus-4.7\n  ⚡ claude-opus-4.8\n  👑 claude-opus-5\n  🚀 claude-sonnet-5\n📊 Check quota balance & expiry date at: 🔗 https://miraiapi.com/usage/\n\n📖 Detailed Documentation & Guide: 🔗 https://docs.google.com/document/d/16smXXteTwJYdrxTfd",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 49,
+    "botProductId": 52,
     "botCategory": "Claude"
   },
   {
@@ -2831,7 +2831,7 @@
     "resellerProductId": 288,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.848Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.185Z",
     "variants": [
       {
         "id": "1m",
@@ -2853,7 +2853,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 151,
+    "botProductId": 162,
     "botCategory": "Grok"
   },
   {
@@ -2880,7 +2880,7 @@
     "resellerProductId": 292,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.848Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.185Z",
     "variants": [
       {
         "id": "1m",
@@ -2902,7 +2902,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 123,
+    "botProductId": 128,
     "botCategory": "ElevenLabs"
   },
   {
@@ -2929,7 +2929,7 @@
     "resellerProductId": 297,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.849Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.186Z",
     "variants": [
       {
         "id": "1m",
@@ -2951,7 +2951,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 110,
+    "botProductId": 115,
     "botCategory": "Education"
   },
   {
@@ -2978,7 +2978,7 @@
     "resellerProductId": 298,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.849Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.186Z",
     "variants": [
       {
         "id": "1m",
@@ -3023,7 +3023,7 @@
     "resellerProductId": 299,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.853Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.187Z",
     "variants": [
       {
         "id": "1m",
@@ -3071,7 +3071,7 @@
     "resellerProductId": 306,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.854Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.187Z",
     "variants": [
       {
         "id": "1m",
@@ -3116,7 +3116,7 @@
     "resellerProductId": 312,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.854Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.187Z",
     "variants": [
       {
         "id": "1m",
@@ -3165,7 +3165,7 @@
     "resellerProductId": 313,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.854Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.187Z",
     "variants": [
       {
         "id": "1m",
@@ -3212,7 +3212,7 @@
     "resellerProductId": 344,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.855Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.188Z",
     "variants": [
       {
         "id": "1m",
@@ -3261,7 +3261,7 @@
     "resellerProductId": 345,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.855Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.188Z",
     "variants": [
       {
         "id": "1m",
@@ -3310,7 +3310,7 @@
     "resellerProductId": 346,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.855Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.188Z",
     "variants": [
       {
         "id": "1m",
@@ -3355,7 +3355,7 @@
     "resellerProductId": 347,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.855Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.189Z",
     "variants": [
       {
         "id": "1m",
@@ -3400,7 +3400,7 @@
     "resellerProductId": 349,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.856Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.189Z",
     "variants": [
       {
         "id": "1m",
@@ -3445,7 +3445,7 @@
     "resellerProductId": 374,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.856Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.189Z",
     "variants": [
       {
         "id": "1m",
@@ -3494,7 +3494,7 @@
     "resellerProductId": 249,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.856Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.189Z",
     "variants": [
       {
         "id": "1m",
@@ -3516,7 +3516,7 @@
     "instructions": "s.\n4. If you see a region restriction or mismatch error, connect to an Indian VPN and try again.",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 45,
+    "botProductId": 48,
     "botCategory": "Claude"
   },
   {
@@ -3543,7 +3543,7 @@
     "resellerProductId": 279,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.856Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.190Z",
     "variants": [
       {
         "id": "1m",
@@ -3592,7 +3592,7 @@
     "resellerProductId": 289,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.856Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.190Z",
     "variants": [
       {
         "id": "1m",
@@ -3614,7 +3614,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 153,
+    "botProductId": 164,
     "botCategory": "Grok"
   },
   {
@@ -3641,7 +3641,7 @@
     "resellerProductId": 362,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.857Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.190Z",
     "variants": [
       {
         "id": "1m",
@@ -3663,7 +3663,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 173,
+    "botProductId": 184,
     "botCategory": "Lovable"
   },
   {
@@ -3690,7 +3690,7 @@
     "resellerProductId": 258,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.857Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.190Z",
     "variants": [
       {
         "id": "1m",
@@ -3712,7 +3712,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 219,
+    "botProductId": 231,
     "botCategory": "Qwen API"
   },
   {
@@ -3739,7 +3739,7 @@
     "resellerProductId": 290,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.857Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.191Z",
     "variants": [
       {
         "id": "1m",
@@ -3761,7 +3761,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 154,
+    "botProductId": 165,
     "botCategory": "Grok"
   },
   {
@@ -3788,7 +3788,7 @@
     "resellerProductId": 259,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.858Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.191Z",
     "variants": [
       {
         "id": "1m",
@@ -3810,7 +3810,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 217,
+    "botProductId": 229,
     "botCategory": "Qwen API"
   },
   {
@@ -3837,7 +3837,7 @@
     "resellerProductId": 291,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.858Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.191Z",
     "variants": [
       {
         "id": "1m",
@@ -3859,7 +3859,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 152,
+    "botProductId": 163,
     "botCategory": "Grok"
   },
   {
@@ -3886,7 +3886,7 @@
     "resellerProductId": 361,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.858Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.191Z",
     "variants": [
       {
         "id": "1m",
@@ -3935,7 +3935,7 @@
     "resellerProductId": 240,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.858Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.192Z",
     "variants": [
       {
         "id": "1m",
@@ -3984,7 +3984,7 @@
     "resellerProductId": 359,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.858Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.192Z",
     "variants": [
       {
         "id": "1m",
@@ -4033,7 +4033,7 @@
     "resellerProductId": 187,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.859Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.193Z",
     "variants": [
       {
         "id": "1m",
@@ -4082,7 +4082,7 @@
     "resellerProductId": 189,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.859Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.194Z",
     "variants": [
       {
         "id": "1m",
@@ -4127,7 +4127,7 @@
     "resellerProductId": 202,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.859Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.194Z",
     "variants": [
       {
         "id": "1m",
@@ -4172,7 +4172,7 @@
     "resellerProductId": 203,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.860Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.194Z",
     "variants": [
       {
         "id": "1m",
@@ -4221,7 +4221,7 @@
     "resellerProductId": 206,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.860Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.195Z",
     "variants": [
       {
         "id": "1m",
@@ -4270,7 +4270,7 @@
     "resellerProductId": 216,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.860Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.195Z",
     "variants": [
       {
         "id": "1m",
@@ -4319,7 +4319,7 @@
     "resellerProductId": 217,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.860Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.195Z",
     "variants": [
       {
         "id": "1m",
@@ -4368,7 +4368,7 @@
     "resellerProductId": 230,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.860Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.195Z",
     "variants": [
       {
         "id": "1m",
@@ -4413,7 +4413,7 @@
     "resellerProductId": 231,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.861Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.196Z",
     "variants": [
       {
         "id": "1m",
@@ -4458,7 +4458,7 @@
     "resellerProductId": 246,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.861Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.196Z",
     "variants": [
       {
         "id": "1m",
@@ -4507,7 +4507,7 @@
     "resellerProductId": 332,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.861Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.197Z",
     "variants": [
       {
         "id": "1m",
@@ -4529,7 +4529,7 @@
     "instructions": "S\n1. Open the ChatGPT website or app.\n2. Enter the email and password.\n3. When ChatGPT asks for the two-factor authentication code, use the 2FA key in Google Authenticator, any 2FA code generator, or a 2FA website. Example: https://2fa.online/\n4. Copy the current 6-digit code and enter it in ChatGPT. The code refreshes every 30 seconds.",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 286,
+    "botProductId": 147,
     "botCategory": "Gemini"
   },
   {
@@ -4556,7 +4556,7 @@
     "resellerProductId": 360,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.862Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.197Z",
     "variants": [
       {
         "id": "1m",
@@ -4601,7 +4601,7 @@
     "resellerProductId": 366,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.862Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.197Z",
     "variants": [
       {
         "id": "1m",
@@ -4623,7 +4623,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 121,
+    "botProductId": 126,
     "botCategory": "ElevenLabs"
   },
   {
@@ -4650,7 +4650,7 @@
     "resellerProductId": 371,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.862Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.198Z",
     "variants": [
       {
         "id": "1m",
@@ -4697,7 +4697,7 @@
     "resellerProductId": 372,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.862Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.198Z",
     "variants": [
       {
         "id": "1m",
@@ -4744,7 +4744,7 @@
     "resellerProductId": 255,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.863Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.198Z",
     "variants": [
       {
         "id": "1m",
@@ -4789,7 +4789,7 @@
     "resellerProductId": 251,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.865Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.199Z",
     "variants": [
       {
         "id": "1m",
@@ -4812,7 +4812,7 @@
     "hasSpecialRequirements": true,
     "botCategory": "VPN",
     "instructions": "",
-    "botProductId": 249
+    "botProductId": 262
   },
   {
     "id": "sp_363_airtable-team-12-months",
@@ -4838,7 +4838,7 @@
     "resellerProductId": 363,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.865Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.200Z",
     "variants": [
       {
         "id": "1m",
@@ -4887,7 +4887,7 @@
     "resellerProductId": 357,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.866Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.200Z",
     "variants": [
       {
         "id": "1m",
@@ -4909,7 +4909,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 264,
+    "botProductId": 276,
     "botCategory": "CapCut"
   },
   {
@@ -4936,7 +4936,7 @@
     "resellerProductId": 233,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.868Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.201Z",
     "variants": [
       {
         "id": "1m",
@@ -4985,7 +4985,7 @@
     "resellerProductId": 198,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.870Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.202Z",
     "variants": [
       {
         "id": "1m",
@@ -5008,7 +5008,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
     "botProductId": 74,
-    "botCategory": "Cursor API"
+    "botCategory": "Codex API"
   },
   {
     "id": "sp_273_autodesk-all-apps-3y",
@@ -5034,7 +5034,7 @@
     "resellerProductId": 273,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.870Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.203Z",
     "variants": [
       {
         "id": "1m",
@@ -5079,7 +5079,7 @@
     "resellerProductId": 365,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.871Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.203Z",
     "variants": [
       {
         "id": "1m",
@@ -5126,7 +5126,7 @@
     "resellerProductId": 339,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.871Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.204Z",
     "variants": [
       {
         "id": "1m",
@@ -5175,7 +5175,7 @@
     "resellerProductId": 5,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.872Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.205Z",
     "variants": [
       {
         "id": "1m",
@@ -5224,7 +5224,7 @@
     "resellerProductId": 215,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.873Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.206Z",
     "variants": [
       {
         "id": "1m",
@@ -5241,13 +5241,13 @@
     "overview": "Wordwall is a versatile tool that helps turn dry exercises into lively interactive games such as lucky wheels and crossword puzzles.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
-    "instructions": "",
+    "importantRequirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
+    "requirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
+    "instructions": "and set up the product: https://drive.google.com/drive/folders/1LScY31qYmg3ujYd0EIflbK",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
     "botProductId": 78,
-    "botCategory": "Education"
+    "botCategory": "Cursor API"
   },
   {
     "id": "sp_221_quizlet-plus-ultimate-12m",
@@ -5273,7 +5273,7 @@
     "resellerProductId": 221,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.873Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.206Z",
     "variants": [
       {
         "id": "1m",
@@ -5290,13 +5290,13 @@
     "overview": "Quizlet helps you learn vocabulary, memorize knowledge, and review more effectively through flashcards, quizzes, and smart study modes. It is suitable for students, learners, and anyone studying foreign languages, preparing for exams, or quickly memorizing information.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
+    "importantRequirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
+    "requirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
     "botProductId": 79,
-    "botCategory": "Education"
+    "botCategory": "DeepSeek API"
   },
   {
     "id": "sp_222_quizlet-plus-12m",
@@ -5322,7 +5322,7 @@
     "resellerProductId": 222,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.874Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.206Z",
     "variants": [
       {
         "id": "1m",
@@ -5339,13 +5339,13 @@
     "overview": "Quizlet helps you learn vocabulary, memorize knowledge, and review more effectively through flashcards, quizzes, and smart study modes. It is suitable for students, learners, and anyone studying foreign languages, preparing for exams, or quickly memorizing information.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
+    "importantRequirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
+    "requirements": "API key must be kept confidential. Never commit keys to public repositories or expose in client-side code. Rate limits and quota allowances apply per model.",
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
     "botProductId": 80,
-    "botCategory": "Education"
+    "botCategory": "DeepSeek API"
   },
   {
     "id": "sp_46_gmail-account-new",
@@ -5371,7 +5371,7 @@
     "resellerProductId": 46,
     "appliedMultiplier": 3.5,
     "pricingRule": "Sub-Dollar ($0.00 – $0.99)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.874Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.207Z",
     "variants": [
       {
         "id": "1m",
@@ -5416,7 +5416,7 @@
     "resellerProductId": 328,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.874Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.207Z",
     "variants": [
       {
         "id": "1m",
@@ -5461,7 +5461,7 @@
     "resellerProductId": 329,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.874Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.207Z",
     "variants": [
       {
         "id": "1m",
@@ -5478,12 +5478,12 @@
     "overview": "Zoom Pro 28D\n\nInstant delivery after payment.\n\nA ready-made account is provided.",
     "deliveryFormat": "Direct Account Access",
     "deliveryType": "auto",
-    "importantRequirements": "",
-    "requirements": "",
+    "importantRequirements": "requirements\n• Retail versions are not supported.\n• If the Retail version is currently installed, uninstall it before activation.\n• Install the MAK or LTSC version before using the product key.\n\nOffice 2024 Professional Plus LTSC download:",
+    "requirements": "requirements\n• Retail versions are not supported.\n• If the Retail version is currently installed, uninstall it before activation.\n• Install the MAK or LTSC version before using the product key.\n\nOffice 2024 Professional Plus LTSC download:",
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 211,
+    "botProductId": 222,
     "botCategory": "Office"
   },
   {
@@ -5510,7 +5510,7 @@
     "resellerProductId": 334,
     "appliedMultiplier": 1.35,
     "pricingRule": "Upper ($15.01 – $40.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.876Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.209Z",
     "variants": [
       {
         "id": "1m",
@@ -5557,7 +5557,7 @@
     "resellerProductId": 278,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.876Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.210Z",
     "variants": [
       {
         "id": "1m",
@@ -5580,7 +5580,7 @@
     "hasSpecialRequirements": true,
     "botCategory": "Streaming",
     "instructions": "",
-    "botProductId": 229
+    "botProductId": 242
   },
   {
     "id": "sp_56_admin-netflix-4k-1m",
@@ -5606,7 +5606,7 @@
     "resellerProductId": 56,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.877Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.211Z",
     "variants": [
       {
         "id": "1m",
@@ -5651,7 +5651,7 @@
     "resellerProductId": 48,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.877Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.211Z",
     "variants": [
       {
         "id": "1m",
@@ -5696,7 +5696,7 @@
     "resellerProductId": 245,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.878Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.212Z",
     "variants": [
       {
         "id": "1m",
@@ -5718,7 +5718,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 231,
+    "botProductId": 244,
     "botCategory": "Streaming"
   },
   {
@@ -5745,7 +5745,7 @@
     "resellerProductId": 358,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.879Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "variants": [
       {
         "id": "1m",
@@ -5767,7 +5767,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 187,
+    "botProductId": 199,
     "botCategory": "Music"
   },
   {
@@ -5794,7 +5794,7 @@
     "resellerProductId": 350,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.883Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "variants": [
       {
         "id": "1m",
@@ -5843,7 +5843,7 @@
     "resellerProductId": 210,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.884Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "variants": [
       {
         "id": "1m",
@@ -5865,7 +5865,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": false,
-    "botProductId": 240,
+    "botProductId": 253,
     "botCategory": "VPN"
   },
   {
@@ -5892,7 +5892,7 @@
     "resellerProductId": 212,
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.884Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "variants": [
       {
         "id": "1m",
@@ -5915,7 +5915,7 @@
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
     "botProductId": 101,
-    "botCategory": "VPN"
+    "botCategory": "Design"
   },
   {
     "id": "sp_268_adguard-vpn-7d",
@@ -5941,7 +5941,7 @@
     "resellerProductId": 268,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.885Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.215Z",
     "variants": [
       {
         "id": "1m",
@@ -5990,7 +5990,7 @@
     "resellerProductId": 269,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.885Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.216Z",
     "variants": [
       {
         "id": "1m",
@@ -6012,7 +6012,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 254,
+    "botProductId": 267,
     "botCategory": "VPN"
   },
   {
@@ -6039,7 +6039,7 @@
     "resellerProductId": 270,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.885Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.216Z",
     "variants": [
       {
         "id": "1m",
@@ -6088,7 +6088,7 @@
     "resellerProductId": 271,
     "appliedMultiplier": 2,
     "pricingRule": "Micro ($1.00 – $2.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.886Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.216Z",
     "variants": [
       {
         "id": "1m",
@@ -6137,7 +6137,7 @@
     "resellerProductId": 38,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.886Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.216Z",
     "variants": [
       {
         "id": "1m",
@@ -6159,7 +6159,7 @@
     "instructions": "",
     "warrantyPolicy": "No warranty.",
     "hasSpecialRequirements": true,
-    "botProductId": 221,
+    "botProductId": 234,
     "botCategory": "Social"
   },
   {
@@ -6195,7 +6195,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "botCategory": "ChatGPT",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.840Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.178Z",
     "variants": [
       {
         "id": "1m",
@@ -6209,7 +6209,7 @@
         "resellerProductId": 383
       }
     ],
-    "botProductId": 39
+    "botProductId": 42
   },
   {
     "id": "sp_380_chatgpt-plus-1m-apple-pay",
@@ -6244,7 +6244,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "botCategory": "ChatGPT",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.841Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.179Z",
     "variants": [
       {
         "id": "1m",
@@ -6292,7 +6292,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "botCategory": "AI Tools",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.861Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.197Z",
     "variants": [
       {
         "id": "1m",
@@ -6340,7 +6340,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "botCategory": "Grok",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.863Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.198Z",
     "variants": [
       {
         "id": "1m",
@@ -6354,7 +6354,7 @@
         "resellerProductId": 382
       }
     ],
-    "botProductId": 147
+    "botProductId": 158
   },
   {
     "id": "sp_384_nordvpn-coupon-3-months",
@@ -6389,7 +6389,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "botCategory": "VPN",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.866Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.200Z",
     "variants": [
       {
         "id": "1m",
@@ -6403,7 +6403,7 @@
         "resellerProductId": 384
       }
     ],
-    "botProductId": 250
+    "botProductId": 263
   },
   {
     "id": "sp_379_capcut-pro-team-1m-1200-credits",
@@ -6437,8 +6437,8 @@
     "resellerProductId": 379,
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
-    "botCategory": "Design",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.868Z",
+    "botCategory": "CapCut",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.201Z",
     "variants": [
       {
         "id": "1m",
@@ -6452,7 +6452,7 @@
         "resellerProductId": 379
       }
     ],
-    "botProductId": 154
+    "botProductId": 278
   },
   {
     "id": "sp_137_capcut-pro-6-months",
@@ -6487,7 +6487,7 @@
     "appliedMultiplier": 1.6,
     "pricingRule": "Mid ($5.01 – $15.00)",
     "botCategory": "CapCut",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.869Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.202Z",
     "variants": [
       {
         "id": "1m",
@@ -6501,7 +6501,7 @@
         "resellerProductId": 137
       }
     ],
-    "botProductId": 258
+    "botProductId": 271
   },
   {
     "id": "sp_4_xbox-game-pass-pc-digital-key",
@@ -6536,7 +6536,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "botCategory": "Games",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.887Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.217Z",
     "variants": [
       {
         "id": "1m",
@@ -6550,7 +6550,7 @@
         "resellerProductId": 4
       }
     ],
-    "botProductId": 168
+    "botProductId": 295
   },
   {
     "id": "sp_197_api-kimi-100m-tokens-7d",
@@ -6585,7 +6585,7 @@
     "appliedMultiplier": 1.8,
     "pricingRule": "Low ($2.01 – $5.00)",
     "botCategory": "Kimi",
-    "lastSynchronizedAt": "2026-11-21T18:20:05.887Z",
+    "lastSynchronizedAt": "2026-11-24T22:11:36.217Z",
     "variants": [
       {
         "id": "1m",
@@ -6599,6 +6599,6 @@
         "resellerProductId": 197
       }
     ],
-    "botProductId": 292
+    "botProductId": 175
   }
 ]
