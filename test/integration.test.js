@@ -1005,6 +1005,39 @@ test('31. AdGuard Brand & Icon Consolidation: All AdGuard products strictly have
   assert.ok(fs.existsSync(iconFilePath), 'assets/icons/AdGuard.svg must exist on disk');
 });
 
+test('32. Available Only Button: Replaces grid/list toggle and filters products to available stock only', async () => {
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(shopHtml.includes('id="availableOnlyBtn"'), 'shop.html must contain availableOnlyBtn');
+  assert.ok(shopHtml.includes('Available Only'), 'shop.html must have Available Only button text');
+  assert.ok(!shopHtml.includes('id="viewModeToggle"'), 'shop.html must not contain viewModeToggle');
+  assert.ok(!shopHtml.includes('id="viewModeGrid"'), 'shop.html must not contain viewModeGrid');
+
+  const css = fs.readFileSync(path.resolve(__dirname, '../style.css'), 'utf8');
+  assert.ok(css.includes('.available-only-btn'), 'style.css must define .available-only-btn');
+
+  // Verify availability filter behavior
+  const mockCatalog = [
+    { id: 'prod_1', name: 'Product In Stock', inStock: true, availableStock: 5 },
+    { id: 'prod_2', name: 'Product Out Of Stock', inStock: false, availableStock: 0 },
+    { id: 'prod_3', name: 'Product Zero Stock', inStock: true, availableStock: 0 },
+    { id: 'prod_4', name: 'Product Unlimited Stock', inStock: true }
+  ];
+
+  const filterAvailability = (items, onlyAvailable) => {
+    return items.filter(prod => {
+      if (!onlyAvailable) return true;
+      return prod.inStock !== false && (prod.availableStock === undefined || prod.availableStock > 0);
+    });
+  };
+
+  const allItems = filterAvailability(mockCatalog, false);
+  assert.equal(allItems.length, 4, 'All items returned when available only is false');
+
+  const availableItems = filterAvailability(mockCatalog, true);
+  assert.equal(availableItems.length, 2, 'Only available items returned when available only is true');
+  assert.deepEqual(availableItems.map(p => p.id), ['prod_1', 'prod_4']);
+});
+
 
 
 

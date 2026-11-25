@@ -248,6 +248,12 @@
               placeholder="Search subscriptions in this category..." oninput="handleSearch(this.value)">
             <span class="catalog-search-shortcut">/</span>
           </div>
+          <div class="catalog-controls-right">
+            <button type="button" class="available-only-btn" id="availableOnlyBtn" onclick="toggleAvailableOnly()" aria-pressed="false" title="Show only available SKUs in this category">
+              <span class="available-dot"></span>
+              <span class="available-label">Available Only</span>
+            </button>
+          </div>
         </div>
 
         <!-- Product list -->
@@ -314,6 +320,7 @@
     let currentBrand = 'all';
     let catalogBrandSamples = {};
     let currentSearch = '';
+    let isAvailableOnly = false;
     let currentPage = 1;
     const PAGE_SIZE = 20;
 
@@ -413,7 +420,19 @@
       return b;
     }
 
-    // Filter products by category and search term
+    // Toggle available only filter
+    function toggleAvailableOnly() {
+      isAvailableOnly = !isAvailableOnly;
+      const btn = document.getElementById('availableOnlyBtn');
+      if (btn) {
+        btn.classList.toggle('active', isAvailableOnly);
+        btn.setAttribute('aria-pressed', String(isAvailableOnly));
+      }
+      currentPage = 1;
+      renderCatalog();
+    }
+
+    // Filter products by category, search term, and availability
     function getFilteredProducts() {
       const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : []);
       return source.filter(prod => {
@@ -452,7 +471,12 @@
           (prod.description && prod.description.toLowerCase().includes(q)) ||
           (prod.duration && prod.duration.toLowerCase().includes(q));
 
-        return matchesCat && matchesBrand && matchesSearch;
+        let matchesAvailability = true;
+        if (isAvailableOnly) {
+          matchesAvailability = prod.inStock !== false && (prod.availableStock === undefined || prod.availableStock > 0);
+        }
+
+        return matchesCat && matchesBrand && matchesSearch && matchesAvailability;
       });
     }
 
@@ -892,9 +916,15 @@
       currentSearch = '';
       currentCategory = 'all';
       currentBrand = 'all';
+      isAvailableOnly = false;
       currentPage = 1;
       const input = document.getElementById('catalogSearchInput');
       if (input) input.value = '';
+      const availBtn = document.getElementById('availableOnlyBtn');
+      if (availBtn) {
+        availBtn.classList.remove('active');
+        availBtn.setAttribute('aria-pressed', 'false');
+      }
       const brandLabel = document.getElementById('brandDropdownLabel');
       if (brandLabel) brandLabel.textContent = 'All Category';
       const brandPrefix = document.getElementById('brandDropdownPrefix');
@@ -1319,7 +1349,8 @@
       }
     });
 
-
+    window.toggleAvailableOnly = toggleAvailableOnly;
+    window.getFilteredProducts = getFilteredProducts;
   </script>
 </body>
 
