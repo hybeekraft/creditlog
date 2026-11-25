@@ -248,30 +248,9 @@
               placeholder="Search subscriptions in this category..." oninput="handleSearch(this.value)">
             <span class="catalog-search-shortcut">/</span>
           </div>
-          <div class="catalog-controls-right">
-            <div class="view-mode-toggle" id="viewModeToggle">
-              <button type="button" class="view-mode-btn" id="viewModeGrid" onclick="setViewMode('grid')" title="Bento Grid View">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                  <rect x="1" y="1" width="6" height="6" rx="1.5" />
-                  <rect x="9" y="1" width="6" height="6" rx="1.5" />
-                  <rect x="1" y="9" width="6" height="6" rx="1.5" />
-                  <rect x="9" y="9" width="6" height="6" rx="1.5" />
-                </svg>
-                <span>Grid</span>
-              </button>
-              <button type="button" class="view-mode-btn active" id="viewModeList" onclick="setViewMode('list')" title="Compact List View">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                  <rect x="1" y="2" width="14" height="2.5" rx="1" />
-                  <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
-                  <rect x="1" y="11.5" width="14" height="2.5" rx="1" />
-                </svg>
-                <span>List</span>
-              </button>
-            </div>
-          </div>
         </div>
 
-        <!-- Product grid / list -->
+        <!-- Product list -->
         <div class="directory-list-view" id="directoryGrid">
           <!-- Rendered by JS -->
         </div>
@@ -335,7 +314,6 @@
     let currentBrand = 'all';
     let catalogBrandSamples = {};
     let currentSearch = '';
-    let currentViewMode = 'list';
     let currentPage = 1;
     const PAGE_SIZE = 20;
 
@@ -555,17 +533,17 @@
 
       if (totalItems === 0) {
         if (paginationWrap) paginationWrap.innerHTML = '';
-        container.className = 'directory-grid';
+        container.className = 'directory-list-view';
         if (isCatalogLoading) {
           container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; color: var(--text-muted); font-size: 14px;">
+            <div style="text-align: center; padding: 72px 20px; color: var(--text-muted); font-size: 14px;">
               Loading subscriptions...
             </div>
           `;
           return;
         }
         container.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 72px 20px; background: rgba(25, 13, 8, 0.02); border-radius: 20px; border: 1px dashed rgba(25, 13, 8, 0.12);">
+          <div style="text-align: center; padding: 72px 20px; background: rgba(25, 13, 8, 0.02); border-radius: 20px; border: 1px dashed rgba(25, 13, 8, 0.12);">
             <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(208, 69, 21, 0.08); border: 1px solid rgba(208, 69, 21, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #D04515;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
@@ -580,81 +558,45 @@
       // Get products for current page
       const pageProducts = sortedProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
-      if (currentViewMode === 'grid') {
-        container.className = 'directory-grid';
-        pageProducts.forEach((prod, idx) => {
-          const formattedPrice = formatPrice(prod.usdPrice);
-          const formattedDual = formatDualPrice(prod.usdPrice);
-          const catLabel = (prod.category || 'APP').toUpperCase();
-          const inStock = prod.inStock !== false;
+      container.className = 'directory-list-view';
+      pageProducts.forEach((prod, idx) => {
+        const formattedPrice = formatPrice(prod.usdPrice);
+        const formattedDual = formatDualPrice(prod.usdPrice);
+        const catLabel = (prod.category || 'APP').toUpperCase();
 
-          const card = document.createElement('div');
-          card.className = 'directory-card';
-          card.style.setProperty('--card-index', idx);
-          card.onclick = () => navigateToProduct(prod.id);
+        const row = document.createElement('div');
+        row.className = 'directory-list-row';
+        row.onclick = () => navigateToProduct(prod.id);
 
-          card.innerHTML = `
-            <div class="card-header-row">
-              ${renderBrandIcon(prod)}
-              ${!inStock ? '<span class="card-stock-pill sold-out">● Out of Stock</span>' : ''}
-            </div>
-
-            <div class="card-title-group" style="margin-bottom: 16px;">
-              <h3 class="directory-item-title" style="font-size: 16px; font-weight: 700; color: #190D08; line-height: 1.35; margin: 0; min-height: 42px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${prod.name}</h3>
-            </div>
-
-            <div class="card-pricing-footer" style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(25, 13, 8, 0.08); margin-top: auto;">
-              <div class="price-val-box">
-                <span class="directory-price-val" style="font-size: 18px; font-weight: 800; color: #190D08; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
-              </div>
-              <button type="button" class="directory-select-btn" ${!inStock ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="event.stopPropagation(); ${inStock ? `navigateToProduct('${prod.id}')` : ''}">
-                <span>${inStock ? 'Details →' : 'Sold Out'}</span>
-              </button>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      } else {
-        container.className = 'directory-list-view';
-        pageProducts.forEach((prod, idx) => {
-          const formattedPrice = formatPrice(prod.usdPrice);
-          const formattedDual = formatDualPrice(prod.usdPrice);
-          const catLabel = (prod.category || 'APP').toUpperCase();
-
-          const row = document.createElement('div');
-          row.className = 'directory-list-row';
-          row.onclick = () => navigateToProduct(prod.id);
-
-          row.innerHTML = `
-            <div class="list-row-left">
-              ${renderBrandIcon(prod)}
-              <div>
-                <div class="directory-item-title" style="font-size: 15px; font-weight: 700; color: #190D08; margin-bottom: 2px;">${prod.name}</div>
-                <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
-                  <span style="color: #D95A22; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                    <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-                    ${prod.duration || '1 Month'}
-                  </span>
-                  <span>·</span>
-                  <span>${catLabel}</span>
-                  <span>·</span>
-                  <span>${prod.inStock !== false ? '● In Stock' : '● Sold Out'}</span>
-                </div>
+        row.innerHTML = `
+          <div class="list-row-left">
+            ${renderBrandIcon(prod)}
+            <div>
+              <div class="directory-item-title" style="font-size: 15px; font-weight: 700; color: #190D08; margin-bottom: 2px;">${prod.name}</div>
+              <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+                <span style="color: #D95A22; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                  ${prod.duration || '1 Month'}
+                </span>
+                <span>·</span>
+                <span>${catLabel}</span>
+                <span>·</span>
+                <span>${prod.inStock !== false ? '● In Stock' : '● Sold Out'}</span>
               </div>
             </div>
+          </div>
 
-            <div class="list-row-right" style="display: flex; align-items: center; gap: 16px;">
-              <div style="text-align: right;">
-                <span style="font-size: 16px; font-weight: 800; color: #190D08; display: block;">${formattedPrice}</span>
-              </div>
-              <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
-                <span>Details →</span>
-              </button>
+          <div class="list-row-right" style="display: flex; align-items: center; gap: 16px;">
+            <div style="text-align: right;">
+              <span style="font-size: 16px; font-weight: 800; color: #190D08; display: block;">${formattedPrice}</span>
             </div>
-          `;
-          container.appendChild(row);
-        });
-      }
+            <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
+              <span>Details →</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
 
       renderPagination(totalPages);
     }
@@ -760,13 +702,6 @@
       }
     }
 
-    // Switch between grid and list view
-    function setViewMode(mode) {
-      currentViewMode = mode;
-      document.getElementById('viewModeGrid').classList.toggle('active', mode === 'grid');
-      document.getElementById('viewModeList').classList.toggle('active', mode === 'list');
-      renderCatalog();
-    }
 
     // Populate category dropdown
     function populateBrandDropdown() {
