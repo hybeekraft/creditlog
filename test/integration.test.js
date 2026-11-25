@@ -1038,6 +1038,19 @@ test('32. Available Only Button: Replaces grid/list toggle and filters products 
   assert.deepEqual(availableItems.map(p => p.id), ['prod_1', 'prod_4']);
 });
 
+test('33. Sticky Footer Layout: Footer remains pinned to viewport bottom without floating gaps', async () => {
+  const css = fs.readFileSync(path.resolve(__dirname, '../style.css'), 'utf8');
+  assert.ok(css.includes('display: flex;\n  flex-direction: column;') || css.includes('flex-direction: column'), 'body must be flex column');
+  assert.ok(css.includes('.main-content') && css.includes('flex: 1 0 auto;'), '.main-content must have flex: 1 0 auto');
+  assert.ok(css.includes('.site-footer-minimal') && css.includes('margin-top: auto;'), '.site-footer-minimal must have margin-top: auto');
+
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(shopHtml.indexOf('</main>') < shopHtml.indexOf('<footer class="site-footer-minimal">'), 'shop.html footer must be placed outside </main>');
+
+  const indexHtml = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
+  assert.ok(indexHtml.indexOf('</main>') < indexHtml.indexOf('<footer class="site-footer-minimal">'), 'index.html footer must be placed outside </main>');
+});
+
 
 
 
