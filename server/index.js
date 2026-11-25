@@ -504,9 +504,9 @@ function resolveProductBranding(rawBrand, requestedIcon = '') {
     { match: ['adguard', 'adguard vpn'], brand: 'AdGuard', icon: 'adguard' },
     { match: ['microsoft', 'microsoft 365', 'o365', 'office 365', 'office365'], brand: 'Microsoft', icon: 'microsoft' },
     { match: ['lovable', 'loveable'], brand: 'Lovable', icon: 'lovable' },
-    { match: ['kimi', 'api', 'api kimi', 'kimi api'], brand: 'Kimi', icon: 'kimi' },
-    { match: ['qwen', 'alibaba qwen', 'tongyi qwen'], brand: 'Qwen', icon: 'qwen' },
-    { match: ['codex', 'openai codex', 'codex api'], brand: 'Codex', icon: 'codex' },
+    { match: ['kimi', 'api kimi', 'kimi api'], brand: 'Kimi', icon: 'kimi' },
+    { match: ['qwen', 'alibaba qwen', 'tongyi qwen', 'qwen api', 'api qwen'], brand: 'Qwen', icon: 'qwen' },
+    { match: ['codex', 'openai codex', 'codex api', 'api codex'], brand: 'Codex', icon: 'codex' },
     { match: ['chatgpt', 'openai chatgpt', 'openai', 'gpt'], brand: 'ChatGPT', icon: 'chatgpt' }
   ];
 

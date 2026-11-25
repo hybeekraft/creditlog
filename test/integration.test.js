@@ -696,6 +696,15 @@ test('21. Qwen Brand Consolidation: All Qwen and Alibaba Qwen products belong st
   // Check for duplicate Qwen brands
   const duplicateBrands = json.data.filter(p => p.brand === 'Alibaba Qwen');
   assert.equal(duplicateBrands.length, 0, 'No product should have "Alibaba Qwen" brand');
+
+  // Verify Qwen brand & icon resolution even when product carries supplier prefix "API"
+  const rawQwenApiProduct = { id: '236', name: 'API Qwen $10 1 Month', brand: 'API', botCategory: 'Qwen API' };
+  const resolvedBrand = shared.getBrandData(rawQwenApiProduct);
+  assert.equal(resolvedBrand.id, 'qwen', 'API Qwen product must resolve to qwen brand icon, not kimi');
+  const renderedHtml = shared.renderBrandIcon(rawQwenApiProduct);
+  assert.ok(renderedHtml.includes('assets/icons/qwen.svg'), 'API Qwen product must render qwen.svg icon');
+  assert.equal(shared.normalizeBrand('API', rawQwenApiProduct.name), 'Qwen', 'normalizeBrand must resolve API Qwen to Qwen');
+  assert.notEqual(shared.normalizeBrand('API'), 'Kimi', 'Generic "API" must never blindly normalize to "Kimi"');
 });
 
 test('22. ChatGPT Brand Consolidation: All ChatGPT and OpenAI products belong strictly to "ChatGPT" (not "OpenAI ChatGPT")', async () => {

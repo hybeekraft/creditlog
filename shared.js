@@ -1545,11 +1545,26 @@ function resolveBrandAssetUrl(url) {
   return clean.startsWith('/') ? clean : '/' + clean;
 }
 
-function normalizeBrand(rawBrand) {
-  if (!rawBrand) return '';
-  let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand);
+function normalizeBrand(rawBrand, productName) {
+  if (!rawBrand && !productName) return '';
+  let b = typeof rawBrand === 'object' ? (rawBrand.brand || rawBrand.name || '') : String(rawBrand || '');
   b = b.trim();
   const lower = b.toLowerCase();
+  const nameLower = (typeof productName === 'string' ? productName : (typeof rawBrand === 'object' ? rawBrand.name : '') || '').toLowerCase();
+  const context = (lower + ' ' + nameLower).trim();
+
+  // If brand is generic 'api', infer from context / product name
+  if (lower === 'api' || lower === 'api key' || lower === 'api tokens') {
+    if (context.includes('qwen')) return 'Qwen';
+    if (context.includes('codex')) return 'Codex';
+    if (context.includes('kimi')) return 'Kimi';
+    if (context.includes('claude') || context.includes('anthropic')) return 'Claude';
+    if (context.includes('chatgpt') || context.includes('openai')) return 'ChatGPT';
+    if (context.includes('deepseek')) return 'DeepSeek';
+    if (context.includes('cursor')) return 'Cursor';
+    return '';
+  }
+
   if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
     return 'Amazon';
   }
@@ -1592,13 +1607,13 @@ function normalizeBrand(rawBrand) {
   if (lower === 'lovable' || lower === 'loveable') {
     return 'Lovable';
   }
-  if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+  if (lower === 'kimi' || lower === 'api kimi' || lower === 'kimi api') {
     return 'Kimi';
   }
-  if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+  if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen' || lower === 'qwen api' || lower === 'api qwen') {
     return 'Qwen';
   }
-  if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
+  if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api' || lower === 'api codex') {
     return 'Codex';
   }
   if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {
@@ -1654,7 +1669,7 @@ function getBrandData(prod) {
     const baseMatch = prod.iconType ? BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === String(prod.iconType).toLowerCase()) : null;
     return {
       id: prod.iconType || 'custom',
-      name: normalizeBrand(prod.brand) || prod.name || 'Custom Brand',
+      name: normalizeBrand(prod.brand, prod.name) || prod.name || 'Custom Brand',
       bg: baseMatch ? baseMatch.bg : '#FFFFFF',
       border: baseMatch ? (baseMatch.border || '1px solid rgba(25, 13, 8, 0.12)') : '1px solid rgba(25, 13, 8, 0.12)',
       shadow: baseMatch ? baseMatch.shadow : 'rgba(25, 13, 8, 0.12)',
@@ -1665,6 +1680,39 @@ function getBrandData(prod) {
       path: baseMatch ? baseMatch.path : '',
       viewBox: baseMatch ? baseMatch.viewBox : '0 0 24 24'
     };
+  }
+
+  // Target context for strong brand identity detection
+  const target = ((prod.name || '') + ' ' + (prod.id || '') + ' ' + (prod.botCategory || '') + ' ' + (prod.category || '')).toLowerCase();
+
+  // Prioritize primary branded AI/API services to avoid generic misclassification (e.g. supplier prefix "API")
+  if (target.includes('qwen')) {
+    const qwen = BRAND_ICON_REGISTRY.find(b => b.id === 'qwen');
+    if (qwen) return qwen;
+  }
+  if (target.includes('codex')) {
+    const codex = BRAND_ICON_REGISTRY.find(b => b.id === 'codex');
+    if (codex) return codex;
+  }
+  if (target.includes('chatgpt') || target.includes('openai')) {
+    const gpt = BRAND_ICON_REGISTRY.find(b => b.id === 'chatgpt');
+    if (gpt) return gpt;
+  }
+  if (target.includes('claude') || target.includes('anthropic')) {
+    const claude = BRAND_ICON_REGISTRY.find(b => b.id === 'claude');
+    if (claude) return claude;
+  }
+  if (target.includes('deepseek')) {
+    const deepseek = BRAND_ICON_REGISTRY.find(b => b.id === 'deepseek');
+    if (deepseek) return deepseek;
+  }
+  if (target.includes('cursor')) {
+    const cursor = BRAND_ICON_REGISTRY.find(b => b.id === 'cursor');
+    if (cursor) return cursor;
+  }
+  if (target.includes('kimi') || target.includes('moonshot')) {
+    const kimi = BRAND_ICON_REGISTRY.find(b => b.id === 'kimi');
+    if (kimi) return kimi;
   }
 
   // Match by iconType
@@ -1683,31 +1731,18 @@ function getBrandData(prod) {
 
   // Match by brand name
   if (prod.brand) {
-    const brandLower = normalizeBrand(prod.brand).toLowerCase().trim();
-    const directBrand = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandLower || b.name.toLowerCase() === brandLower);
-    if (directBrand) return directBrand;
-    for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
-      const b = BRAND_ICON_REGISTRY[i];
-      if (!b.match) continue;
-      for (let j = 0; j < b.match.length; j++) {
-        if (brandLower.includes(b.match[j])) return b;
+    const brandLower = normalizeBrand(prod.brand, prod.name).toLowerCase().trim();
+    if (brandLower) {
+      const directBrand = BRAND_ICON_REGISTRY.find(b => b.id.toLowerCase() === brandLower || b.name.toLowerCase() === brandLower);
+      if (directBrand) return directBrand;
+      for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {
+        const b = BRAND_ICON_REGISTRY[i];
+        if (!b.match) continue;
+        for (let j = 0; j < b.match.length; j++) {
+          if (brandLower.includes(b.match[j])) return b;
+        }
       }
     }
-  }
-
-  // Match by product name or id
-  const target = ((prod.name || '') + ' ' + (prod.id || '')).toLowerCase();
-  if (target.includes('codex')) {
-    const codex = BRAND_ICON_REGISTRY.find(b => b.id === 'codex');
-    if (codex) return codex;
-  }
-  if (target.includes('chatgpt') || target.includes('openai')) {
-    const gpt = BRAND_ICON_REGISTRY.find(b => b.id === 'chatgpt');
-    if (gpt) return gpt;
-  }
-  if (target.includes('claude') || target.includes('anthropic')) {
-    const claude = BRAND_ICON_REGISTRY.find(b => b.id === 'claude');
-    if (claude) return claude;
   }
 
   for (let i = 0; i < BRAND_ICON_REGISTRY.length; i++) {

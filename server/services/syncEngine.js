@@ -121,10 +121,25 @@ class SyncEngine {
     return name.split(' ')[0] || 'Digital Service';
   }
 
-  normalizeBrand(brand = '') {
-    if (!brand) return '';
-    const b = String(brand).trim();
+  normalizeBrand(brand = '', name = '') {
+    if (!brand && !name) return '';
+    const b = String(brand || '').trim();
     const lower = b.toLowerCase();
+    const n = String(name || '').toLowerCase();
+    const context = (lower + ' ' + n).trim();
+
+    // If generic 'api', infer from context / name
+    if (lower === 'api' || lower === 'api key' || lower === 'api tokens') {
+      if (context.includes('qwen')) return 'Qwen';
+      if (context.includes('codex')) return 'Codex';
+      if (context.includes('kimi')) return 'Kimi';
+      if (context.includes('claude') || context.includes('anthropic')) return 'Claude';
+      if (context.includes('chatgpt') || context.includes('openai')) return 'ChatGPT';
+      if (context.includes('deepseek')) return 'DeepSeek';
+      if (context.includes('cursor')) return 'Cursor';
+      return '';
+    }
+
     if (lower === 'amazon' || lower === 'amazon prime' || lower === 'amazon prime video' || lower === 'prime video' || lower === 'primevideo') {
       return 'Amazon';
     }
@@ -167,13 +182,13 @@ class SyncEngine {
     if (lower === 'lovable' || lower === 'loveable') {
       return 'Lovable';
     }
-    if (lower === 'kimi' || lower === 'api' || lower === 'api kimi' || lower === 'kimi api') {
+    if (lower === 'kimi' || lower === 'api kimi' || lower === 'kimi api') {
       return 'Kimi';
     }
-    if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen') {
+    if (lower === 'qwen' || lower === 'alibaba qwen' || lower === 'tongyi qwen' || lower === 'qwen api' || lower === 'api qwen') {
       return 'Qwen';
     }
-    if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api') {
+    if (lower === 'codex' || lower === 'openai codex' || lower === 'codex api' || lower === 'api codex') {
       return 'Codex';
     }
     if (lower === 'chatgpt' || lower === 'openai chatgpt' || lower === 'openai' || lower === 'gpt') {

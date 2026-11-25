@@ -143,6 +143,29 @@ def _require_admin(req, *roles):
     return claims, None
 
 
+def _infer_product_brand(name, category=""):
+    target = f"{name or ''} {category or ''}".lower()
+    if "qwen" in target:
+        return "Qwen", "qwen"
+    if "codex" in target:
+        return "Codex", "codex"
+    if "kimi" in target or "moonshot" in target:
+        return "Kimi", "kimi"
+    if "deepseek" in target:
+        return "DeepSeek", "deepseek"
+    if "claude" in target or "anthropic" in target:
+        return "Claude", "claude"
+    if "chatgpt" in target or "openai" in target:
+        return "ChatGPT", "chatgpt"
+    if "gemini" in target:
+        return "Gemini", "gemini"
+    parts = (name or "").split()
+    first = parts[0] if parts else ""
+    if first.lower() in ("api", "api key", "api tokens"):
+        first = ""
+    return first, (first.lower() if first else "")
+
+
 def _product(service, row):
     data = dict(row)
     stock_count = service["stock_count"](data["id"])
@@ -151,11 +174,18 @@ def _product(service, row):
     available = 999999 if is_supplier and stock is None else max(0, int(stock or 0))
     price = int(data.get("price") or 0)
     cost = int(data.get("supplier_price") or 0)
+    raw_brand = data.get("web_brand") or ""
+    inferred_brand, inferred_icon = _infer_product_brand(data.get("name"), data.get("category"))
+    brand = raw_brand if (raw_brand and raw_brand.lower() != "api") else (inferred_brand or raw_brand)
+    icon_type = data.get("iconType") or inferred_icon or (brand.lower() if brand else "")
+    brand_class = f"tile-{icon_type}" if icon_type else "tile-brand-default"
     return {
         "id": str(data["id"]), "botProductId": data["id"],
         "name": data["name"], "title": data["name"],
         "description": data.get("description") or "",
-        "brand": data.get("web_brand") or (data["name"].split()[0] if data["name"] else ""),
+        "brand": brand,
+        "iconType": icon_type,
+        "brandClass": brand_class,
         "logoUrl": data.get("web_logo_url") or "",
         "importantRequirements": data.get("web_requirements") or "",
         "howItIsDelivered": data.get("web_delivery_instructions") or "",
