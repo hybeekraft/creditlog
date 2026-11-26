@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment — CreditLog</title>
+  <meta name="description" content="Select your preferred payment gateway to complete your CreditLog order.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
+</head>
+<body>
+
+  <main class="main-content">
+    <div class="checkout-page-shell">
+
+      <!-- Top bar -->
+      <div class="checkout-top-bar">
+        <a href="javascript:void(0)" onclick="handleBackToCheckout()" class="cancel-link-btn" id="backToCheckoutBtn">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+          </svg>
+          <span>Back to Checkout</span>
+        </a>
+
+        <button type="button" class="currency-toggle-btn" onclick="toggleCurrency()" aria-label="Current currency: NGN. Click to switch to USD ($)." title="Click to switch to USD ($)">
+          <span class="curr-flag">
+            <svg class="flag-icon" width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);vertical-align:middle;flex-shrink:0;"><rect width="18" height="13" rx="2" fill="#008751"/><rect x="6" width="6" height="13" fill="#FFFFFF"/></svg>
+          </span>
+          <span class="curr-code">NGN ₦</span>
+        </button>
+      </div>
+
+      <div class="checkout-layout-grid">
+
+        <!-- Left: Payment Gateway Selection & Inline Payment Panel -->
+        <div class="checkout-left-col">
+
+          <!-- Gateway Selection Card -->
+          <div class="checkout-card" id="gatewaySelectionCard">
+            <h2 class="card-heading">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515; margin-right: 6px;"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+              <span>Payment Gateway</span>
+            </h2>
+            <div class="gateways-list">
+              <div class="gateway-option-card active" id="gwCardBachs" onclick="selectGateway('Bachs')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="Bachs" checked>
+                  <div>
+                    <div class="gw-name-text">Bachs Global &amp; Local Checkout</div>
+                    <div class="gw-desc-text">Cards, Bank Transfer, Mobile Money &amp; Stablecoins (USDT / USDC)</div>
+                  </div>
+                </div>
+                <span class="gw-badge-pill">Bachs</span>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardCryptoBot" onclick="selectGateway('CryptoBot')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="CryptoBot">
+                  <div>
+                    <div class="gw-name-text">CryptoBot</div>
+                    <div class="gw-desc-text">Pay through your Telegram CryptoBot wallet</div>
+                  </div>
+                </div>
+                <span class="gw-badge-pill">Crypto</span>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardBank" onclick="selectGateway('Bank')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="Bank">
+                  <div>
+                    <div class="gw-name-text">Bank transfer</div>
+                    <div class="gw-desc-text">Manual payment review</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardBinance" onclick="selectGateway('Binance')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="Binance">
+                  <div>
+                    <div class="gw-name-text">Binance Pay</div>
+                    <div class="gw-desc-text">Submit the Binance transaction reference for review</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardTRC20" onclick="selectGateway('TRC20')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="TRC20">
+                  <div>
+                    <div class="gw-name-text">USDT · TRC20</div>
+                    <div class="gw-desc-text">On chain transaction verification</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gateway-option-card" id="gwCardBEP20" onclick="selectGateway('BEP20')">
+                <div class="gw-info-left">
+                  <input type="radio" name="paymentGateway" value="BEP20">
+                  <div>
+                    <div class="gw-name-text">USDT · BEP20</div>
+                    <div class="gw-desc-text">On chain transaction verification</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inline Payment Instructions & Reference Submission -->
+          <div class="checkout-card payment-inline-card" id="inlinePaymentPanel" style="display: none;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+              <h2 class="card-heading" style="margin-bottom: 0;">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515;"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <span id="paymentTitle">Complete Payment</span>
+              </h2>
+              <button type="button" class="payment-copy-btn" onclick="resetGatewaySelection()">Change Gateway</button>
+            </div>
+
+            <div class="payment-detail-box" id="paymentDetailsBox"></div>
+
+            <p id="paymentInstructionsText" style="font-size: 13px; color: #43332A; line-height: 1.55; margin: 0 0 18px; white-space: pre-wrap;"></p>
+
+            <div class="form-group-item">
+              <label for="paymentReferenceInput" id="paymentReferenceLabel">Transaction reference / hash *</label>
+              <input type="text" id="paymentReferenceInput" autocomplete="off" placeholder="Enter your transaction hash or payment reference">
+            </div>
+
+            <button type="button" id="paymentReferenceSubmit" class="checkout-pay-btn" onclick="submitPaymentReference()">
+              <span>Submit Payment Reference</span>
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Right: Order summary -->
+        <aside class="order-summary-card">
+          <h3 style="font-size: 16px; font-weight: 800; color: #190D08; margin-bottom: 16px;">Order Summary</h3>
+
+          <!-- Real-Time Stock Reservation Banner -->
+          <div id="reservationNoticeBanner" style="display: none; background: rgba(217, 90, 34, 0.1); border: 1px solid rgba(217, 90, 34, 0.25); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #D95A22; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Stock Reserved: <strong id="resvCountdownTimer">15:00</strong></span>
+            </div>
+            <span style="font-size: 11px; background: rgba(217, 90, 34, 0.18); padding: 2px 7px; border-radius: 9999px; font-weight: 700;">Locked</span>
+          </div>
+
+          <div class="selected-product-box">
+            <div class="summary-icon-tile" id="summaryIconTile"></div>
+            <div>
+              <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
+              <div class="summary-prod-option" id="summaryProdOption">Duration: 1 Month</div>
+              <div id="summaryDeliveryFormat" style="font-size: 11px; background: rgba(208,69,21,0.08); color: #D04515; font-weight: 700; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-top: 4px;">Delivery: Instant Dispatch</div>
+            </div>
+          </div>
+
+          <!-- Customer Preview Box -->
+          <div class="payment-cust-summary" id="paymentCustomerPreview">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <strong style="color: #190D08;">Dispatch To</strong>
+              <button type="button" onclick="handleBackToCheckout()" style="background: none; border: none; color: #D04515; font-size: 12px; font-weight: 700; cursor: pointer; padding: 0;">Edit</button>
+            </div>
+            <div id="summaryCustName" style="font-weight: 600;">—</div>
+            <div id="summaryCustEmail" style="color: #705E51;">—</div>
+            <div id="summaryCustChannel" style="color: #705E51; font-size: 11.5px; margin-top: 2px;">Channel: Email</div>
+          </div>
+
+          <!-- Product-Specific Requirements Banner -->
+          <div id="summaryRequirementsBanner" style="display: none; background: rgba(208, 69, 21, 0.05); border: 1px solid rgba(208, 69, 21, 0.18); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; color: #43332A; line-height: 1.45;">
+            <strong style="color: #D04515; display: block; margin-bottom: 3px;">Product Requirement:</strong>
+            <span id="summaryRequirementsText"></span>
+          </div>
+
+          <div class="summary-row-line">
+            <span>Quantity</span>
+            <strong id="summaryQtyDisplay" style="color: #190D08;">1</strong>
+          </div>
+
+          <div class="summary-row-line">
+            <span>Unit Price</span>
+            <strong id="summaryUnitPrice" style="color: #190D08;">$0.00</strong>
+          </div>
+
+          <div class="summary-row-line">
+            <span>Delivery</span>
+            <span style="color: #15803D; font-weight: 700;">Instant Digital (Free)</span>
+          </div>
+
+          <div class="summary-total-line">
+            <div>
+              <span style="font-size: 12px; color: #705E51; display: block;">Total Due</span>
+              <span class="total-big-val" id="summaryTotalBig">$0.00</span>
+            </div>
+          </div>
+
+          <button type="button" class="checkout-pay-btn" id="confirmPayBtn" onclick="handleConfirmPayment()">
+            <span>Continue to Pay</span>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/shared.js"></script>
+  <script>
+    const PENDING_CHECKOUT_KEY = 'creditlog_pending_checkout';
+
+    let pendingCheckout = null;
+    let currentProduct = null;
+    let serverQuote = null;
+    let selectedGateway = 'Bachs';
+    let createdOrder = null;
+    let activeReservationToken = null;
+    let countdownIntervalId = null;
+    let preserveReservationOnUnload = false;
+
+    function escapeHtml(text) {
+      if (text === undefined || text === null) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function copyPaymentText(text, label) {
+      if (!text) return;
+      navigator.clipboard.writeText(String(text));
+      showToast(`${label} copied to clipboard!`);
+    }
+
+    function handleBackToCheckout() {
+      preserveReservationOnUnload = true;
+      if (pendingCheckout && pendingCheckout.productId) {
+        const backUrl = `checkout.html?productId=${encodeURIComponent(pendingCheckout.productId)}&duration=${encodeURIComponent(pendingCheckout.duration || '')}&qty=${pendingCheckout.quantity || 1}`;
+        window.location.href = backUrl;
+      } else {
+        window.location.href = 'checkout.html';
+      }
+    }
+
+    function startCountdownTimer(expiresAt) {
+      if (countdownIntervalId) clearInterval(countdownIntervalId);
+      function tick() {
+        const remaining = Math.max(0, expiresAt - Date.now());
+        const totalSecs = Math.floor(remaining / 1000);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        const timerEl = document.getElementById('resvCountdownTimer');
+        if (timerEl) {
+          timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        if (remaining <= 0) {
+          clearInterval(countdownIntervalId);
+          activeReservationToken = null;
+          const banner = document.getElementById('reservationNoticeBanner');
+          if (banner) banner.style.display = 'none';
+        }
+      }
+      tick();
+      countdownIntervalId = setInterval(tick, 1000);
+    }
+
+    function selectGateway(gw) {
+      // Switching gateways before/after an unsubmitted inline order resets inline instructions cleanly
+      if (createdOrder && String(createdOrder.gateway || '').toLowerCase() !== gw.toLowerCase()) {
+        resetGatewaySelection();
+      }
+      selectedGateway = gw;
+      document.querySelectorAll('.gateway-option-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById(`gwCard${gw}`);
+      if (activeCard) {
+        activeCard.classList.add('active');
+        const radio = activeCard.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      }
+      updatePayButtonLabel();
+    }
+
+    function resetGatewaySelection() {
+      createdOrder = null;
+      const panel = document.getElementById('inlinePaymentPanel');
+      if (panel) panel.style.display = 'none';
+      const refInput = document.getElementById('paymentReferenceInput');
+      if (refInput) refInput.value = '';
+      const btn = document.getElementById('confirmPayBtn');
+      if (btn) btn.disabled = false;
+      updatePayButtonLabel();
+    }
+
+    function updatePayButtonLabel() {
+      const btn = document.getElementById('confirmPayBtn');
+      if (!btn || createdOrder) return;
+      const priceLabel = serverQuote ? serverQuote.formattedPrice : '';
+      const suffix = priceLabel ? ` (${priceLabel})` : '';
+      btn.innerHTML = `
+        <span>Pay Now${suffix}</span>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      `;
+    }
+
+    async function fetchServerQuote() {
+      if (!pendingCheckout) return;
+      const activeCurr = getCurrency();
+      try {
+        const res = await fetch('/api/orders/quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: pendingCheckout.productId,
+            duration: pendingCheckout.duration,
+            quantity: pendingCheckout.quantity,
+            currency: activeCurr
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            serverQuote = data;
+            document.getElementById('summaryUnitPrice').textContent = formatPrice(data.unitPriceUsd);
+            document.getElementById('summaryTotalBig').textContent = data.formattedPrice;
+            updatePayButtonLabel();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Payment quote fallback:', err);
+      }
+
+      const plan = (currentProduct && currentProduct.variants)
+        ? currentProduct.variants.find(v => v.duration === pendingCheckout.duration)
+        : null;
+      const unit = plan ? plan.usdPrice : (currentProduct ? currentProduct.usdPrice : 5.00);
+      const totalUsd = unit * (pendingCheckout.quantity || 1);
+      document.getElementById('summaryUnitPrice').textContent = formatPrice(unit);
+      document.getElementById('summaryTotalBig').textContent = formatPrice(totalUsd);
+      updatePayButtonLabel();
+    }
+
+    function renderDetailRow(label, value, copyLabel) {
+      const safeVal = escapeHtml(value);
+      const encodedAttr = escapeHtml(String(value));
+      return `
+        <div class="payment-detail-row">
+          <div>
+            <span class="payment-detail-label">${escapeHtml(label)}</span>
+            <span class="payment-detail-value">${safeVal}</span>
+          </div>
+          ${copyLabel ? `<button type="button" class="payment-copy-btn" data-copy="${encodedAttr}" data-label="${escapeHtml(copyLabel)}" onclick="copyPaymentText(this.dataset.copy, this.dataset.label)">Copy</button>` : ''}
+        </div>
+      `;
+    }
+
+    function showInlinePaymentInstructions(order) {
+      const panel = document.getElementById('inlinePaymentPanel');
+      const detailsBox = document.getElementById('paymentDetailsBox');
+      const instrEl = document.getElementById('paymentInstructionsText');
+      const titleEl = document.getElementById('paymentTitle');
+      const refLabel = document.getElementById('paymentReferenceLabel');
+      const refInput = document.getElementById('paymentReferenceInput');
+
+      const gw = String(order.gateway || selectedGateway || '').toLowerCase();
+      const payment = order.payment || {};
+      const gwLabels = {
+        bank: 'Bank Transfer',
+        binance: 'Binance Pay',
+        trc20: 'USDT · TRC20',
+        bep20: 'USDT · BEP20',
+        bachs: 'Bachs Checkout',
+        cryptobot: 'CryptoBot'
+      };
+
+      titleEl.textContent = `Order ${order.id} · ${gwLabels[gw] || order.gateway}`;
+
+      let rowsHtml = '';
+      if (gw === 'trc20' || gw === 'bep20') {
+        const net = gw.toUpperCase();
+        if (payment.exactAmount) rowsHtml += renderDetailRow(`Exact Amount (${net})`, `${payment.exactAmount} USDT`, 'Amount');
+        if (payment.address) rowsHtml += renderDetailRow(`USDT (${net}) Wallet Address`, payment.address, 'Wallet address');
+        refLabel.textContent = `On-Chain Transaction Hash (${net}) *`;
+        refInput.placeholder = 'Paste your transaction hash (TxID) after sending';
+      } else if (gw === 'binance') {
+        const amt = payment.amountUsd !== undefined ? `$${Number(payment.amountUsd).toFixed(2)} USDT` : order.price;
+        rowsHtml += renderDetailRow('Amount Due', amt, 'Amount');
+        if (payment.payId) rowsHtml += renderDetailRow('Binance Pay ID', payment.payId, 'Binance Pay ID');
+        refLabel.textContent = 'Binance Transaction / Order ID *';
+        refInput.placeholder = 'Enter your Binance Pay reference or order ID';
+      } else if (gw === 'bank') {
+        if (payment.amountNgn) rowsHtml += renderDetailRow('Amount (NGN)', `₦${Number(payment.amountNgn).toLocaleString()}`, 'Amount');
+        if (payment.reference) rowsHtml += renderDetailRow('Transfer Narration / Reference', payment.reference, 'Reference');
+        if (Array.isArray(payment.accounts)) {
+          payment.accounts.forEach((acc, i) => {
+            const bankName = acc.bank_name || acc.bank || `Bank Account ${i + 1}`;
+            const accNum = acc.account_number || acc.number || '';
+            const accName = acc.account_name || acc.name || '';
+            if (accNum) {
+              rowsHtml += renderDetailRow(`${bankName}${accName ? ' · ' + accName : ''}`, accNum, 'Account number');
+            }
+          });
+        } else if (payment.accounts) {
+          rowsHtml += renderDetailRow('Bank Accounts', typeof payment.accounts === 'string' ? payment.accounts : JSON.stringify(payment.accounts), null);
+        }
+        refLabel.textContent = 'Sender Name or Bank Transfer Reference *';
+        refInput.placeholder = 'Enter transfer session ID or sender account name';
+      }
+
+      if (!rowsHtml) {
+        rowsHtml += renderDetailRow('Amount Due', order.price || '', null);
+      }
+
+      detailsBox.innerHTML = rowsHtml;
+      instrEl.textContent = payment.instructions || 'Complete the transfer above, then submit your transaction reference below.';
+
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      const confirmBtn = document.getElementById('confirmPayBtn');
+      if (confirmBtn) {
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = `<span>Complete Steps on Left ↓</span>`;
+      }
+    }
+
+    async function handleConfirmPayment() {
+      if (!pendingCheckout) {
+        showToast('Checkout session missing. Returning to checkout...');
+        window.location.href = 'checkout.html';
+        return;
+      }
+
+      if (createdOrder) {
+        if (createdOrder.checkoutUrl) {
+          preserveReservationOnUnload = true;
+          window.location.assign(createdOrder.checkoutUrl);
+          return;
+        }
+        document.getElementById('inlinePaymentPanel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
+      const payBtn = document.getElementById('confirmPayBtn');
+      payBtn.disabled = true;
+      payBtn.innerHTML = `<span>Initializing ${escapeHtml(selectedGateway)}...</span>`;
+
+      try {
+        const res = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: pendingCheckout.productId,
+            duration: pendingCheckout.duration,
+            quantity: pendingCheckout.quantity,
+            customerName: pendingCheckout.customerName,
+            customerEmail: pendingCheckout.customerEmail,
+            customerPhone: pendingCheckout.customerPhone,
+            deliveryChannel: pendingCheckout.deliveryChannel,
+            deliveryContact: pendingCheckout.deliveryContact,
+            productSpecificInfo: pendingCheckout.productSpecificInfo,
+            notes: pendingCheckout.notes,
+            currency: getCurrency(),
+            gateway: selectedGateway.toLowerCase(),
+            reservationToken: activeReservationToken
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.order) {
+          throw new Error(data.message || 'Order creation failed');
+        }
+
+        createdOrder = data.order;
+        const redirectUrl = createdOrder.checkoutUrl || data.checkoutUrl || createdOrder.payment?.checkout_url || null;
+        if (redirectUrl) {
+          createdOrder.checkoutUrl = redirectUrl;
+        }
+        localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
+
+        if (redirectUrl) {
+          preserveReservationOnUnload = true;
+          window.location.assign(redirectUrl);
+          return;
+        }
+
+        showInlinePaymentInstructions(createdOrder);
+      } catch (err) {
+        console.error('Payment initialization failed:', err);
+        showToast(err.message || 'Payment could not be initialized. Please try again.');
+        payBtn.disabled = false;
+        updatePayButtonLabel();
+      }
+    }
+
+    async function submitPaymentReference() {
+      const reference = document.getElementById('paymentReferenceInput').value.trim();
+      const submitBtn = document.getElementById('paymentReferenceSubmit');
+      if (!reference) {
+        showToast('Enter the transaction reference.');
+        document.getElementById('paymentReferenceInput')?.focus();
+        return;
+      }
+      if (!createdOrder) {
+        showToast('Please select a gateway and initialize payment first.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Submitting &amp; Verifying...</span>`;
+
+      try {
+        const orderIdentifier = createdOrder.botOrderId || createdOrder.id;
+        const gw = String(createdOrder.gateway || selectedGateway).toLowerCase();
+
+        if (createdOrder.botOrderId && createdOrder.accessToken) {
+          const response = await fetch(`/api/orders/${encodeURIComponent(createdOrder.botOrderId)}/payment-reference`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accessToken: createdOrder.accessToken, reference })
+          });
+          const result = await response.json();
+          if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Reference could not be submitted.');
+          }
+
+          if (['trc20', 'bep20'].includes(gw)) {
+            const verification = await fetch('/api/payment/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                orderId: createdOrder.botOrderId,
+                accessToken: createdOrder.accessToken,
+                transactionHash: reference
+              })
+            });
+            const verified = await verification.json();
+            if (verified.order) {
+              createdOrder = { ...createdOrder, ...verified.order };
+              localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
+            }
+            if (!verified.success && verification.status !== 402) {
+              throw new Error(verified.message || 'Payment could not be verified.');
+            }
+          }
+        } else {
+          // Local standalone server fallback verification
+          const verification = await fetch('/api/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderId: createdOrder.id,
+              reference,
+              gateway: createdOrder.gateway || selectedGateway,
+              reservationToken: activeReservationToken
+            })
+          });
+          const verified = await verification.json();
+          if (!verification.ok || !verified.success) {
+            throw new Error(verified.message || 'Payment could not be verified.');
+          }
+          if (verified.order) {
+            createdOrder = { ...createdOrder, ...verified.order };
+          }
+        }
+
+        localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
+        sessionStorage.removeItem(PENDING_CHECKOUT_KEY);
+        localStorage.removeItem(PENDING_CHECKOUT_KEY);
+        preserveReservationOnUnload = true;
+
+        const accessHash = createdOrder.accessToken ? `#access=${encodeURIComponent(createdOrder.accessToken)}` : '';
+        window.location.assign(`success.html?orderId=${encodeURIComponent(orderIdentifier)}${accessHash}`);
+      } catch (err) {
+        showToast(err.message || 'Reference submission failed.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Submit Payment Reference</span>`;
+      }
+    }
+
+    async function initPaymentPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const rawPending = sessionStorage.getItem(PENDING_CHECKOUT_KEY) || sessionStorage.getItem('creditlog_checkout_details') || localStorage.getItem(PENDING_CHECKOUT_KEY);
+
+      if (!rawPending) {
+        const fallbackProdId = urlParams.get('productId') || urlParams.get('id');
+        if (fallbackProdId) {
+          window.location.replace(`checkout.html?productId=${encodeURIComponent(fallbackProdId)}&duration=${encodeURIComponent(urlParams.get('duration') || '')}&qty=${encodeURIComponent(urlParams.get('qty') || '1')}`);
+        } else {
+          window.location.replace('shop.html');
+        }
+        return;
+      }
+
+      try {
+        pendingCheckout = JSON.parse(rawPending);
+      } catch (e) {
+        window.location.replace('checkout.html');
+        return;
+      }
+
+      if (!pendingCheckout || !pendingCheckout.productId || !pendingCheckout.customerEmail) {
+        window.location.replace('checkout.html');
+        return;
+      }
+
+      currentProduct = pendingCheckout.productSnapshot || null;
+      serverQuote = pendingCheckout.quoteSnapshot || null;
+      activeReservationToken = pendingCheckout.reservationToken || null;
+
+      // Populate customer preview
+      document.getElementById('summaryCustName').textContent = pendingCheckout.customerName || 'Customer';
+      document.getElementById('summaryCustEmail').textContent = pendingCheckout.customerEmail || '';
+      document.getElementById('summaryCustChannel').textContent = `Channel: ${pendingCheckout.deliveryChannel || 'Email'}`;
+
+      // Start reservation timer if active
+      if (activeReservationToken && pendingCheckout.reservationExpiresAt && pendingCheckout.reservationExpiresAt > Date.now()) {
+        const banner = document.getElementById('reservationNoticeBanner');
+        if (banner) banner.style.display = 'flex';
+        startCountdownTimer(pendingCheckout.reservationExpiresAt);
+      }
+
+      // Fetch fresh product info if needed
+      try {
+        const res = await fetch(`/api/products/${encodeURIComponent(pendingCheckout.productId)}`);
+        if (res.ok) {
+          const apiData = await res.json();
+          if (apiData.success && apiData.data) currentProduct = apiData.data;
+        }
+      } catch (e) {}
+
+      if (currentProduct) {
+        document.getElementById('summaryProdTitle').textContent = currentProduct.name;
+        document.getElementById('summaryProdOption').textContent = `Option: ${pendingCheckout.duration || currentProduct.duration || 'Standard'}`;
+        document.getElementById('summaryDeliveryFormat').textContent = `Delivery: ${currentProduct.deliveryFormat || 'Instant Dispatch'}`;
+        document.getElementById('summaryQtyDisplay').textContent = pendingCheckout.quantity || 1;
+
+        const reqBanner = document.getElementById('summaryRequirementsBanner');
+        const reqText = document.getElementById('summaryRequirementsText');
+        const rawReq = (currentProduct.importantRequirements || currentProduct.requirements || '').trim();
+        if (reqBanner && reqText && rawReq) {
+          reqText.textContent = rawReq;
+          reqBanner.style.display = 'block';
+        }
+
+        const iconTile = document.getElementById('summaryIconTile');
+        if (iconTile && typeof renderBrandIcon === 'function') {
+          iconTile.outerHTML = renderBrandIcon(currentProduct, { size: 44, radius: 12, id: 'summaryIconTile', className: 'summary-icon-tile' });
+        }
+      }
+
+      if (serverQuote) {
+        document.getElementById('summaryUnitPrice').textContent = formatPrice(serverQuote.unitPriceUsd);
+        document.getElementById('summaryTotalBig').textContent = serverQuote.formattedPrice;
+      }
+
+      updatePayButtonLabel();
+      await fetchServerQuote();
+    }
+
+    // Release held stock only if user exits without completing or going back to checkout
+    window.addEventListener('beforeunload', () => {
+      if (!preserveReservationOnUnload && activeReservationToken) {
+        navigator.sendBeacon('/api/inventory/release', JSON.stringify({ reservationToken: activeReservationToken }));
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', initPaymentPage);
+
+    window.addEventListener('currencychange', async () => {
+      await fetchServerQuote();
+    });
+  </script>
+
+</body>
+</html>

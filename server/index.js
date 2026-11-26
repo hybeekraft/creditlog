@@ -26,6 +26,7 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(process.cwd(), 'shop.html'));
     fs.readFileSync(path.join(process.cwd(), 'product.html'));
     fs.readFileSync(path.join(process.cwd(), 'checkout.html'));
+    fs.readFileSync(path.join(process.cwd(), 'payment.html'));
     fs.readFileSync(path.join(process.cwd(), 'success.html'));
     fs.readFileSync(path.join(process.cwd(), 'robots.txt'));
     fs.readFileSync(path.join(process.cwd(), 'sitemap.xml'));
@@ -48,6 +49,7 @@ if (process.env.__VERCEL_NFT_BUNDLE_DUMMY) {
     fs.readFileSync(path.join(__dirname, '..', 'shop.html'));
     fs.readFileSync(path.join(__dirname, '..', 'product.html'));
     fs.readFileSync(path.join(__dirname, '..', 'checkout.html'));
+    fs.readFileSync(path.join(__dirname, '..', 'payment.html'));
     fs.readFileSync(path.join(__dirname, '..', 'success.html'));
     fs.readFileSync(path.join(__dirname, '..', 'admin.html'));
     fs.readFileSync(path.join(__dirname, '..', 'orders.html'));
@@ -117,7 +119,7 @@ async function createBachsCheckoutSession(orderData, reqHost) {
 
   const storeUrl = process.env.STORE_URL || `http://${reqHost || 'localhost:3000'}`;
   const successUrl = `${storeUrl}/success.html?orderId=${encodeURIComponent(orderData.id)}`;
-  const cancelUrl = `${storeUrl}/checkout.html?orderId=${encodeURIComponent(orderData.id)}`;
+  const cancelUrl = `${storeUrl}/payment.html?orderId=${encodeURIComponent(orderData.id)}`;
 
   if (isDemo) {
     return {

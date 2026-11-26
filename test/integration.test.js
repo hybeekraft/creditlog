@@ -950,7 +950,7 @@ test('30. Click-to-Switch Currency Toggle: Direct switch on click without dropdo
   assert.ok(!toggleHtml.includes('currency-dropdown-menu'), 'Toggle must not render dropdown menu');
 
   // Check storefront pages for currency toggle
-  const pages = ['shop.html', 'index.html', 'product.html', 'checkout.html'];
+  const pages = ['shop.html', 'index.html', 'product.html', 'checkout.html', 'payment.html'];
   for (const pageName of pages) {
     const pageHtml = fs.readFileSync(path.resolve(__dirname, `../${pageName}`), 'utf8');
     assert.ok(
@@ -1063,6 +1063,23 @@ test('34. Storefront & Admin Integrity: viewSupplierProducts defined and canonic
 
   const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
   assert.ok(shopHtml.includes('getProductCategory(prod)'), 'shop.html must resolve canonical category name in list row');
+});
+
+test('35. Dedicated Payment Page Flow: checkout.html transitions to payment.html for gateway selection & inline verification', async () => {
+  const checkoutHtml = fs.readFileSync(path.resolve(__dirname, '../checkout.html'), 'utf8');
+  assert.ok(!checkoutHtml.includes('3. Payment Gateway'), 'checkout.html must not embed Section 3 payment gateway selection');
+  assert.ok(!checkoutHtml.includes('id="paymentGatewayModal"'), 'checkout.html must not embed gateway modal');
+  assert.ok(checkoutHtml.includes('payment.html?productId='), 'checkout.html must navigate to payment.html after Proceed to Payment');
+
+  const paymentHtml = fs.readFileSync(path.resolve(__dirname, '../payment.html'), 'utf8');
+  for (const gw of ['Bachs', 'CryptoBot', 'Bank', 'Binance', 'TRC20', 'BEP20']) {
+    assert.ok(paymentHtml.includes(`selectGateway('${gw}')`), `payment.html must render gateway option ${gw}`);
+  }
+  assert.ok(paymentHtml.includes('id="inlinePaymentPanel"'), 'payment.html must support inline manual/crypto payment verification');
+  assert.ok(paymentHtml.includes('/api/orders/create'), 'payment.html must initialize orders via /api/orders/create');
+
+  const res = await fetch(`${baseUrl}/payment.html`);
+  assert.equal(res.status, 200, 'Server must serve /payment.html with HTTP 200');
 });
 
 

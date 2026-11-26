@@ -18,6 +18,8 @@ Disallow: /activity-logs
 # Block private customer checkout sessions and order receipt pages
 Disallow: /checkout.html
 Disallow: /checkout
+Disallow: /payment.html
+Disallow: /payment
 Disallow: /success.html
 Disallow: /success
 

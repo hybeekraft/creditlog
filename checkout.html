@@ -11,332 +11,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D04515'><path d='M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z'/></svg>">
-  <style>
-    /* Checkout page styles */
-    .checkout-page-shell {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 24px 20px 80px;
-    }
-
-    /* Top bar */
-    .checkout-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0 24px;
-      border-bottom: 1px solid rgba(25, 13, 8, 0.08);
-      margin-bottom: 28px;
-    }
-
-    .cancel-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      border-radius: 9999px;
-      background: #FFFFFF;
-      border: 1px solid rgba(25, 13, 8, 0.12);
-      color: #190D08;
-      font-size: 13.5px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .cancel-link-btn:hover {
-      background: #FBF6EA;
-      color: #D04515;
-      border-color: #D04515;
-      transform: translateX(-2px);
-    }
-
-    .checkout-layout-grid {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 28px;
-      align-items: start;
-    }
-
-    /* Form layout */
-    .checkout-card {
-      background: #FFFFFF;
-      border: 1px solid rgba(25, 13, 8, 0.09);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 20px;
-    }
-
-    .card-heading {
-      font-size: 17px;
-      font-weight: 800;
-      color: #190D08;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .form-group-item {
-      margin-bottom: 16px;
-    }
-
-    .form-group-item label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: #190D08;
-      margin-bottom: 6px;
-    }
-
-    .form-group-item input,
-    .form-group-item textarea,
-    .form-group-item select {
-      width: 100%;
-      background: #FBF6EA;
-      border: 1.5px solid rgba(25, 13, 8, 0.12);
-      border-radius: 12px;
-      padding: 12px 14px;
-      color: #190D08;
-      font-size: 14px;
-      outline: none;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-
-    .form-group-item input:focus,
-    .form-group-item textarea:focus,
-    .form-group-item select:focus {
-      border-color: #D04515;
-      background: #FFFFFF;
-      box-shadow: 0 0 0 3px rgba(208, 69, 21, 0.12);
-    }
-
-    .form-help-hint {
-      font-size: 11.5px;
-      color: #705E51;
-      margin-top: 4px;
-      line-height: 1.4;
-      display: block;
-    }
-
-    .form-row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    /* Contact channel pills */
-    .channel-pills-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .channel-pill-btn {
-      background: #FBF6EA;
-      border: 1.5px solid rgba(25, 13, 8, 0.1);
-      border-radius: 12px;
-      padding: 10px 8px;
-      text-align: center;
-      cursor: pointer;
-      color: #705E51;
-      font-size: 12.5px;
-      font-weight: 700;
-      transition: all 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .channel-pill-btn:hover {
-      background: #F0EEE6;
-      color: #190D08;
-    }
-
-    .channel-pill-btn.active {
-      background: rgba(208, 69, 21, 0.08);
-      border-color: #D04515;
-      color: #D04515;
-    }
-
-    /* Payment methods */
-    .gateways-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .gateway-option-card {
-      background: #FBF6EA;
-      border: 1.5px solid rgba(25, 13, 8, 0.08);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .gateway-option-card:hover {
-      background: #F3EFE8;
-      border-color: rgba(25, 13, 8, 0.18);
-    }
-
-    .gateway-option-card.active {
-      background: rgba(208, 69, 21, 0.06);
-      border-color: #D04515;
-    }
-
-    .gw-info-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .gw-name-text {
-      font-size: 14px;
-      font-weight: 700;
-      color: #190D08;
-    }
-
-    .gw-desc-text {
-      font-size: 11.5px;
-      color: #705E51;
-      margin-top: 2px;
-    }
-
-    /* Order summary */
-    .order-summary-card {
-      background: #FFFFFF;
-      border: 1px solid rgba(25, 13, 8, 0.09);
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
-      position: sticky;
-      top: 80px;
-    }
-
-    .selected-product-box {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(25, 13, 8, 0.08);
-      margin-bottom: 18px;
-    }
-
-    .summary-icon-tile {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: #FBF6EA;
-      border: 1px solid rgba(25, 13, 8, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .summary-prod-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #190D08;
-      line-height: 1.3;
-    }
-
-    .summary-prod-option {
-      font-size: 12.5px;
-      color: #D04515;
-      font-weight: 600;
-      margin-top: 2px;
-    }
-
-    .summary-row-line {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13.5px;
-      color: #705E51;
-      margin-bottom: 10px;
-    }
-
-    .summary-total-line {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid rgba(25, 13, 8, 0.08);
-      margin-top: 14px;
-      margin-bottom: 22px;
-    }
-
-    .total-big-val {
-      font-size: 26px;
-      font-weight: 800;
-      color: #190D08;
-      letter-spacing: -0.02em;
-    }
-
-    .checkout-pay-btn {
-      width: 100%;
-      background: #D04515;
-      color: #FFFFFF;
-      font-size: 15px;
-      font-weight: 800;
-      padding: 14px 20px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 14px rgba(208, 69, 21, 0.3);
-    }
-
-    .checkout-pay-btn:hover {
-      background: #BD3F14;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(208, 69, 21, 0.4);
-    }
-
-    .checkout-pay-btn:active {
-      transform: scale(0.98);
-    }
-
-    @media (max-width: 820px) {
-      .checkout-layout-grid {
-        grid-template-columns: 1fr;
-      }
-      .order-summary-card {
-        position: static;
-        order: -1;
-      }
-      .form-row-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
 
   <main class="main-content">
     <div class="checkout-page-shell">
-      
+
       <!-- Top bar -->
       <div class="checkout-top-bar">
         <a href="javascript:void(0)" onclick="handleCancel()" class="cancel-link-btn" id="cancelCheckoutBtn">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
           </svg>
-          <span>Cancel & Return</span>
+          <span>Cancel &amp; Return</span>
         </a>
 
         <button type="button" class="currency-toggle-btn" onclick="toggleCurrency()" aria-label="Current currency: NGN. Click to switch to USD ($)." title="Click to switch to USD ($)">
@@ -348,10 +35,10 @@
       </div>
 
       <div class="checkout-layout-grid">
-        
-        <!-- Customer information -->
+
+        <!-- Customer & delivery details -->
         <div class="checkout-left-col">
-          
+
           <!-- Customer details -->
           <div class="checkout-card">
             <h2 class="card-heading">
@@ -379,7 +66,7 @@
           <div class="checkout-card">
             <h2 class="card-heading">
               <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515; margin-right: 6px;"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-              <span>2. Delivery & Contact Preferences</span>
+              <span>2. Delivery &amp; Contact Preferences</span>
             </h2>
             <label style="font-size: 13px; font-weight: 700; color: #190D08; margin-bottom: 8px; display: block;">
               Preferred Dispatch Channel *
@@ -423,49 +110,14 @@
             </div>
           </div>
 
-          <!-- Payment method -->
-          <div class="checkout-card">
-            <h2 class="card-heading">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515; margin-right: 6px;"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
-              <span>3. Payment Gateway</span>
-            </h2>
-            <div class="gateways-list">
-              <div class="gateway-option-card active" id="gwCardBachs" onclick="selectGateway('Bachs')">
-                <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="Bachs" checked style="accent-color: #D04515;">
-                  <div>
-                    <div class="gw-name-text">Bachs Global & Local Checkout</div>
-                    <div class="gw-desc-text">Cards, Bank Transfer, Mobile Money & Stablecoins (USDT / USDC)</div>
-                  </div>
-                </div>
-                <span style="font-size: 11px; font-weight: 800; background: #0F172A; color: #FFF; padding: 2px 8px; border-radius: 4px;">Bachs</span>
-              </div>
-
-              <div class="gateway-option-card" id="gwCardCryptoBot" onclick="selectGateway('CryptoBot')">
-                <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="CryptoBot" style="accent-color: #D04515;">
-                  <div>
-                    <div class="gw-name-text">CryptoBot</div>
-                    <div class="gw-desc-text">Pay through your Telegram CryptoBot wallet</div>
-                  </div>
-                </div>
-                <span style="font-size: 11px; font-weight: 800; background: #0F172A; color: #FFF; padding: 2px 8px; border-radius: 4px;">Crypto</span>
-              </div>
-              <div class="gateway-option-card" id="gwCardBank" onclick="selectGateway('Bank')"><div class="gw-info-left"><input type="radio" name="paymentGateway" value="Bank"><div><div class="gw-name-text">Bank transfer</div><div class="gw-desc-text">Manual payment review</div></div></div></div>
-              <div class="gateway-option-card" id="gwCardBinance" onclick="selectGateway('Binance')"><div class="gw-info-left"><input type="radio" name="paymentGateway" value="Binance"><div><div class="gw-name-text">Binance Pay</div><div class="gw-desc-text">Submit the Binance transaction reference for review</div></div></div></div>
-              <div class="gateway-option-card" id="gwCardTRC20" onclick="selectGateway('TRC20')"><div class="gw-info-left"><input type="radio" name="paymentGateway" value="TRC20"><div><div class="gw-name-text">USDT · TRC20</div><div class="gw-desc-text">On chain transaction verification</div></div></div></div>
-              <div class="gateway-option-card" id="gwCardBEP20" onclick="selectGateway('BEP20')"><div class="gw-info-left"><input type="radio" name="paymentGateway" value="BEP20"><div><div class="gw-name-text">USDT · BEP20</div><div class="gw-desc-text">On chain transaction verification</div></div></div></div>
-            </div>
-          </div>
-
         </div>
 
         <!-- Right: Order summary -->
         <aside class="order-summary-card">
           <h3 style="font-size: 16px; font-weight: 800; color: #190D08; margin-bottom: 16px;">Order Summary</h3>
-          
+
           <!-- Real-Time Stock Reservation Banner -->
-          <div id="reservationNoticeBanner" style="display: none; background: rgba(217, 90, 34, 0.1); border: 1px solid rgba(217, 90, 34, 0.25); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #D95A22; display: flex; align-items: center; justify-content: space-between;">
+          <div id="reservationNoticeBanner" style="display: none; background: rgba(217, 90, 34, 0.1); border: 1px solid rgba(217, 90, 34, 0.25); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 12.5px; color: #D95A22; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <span>Stock Reserved: <strong id="resvCountdownTimer">15:00</strong></span>
@@ -530,119 +182,6 @@
 
       </div>
     </div>
-
-    <!-- REAL-TIME PAYMENT GATEWAY MODAL -->
-    <div id="paymentGatewayModal" class="gateway-modal-backdrop hidden">
-      <div class="gateway-modal-card">
-        <div class="gateway-modal-header" id="gwHeader">
-          <div class="gw-brand-wrap">
-            <span class="gw-logo" id="gwLogo">Bachs</span>
-            <div class="gw-secured-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7c0-2.757-2.243-5-5-5zm-3 5c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"/></svg>
-              <span>PCI-DSS Encrypted</span>
-            </div>
-          </div>
-          <button type="button" class="gw-close-btn" onclick="closeGatewayModal()" title="Cancel Payment">✕</button>
-        </div>
-
-        <div class="gw-merchant-strip">
-          <div class="gw-merchant-info">
-            <span class="gw-merchant-name">CreditLog Automated Subscriptions</span>
-            <span class="gw-cust-email" id="gwCustomerEmail">customer@example.com</span>
-          </div>
-          <div class="gw-amount-box">
-            <span class="gw-amount-label">Amount Due</span>
-            <span class="gw-amount-val" id="gwAmountDisplay">$0.00</span>
-          </div>
-        </div>
-
-        <!-- Gateway Channel Tabs -->
-        <div class="gw-tabs-nav" id="gwTabsNav">
-          <button type="button" class="gw-tab-btn active" id="gwTabCard" onclick="switchGwTab('card')">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
-            <span>Card</span>
-          </button>
-          <button type="button" class="gw-tab-btn" id="gwTabTransfer" onclick="switchGwTab('transfer')">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-            <span>Bank Transfer</span>
-          </button>
-          <button type="button" class="gw-tab-btn" id="gwTabUssd" onclick="switchGwTab('ussd')">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
-            <span>USSD</span>
-          </button>
-        </div>
-
-        <!-- Tab 1: Card Payment -->
-        <div class="gw-tab-pane" id="gwPaneCard">
-          <div class="gw-input-group">
-            <label>Card Number</label>
-            <div class="gw-card-input-wrap">
-              <input type="text" id="gwCardNumber" autocomplete="off" maxlength="19">
-              <span class="gw-card-brand-badge" id="gwCardBrand">Mastercard</span>
-            </div>
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-            <div class="gw-input-group">
-              <label>Valid Thru (MM/YY)</label>
-              <input type="text" id="gwCardExpiry" autocomplete="off" maxlength="5">
-            </div>
-            <div class="gw-input-group">
-              <label>CVV</label>
-              <input type="password" id="gwCardCvv" autocomplete="off" maxlength="4">
-            </div>
-          </div>
-          <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-size: 11.5px; color: #705E51; display: inline-flex; align-items: center; gap: 4px;">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" style="color: #D04515;"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" clip-rule="evenodd"/></svg>
-              Continue using the payment provider checkout
-            </span>
-          </div>
-        </div>
-
-        <!-- Tab 2: Bank Transfer -->
-        <div class="gw-tab-pane hidden" id="gwPaneTransfer">
-          <div style="background: #FBF6EA; border: 1.5px dashed rgba(25, 13, 8, 0.18); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 12px;">
-            <span style="font-size: 12px; color: #705E51;">Transfer exactly to this temporary virtual account:</span>
-            <div style="font-size: 21px; font-weight: 800; color: #190D08; letter-spacing: 1.5px; margin: 6px 0;" id="gwVirtualAcc">Bank account details come from the server</div>
-            <div style="font-size: 13px; font-weight: 700; color: #D04515;" id="gwVirtualBank">Wema Bank / CreditLog Checkout</div>
-            <span style="font-size: 11px; color: #8C827A; display: block; margin-top: 4px;">Dynamic account expires in 30:00 mins</span>
-          </div>
-          <button type="button" onclick="copyVirtualAccount()" class="gw-test-btn" style="width: 100%; justify-content: center; padding: 8px; display: inline-flex; align-items: center; gap: 6px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-            <span>Copy Account Number</span>
-          </button>
-        </div>
-
-        <!-- Tab 3: USSD -->
-        <div class="gw-tab-pane hidden" id="gwPaneUssd">
-          <div style="padding: 4px 0;">
-            <label style="font-size: 12px; font-weight: 600; color: #705E51; margin-bottom: 6px; display: block;">Select your Bank:</label>
-            <select id="gwUssdBank" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(25, 13, 8, 0.14); font-size: 13.5px; background: #FBF6EA; color: #190D08;" onchange="updateUssdCode(this.value)">
-              <option value="GTBank">GTBank (*737*2*Amount*Ref#)</option>
-              <option value="Zenith">Zenith Bank (*966*Amount*Ref#)</option>
-              <option value="Access">Access Bank (*901*Amount*Ref#)</option>
-              <option value="UBA">UBA (*919*Amount*Ref#)</option>
-              <option value="FirstBank">First Bank (*894*Amount*Ref#)</option>
-            </select>
-            <div style="margin-top: 12px; padding: 12px; background: rgba(208, 69, 21, 0.08); border: 1px solid rgba(208, 69, 21, 0.2); border-radius: 8px; font-family: monospace; font-size: 14.5px; font-weight: 700; color: #D04515; text-align: center;" id="gwUssdDisplay">
-              Payment instructions come from the server
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit & Auth Button -->
-        <div style="padding: 0 20px 18px;">
-          <button type="button" class="gw-pay-action-btn" id="gwPaySubmitBtn" onclick="authorizeGatewayPayment()">
-            <span id="gwBtnText">Authorize & Pay Now</span>
-          </button>
-        </div>
-
-        <div class="gw-modal-footer">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          <span id="gwFooterText">Protected by Bachs 256-bit PCI-DSS Security</span>
-        </div>
-      </div>
-    </div>
   </main>
 
   <script src="/shared.js"></script>
@@ -652,17 +191,20 @@
     let currentDuration = '';
     let currentQty = 1;
     let selectedDeliveryChannel = 'Email';
-    let selectedGateway = 'Bachs';
     let currentProduct = null;
     let serverQuote = null;
-    let createdOrder = null;
     let activeReservationToken = null;
     let reservationExpiresAt = null;
     let countdownIntervalId = null;
+    let isNavigatingToPayment = false;
+
+    const PENDING_CHECKOUT_KEY = 'creditlog_pending_checkout';
 
     // Cancel and go back
     async function handleCancel() {
       await releaseStockReservation();
+      sessionStorage.removeItem(PENDING_CHECKOUT_KEY);
+      localStorage.removeItem(PENDING_CHECKOUT_KEY);
       if (currentProductId) {
         window.location.href = `product.html?id=${encodeURIComponent(currentProductId)}`;
       } else {
@@ -690,7 +232,7 @@
     // Hold stock on server
     async function reserveStock(qty) {
       if (countdownIntervalId) clearInterval(countdownIntervalId);
-      
+
       const banner = document.getElementById('reservationNoticeBanner');
       const errorBanner = document.getElementById('stockErrorBanner');
       const payBtn = document.getElementById('proceedPayBtn');
@@ -724,7 +266,6 @@
           }
           return true;
         } else if (res.status === 409 || (data && data.inStock === false)) {
-          // Out of stock confirmed
           activeReservationToken = null;
           if (banner) banner.style.display = 'none';
           if (errorBanner) {
@@ -739,7 +280,6 @@
           showToast(data.message || 'Product is currently out of stock.');
           return false;
         } else {
-          // Graceful fallback for direct checkout
           if (payBtn && serverQuote && serverQuote.inStock !== false) {
             payBtn.disabled = false;
             payBtn.classList.remove('disabled');
@@ -781,7 +321,7 @@
     // Initialize checkout
     async function initCheckout() {
       const urlParams = new URLSearchParams(window.location.search);
-      currentProductId = urlParams.get('productId') || urlParams.get('id') || 'netflix-premium';
+      currentProductId = urlParams.get('productId') || urlParams.get('id') || urlParams.get('sku') || 'netflix-premium';
       currentDuration = urlParams.get('duration') || urlParams.get('plan') || '';
       currentQty = parseInt(urlParams.get('qty') || '1', 10) || 1;
 
@@ -800,7 +340,7 @@
 
       // Fallback to local catalog if offline
       if (!currentProduct) {
-        const source = (typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS;
+        const source = (typeof getAllCatalogProducts === 'function') ? getAllCatalogProducts() : ((typeof CATALOG_PRODUCTS !== 'undefined') ? CATALOG_PRODUCTS : PRODUCTS);
         currentProduct = source.find(p => p.id === currentProductId) || source[0];
       }
 
@@ -859,17 +399,49 @@
         iconTile.outerHTML = renderBrandIcon(currentProduct, { size: 44, radius: 12, id: 'summaryIconTile', className: 'summary-icon-tile' });
       }
 
-      // Pre-fill saved customer info
-      const savedCust = JSON.parse(localStorage.getItem('creditlog_last_customer') || '{}');
-      if (savedCust.name) document.getElementById('custName').value = savedCust.name;
-      if (savedCust.email) document.getElementById('custEmail').value = savedCust.email;
-      if (savedCust.phone) document.getElementById('custPhone').value = savedCust.phone;
+      // Pre-fill pending session (if returning from payment.html) or saved customer details
+      let restoredReservation = false;
+      try {
+        const pendingRaw = sessionStorage.getItem(PENDING_CHECKOUT_KEY) || localStorage.getItem(PENDING_CHECKOUT_KEY);
+        const pending = pendingRaw ? JSON.parse(pendingRaw) : null;
+        if (pending && String(pending.productId) === String(currentProductId)) {
+          if (pending.customerName) document.getElementById('custName').value = pending.customerName;
+          if (pending.customerEmail) document.getElementById('custEmail').value = pending.customerEmail;
+          if (pending.customerPhone) document.getElementById('custPhone').value = pending.customerPhone;
+          if (pending.deliveryChannel) selectChannel(pending.deliveryChannel);
+          if (pending.deliveryContact && pending.deliveryContact !== pending.customerPhone && pending.deliveryContact !== pending.customerEmail) {
+            document.getElementById('altContactInput').value = pending.deliveryContact;
+          }
+          if (pending.productSpecificInfo) document.getElementById('productSpecificInput').value = pending.productSpecificInfo;
+          if (pending.notes) document.getElementById('orderNotes').value = pending.notes;
+          if (pending.reservationToken && pending.reservationExpiresAt && pending.reservationExpiresAt > Date.now() && Number(pending.quantity) === currentQty) {
+            activeReservationToken = pending.reservationToken;
+            reservationExpiresAt = pending.reservationExpiresAt;
+            const banner = document.getElementById('reservationNoticeBanner');
+            if (banner) banner.style.display = 'flex';
+            startCountdownTimer(pending.reservationExpiresAt);
+            restoredReservation = true;
+          }
+        } else {
+          const savedCust = JSON.parse(localStorage.getItem('creditlog_last_customer') || '{}');
+          if (savedCust.name) document.getElementById('custName').value = savedCust.name;
+          if (savedCust.email) document.getElementById('custEmail').value = savedCust.email;
+          if (savedCust.phone) document.getElementById('custPhone').value = savedCust.phone;
+        }
+      } catch (e) {
+        const savedCust = JSON.parse(localStorage.getItem('creditlog_last_customer') || '{}');
+        if (savedCust.name) document.getElementById('custName').value = savedCust.name;
+        if (savedCust.email) document.getElementById('custEmail').value = savedCust.email;
+        if (savedCust.phone) document.getElementById('custPhone').value = savedCust.phone;
+      }
 
       // Get price quote from server
       await fetchServerQuote();
 
-      // Hold stock on server
-      await reserveStock(currentQty);
+      // Hold stock on server unless restored from active payment session
+      if (!restoredReservation) {
+        await reserveStock(currentQty);
+      }
     }
 
     // Get order quote from server
@@ -947,20 +519,8 @@
       }
     }
 
-    // Choose payment method
-    function selectGateway(gw) {
-      selectedGateway = gw;
-      document.querySelectorAll('.gateway-option-card').forEach(c => c.classList.remove('active'));
-      const activeCard = document.getElementById(`gwCard${gw}`);
-      if (activeCard) {
-        activeCard.classList.add('active');
-        const radio = activeCard.querySelector('input[type="radio"]');
-        if (radio) radio.checked = true;
-      }
-    }
-
-    // Create order and proceed to payment
-    async function handleProceedToPayment() {
+    // Save checkout details and move to Payment Gateway page
+    function handleProceedToPayment() {
       const name = document.getElementById('custName').value.trim();
       const email = document.getElementById('custEmail').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -968,7 +528,6 @@
       const productSpecific = document.getElementById('productSpecificInput').value.trim();
       const notes = document.getElementById('orderNotes').value.trim();
 
-      // Validate fields
       if (!name) {
         showToast('Please enter your Full Name.');
         document.getElementById('custName').focus();
@@ -988,132 +547,49 @@
       // Save customer details for future orders
       localStorage.setItem('creditlog_last_customer', JSON.stringify({ name, email, phone }));
 
-      const payBtn = document.getElementById('proceedPayBtn');
-      payBtn.disabled = true;
-      payBtn.innerHTML = `<span>Verifying Order with Server...</span>`;
+      const checkoutPayload = {
+        productId: currentProductId,
+        duration: currentDuration,
+        quantity: currentQty,
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        deliveryChannel: selectedDeliveryChannel,
+        deliveryContact: altContact || phone || email,
+        productSpecificInfo: productSpecific,
+        notes: notes,
+        currency: getCurrency(),
+        reservationToken: activeReservationToken,
+        reservationExpiresAt: reservationExpiresAt,
+        productSnapshot: currentProduct ? {
+          id: currentProduct.id,
+          name: currentProduct.name,
+          brand: currentProduct.brand,
+          brandClass: currentProduct.brandClass,
+          iconType: currentProduct.iconType,
+          deliveryFormat: currentProduct.deliveryFormat,
+          importantRequirements: currentProduct.importantRequirements || currentProduct.requirements || '',
+          usdPrice: currentProduct.usdPrice,
+          variants: currentProduct.variants || []
+        } : null,
+        quoteSnapshot: serverQuote,
+        updatedAt: Date.now()
+      };
 
-      // Create order on server
-      try {
-        const res = await fetch('/api/orders/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productId: currentProductId,
-            duration: currentDuration,
-            quantity: currentQty,
-            customerName: name,
-            customerEmail: email,
-            customerPhone: phone,
-            deliveryChannel: selectedDeliveryChannel,
-            deliveryContact: altContact || phone || email,
-            productSpecificInfo: productSpecific,
-            notes: notes,
-            currency: getCurrency(),
-            gateway: selectedGateway.toLowerCase(),
-            reservationToken: activeReservationToken
-          })
-        });
+      const serialized = JSON.stringify(checkoutPayload);
+      sessionStorage.setItem(PENDING_CHECKOUT_KEY, serialized);
+      localStorage.setItem(PENDING_CHECKOUT_KEY, serialized);
+      sessionStorage.setItem('creditlog_checkout_details', serialized);
 
-        const data = await res.json();
-        if (data.success && data.order) {
-          createdOrder = data.order;
-          localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
-        } else {
-          throw new Error(data.message || 'Order creation failed');
-        }
-      } catch (err) {
-        console.error('Order creation failed:', err);
-        showToast(err.message || 'Order could not be created. Please try again.');
-        payBtn.disabled = false;
-        payBtn.textContent = 'Try again';
-        return;
-      }
-
-      payBtn.disabled = false;
-      payBtn.innerHTML = `<span>Proceed to Payment (${createdOrder.price})</span>`;
-
-      // Open payment modal
-      openGatewayModal(createdOrder);
+      // Keep reservation active across transition to payment.html
+      isNavigatingToPayment = true;
+      const paymentUrl = `payment.html?productId=${encodeURIComponent(currentProductId)}&duration=${encodeURIComponent(currentDuration)}&qty=${currentQty}${activeReservationToken ? `&reservationToken=${encodeURIComponent(activeReservationToken)}` : ''}`;
+      window.location.href = paymentUrl;
     }
 
-    // Show payment modal
-    function openGatewayModal(order) {
-      const modal = document.getElementById('paymentGatewayModal');
-      if (order.checkoutUrl) { window.location.assign(order.checkoutUrl); return; }
-      const card = modal.querySelector('.gateway-modal-card');
-      const payment = order.payment || {};
-      card.innerHTML = '<div style="padding:24px"><button type="button" onclick="closeGatewayModal()" style="float:right">Close</button><h2 id="paymentTitle"></h2><p id="paymentAmount"></p><pre id="paymentInstructions" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre><label for="paymentReferenceInput">Transaction reference / hash</label><input id="paymentReferenceInput" autocomplete="off" style="width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ddd;border-radius:8px"><button id="paymentReferenceSubmit" type="button" onclick="submitPaymentReference()" class="gw-pay-action-btn">Submit payment reference</button></div>';
-      document.getElementById('paymentTitle').textContent = `Order ${order.id} · ${order.gateway}`;
-      document.getElementById('paymentAmount').textContent = order.price;
-      document.getElementById('paymentInstructions').textContent = [payment.instructions, payment.reference && `Reference: ${payment.reference}`, payment.amountNgn && `Amount: ₦${Number(payment.amountNgn).toLocaleString()}`, payment.address && `Send ${payment.exactAmount} USDT to ${payment.address}`, payment.payId && `Binance Pay ID: ${payment.payId}`, payment.accounts && `Bank accounts: ${JSON.stringify(payment.accounts)}`].filter(Boolean).join('\n');
-      const refInput = document.getElementById('paymentReferenceInput');
-      if (['bachs','cryptobot'].includes(String(order.gateway).toLowerCase())) refInput.hidden = true;
-      if (['bachs','cryptobot'].includes(String(order.gateway).toLowerCase())) document.getElementById('paymentReferenceSubmit').hidden = true;
-      modal.classList.remove('hidden');
-    }
-
-    function closeGatewayModal() {
-      document.getElementById('paymentGatewayModal').classList.add('hidden');
-    }
-
-    function switchGwTab(tab) {
-      document.querySelectorAll('.gw-tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.gw-tab-pane').forEach(p => p.classList.add('hidden'));
-
-      if (tab === 'card') {
-        document.getElementById('gwTabCard').classList.add('active');
-        document.getElementById('gwPaneCard').classList.remove('hidden');
-      } else if (tab === 'transfer') {
-        document.getElementById('gwTabTransfer').classList.add('active');
-        document.getElementById('gwPaneTransfer').classList.remove('hidden');
-      } else if (tab === 'ussd') {
-        document.getElementById('gwTabUssd').classList.add('active');
-        document.getElementById('gwPaneUssd').classList.remove('hidden');
-      }
-    }
-
-    function copyVirtualAccount() {
-      const acc = document.getElementById('gwVirtualAcc').textContent;
-      navigator.clipboard.writeText(acc);
-      showToast(`Virtual account copied: ${acc}`);
-    }
-
-    function updateUssdCode(bank) {
-      const total = createdOrder ? createdOrder.price.replace(/[^0-9]/g, '') : '5500';
-      const ref = Math.floor(10000 + Math.random() * 90000);
-      let code = `*737*2*${total}*${ref}#`;
-      if (bank === 'Zenith') code = `*966*${total}*${ref}#`;
-      if (bank === 'Access') code = `*901*${total}*${ref}#`;
-      if (bank === 'UBA') code = `*919*${total}*${ref}#`;
-      if (bank === 'FirstBank') code = `*894*${total}*${ref}#`;
-      document.getElementById('gwUssdDisplay').textContent = code;
-    }
-
-    // Verify payment with server
-    async function submitPaymentReference() {
-      const reference = document.getElementById('paymentReferenceInput').value.trim();
-      if (!reference || !createdOrder?.accessToken) { showToast('Enter the transaction reference.'); return; }
-      const response = await fetch(`/api/orders/${encodeURIComponent(createdOrder.botOrderId)}/payment-reference`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:createdOrder.accessToken,reference})});
-      const result = await response.json();
-      if (!response.ok || !result.success) { showToast(result.message || 'Reference could not be submitted.'); return; }
-      if (['trc20','bep20'].includes(String(createdOrder.gateway).toLowerCase())) {
-        const verification = await fetch('/api/payment/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:createdOrder.botOrderId,accessToken:createdOrder.accessToken,transactionHash:reference})});
-        const verified = await verification.json();
-        if (verified.order) { createdOrder = {...createdOrder,...verified.order}; localStorage.setItem('creditlog_last_order',JSON.stringify(createdOrder)); }
-        if (!verified.success && verification.status !== 402) { showToast(verified.message || 'Payment could not be verified.'); return; }
-      }
-      localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
-      window.location.assign(`success.html?orderId=${encodeURIComponent(createdOrder.botOrderId)}`);
-    }
-
-    function authorizeGatewayPayment() {
-      if (!createdOrder?.checkoutUrl) { showToast('Payment was not initialized by the payment provider.'); return; }
-      window.location.assign(createdOrder.checkoutUrl);
-    }
-
-    // Release held stock if user leaves without paying
+    // Release held stock only if user exits without proceeding to payment
     window.addEventListener('beforeunload', () => {
-      if (activeReservationToken) {
+      if (!isNavigatingToPayment && activeReservationToken) {
         navigator.sendBeacon('/api/inventory/release', JSON.stringify({ reservationToken: activeReservationToken }));
       }
     });

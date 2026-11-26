@@ -243,6 +243,8 @@
     if (!orderIdParam || !accessToken) { window.location.replace('shop.html'); return; }
     order.accessToken = accessToken;
     localStorage.setItem('creditlog_last_order', JSON.stringify(order));
+    sessionStorage.removeItem('creditlog_pending_checkout');
+    localStorage.removeItem('creditlog_pending_checkout');
 
     document.querySelector('.cred-grid')?.replaceChildren();
     document.querySelector('.cred-instructions')?.remove();
