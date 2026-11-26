@@ -615,16 +615,16 @@
             </div>
           </div>
 
-          <div class="list-row-right" style="display: flex; align-items: center; gap: 14px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="list-row-right" style="display: flex; align-items: center; gap: 16px;">
+            <div class="catalog-stock-col">
               <span class="catalog-stock-pill ${isAvailable ? 'available' : 'out-of-stock'}">
                 ${isAvailable ? '✓ Available' : '× Out Of Stock'}
               </span>
-              <div style="text-align: right;">
-                <span style="font-size: 16px; font-weight: 800; color: #190D08; display: block;">${formattedPrice}</span>
-              </div>
             </div>
-            <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px;">
+            <div class="catalog-price-col">
+              <span style="font-size: 16px; font-weight: 800; color: #190D08; display: block; font-variant-numeric: tabular-nums;">${formattedPrice}</span>
+            </div>
+            <button type="button" class="directory-select-btn" onclick="event.stopPropagation(); navigateToProduct('${prod.id}')" style="padding: 7px 14px; font-size: 12.5px; flex-shrink: 0;">
               <span>Details →</span>
             </button>
           </div>

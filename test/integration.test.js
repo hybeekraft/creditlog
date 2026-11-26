@@ -1065,6 +1065,8 @@ test('36. Catalog Stock Availability Badges: Beside product amounts with Availab
   assert.ok(css.includes('.catalog-stock-pill'), 'style.css must define .catalog-stock-pill');
   assert.ok(css.includes('.catalog-stock-pill.available'), 'style.css must define .catalog-stock-pill.available');
   assert.ok(css.includes('.catalog-stock-pill.out-of-stock'), 'style.css must define .catalog-stock-pill.out-of-stock');
+  assert.ok(css.includes('.catalog-stock-col'), 'style.css must define .catalog-stock-col');
+  assert.ok(css.includes('.catalog-price-col'), 'style.css must define .catalog-price-col');
 });
 
 test.after(async () => {
