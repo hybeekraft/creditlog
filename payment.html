@@ -472,7 +472,7 @@
           })
         });
 
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.success || !data.order) {
           throw new Error(data.message || 'Order creation failed');
         }
@@ -525,7 +525,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ accessToken: createdOrder.accessToken, reference })
           });
-          const result = await response.json();
+          const result = await response.json().catch(() => ({}));
           if (!response.ok || !result.success) {
             throw new Error(result.message || 'Reference could not be submitted.');
           }
@@ -540,7 +540,7 @@
                 transactionHash: reference
               })
             });
-            const verified = await verification.json();
+            const verified = await verification.json().catch(() => ({}));
             if (verified.order) {
               createdOrder = { ...createdOrder, ...verified.order };
               localStorage.setItem('creditlog_last_order', JSON.stringify(createdOrder));
@@ -561,7 +561,7 @@
               reservationToken: activeReservationToken
             })
           });
-          const verified = await verification.json();
+          const verified = await verification.json().catch(() => ({}));
           if (!verification.ok || !verified.success) {
             throw new Error(verified.message || 'Payment could not be verified.');
           }
