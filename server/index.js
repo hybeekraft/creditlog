@@ -1906,7 +1906,9 @@ const server = http.createServer(async (req, res) => {
 
     const newOrder = {
       id: orderId,
+      botOrderId: orderId,
       reference: paymentRef,
+      accessToken: paymentRef,
       status: 'Pending',
       customerName: finalName,
       customerEmail: finalEmail,
