@@ -1044,9 +1044,11 @@ test('35. Dedicated Payment Page Flow: checkout.html transitions to payment.html
   const checkoutHtml = fs.readFileSync(path.resolve(__dirname, '../checkout.html'), 'utf8');
   assert.ok(!checkoutHtml.includes('3. Payment Gateway'), 'checkout.html must not embed Section 3 payment gateway selection');
   assert.ok(!checkoutHtml.includes('id="paymentGatewayModal"'), 'checkout.html must not embed gateway modal');
+  assert.ok(!checkoutHtml.includes('summaryProdOption'), 'checkout.html must not repeat product option/duration below title');
   assert.ok(checkoutHtml.includes('payment.html?productId='), 'checkout.html must navigate to payment.html after Proceed to Payment');
 
   const paymentHtml = fs.readFileSync(path.resolve(__dirname, '../payment.html'), 'utf8');
+  assert.ok(!paymentHtml.includes('summaryProdOption'), 'payment.html must not repeat product option/duration below title');
   for (const gw of ['Bachs', 'CryptoBot', 'Bank', 'Binance', 'TRC20', 'BEP20']) {
     assert.ok(paymentHtml.includes(`selectGateway('${gw}')`), `payment.html must render gateway option ${gw}`);
   }

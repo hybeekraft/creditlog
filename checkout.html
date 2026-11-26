@@ -134,7 +134,6 @@
             <div class="summary-icon-tile" id="summaryIconTile"></div>
             <div>
               <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
-              <div class="summary-prod-option" id="summaryProdOption">Duration: 1 Month</div>
               <div id="summaryDeliveryFormat" style="font-size: 11px; background: rgba(208,69,21,0.08); color: #D04515; font-weight: 700; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-top: 4px;">Delivery: Instant Dispatch</div>
             </div>
           </div>
@@ -357,7 +356,6 @@
 
       // Update order summary
       document.getElementById('summaryProdTitle').textContent = currentProduct.name;
-      document.getElementById('summaryProdOption').textContent = `Option: ${currentDuration || currentProduct.duration || 'Standard'}`;
       document.getElementById('summaryQtyDisplay').textContent = currentQty;
 
       // Show delivery format
