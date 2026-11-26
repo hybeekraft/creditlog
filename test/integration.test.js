@@ -1049,6 +1049,20 @@ test('33. Sticky Footer Layout: Footer remains pinned to viewport bottom without
 
   const indexHtml = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
   assert.ok(indexHtml.indexOf('</main>') < indexHtml.indexOf('<footer class="site-footer-minimal">'), 'index.html footer must be placed outside </main>');
+
+  const productHtml = fs.readFileSync(path.resolve(__dirname, '../product.html'), 'utf8');
+  assert.ok(productHtml.indexOf('</main>') < productHtml.indexOf('<footer class="site-footer-minimal">'), 'product.html footer must be placed outside </main>');
+});
+
+test('34. Storefront & Admin Integrity: viewSupplierProducts defined and canonical category label resolution in shop', async () => {
+  const adminHtml = fs.readFileSync(path.resolve(__dirname, '../admin.html'), 'utf8');
+  assert.ok(adminHtml.includes('function viewSupplierProducts()'), 'admin.html must define viewSupplierProducts()');
+
+  const settingsHtml = fs.readFileSync(path.resolve(__dirname, '../settings.html'), 'utf8');
+  assert.ok(settingsHtml.includes('switchSettingsTab(tabParam)'), 'settings.html must support tab parameter on load');
+
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(shopHtml.includes('getProductCategory(prod)'), 'shop.html must resolve canonical category name in list row');
 });
 
 

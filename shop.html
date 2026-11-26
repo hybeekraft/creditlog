@@ -288,7 +288,7 @@
         <a href="index.html">Home</a>
         <a href="shop.html">Shop</a>
         <a href="index.html#faqSection">FAQ</a>
-        <a href="/login?next=admin.html">Admin</a>
+        <a href="login.html?next=admin.html">Admin</a>
       </nav>
 
       <div class="footer-minimal-socials">
@@ -601,7 +601,8 @@
       pageProducts.forEach((prod, idx) => {
         const formattedPrice = formatPrice(prod.usdPrice);
         const formattedDual = formatDualPrice(prod.usdPrice);
-        const catLabel = (prod.category || 'APP').toUpperCase();
+        const catName = typeof getProductCategory === 'function' ? getProductCategory(prod) : (prod.botCategory || prod.brand || prod.category || 'APP');
+        const catLabel = catName.toUpperCase();
 
         const row = document.createElement('div');
         row.className = 'directory-list-row';
@@ -1237,6 +1238,12 @@
       currentCategory = 'all';
       currentBrand = 'all';
       currentSearch = '';
+      isAvailableOnly = false;
+      const availBtn = document.getElementById('availableOnlyBtn');
+      if (availBtn) {
+        availBtn.classList.remove('active');
+        availBtn.setAttribute('aria-pressed', 'false');
+      }
       const searchInput = document.getElementById('catalogSearchInput');
       if (searchInput) searchInput.value = '';
       const catSearchInput = document.getElementById('categorySearchInput');

@@ -1051,6 +1051,12 @@
       }
       fetchResellerStatus();
       loadAllProductsCatalog();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam) {
+        switchSettingsTab(tabParam);
+      }
     });
 
     async function fetchResellerStatus() {

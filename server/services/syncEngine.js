@@ -704,7 +704,7 @@ class SyncEngine {
       console.log(`[SyncEngine] Sync complete: ${supplierProducts.length} supplier items, ${newCount} added, ${pricesCount} price changes, ${stockCount} stock updates, ${outOfStockCount} out-of-stock. Bot DB synced: ${botDbBridge.isAvailable()}`);
       return this.syncStatus;
     } catch (err) {
-      console.error('[SyncEngine] Sync failed:', err.message);
+      console.warn('[SyncEngine] Sync skipped: supplier wholesale API unreachable (%s)', err.message);
       this.syncStatus.lastStatus = 'failed';
       this.syncStatus.error = err.message;
       return this.syncStatus;

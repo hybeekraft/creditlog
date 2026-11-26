@@ -657,6 +657,10 @@
       }
     }
 
+    function viewSupplierProducts() {
+      window.location.href = 'settings.html?tab=catalog';
+    }
+
     async function clearSystemCacheAndRefresh() {
       if (typeof showToast === 'function') {
         showToast('Clearing system cache and reloading live metrics...');
