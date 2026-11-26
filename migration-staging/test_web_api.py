@@ -125,6 +125,14 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
         body = await allowed.json()
         self.assertEqual(body["data"][0]["customerEmail"], "private@example.com")
 
+    async def test_cryptobot_gateway_rejected(self):
+        response = await self.client.post("/api/orders/create", headers=self.headers, json={
+            "productId": self.product_id, "quantity": 1, "customerName": "Test Buyer",
+            "customerEmail": "buyer@example.com", "customerPhone": "+2348000000000",
+            "gateway": "cryptobot", "currency": "USD",
+        })
+        self.assertEqual(response.status, 422)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -13,7 +13,7 @@ The Node website currently has a second catalog and order store in JSON files. T
 - Guest shopping with persistent Telegram user preferences for language and currency.
 - Featured products, categories, catalog browsing, product descriptions, quantity selection, and live supplier availability.
 - Automatic supplier delivery, manual fulfillment, and assisted fulfillment paths.
-- Bachs checkout with server-side status verification; @CryptoBot invoices; direct bank transfer; Binance Pay; USDT TRC20 and BEP20 transfer.
+- Bachs checkout with server-side status verification; direct bank transfer; Binance Pay; USDT TRC20 and BEP20 transfer.
 - Payment reference submission, duplicate-payment checks, underpayment checks for Bachs, order cancellation, recent orders, and order detail/status checks.
 - Force-subscribe channel gate, support contact, multi-language text, USD/NGN display, custom emoji branding, and order/delivery notifications.
 
@@ -23,7 +23,7 @@ The Node website currently has a second catalog and order store in JSON files. T
 - Inventory: supplier stock synchronization, local stock item upload, low-stock checks, and product delivery-type management.
 - Orders: inspect statistics, approve/reject pending payments, manually deliver content, refund records, inspect supplier orders, and export/backup the database/catalog.
 - Supplier operations: supplier status and balance, catalog fetch, supplier order history, multi-supplier registry from environment, and periodic catalog sync every 10 minutes.
-- Payments: set/pause Bachs, configure Bachs currency/base URL/callback, configure bank accounts, exchange rate, CryptoBot token, Binance Pay ID, and USDT wallets.
+- Payments: set/pause Bachs, configure Bachs currency/base URL/callback, configure bank accounts, exchange rate, Binance Pay ID, and USDT wallets.
 - Store behavior: auto/manual/instant fulfillment mode, force-subscribe channels and admin-check behavior, featured products, broadcast controls, and support/channel configuration.
 
 ### Settings and access model

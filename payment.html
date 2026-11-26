@@ -57,17 +57,6 @@
                 <span class="gw-badge-pill">Bachs</span>
               </div>
 
-              <div class="gateway-option-card" id="gwCardCryptoBot" onclick="selectGateway('CryptoBot')">
-                <div class="gw-info-left">
-                  <input type="radio" name="paymentGateway" value="CryptoBot">
-                  <div>
-                    <div class="gw-name-text">CryptoBot</div>
-                    <div class="gw-desc-text">Pay through your Telegram CryptoBot wallet</div>
-                  </div>
-                </div>
-                <span class="gw-badge-pill">Crypto</span>
-              </div>
-
               <div class="gateway-option-card" id="gwCardBank" onclick="selectGateway('Bank')">
                 <div class="gw-info-left">
                   <input type="radio" name="paymentGateway" value="Bank">
@@ -373,8 +362,7 @@
         binance: 'Binance Pay',
         trc20: 'USDT · TRC20',
         bep20: 'USDT · BEP20',
-        bachs: 'Bachs Checkout',
-        cryptobot: 'CryptoBot'
+        bachs: 'Bachs Checkout'
       };
 
       titleEl.textContent = `Order ${order.id} · ${gwLabels[gw] || order.gateway}`;

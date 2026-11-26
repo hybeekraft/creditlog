@@ -1049,9 +1049,10 @@ test('35. Dedicated Payment Page Flow: checkout.html transitions to payment.html
 
   const paymentHtml = fs.readFileSync(path.resolve(__dirname, '../payment.html'), 'utf8');
   assert.ok(!paymentHtml.includes('summaryProdOption'), 'payment.html must not repeat product option/duration below title');
-  for (const gw of ['Bachs', 'CryptoBot', 'Bank', 'Binance', 'TRC20', 'BEP20']) {
+  for (const gw of ['Bachs', 'Bank', 'Binance', 'TRC20', 'BEP20']) {
     assert.ok(paymentHtml.includes(`selectGateway('${gw}')`), `payment.html must render gateway option ${gw}`);
   }
+  assert.ok(!/cryptobot/i.test(paymentHtml), 'payment.html must not contain CryptoBot payment option');
   assert.ok(paymentHtml.includes('id="dynamicGatewayPanel"') || paymentHtml.includes('id="inlinePaymentPanel"'), 'payment.html must support inline manual/crypto payment verification');
   assert.ok(paymentHtml.includes('/api/orders/create'), 'payment.html must initialize orders via /api/orders/create');
   assert.ok(fs.existsSync(path.resolve(__dirname, '../payment.html')), 'payment.html file must exist in root');
