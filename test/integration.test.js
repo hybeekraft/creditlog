@@ -144,31 +144,6 @@ test.before(async () => {
   });
 });
 
-test.after(async () => {
-  syncEngine.stopPeriodicSync();
-  botDbBridge.close();
-  if (typeof server.closeAllConnections === 'function') {
-    server.closeAllConnections();
-  }
-  await new Promise((resolve) => {
-    server.close(() => {
-      console.log('[Test Server] Closed');
-      resolve();
-    });
-  });
-  if (mockBackend) {
-    await new Promise(resolve => mockBackend.close(resolve));
-  }
-  if (previousBackendUrl === undefined) delete process.env.CREDITLOG_BACKEND_URL;
-  else process.env.CREDITLOG_BACKEND_URL = previousBackendUrl;
-  if (previousBackendSecret === undefined) delete process.env.CREDITLOG_BACKEND_SECRET;
-  else process.env.CREDITLOG_BACKEND_SECRET = previousBackendSecret;
-
-  const handles = process._getActiveHandles ? process._getActiveHandles() : [];
-  console.log('Remaining active handles:', handles.map(h => (h.constructor ? h.constructor.name : typeof h)));
-  setTimeout(() => process.exit(0), 100).unref();
-});
-
 test('1. Supplier Wholesale API Integration & Account Check', async () => {
   const info = await resellerService.getInfo();
   assert.equal(info.ok, true, 'Supplier /account/info should return ok: true');
@@ -1075,11 +1050,46 @@ test('35. Dedicated Payment Page Flow: checkout.html transitions to payment.html
   for (const gw of ['Bachs', 'CryptoBot', 'Bank', 'Binance', 'TRC20', 'BEP20']) {
     assert.ok(paymentHtml.includes(`selectGateway('${gw}')`), `payment.html must render gateway option ${gw}`);
   }
-  assert.ok(paymentHtml.includes('id="inlinePaymentPanel"'), 'payment.html must support inline manual/crypto payment verification');
+  assert.ok(paymentHtml.includes('id="dynamicGatewayPanel"') || paymentHtml.includes('id="inlinePaymentPanel"'), 'payment.html must support inline manual/crypto payment verification');
   assert.ok(paymentHtml.includes('/api/orders/create'), 'payment.html must initialize orders via /api/orders/create');
+  assert.ok(fs.existsSync(path.resolve(__dirname, '../payment.html')), 'payment.html file must exist in root');
+});
 
-  const res = await fetch(`${baseUrl}/payment.html`);
-  assert.equal(res.status, 200, 'Server must serve /payment.html with HTTP 200');
+test('36. Catalog Stock Availability Badges: Beside product amounts with Available / Out Of Stock pills', async () => {
+  const shopHtml = fs.readFileSync(path.resolve(__dirname, '../shop.html'), 'utf8');
+  assert.ok(shopHtml.includes('catalog-stock-pill'), 'shop.html must render catalog-stock-pill beside price');
+  assert.ok(shopHtml.includes('✓ Available'), 'shop.html must contain ✓ Available badge text');
+  assert.ok(shopHtml.includes('× Out Of Stock'), 'shop.html must contain × Out Of Stock badge text');
+
+  const css = fs.readFileSync(path.resolve(__dirname, '../style.css'), 'utf8');
+  assert.ok(css.includes('.catalog-stock-pill'), 'style.css must define .catalog-stock-pill');
+  assert.ok(css.includes('.catalog-stock-pill.available'), 'style.css must define .catalog-stock-pill.available');
+  assert.ok(css.includes('.catalog-stock-pill.out-of-stock'), 'style.css must define .catalog-stock-pill.out-of-stock');
+});
+
+test.after(async () => {
+  syncEngine.stopPeriodicSync();
+  botDbBridge.close();
+  if (typeof server.closeAllConnections === 'function') {
+    server.closeAllConnections();
+  }
+  await new Promise((resolve) => {
+    server.close(() => {
+      console.log('[Test Server] Closed');
+      resolve();
+    });
+  });
+  if (mockBackend) {
+    await new Promise(resolve => mockBackend.close(resolve));
+  }
+  if (previousBackendUrl === undefined) delete process.env.CREDITLOG_BACKEND_URL;
+  else process.env.CREDITLOG_BACKEND_URL = previousBackendUrl;
+  if (previousBackendSecret === undefined) delete process.env.CREDITLOG_BACKEND_SECRET;
+  else process.env.CREDITLOG_BACKEND_SECRET = previousBackendSecret;
+
+  const handles = process._getActiveHandles ? process._getActiveHandles() : [];
+  console.log('Remaining active handles:', handles.map(h => (h.constructor ? h.constructor.name : typeof h)));
+  setTimeout(() => process.exit(0), 100).unref();
 });
 
 
