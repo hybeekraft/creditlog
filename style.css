@@ -8884,9 +8884,12 @@ body {
   .checkout-layout-grid {
     grid-template-columns: 1fr;
   }
+  .checkout-left-col {
+    order: 1;
+  }
   .order-summary-card {
     position: static;
-    order: -1;
+    order: 2;
   }
   .form-row-2 {
     grid-template-columns: 1fr;

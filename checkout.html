@@ -134,7 +134,6 @@
             <div class="summary-icon-tile" id="summaryIconTile"></div>
             <div>
               <div class="summary-prod-title" id="summaryProdTitle">Subscription Name</div>
-              <div id="summaryDeliveryFormat" style="font-size: 11px; background: rgba(208,69,21,0.08); color: #D04515; font-weight: 700; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-top: 4px;">Delivery: Instant Dispatch</div>
             </div>
           </div>
 
@@ -358,11 +357,6 @@
       document.getElementById('summaryProdTitle').textContent = currentProduct.name;
       document.getElementById('summaryQtyDisplay').textContent = currentQty;
 
-      // Show delivery format
-      const delFmtEl = document.getElementById('summaryDeliveryFormat');
-      if (delFmtEl) {
-        delFmtEl.textContent = `Delivery: ${currentProduct.deliveryFormat || 'Instant Dispatch'}`;
-      }
 
       // Show product requirements
       const reqBanner = document.getElementById('summaryRequirementsBanner');
