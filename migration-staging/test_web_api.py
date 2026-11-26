@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+from unittest.mock import patch
 
 from aiohttp import web
 from aiohttp.test_utils import TestClient, TestServer
@@ -132,6 +133,33 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
             "gateway": "cryptobot", "currency": "USD",
         })
         self.assertEqual(response.status, 422)
+
+    async def test_bachs_order_creation_returns_checkout_url(self):
+        captured = {}
+
+        async def fake_init_bachs(order_id, total, name, email, uid, qty, success_url_override=None, cancel_url_override=None):
+            captured["success_url"] = success_url_override
+            captured["cancel_url"] = cancel_url_override
+            return True, {
+                "checkout_id": "cs_bachs_test_123",
+                "checkout_url": "https://checkout.bachs.io/c/cs_bachs_test_123",
+                "status": "open",
+                "amount": "12.50",
+                "currency": "USD",
+            }
+
+        with patch.object(bot, "initialize_bachs_transaction", side_effect=fake_init_bachs), \
+             patch.dict(os.environ, {"WEB_SUCCESS_URL": "", "WEB_CANCEL_URL": "", "WEB_STORE_URL": "https://creditlog.com"}):
+            response = await self.client.post("/api/orders/create", headers=self.headers, json={
+                "productId": self.product_id, "quantity": 1, "customerName": "Test Buyer",
+                "customerEmail": "buyer@example.com", "customerPhone": "+2348000000000",
+                "gateway": "bachs", "currency": "USD",
+            })
+        result = await response.json()
+        self.assertEqual(response.status, 201)
+        self.assertEqual(result["order"]["checkoutUrl"], "https://checkout.bachs.io/c/cs_bachs_test_123")
+        self.assertTrue(captured["success_url"].startswith("https://creditlog.com/success.html?orderId="))
+        self.assertEqual(captured["cancel_url"], "https://creditlog.com/payment.html")
 
 
 if __name__ == "__main__":
