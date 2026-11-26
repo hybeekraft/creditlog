@@ -1186,27 +1186,28 @@ option {
 .catalog-stock-pill {
   font-size: 11px;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 3px 9px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   white-space: nowrap;
   line-height: 1.25;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   flex-shrink: 0;
+  font-family: inherit;
 }
 
 .catalog-stock-pill.available {
-  background: #0E241B;
-  color: #34D399;
-  border: 1px solid rgba(52, 211, 153, 0.25);
+  background: rgba(21, 128, 61, 0.08);
+  color: #15803D;
+  border: 1px solid rgba(21, 128, 61, 0.22);
 }
 
 .catalog-stock-pill.out-of-stock {
-  background: #2A1215;
-  color: #F87171;
-  border: 1px solid rgba(248, 113, 113, 0.25);
+  background: rgba(185, 28, 28, 0.08);
+  color: #B91C1C;
+  border: 1px solid rgba(185, 28, 28, 0.22);
 }
 
 .catalog-stock-col {
